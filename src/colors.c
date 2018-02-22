@@ -6,13 +6,13 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 02:21:28 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/15 10:48:41 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/22 18:28:27 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static t_color	interpole_color(double t, t_color c1, t_color c2)
+t_color			interpole_color(double t, t_color c1, t_color c2)
 {
 	t_color	ip;
 
@@ -23,7 +23,7 @@ static t_color	interpole_color(double t, t_color c1, t_color c2)
 	return (ip);
 }
 
-static t_color	get_color(int color)
+t_color			get_color(int color)
 {
 	t_color c;
 

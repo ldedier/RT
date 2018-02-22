@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 22:42:29 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/15 10:15:50 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/20 15:50:49 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	add_obj(t_objlist **lst, t_object object)
 		perror("cant malloc new object");
 		exit(errno);
 	}
+	if (first == NULL)
+		first = *lst;
 	(*lst)->next = NULL;
 	(*lst)->object = object;
 	if (prev != NULL)

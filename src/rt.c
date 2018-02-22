@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 04:37:03 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/15 10:53:15 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/22 18:06:20 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int				display_usage(void)
 {
 	ft_putendl("usage: ./fractol scene_number");
-	ft_putendl("scenes:\n\t1: sphere\n\t2: sphere + plane\n\t3: blahblahblah");
+	ft_putendl("scenes:\n\t1: sphere\n\t2: 3 spheres\n\t3: blahblahblah");
 	return (0);
 }
 
