@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:36:26 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/22 11:01:35 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/24 01:17:02 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ t_world				*new_world(unsigned char scene)
 	world->cam->o.x = CAMERA_X;
 	world->cam->o.y = CAMERA_Y;
 	world->cam->o.z = CAMERA_Z;
+	//TODO: add cam->v i que la pantalla roti i tal
 	world->cam->fd = CAMERA_FD;
-	world->cam->pd = FOV / HRES;
+	world->cam->pd = ZOOM / HRES;
 	world->objlist = NULL;
 	populate_world(world, scene);
 	return (world);

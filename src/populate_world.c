@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 22:36:39 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/22 18:50:15 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/24 01:05:39 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_object	create_sphere(t_point3d pos, double rad, t_color color)
 	t_object	sphere;
 
 	sphere.intersect_func = intersect_sphere;
+	sphere.normal_func = normal_sphere;
 	sphere.o = pos;
 	sphere.s.x = rad;
 	sphere.r = POINT_ZERO;
@@ -32,26 +33,45 @@ t_object	create_plane(t_point3d pos, t_point3d v, t_color color)
 	t_object	plane;
 
 	plane.intersect_func = intersect_plane;
+	plane.normal_func = normal_plane;
 	plane.o = pos;
 	plane.s = POINT_ZERO;
-	plane.r = v;
+	plane.r = normalize(v);
 	plane.c = color;
 	return (plane);
 }
 
+t_object	create_cone(t_point3d pos, t_point3d v, double the, t_color color)
+{
+	t_object	cone;
+
+	cone.intersect_func = intersect_cone;
+	cone.normal_func = normal_cone;
+	cone.o = pos;
+	cone.s.x = the;
+	cone.r = normalize(v);
+	cone.c = color;
+	return (cone);
+}
+
 void		populate_world(t_world *world, unsigned char scene)
 {
-	world->lights[0].o = (t_point3d){.x = 2, .y = -1, .z = 0};
-	world->lights[0].intensity = 0.5;
-	//if (scene == 1)
-		add_obj(&(world->objlist), create_sphere(SPHERE1_POS, SPHERE1_COL));
-	if (scene == 2)
+	t_objlist	**lst;
+(void)scene;	
+	lst = &(world->objlist);
+	world->lights[0].o = LIGHT1_POS;
+	world->lights[0].intensity = LIGHT1_INT;
+	add_obj(lst, create_sphere(SPHERE1_POS, SPHERE1_RAD, SPHERE1_COL));
+	if (scene > 1)
 	{
-		world->lights[0].o = (t_point3d){.x = -0.4, .y = 0.0, .z = 2};
-		add_obj(&(world->objlist), create_sphere(SPHERE2_POS, SPHERE2_COL));
-		add_obj(&(world->objlist), create_sphere(SPHERE3_POS, SPHERE3_COL));
+		add_obj(lst, create_sphere(SPHERE2_POS, SPHERE2_RAD, SPHERE2_COL));
+		add_obj(lst, create_sphere(SPHERE3_POS, SPHERE3_RAD, SPHERE3_COL));
 	}
-	//if (scene == 3)
-	//	add_obj(&(world->objlist), create_plane(PLANE1_POS, PLANE1_VEC,
-	//				PLANE1_COL));
+	if (scene > 2)
+	{
+		add_obj(lst, create_plane(PLANE1_POS, PLANE1_VEC, PLANE1_COL));
+		add_obj(lst, create_plane(PLANE2_POS, PLANE2_VEC, PLANE2_COL));
+	}
+	if (scene > 3)
+		add_obj(lst, create_cone(CONE1_POS, CONE1_VEC, CONE1_ANG, CONE1_COL));
 }

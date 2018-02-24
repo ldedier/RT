@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/22 18:36:55 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/24 03:10:42 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,34 +27,43 @@
 
 # define HRES 1600
 # define VRES 1200
-# define FOV 2.0
+# define ZOOM 1.5
 # define CAMERA_X 0
 # define CAMERA_Y 0
 # define CAMERA_Z -2
 # define CAMERA_FD 1
+# define PERSPECTIVE 2
 # define NLIGHTS 1
-# define AMBIENT_LIGHT 0.2
+# define AMBIENT_LIGHT 0.1
+# define EPSILON 0.00000001
 
-//TODO: canviar CAMERA_Z per (la direccio on esta mirant la camera).z negatiu
-# define POINT_BEHIND_CAMERA (t_point3d){.x=0,.y=0,.z=CAMERA_Z}
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
-# define BACKGROUND_COLOR get_color(0x202020)
-# define SPHERE1_POS (t_point3d){.x=0.0,.y=0.0,.z=3.0}, 0.5
+# define WHITE_COLOR (t_color){.r=255,.g=255,.b=255,.col=0XFFFFFF}
+# define BACKGROUND_COLOR get_color(0x0)
+# define SPHERE1_POS (t_point3d){.x=0.0,.y=0.0,.z=3.0}
+# define SPHERE1_RAD 0.5
 # define SPHERE1_COL get_color(0xFF0000)
-# define SPHERE2_POS (t_point3d){.x=-0.67,.y=-0.4,.z=3.0}, 0.2
+# define SPHERE2_POS (t_point3d){.x=-0.67,.y=-0.4,.z=1.0}
+# define SPHERE2_RAD 0.2
 # define SPHERE2_COL get_color(0x00FF00)
-# define SPHERE3_POS (t_point3d){.x=0.07,.y=0.4,.z=2.8}, 0.34
+# define SPHERE3_POS (t_point3d){.x=0.07,.y=0.4,.z=2.8}
+# define SPHERE3_RAD 0.34
 # define SPHERE3_COL get_color(0x0000FF)
-# define PLANE1_POS (t_point3d){.x=0.0,.y=0.0,.z=0.0}
-# define PLANE1_VEC normalize((t_point3d){.x=0.0,.y=1.0,.z=-1.0})
-# define PLANE1_COL get_color(0xFFFFFF)
-# define PLANE2_POS (t_point3d){.x=0.0,.y=0.0,.z=0.0}
-# define PLANE2_COL get_color(0xFFFFFF)
-# define CUBE1_POS (t_point3d){.x=0.0,.y=0.0,.z=0.0}
-# define CUBE1_COL get_color(0xFFFFFF)
-# define CUBE2_POS (t_point3d){.x=0.0,.y=0.0,.z=0.0}
-# define CUBE2_COL get_color(0xFFFFFF)
+# define PLANE1_POS (t_point3d){.x=0.0,.y=2.0,.z=0.0}
+# define PLANE1_VEC (t_point3d){.x=0.0,.y=-1.0,.z=-0.0}
+# define PLANE1_COL get_color(0xFF00FF)
+# define PLANE2_POS (t_point3d){.x=-1.0,.y=0.0,.z=0.0}
+# define PLANE2_VEC (t_point3d){.x=1,.y=0.0,.z=-0.0}
+# define PLANE2_COL get_color(0xFFFF00)
+# define CONE1_POS (t_point3d){.x=0.1,.y=0.05,.z=2.55}
+# define CONE1_VEC (t_point3d){.x=1.0,.y=1.0,.z=0.0}
+# define CONE1_ANG 0.3
+# define CONE1_COL get_color(0x00FFFF)
+# define LIGHT1_POS (t_point3d){.x=0.9,.y=-1.3,.z=1.2}
+# define LIGHT1_INT 0.95
+# define LIGHT2_POS (t_point3d){.x=-0.4,.y=0.1,.z=2.0}
+# define LIGHT2_INT 0.4
 
 typedef struct	s_pixel
 {
@@ -133,12 +142,21 @@ typedef struct	s_color
 */
 typedef struct	s_object
 {
-	int			(*intersect_func)(t_line, struct s_object, t_point3d *hit);
+	int			(*intersect_func)(t_line, struct s_object, t_point3d*);
+	t_point3d	(*normal_func)(struct s_object, t_point3d);
 	t_point3d	o;
 	t_point3d	s;
 	t_point3d	r;
 	t_color		c;
 }				t_object;
+
+typedef struct	s_auxcone
+{
+	double		sqcos;
+	double		dv;
+	t_point3d	co;
+	double		cov;
+}				t_auxcone;
 
 typedef struct			s_objlist
 {
@@ -192,6 +210,7 @@ void			del_lst(t_objlist **lst);
 */
 t_point3d		newvector(t_point3d from, t_point3d to);
 double			dotprod(t_point3d v1, t_point3d v2);
+t_point3d		crossprod(t_point3d v1, t_point3d v2);
 double			magnitude(t_point3d v);
 t_point3d		normalize(t_point3d v);
 
@@ -203,7 +222,7 @@ t_color			render_pixel(t_world *world, t_pixel pix);
 t_color			interpole_color(double t, t_color c1, t_color c2);
 t_color			get_color(int color);
 void			paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
-t_hit			trace(t_line line, t_objlist *objlist);
+t_hit			*trace(t_line line, t_objlist *objlist);
 /*
 ** intersections
 */
@@ -211,5 +230,17 @@ int				intersect_sphere(t_line line, t_object obj, t_point3d *hit);
 int				intersect_cone(t_line line, t_object obj, t_point3d *hit);
 int				intersect_plane(t_line line, t_object obj, t_point3d *hit);
 int				intersect_cylinder(t_line line, t_object obj, t_point3d *hit);
+/*
+**normals
+*/
+t_point3d		normal_sphere(t_object sphere, t_point3d hitpoint);
+t_point3d		normal_cone(t_object sphere, t_point3d hitpoint);
+t_point3d		normal_plane(t_object sphere, t_point3d hitpoint);
+t_point3d		normal_cylinder(t_object sphere, t_point3d hitpoint);
 
+/*
+**transforms
+*/
+t_point3d		move(t_point3d p, t_point3d v, double scale);
+void			translate(t_object *obj, t_point3d v);
 #endif
