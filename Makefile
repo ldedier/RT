@@ -6,7 +6,7 @@
 #    By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/07 00:32:26 by lcavalle          #+#    #+#              #
-#    Updated: 2018/02/22 20:25:50 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/02/28 01:48:36 by lcavalle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,20 @@ FLAGS = -Wall -Wextra -Werror
 SRCDIR = src
 OBJDIR = obj
 HEADDIR = headers
-SOURCES := $(wildcard $(SRCDIR)/*.c)
-HEADS := $(wildcard $(HEADDIR)/*.h) 
-
+SOURCES :=	$(SRCDIR)/colors.c \
+			$(SRCDIR)/input.c \
+			$(SRCDIR)/intersections.c \
+			$(SRCDIR)/normals.c \
+			$(SRCDIR)/obj_list.c \
+			$(SRCDIR)/paint_threaded.c \
+			$(SRCDIR)/populate_world.c \
+			$(SRCDIR)/renderer.c \
+			$(SRCDIR)/rt.c \
+			$(SRCDIR)/tracer.c \
+			$(SRCDIR)/transforms.c \
+			$(SRCDIR)/vectors.c \
+			$(SRCDIR)/world_maker.c
+HEADS :=	$(HEADDIR)/rt.h
 OBJ = $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 INCLUDES = -I libft -I lmlx -I headers
 LIBS = -L libft/ -lft -L minilibx_macos/ -lmlx -lpthread

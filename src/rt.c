@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 04:37:03 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/24 15:33:36 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/28 02:38:11 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int				main(int argc, char **args)
 		return (display_usage());
 	mlx_loop_hook(world->canvas->mlx, draw_frame, (void*)world);
 	mlx_key_hook(world->canvas->win, key_press, (void*)world);
+	mlx_expose_hook(world->canvas->win, expose, (void*)world);
 	paint_threaded(world);
 	mlx_loop(world->canvas->mlx);
 	return (0);

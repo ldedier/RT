@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/28 01:36:57 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/28 02:18:06 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_color				render_pixel(t_world *world, t_pixel pix)
 	t_line		line;
 	double		illu;
 	t_line		sray;
-
+	
 	line = ray(screen2world(pix, world), world);
 	if ((hit = trace(line, world->objlist)))
 	{

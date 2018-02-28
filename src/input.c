@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 08:29:48 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/22 15:08:47 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/28 02:43:57 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ int			key_press(int keycode, void *param)
 	ft_putchar('\n');
 	paint_threaded(world);
 	return (keycode);
+}
+
+int			expose(void *param)
+{
+	(void)param;
+	ft_putendl("expose called");
+	return (0);
 }
 
 int			draw_frame(void *param)

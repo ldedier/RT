@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/27 09:45:10 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/28 02:38:53 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ typedef struct	s_thr_par
 */
 int				draw_frame(void *param);
 int				key_press(int keycode, void *param);
+int				expose(void *param);
 
 /*
 ** world
