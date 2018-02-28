@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 04:37:03 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/23 20:06:30 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/24 15:33:36 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int				main(int argc, char **args)
 		world = new_world(3);
 	else if (ft_strcmp(args[1], "4") == 0)
 		world = new_world(4);
+	else if (ft_strcmp(args[1], "5") == 0)
+		world = new_world(5);
 	else
 		return (display_usage());
 	mlx_loop_hook(world->canvas->mlx, draw_frame, (void*)world);

@@ -6,11 +6,21 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 11:22:16 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/24 00:12:07 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/26 23:05:29 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+t_point3d	scale(t_point3d p, double scale)
+{
+	t_point3d	res;
+
+	res.x = p.x * scale;
+	res.y = p.y * scale;
+	res.z = p.z * scale;
+	return (res);
+}
 
 t_point3d	move(t_point3d p, t_point3d v, double scale)
 {

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:44:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/23 21:06:11 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/26 23:14:29 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,7 @@ t_point3d	normal_cone(t_object cone, t_point3d hitpoint)
 	hitplane = crossprod(aux, cone.r);
 	normal = crossprod(aux, hitplane);
 	if (dotprod(cone.r, aux) < 0.0)
-	{
-		normal.x = -normal.x;
-		normal.y = -normal.y;
-		normal.z = -normal.z;
-	}
+		normal = scale(normal, -1.0);
 	return (normalize(normal));
 }
 
@@ -41,10 +37,9 @@ t_point3d	normal_plane(t_object plane, t_point3d hitpoint)
 	return (plane.r);
 }
 
-t_point3d	normal_cylinder(t_object cylinder, t_point3d hitpoint)
+t_point3d	normal_cylinder(t_object cyl, t_point3d hitp)
 {	
-	t_point3d	point = (t_point3d){.x=0,.y=0,.z=0};
-	(void)cylinder;
-	(void)hitpoint;
-	return (point);
+	return (normalize(newvector(
+					move(cyl.o, cyl.r,dotprod(cyl.r, newvector(cyl.o, hitp))),
+					hitp)));
 }

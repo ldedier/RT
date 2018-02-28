@@ -6,17 +6,17 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 01:01:52 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/24 01:19:04 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/27 08:44:33 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-/*quadratic equation. a would always be 1 (as it is the square of the unit vec)
-**  so we simplify it by dividing b by 2 and removing the 4 from the radicand
-** (so now it is b*b - ac)(wikipedia line-sphere intersection)
+/*
+** quadratic equation. simpliefied a, b and c. also simplified formula
+** (wikipedia line-sphere intersection)
 */
-int		intersect_sphere(t_line line, t_object obj, t_point3d *hitpoint)
+int	intersect_sphere(t_line line, t_object obj, t_point3d *hitpoint)
 {
 	t_point3d	tmpvec;
 	t_quadratic	equa;
@@ -34,17 +34,13 @@ int		intersect_sphere(t_line line, t_object obj, t_point3d *hitpoint)
 	sols.t1 = -equa.b + sqrt(radic);
 	sols.t2 = -equa.b - sqrt(radic);
 	t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
-	/*if (sols.t1 < sols.t2 && sols.t1 > 0.0) 
-		t = sols.t1;
-	else
-		t = sols.t2;*/
 	(*hitpoint).x = line.o.x + line.v.x * t;
 	(*hitpoint).y = line.o.y + line.v.y * t;
 	(*hitpoint).z = line.o.z + line.v.z * t;
 	return (1);
 }
 
-int		intersect_cone(t_line line, t_object obj, t_point3d *hitpoint)
+int	intersect_cone(t_line line, t_object obj, t_point3d *hitpoint)
 {
 	t_auxcone	aux;
 	t_quadratic	equa;
@@ -56,7 +52,7 @@ int		intersect_cone(t_line line, t_object obj, t_point3d *hitpoint)
 	t = cos(obj.s.x);
 	aux.sqcos = t * t;
 	aux.dv = dotprod(line.v, obj.r);
-	aux.co = newvector(obj.o, line.o);//SI NO VA GIRAR AQUESTS
+	aux.co = newvector(obj.o, line.o);
 	aux.cov = dotprod(aux.co, obj.r);
 	equa = (t_quadratic){.a = aux.dv * aux.dv - aux.sqcos,
 		.b = 2 * (aux.dv * aux.cov - dotprod(line.v, aux.co) * aux.sqcos),
@@ -73,10 +69,11 @@ int		intersect_cone(t_line line, t_object obj, t_point3d *hitpoint)
 	return (1);
 }
 
-int		intersect_plane(t_line line, t_object obj, t_point3d *hitpoint)
+int	intersect_plane(t_line line, t_object obj, t_point3d *hitpoint)
 {
 	double	den;
 	double	sol;
+
 	den = dotprod(line.v, obj.r);
 	if (den < EPSILON && den > -EPSILON)
 		return (0);
@@ -84,15 +81,33 @@ int		intersect_plane(t_line line, t_object obj, t_point3d *hitpoint)
 	(*hitpoint).x = line.o.x + line.v.x * sol;
 	(*hitpoint).y = line.o.y + line.v.y * sol;
 	(*hitpoint).z = line.o.z + line.v.z * sol;
-//	if (magnitude(newvector(*hitpoint, obj.o)) > 5)
-//		return (0);
 	return (1);
 }
 
-int		intersect_cylinder(t_line line, t_object obj, t_point3d *hitpoint)
+int	intersect_cylinder(t_line line, t_object obj, t_point3d *hitpoint)
 {
-	(void)line;
-	(void)obj;
-	(void)hitpoint;
-	return (0);
+	t_auxcyl	aux;
+	t_quadratic	equa;
+	t_quadsol	sols;
+	double		t;
+	double		radic;
+
+	(*hitpoint) = move(line.o, line.v, -EPSILON);
+	aux.colo = newvector(obj.o, line.o);
+	aux.ddv = newvector(scale(obj.r, dotprod(line.v, obj.r)), line.v);
+	aux.scolol = scale(obj.r, dotprod(aux.colo, obj.r));
+	aux.scolol2 = newvector(aux.scolol, aux.colo);
+	equa = (t_quadratic){.a = dotprod(aux.ddv, aux.ddv),
+		.b = 2 * dotprod(aux.ddv, aux.scolol2),
+		.c = dotprod(aux.scolol2, aux.scolol2) - obj.s.x * obj.s.x};
+	radic = equa.b * equa.b - 4 * equa.a * equa.c;
+	if (radic < 0.0)
+		return (0);
+	sols.t1 = (-equa.b + sqrt(radic)) / (2 * equa.a);
+	sols.t2 = (-equa.b - sqrt(radic)) / (2 * equa.a);
+	t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
+	(*hitpoint).x = line.o.x + line.v.x * t;
+	(*hitpoint).y = line.o.y + line.v.y * t;
+	(*hitpoint).z = line.o.z + line.v.z * t;
+	return (1);
 }

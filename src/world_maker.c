@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:36:26 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/24 01:17:02 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/27 07:09:32 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ t_world				*new_world(unsigned char scene)
 			!(world->cam = malloc(sizeof(t_camera))))
 		return (NULL);
 	world->canvas = canvas;
-	world->cam->o.x = CAMERA_X;
-	world->cam->o.y = CAMERA_Y;
-	world->cam->o.z = CAMERA_Z;
-	//TODO: add cam->v i que la pantalla roti i tal
+	world->cam->o = CAMERA_POS;
+	world->cam->look = normalize(CAMERA_LOOK);
+	world->cam->up = normalize(CAMERA_UP);
 	world->cam->fd = CAMERA_FD;
 	world->cam->pd = ZOOM / HRES;
 	world->objlist = NULL;

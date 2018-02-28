@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 22:36:39 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/24 01:05:39 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/27 03:34:24 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,19 @@ t_object	create_cone(t_point3d pos, t_point3d v, double the, t_color color)
 	return (cone);
 }
 
+t_object	create_cylind(t_point3d pos, t_point3d v, double rad, t_color color)
+{
+	t_object	cylinder;
+
+	cylinder.intersect_func = intersect_cylinder;
+	cylinder.normal_func = normal_cylinder;
+	cylinder.o = pos;
+	cylinder.s.x = rad;
+	cylinder.r = normalize(v);
+	cylinder.c = color;
+	return (cylinder);
+}
+
 void		populate_world(t_world *world, unsigned char scene)
 {
 	t_objlist	**lst;
@@ -74,4 +87,7 @@ void		populate_world(t_world *world, unsigned char scene)
 	}
 	if (scene > 3)
 		add_obj(lst, create_cone(CONE1_POS, CONE1_VEC, CONE1_ANG, CONE1_COL));
+	if (scene > 4)
+		add_obj(lst, create_cylind(CYLINDER1_POS, CYLINDER1_VEC,
+					CYLINDER1_RAD, CYLINDER1_COL));
 }

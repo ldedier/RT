@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/24 03:10:42 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/27 09:45:10 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,16 @@
 
 # define HRES 1600
 # define VRES 1200
-# define ZOOM 1.5
-# define CAMERA_X 0
-# define CAMERA_Y 0
-# define CAMERA_Z -2
-# define CAMERA_FD 1
 # define PERSPECTIVE 2
+# define ZOOM 1.5
+# define CAMERA_FD 1
+# define CAMERA_POS (t_point3d){.x=0.0,.y=-0.0,.z=-2.0}
+# define CAMERA_LOOK (t_point3d){.x=-0.0,.y=0.0,.z=1.0}
+# define CAMERA_UP (t_point3d){.x=-0.0,.y=1.0,.z=0.0}
+
 # define NLIGHTS 1
-# define AMBIENT_LIGHT 0.1
+# define AMBIENT_LIGHT 0.07
+# define SHINE 0.65
 # define EPSILON 0.00000001
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
@@ -60,7 +62,11 @@
 # define CONE1_VEC (t_point3d){.x=1.0,.y=1.0,.z=0.0}
 # define CONE1_ANG 0.3
 # define CONE1_COL get_color(0x00FFFF)
-# define LIGHT1_POS (t_point3d){.x=0.9,.y=-1.3,.z=1.2}
+# define CYLINDER1_POS (t_point3d){.x=0.3,.y=0.7,.z=3.0}
+# define CYLINDER1_VEC (t_point3d){.x=0.7,.y=0.2,.z=1.0}
+# define CYLINDER1_RAD 0.17
+# define CYLINDER1_COL get_color(0xFFAADD)
+# define LIGHT1_POS (t_point3d){.x=1.4,.y=-1.0,.z=0.6}
 # define LIGHT1_INT 0.95
 # define LIGHT2_POS (t_point3d){.x=-0.4,.y=0.1,.z=2.0}
 # define LIGHT2_INT 0.4
@@ -123,7 +129,8 @@ typedef struct	s_line
 typedef struct	s_camera
 {
 	t_point3d	o;
-	t_point3d	r;
+	t_point3d	look;
+	t_point3d	up;
 	double		fd;
 	double		pd;
 }				t_camera;
@@ -157,6 +164,14 @@ typedef struct	s_auxcone
 	t_point3d	co;
 	double		cov;
 }				t_auxcone;
+
+typedef struct	s_auxcyl
+{
+	t_point3d	colo;
+	t_point3d	ddv;
+	t_point3d	scolol;
+	t_point3d	scolol2;
+}				t_auxcyl;
 
 typedef struct			s_objlist
 {
@@ -243,4 +258,5 @@ t_point3d		normal_cylinder(t_object sphere, t_point3d hitpoint);
 */
 t_point3d		move(t_point3d p, t_point3d v, double scale);
 void			translate(t_object *obj, t_point3d v);
+t_point3d		scale(t_point3d p, double scale);
 #endif
