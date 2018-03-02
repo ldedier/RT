@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/03/02 20:34:55 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/03/02 21:23:58 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ t_color				render_pixel(t_world *world, t_pixel pix)
 			illu = dotprod(hit->normal, sray.v) * world->lights[0].intensity;
 		illu = illu < 0.0 ? 0.0 : illu;
 		illu = illu > 1.0 - AMBIENT_LIGHT ? 1.0 - AMBIENT_LIGHT : illu;
-		shine = dotprod(hit->bounce, sray.v) - SHINE;
+		shine = dotprod(hit->bounce, sray.v);
 		if (shine > 0)
-			return (freeret(interpole_color(shine, interpole_color(
+			return (freeret(interpole_color(pow(shine, PHONG), interpole_color(
 								AMBIENT_LIGHT + illu, BLACK_COLOR, hit->obj.c),
 							WHITE_COLOR), &hit));
 			return (freeret(interpole_color(AMBIENT_LIGHT + illu, BLACK_COLOR,
