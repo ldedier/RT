@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/28 02:38:53 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/03/02 20:38:54 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,19 @@
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
+
 # define CAMERA_POS (t_point3d){.x=0.0,.y=-0.0,.z=-2.0}
 # define CAMERA_LOOK (t_point3d){.x=-0.0,.y=0.0,.z=1.0}
 # define CAMERA_UP (t_point3d){.x=-0.0,.y=1.0,.z=0.0}
+# define H_ROTATION (t_point3d){.x=0.0,.y=0.3,.z=0.0}
+
+# define KEY_UP 49
+# define KEY_DOWN 257
+# define KEY_LEFT 0
+# define KEY_RIGHT 2
+# define KEY_FORWARD 13
+# define KEY_BACKWARD 1
+# define KEY_RESET 15
 
 # define NLIGHTS 1
 # define AMBIENT_LIGHT 0.07
@@ -46,7 +56,7 @@
 # define SPHERE1_POS (t_point3d){.x=0.0,.y=0.0,.z=3.0}
 # define SPHERE1_RAD 0.5
 # define SPHERE1_COL get_color(0xFF0000)
-# define SPHERE2_POS (t_point3d){.x=-0.67,.y=-0.4,.z=1.0}
+# define SPHERE2_POS (t_point3d){.x=-0.0,.y=-0.0,.z=0.0}
 # define SPHERE2_RAD 0.2
 # define SPHERE2_COL get_color(0x00FF00)
 # define SPHERE3_POS (t_point3d){.x=0.07,.y=0.4,.z=2.8}
@@ -62,55 +72,55 @@
 # define CONE1_VEC (t_point3d){.x=1.0,.y=1.0,.z=0.0}
 # define CONE1_ANG 0.3
 # define CONE1_COL get_color(0x00FFFF)
-# define CYLINDER1_POS (t_point3d){.x=0.3,.y=0.7,.z=3.0}
-# define CYLINDER1_VEC (t_point3d){.x=0.7,.y=0.2,.z=1.0}
-# define CYLINDER1_RAD 0.17
-# define CYLINDER1_COL get_color(0xFFAADD)
+# define CYL1_POS (t_point3d){.x=0.3,.y=0.7,.z=3.0}
+# define CYL1_VEC (t_point3d){.x=0.7,.y=0.2,.z=1.0}
+# define CYL1_RAD 0.17
+# define CYL1_COL get_color(0xFFAADD)
 # define LIGHT1_POS (t_point3d){.x=1.4,.y=-1.0,.z=0.6}
 # define LIGHT1_INT 0.95
 # define LIGHT2_POS (t_point3d){.x=-0.4,.y=0.1,.z=2.0}
 # define LIGHT2_INT 0.4
 
-typedef struct	s_pixel
+typedef struct			s_pixel
 {
-	int			x;
-	int			y;
-}				t_pixel;
+	int					x;
+	int					y;
+}						t_pixel;
 
-typedef struct	s_canvas
+typedef struct			s_canvas
 {
-	void		*mlx;
-	void		*win;
-	void		*next_img;
-	int			*img_arr;
-	t_pixel		win_size;
-	t_pixel		halved_win_size;
-	int			bpp;
-	int			size_line;
-	int			endian;
-	double		ratio;
-}				t_canvas;
+	void				*mlx;
+	void				*win;
+	void				*next_img;
+	int					*img_arr;
+	t_pixel				win_size;
+	t_pixel				halved_win_size;
+	int					bpp;
+	int					size_line;
+	int					endian;
+	double				ratio;
+}						t_canvas;
 
-typedef struct	s_quadratic
+typedef struct			s_quadratic
 {
-	double		a;
-	double		b;
-	double		c;
-	double		radic;
-}				t_quadratic;
+	double				a;
+	double				b;
+	double				c;
+	double				radic;
+}						t_quadratic;
 
-typedef struct	s_quadsol
+typedef struct			s_quadsol
 {
-	double		t1;
-	double		t2;
-}				t_quadsol;
+	double				t1;
+	double				t2;
+}						t_quadsol;
 
-typedef struct	s_point3d
+typedef struct			s_point3d
 {
-	double		x;
-	double		y;
-	double		z;
-}				t_point3d;
+	double				x;
+	double				y;
+	double				z;
+}						t_point3d;
 
 /*
 ** o = origin
@@ -120,58 +130,58 @@ typedef struct	s_point3d
 ** fd = focal distance
 ** pd = pixel distance (in 3d world)
 */
-typedef struct	s_line
+typedef struct			s_line
 {
-	t_point3d	o;
-	t_point3d	v;
-}				t_line;
+	t_point3d			o;
+	t_point3d			v;
+}						t_line;
 
-typedef struct	s_camera
+typedef struct			s_camera
 {
-	t_point3d	o;
-	t_point3d	look;
-	t_point3d	up;
-	double		fd;
-	double		pd;
-}				t_camera;
+	t_point3d			o;
+	t_point3d			look;
+	t_point3d			up;
+	double				fd;
+	double				pd;
+}						t_camera;
 
-typedef struct	s_color
+typedef struct			s_color
 {
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-	unsigned int	col;
+	unsigned char		r;
+	unsigned char		g;
+	unsigned char		b;
+	unsigned int		col;
 }						t_color;
 
 /*
 ** the scanhit function is what determines what the object is, as we
 ** only need the object to calculate the intersection with the ray
 */
-typedef struct	s_object
+typedef struct			s_object
 {
-	int			(*intersect_func)(t_line, struct s_object, t_point3d*);
-	t_point3d	(*normal_func)(struct s_object, t_point3d);
-	t_point3d	o;
-	t_point3d	s;
-	t_point3d	r;
-	t_color		c;
-}				t_object;
+	int					(*intersect_func)(t_line, struct s_object, t_point3d*);
+	t_point3d			(*normal_func)(struct s_object, t_point3d);
+	t_point3d			o;
+	t_point3d			s;
+	t_point3d			r;
+	t_color				c;
+}						t_object;
 
-typedef struct	s_auxcone
+typedef struct			s_auxcone
 {
-	double		sqcos;
-	double		dv;
-	t_point3d	co;
-	double		cov;
-}				t_auxcone;
+	double				sqcos;
+	double				dv;
+	t_point3d			co;
+	double				cov;
+}						t_auxcone;
 
-typedef struct	s_auxcyl
+typedef struct			s_auxcyl
 {
-	t_point3d	colo;
-	t_point3d	ddv;
-	t_point3d	scolol;
-	t_point3d	scolol2;
-}				t_auxcyl;
+	t_point3d			colo;
+	t_point3d			ddv;
+	t_point3d			scolol;
+	t_point3d			scolol2;
+}						t_auxcyl;
 
 typedef struct			s_objlist
 {
@@ -181,83 +191,91 @@ typedef struct			s_objlist
 
 typedef struct			s_hit
 {
-	t_object 			obj;
+	t_object			obj;
 	t_point3d			point;
+	t_point3d			normal;
+	t_point3d			bounce;
 }						t_hit;
 
-typedef struct	s_light
+typedef struct			s_light
 {
-	double		intensity;
-	t_point3d	o;
-}				t_light;
+	double				intensity;
+	t_point3d			o;
+}						t_light;
 
-typedef struct	s_world
+typedef struct			s_world
 {
-	t_canvas	*canvas;
-	t_camera	*cam;
-	t_objlist	*objlist;
-	t_light		lights[NLIGHTS];
-}				t_world;
+	t_canvas			*canvas;
+	t_camera			*cam;
+	t_objlist			*objlist;
+	t_light				lights[NLIGHTS];
+}						t_world;
 
-typedef struct	s_thr_par
+typedef struct			s_thr_par
 {
-	t_world		*world;
-	int			p_y;
-}				t_thr_par;
+	t_world				*world;
+	int					p_y;
+}						t_thr_par;
 
 /*
 ** input
 */
-int				draw_frame(void *param);
-int				key_press(int keycode, void *param);
-int				expose(void *param);
+int						draw_frame(void *param);
+int						key_press(int keycode, void *param);
+int						expose(void *param);
 
 /*
 ** world
 */
-t_world			*new_world(unsigned char map);
-void			populate_world(t_world *world, unsigned char scene);
-t_object		create_sphere(t_point3d pos, double red, t_color color);
-void			add_obj(t_objlist **lst, t_object object);
-void			del_lst(t_objlist **lst);
+t_world					*new_world(unsigned char map);
+void					populate_world(t_world *world, unsigned char scene);
+t_object				create_sphere(t_point3d pos, double red, t_color color);
+void					add_obj(t_objlist **lst, t_object object);
+void					del_lst(t_objlist **lst);
 
 /*
 **vector
 */
-t_point3d		newvector(t_point3d from, t_point3d to);
-double			dotprod(t_point3d v1, t_point3d v2);
-t_point3d		crossprod(t_point3d v1, t_point3d v2);
-double			magnitude(t_point3d v);
-t_point3d		normalize(t_point3d v);
+t_point3d				newvector(t_point3d from, t_point3d to);
+double					dotprod(t_point3d v1, t_point3d v2);
+t_point3d				crossprod(t_point3d v1, t_point3d v2);
+double					magnitude(t_point3d v);
+t_point3d				normalize(t_point3d v);
 
 /*
 **render
 */
-void			paint_threaded(t_world *world);
-t_color			render_pixel(t_world *world, t_pixel pix);
-t_color			interpole_color(double t, t_color c1, t_color c2);
-t_color			get_color(int color);
-void			paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
-t_hit			*trace(t_line line, t_objlist *objlist);
+void					paint_threaded(t_world *world);
+t_color					render_pixel(t_world *world, t_pixel pix);
+t_color					interpole_color(double t, t_color c1, t_color c2);
+t_color					get_color(int color);
+void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
+t_hit					*trace(t_line line, t_objlist *objlist);
 /*
 ** intersections
 */
-int				intersect_sphere(t_line line, t_object obj, t_point3d *hit);
-int				intersect_cone(t_line line, t_object obj, t_point3d *hit);
-int				intersect_plane(t_line line, t_object obj, t_point3d *hit);
-int				intersect_cylinder(t_line line, t_object obj, t_point3d *hit);
+int						intersect_sphere(t_line line, t_object obj,
+		t_point3d *hit);
+int						intersect_cone(t_line line, t_object obj,
+		t_point3d *hit);
+int						intersect_plane(t_line line, t_object obj,
+		t_point3d *hit);
+int						intersect_cylinder(t_line line, t_object obj,
+		t_point3d *hit);
 /*
 **normals
 */
-t_point3d		normal_sphere(t_object sphere, t_point3d hitpoint);
-t_point3d		normal_cone(t_object sphere, t_point3d hitpoint);
-t_point3d		normal_plane(t_object sphere, t_point3d hitpoint);
-t_point3d		normal_cylinder(t_object sphere, t_point3d hitpoint);
+t_point3d				normal_sphere(t_object sphere, t_point3d hitpoint);
+t_point3d				normal_cone(t_object sphere, t_point3d hitpoint);
+t_point3d				normal_plane(t_object sphere, t_point3d hitpoint);
+t_point3d				normal_cylinder(t_object sphere, t_point3d hitpoint);
 
 /*
 **transforms
 */
-t_point3d		move(t_point3d p, t_point3d v, double scale);
-void			translate(t_object *obj, t_point3d v);
-t_point3d		scale(t_point3d p, double scale);
+t_point3d				translate_vec(t_point3d p, t_point3d v, double scale);
+void					translate(t_object *obj, t_point3d v);
+t_point3d				scale(t_point3d p, double scale);
+t_point3d				rotate_vec(t_point3d v, t_point3d a);
+void					rotate(t_object *obj, t_point3d a);
 #endif

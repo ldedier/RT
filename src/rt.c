@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 04:37:03 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/28 02:38:11 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/03/02 20:32:17 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,25 @@
 
 int				display_usage(void)
 {
-	ft_putendl("usage: ./fractol scene_number");
-	ft_putendl("scenes:\n\t1: sphere\n\t2: 3 spheres\n\t3: blahblahblah");
+	ft_putendl("usage: ./rtv1 scene_number");
+	ft_putendl("scenes:\n\t1: plane\n"
+			"\t2: plane + sphere\n"
+			"\t3: cylinder (not rotated)\n"
+			"\t4: cone\n\t5: lots of things\n"
+			"\t6: lots of things (cylinder rotated)");
 	return (0);
 }
 
 int				main(int argc, char **args)
 {
 	t_world	*world;
+	int		scene;
 
 	if (argc != 2)
 		return (display_usage());
-	if (ft_strcmp(args[1], "1") == 0)
-		world = new_world(1);
-	else if (ft_strcmp(args[1], "2") == 0)
-		world = new_world(2);
-	else if (ft_strcmp(args[1], "3") == 0)
-		world = new_world(3);
-	else if (ft_strcmp(args[1], "4") == 0)
-		world = new_world(4);
-	else if (ft_strcmp(args[1], "5") == 0)
-		world = new_world(5);
+	scene = ft_atoi(args[1]);
+	if (scene > 0 && scene <= 6)
+		world = new_world(scene);
 	else
 		return (display_usage());
 	mlx_loop_hook(world->canvas->mlx, draw_frame, (void*)world);

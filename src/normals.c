@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:44:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/26 23:14:29 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/03/02 20:31:58 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ t_point3d	normal_plane(t_object plane, t_point3d hitpoint)
 }
 
 t_point3d	normal_cylinder(t_object cyl, t_point3d hitp)
-{	
+{
 	return (normalize(newvector(
-					move(cyl.o, cyl.r,dotprod(cyl.r, newvector(cyl.o, hitp))),
-					hitp)));
+					translate_vec(cyl.o, cyl.r,
+						dotprod(cyl.r, newvector(cyl.o, hitp))), hitp)));
 }

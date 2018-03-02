@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 08:29:48 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/28 02:43:57 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/03/02 17:55:40 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,28 @@
 
 static void	key_camera(int keycode, t_camera *cam)
 {
-	if (keycode == 13)
-		cam->o.y -= 0.2;
-	else if (keycode == 0)
-		cam->o.x -= 0.2;
-	else if (keycode == 1)
-		cam->o.y += 0.2;
-	else if (keycode == 2)
-		cam->o.x += 0.2;
-	else if (keycode == 49)
+	if (keycode == KEY_UP)
+		cam->o = translate_vec(cam->o, cam->up, -0.35);
+	else if (keycode == KEY_DOWN)
+		cam->o = translate_vec(cam->o, cam->up, 0.35);
+	else if (keycode == KEY_LEFT)
+		cam->o = translate_vec(cam->o, crossprod(cam->look, cam->up), 0.35);
+	else if (keycode == KEY_RIGHT)
+		cam->o = translate_vec(cam->o, crossprod(cam->look, cam->up), -0.35);
+	else if (keycode == KEY_FORWARD)
+		cam->o = translate_vec(cam->o, cam->look, 0.35);
+	else if (keycode == KEY_BACKWARD)
+		cam->o = translate_vec(cam->o, cam->look, -0.35);
+	else if (keycode == KEY_RESET)
 	{
-		cam->o.x = 0.0;
-		cam->o.y = 0.0;
+		cam->o = CAMERA_POS;
+		cam->look = normalize(CAMERA_LOOK);
+		cam->up = normalize(CAMERA_UP);
 	}
+	else if (keycode == 124)
+		cam->look = rotate_vec(cam->look, H_ROTATION);
+	else if (keycode == 123)
+		cam->look = rotate_vec(cam->look, scale(H_ROTATION, -1.0));
 }
 
 int			key_press(int keycode, void *param)

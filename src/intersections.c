@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 01:01:52 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/27 08:44:33 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/03/02 16:29:09 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ** quadratic equation. simpliefied a, b and c. also simplified formula
 ** (wikipedia line-sphere intersection)
 */
+
 int	intersect_sphere(t_line line, t_object obj, t_point3d *hitpoint)
 {
 	t_point3d	tmpvec;
@@ -24,7 +25,7 @@ int	intersect_sphere(t_line line, t_object obj, t_point3d *hitpoint)
 	double		t;
 	double		radic;
 
-	(*hitpoint) = move(line.o, line.v, -EPSILON);
+	(*hitpoint) = translate_vec(line.o, line.v, -EPSILON);
 	tmpvec = newvector(obj.o, line.o);
 	equa = (t_quadratic){.a = 1, .b = dotprod(tmpvec, line.v),
 		.c = dotprod(tmpvec, tmpvec) - obj.s.x * obj.s.x};
@@ -48,7 +49,7 @@ int	intersect_cone(t_line line, t_object obj, t_point3d *hitpoint)
 	double		t;
 	double		radic;
 
-	(*hitpoint) = move(line.o, line.v, -EPSILON);
+	(*hitpoint) = translate_vec(line.o, line.v, -EPSILON);
 	t = cos(obj.s.x);
 	aux.sqcos = t * t;
 	aux.dv = dotprod(line.v, obj.r);
@@ -92,7 +93,7 @@ int	intersect_cylinder(t_line line, t_object obj, t_point3d *hitpoint)
 	double		t;
 	double		radic;
 
-	(*hitpoint) = move(line.o, line.v, -EPSILON);
+	(*hitpoint) = translate_vec(line.o, line.v, -EPSILON);
 	aux.colo = newvector(obj.o, line.o);
 	aux.ddv = newvector(scale(obj.r, dotprod(line.v, obj.r)), line.v);
 	aux.scolol = scale(obj.r, dotprod(aux.colo, obj.r));

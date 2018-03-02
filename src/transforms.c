@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 11:22:16 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/26 23:05:29 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/03/02 19:55:15 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,35 @@ t_point3d	scale(t_point3d p, double scale)
 	return (res);
 }
 
-t_point3d	move(t_point3d p, t_point3d v, double scale)
+t_point3d	translate_vec(t_point3d p, t_point3d v, double scale)
 {
 	return ((t_point3d){.x = p.x + v.x * scale,
 			.y = p.y + v.y * scale,
 			.z = p.z + v.z * scale});
 }
 
-void	translate(t_object *obj, t_point3d v)
+void		translate(t_object *obj, t_point3d v)
 {
-	t_point3d	p;
-	p = (*obj).o;
-	(*obj).o = move(p, v, 1.0);
+	obj->o = translate_vec(obj->o, v, 1.0);
 }
 
-void	rotate(t_object *obj, t_point3d angles)
+t_point3d	rotate_vec(t_point3d vec, t_point3d a)
 {
-	(void)obj;
-	(void)angles;
+	t_point3d	rot;
+
+	rot.x = vec.x * cos(a.x) * cos(a.y) +
+		vec.y * (cos(a.x) * sin(a.y) * sin(a.z) - sin(a.x) * cos(a.z)) +
+		vec.z * (cos(a.x) * sin(a.y) * cos(a.z) + sin(a.x) * sin(a.z));
+	rot.y = vec.x * sin(a.x) * cos(a.y) +
+		vec.y * (sin(a.x) * sin(a.y) * sin(a.z) + cos(a.x) * cos(a.z)) +
+		vec.z * (sin(a.x) * sin(a.y) * cos(a.z) - sin(a.x) * sin(a.z));
+	rot.z = vec.x * -sin(a.y) +
+		vec.y * cos(a.y) * sin(a.z) +
+		vec.z * cos(a.y) * cos(a.z);
+	return (rot);
+}
+
+void		rotate(t_object *obj, t_point3d a)
+{
+	obj->r = normalize(rotate_vec(obj->r, a));
 }

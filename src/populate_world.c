@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 22:36:39 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/27 03:34:24 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/03/02 19:58:18 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_object	create_sphere(t_point3d pos, double rad, t_color color)
 	sphere.c = color;
 	return (sphere);
 }
+
 t_object	create_plane(t_point3d pos, t_point3d v, t_color color)
 {
 	t_object	plane;
@@ -70,24 +71,28 @@ t_object	create_cylind(t_point3d pos, t_point3d v, double rad, t_color color)
 void		populate_world(t_world *world, unsigned char scene)
 {
 	t_objlist	**lst;
-(void)scene;	
+	t_object	cyl;
+	t_object	sphere;
+
 	lst = &(world->objlist);
 	world->lights[0].o = LIGHT1_POS;
 	world->lights[0].intensity = LIGHT1_INT;
-	add_obj(lst, create_sphere(SPHERE1_POS, SPHERE1_RAD, SPHERE1_COL));
-	if (scene > 1)
-	{
-		add_obj(lst, create_sphere(SPHERE2_POS, SPHERE2_RAD, SPHERE2_COL));
-		add_obj(lst, create_sphere(SPHERE3_POS, SPHERE3_RAD, SPHERE3_COL));
-	}
-	if (scene > 2)
-	{
-		add_obj(lst, create_plane(PLANE1_POS, PLANE1_VEC, PLANE1_COL));
-		add_obj(lst, create_plane(PLANE2_POS, PLANE2_VEC, PLANE2_COL));
-	}
-	if (scene > 3)
+	add_obj(lst, create_plane(PLANE1_POS, PLANE1_VEC, PLANE1_COL));
+	cyl = create_cylind(CYL1_POS, CYL1_VEC, CYL1_RAD, CYL1_COL);
+	sphere = create_sphere(SPHERE2_POS, SPHERE2_RAD, SPHERE2_COL);
+	translate(&sphere, (t_point3d){.x = -0.67, .y = -0.4, .z = 1.0});
+	if (scene == 6)
+		rotate(&cyl, (t_point3d){.x = 1.0, .y = 3.0, .z = 1.5});
+	if (scene == 2 || scene > 4)
+		add_obj(lst, create_sphere(SPHERE1_POS, SPHERE1_RAD, SPHERE1_COL));
+	if (scene == 3 || scene > 4)
+		add_obj(lst, cyl);
+	if (scene >= 4)
 		add_obj(lst, create_cone(CONE1_POS, CONE1_VEC, CONE1_ANG, CONE1_COL));
 	if (scene > 4)
-		add_obj(lst, create_cylind(CYLINDER1_POS, CYLINDER1_VEC,
-					CYLINDER1_RAD, CYLINDER1_COL));
+	{
+		add_obj(lst, create_plane(PLANE2_POS, PLANE2_VEC, PLANE2_COL));
+		add_obj(lst, sphere);
+		add_obj(lst, create_sphere(SPHERE3_POS, SPHERE3_RAD, SPHERE3_COL));
+	}
 }

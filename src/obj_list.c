@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 22:42:29 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/20 15:50:49 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/28 11:27:49 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	del_lst(t_objlist **lst)
 {
 	t_objlist	*aux;
 
-	while(*lst != NULL)
+	while (*lst != NULL)
 	{
 		aux = *lst;
 		*lst = (*lst)->next;

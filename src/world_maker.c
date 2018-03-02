@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:36:26 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/27 07:09:32 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/03/02 17:55:44 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_canvas		*new_canvas(void)
 		return (NULL);
 	canvas->bpp = 32;
 	canvas->endian = 1;
-	canvas->ratio = HRES/VRES;
+	canvas->ratio = HRES / VRES;
 	canvas->size_line = canvas->win_size.x;
 	canvas->img_arr = (int *)mlx_get_data_addr(canvas->next_img,
 			&(canvas->bpp), &(canvas->size_line), &(canvas->endian));

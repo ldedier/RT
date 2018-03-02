@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 02:21:28 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/22 18:28:27 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/02/28 11:26:04 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ t_color			get_color(int color)
 
 void			paint_pixel(t_pixel p, t_color c, t_canvas *canvas)
 {
-	interpole_color(1,get_color(c.col), c);
+	interpole_color(1, get_color(c.col), c);
 	canvas->img_arr[p.x + p.y * canvas->win_size.x] = c.col;
 }
