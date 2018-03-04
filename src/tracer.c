@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/03/02 18:48:07 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/03/04 02:13:46 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@ static t_point3d	reflection(t_point3d n, t_point3d v)
 	r.y = v.y - n.y * aux;
 	r.z = v.z - n.z * aux;
 	return (r);
+}
+
+t_hit				*retfree(int r, t_hit **hit)
+{
+	if (!r)
+	{
+		free(*hit);
+		*hit = NULL;
+	}
+	return (*hit);
 }
 
 t_hit				*trace(t_line line, t_objlist *objlist)
@@ -49,6 +59,6 @@ t_hit				*trace(t_line line, t_objlist *objlist)
 		objlist = objlist->next;
 	}
 	if (dotprod(newvector(line.o, hit->point), line.v) > 0)
-		return (hit);
-	return (NULL);
+		return (retfree(1, &hit));
+	return (retfree(0, &hit));
 }

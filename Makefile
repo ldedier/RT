@@ -6,7 +6,7 @@
 #    By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/07 00:32:26 by lcavalle          #+#    #+#              #
-#    Updated: 2018/02/28 01:48:36 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/03/03 19:03:43 by lcavalle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ lib:
 	@make -C minilibx_macos/
 	@echo "minilibx compiled"
 
-$(OBJ): $(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADS) 
+$(OBJ): $(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADS)
+	@mkdir -p $(@D)
 	gcc $(FLAGS) $(INCLUDES) -c $< -o $@
 
 clean:

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 08:29:48 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/03/02 17:55:40 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/03/04 02:15:40 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,12 @@ int			key_press(int keycode, void *param)
 
 int			expose(void *param)
 {
-	(void)param;
+	t_world	*world;
+
+	world = (t_world *)param;
 	ft_putendl("expose called");
+	mlx_put_image_to_window(world->canvas->mlx, world->canvas->win,
+			world->canvas->next_img, 0, 0);
 	return (0);
 }
 

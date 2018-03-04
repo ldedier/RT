@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/03/02 21:23:58 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/03/03 19:16:58 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,17 @@ static t_color		freeret(t_color c, t_hit **hit)
 static int			shadowhit(t_world *world, t_hit *hit, t_line *sray)
 {
 	t_hit	*shit;
+	int		ret;
 
 	sray->v = normalize(newvector(hit->point, world->lights[0].o));
 	sray->o = translate_vec(hit->point, sray->v, EPSILON);
 	if ((shit = trace(*sray, world->objlist)) &&
 			magnitude(newvector(sray->o, shit->point)) <
 			magnitude(newvector(hit->point, world->lights[0].o)))
-		return (1);
-	return (0);
+		ret = 1;
+	ret = 0;
+	free(shit);
+	return (ret);
 }
 
 t_color				render_pixel(t_world *world, t_pixel pix)
@@ -95,9 +98,3 @@ t_color				render_pixel(t_world *world, t_pixel pix)
 	}
 	return (freeret(BACKGROUND_COLOR, &hit));
 }
-/*
-**if (illu + AMBIENT_LIGHT > 1.0)
-**	return (freeret(interpole_color(1.0 - (illu + AMBIENT_LIGHT - 1.0) /
-**	(world->lights[0].intensity + AMBIENT_LIGHT - 1.0), interpole_color(SHINE,
-**	hit->obj.c, WHITE_COLOR), hit->obj.c), &hit));
-*/

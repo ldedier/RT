@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/03/02 21:23:57 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/03/04 02:17:34 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 
 # define NLIGHTS 1
 # define AMBIENT_LIGHT 0.07
-# define PHONG 15.0
+# define PHONG 20.0
 # define EPSILON 0.00000001
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
