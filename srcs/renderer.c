@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 05:59:15 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/01 08:23:03 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce)
 	t_hit			*hit;
 	t_line			*srays[MAX_LIGHTS];
 	t_shadowsfree	aux;
+	t_color			reflect_c;
 	double			fog;
 
 	if ((hit = trace(ray, world->objlist)))
@@ -75,20 +76,21 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce)
 		castshadows(world, hit, srays);
 		aux = (t_shadowsfree){.srays = srays, .nlights = world->nlights};
 		if (bounce < MAX_BOUNCE)
-			return (freeret(interpole_color(0.5,ray_color(newray(translate_vec(
-										hit->point, hit->bounce, EPSILON),
-									hit->bounce), world, bounce + 1),
+		{
+			reflect_c = ray_color(newray(translate_vec(hit->point, hit->bounce,
+							EPSILON), hit->bounce), world, bounce + 1);
+			return (freeret(interpole_color(hit->obj.reflect,
 							interpole_color(fog, illuminate(world, hit, srays),
-								world->fog.color)), &hit, &aux));
+								world->fog.color), reflect_c), &hit, &aux));
+		}
 		else
 			return (freeret(interpole_color(fog, illuminate(world, hit, srays),
 							world->fog.color), &hit, &aux));
-
 	}
 	return (freeret(world->fog.color, &hit, NULL));
 }
 
-t_color				render_pixel(t_world *world, t_pixel pix)
+t_color				render_pixel(t_world *world, t_pixel pix) // param paint_fast
 {
 	t_point3d	point;
 	t_color		ret;

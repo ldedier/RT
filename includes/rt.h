@@ -6,18 +6,18 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 06:13:29 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/01 09:02:39 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//TODO	reflexion
-//TODO	directional light
+//DONE	reflexion
+//DONE	directional light
 //TODO	perturbation
 //TODO	negative object
 //TODO	antialiasing / other filters
 //TODO	cartoon shading
 //TODO	low resolution when moving camera
-//TODO	mr bean
+//DONE	mr bean
 
 #ifndef RT_H
 # define RT_H
@@ -34,8 +34,8 @@
 # include <pthread.h>
 # define NTHREADS 8
 
-# define HRES 600
-# define VRES 400
+# define HRES 160
+# define VRES 120
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
@@ -182,6 +182,10 @@ typedef struct			s_object
 	t_point3d			s;
 	t_point3d			r;
 	t_color				c;
+	double				shine;
+	double				reflect;
+	double				refract;
+	double				transp;
 }						t_object;
 
 typedef struct			s_auxcone
@@ -228,8 +232,10 @@ typedef struct			s_hit
 typedef struct			s_light
 {
 	t_point3d			o;
+	t_point3d			v;
 	t_color				c;
 	double				intensity;
+	double				angle;
 	char				type;
 }						t_light;
 
@@ -329,7 +335,7 @@ void					paint_threaded(t_world *world);
 t_color					render_pixel(t_world *world, t_pixel pix);
 void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
 t_hit					*trace(t_line line, t_objlist *objlist);
-void					castshadows(t_world *w, t_hit *h, t_line **l);
+void					castshadows(t_world *w, t_hit *h, t_line **rays);
 t_color					illuminate(t_world *world, t_hit *hit, t_line **srays);
 
 /*

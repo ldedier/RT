@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 05:59:16 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/01 08:53:44 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static t_illum	getillum(t_world *world, t_hit *hit, t_line **srays)
 		if (srays[i])
 		{
 			light = world->lights[i];
-			if (light.type == 's')
+			if (light.type != 'd')
 				light.intensity = 1.0 /
 					sqrt(magnitude(newvector(hit->point, light.o)));
 			newillu = dotprod(hit->normal, srays[i]->v) *
@@ -73,7 +73,7 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_line **srays, t_color lc)
 	shine.in = 0;
 	i = -1;
 	while (++i < world->nlights)
-		if (srays[i] && world->lights[i].type == 's')
+		if (srays[i] && world->lights[i].type != 'd')
 		{
 			light = world->lights[i];
 			light.intensity = magnitude(newvector(hit->point, light.o));

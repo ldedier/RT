@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 23:52:56 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 06:18:58 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/01 09:02:43 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ int		parse_sphere(char *line, t_object *rsphere)
 		return (0);
 	rsphere->s.x = fabs(rsphere->s.x);
 	rsphere->c = get_color(color);
+	rsphere->shine = 30;
+	rsphere->reflect = 0.1;
+	rsphere->refract = 0.4;
+	rsphere->transp = 0;
 	return (1);
 }
 
@@ -46,6 +50,10 @@ int		parse_plane(char *line, t_object *rplane)
 		return (0);
 	rplane->c = get_color(color);
 	rplane->r = normalize(n);
+	rplane->shine = 100;
+	rplane->reflect = 0;
+	rplane->refract = 0.2;
+	rplane->transp = 0.6;
 	return (1);
 }
 
@@ -67,6 +75,10 @@ int		parse_cone(char *line, t_object *rcone)
 		return (0);
 	rcone->c = get_color(color);
 	rcone->r = normalize(v);
+	rcone->shine = 30;
+	rcone->reflect = 1;
+	rcone->refract = 0.4;
+	rcone->transp = 0;
 	return (1);
 }
 
@@ -88,6 +100,10 @@ int		parse_cylinder(char *line, t_object *rcyl)
 		return (0);
 	rcyl->c = get_color(color);
 	rcyl->r = normalize(v);
+	rcyl->shine = 0;
+	rcyl->reflect = 0;
+	rcyl->refract = 0.7;
+	rcyl->transp = 1;
 	return (1);
 }
 
@@ -103,5 +119,7 @@ int		parse_light(char *line, t_light *rlight)
 		return (0);
 	rlight->c = get_color(color);
 	rlight->type = 's';
+	rlight->v = (t_point3d){.x = 0, .y = 1, .z = 0};
+	rlight->angle = 0.8;
 	return (1);
 }
