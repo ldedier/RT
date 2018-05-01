@@ -3,65 +3,127 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/12/07 00:32:26 by lcavalle          #+#    #+#              #
-#    Updated: 2018/03/03 19:03:43 by lcavalle         ###   ########.fr        #
+#    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
+#    Updated: 2018/05/01 03:39:56 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = rtv1
-FLAGS = -Wall -Wextra -Werror
-SRCDIR = src
-OBJDIR = obj
-HEADDIR = headers
-SOURCES :=	$(SRCDIR)/colors.c \
-			$(SRCDIR)/input.c \
-			$(SRCDIR)/intersections.c \
-			$(SRCDIR)/normals.c \
-			$(SRCDIR)/obj_list.c \
-			$(SRCDIR)/paint_threaded.c \
-			$(SRCDIR)/populate_world.c \
-			$(SRCDIR)/renderer.c \
-			$(SRCDIR)/rt.c \
-			$(SRCDIR)/tracer.c \
-			$(SRCDIR)/transforms.c \
-			$(SRCDIR)/vectors.c \
-			$(SRCDIR)/world_maker.c
-HEADS :=	$(HEADDIR)/rt.h
-OBJ = $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-INCLUDES = -I libft -I lmlx -I headers
-LIBS = -L libft/ -lft -L minilibx_macos/ -lmlx -lpthread
-FRAMEWORKS = -framework OpenGL -framework AppKit
+NAME	= rt
 
-all: $(NAME)
+CC		= gcc -g
 
-$(NAME): lib $(OBJ)
-	@gcc -o $(NAME) $(OBJ) $(LIBS) $(FRAMEWORKS)
-	@echo "Linking complete!! :D"
-lib: 
-	@echo "compiling libft"
-	@make -C libft/
-	@echo "libft compiled"
-	@echo "compiling minilibx"
-	@make -C minilibx_macos/
-	@echo "minilibx compiled"
+PWD = \"$(shell pwd)\"
 
-$(OBJ): $(OBJDIR)/%.o: $(SRCDIR)/%.c $(HEADS)
-	@mkdir -p $(@D)
-	gcc $(FLAGS) $(INCLUDES) -c $< -o $@
+OK_COLOR = \x1b[32;01m
+EOC = \033[0m
+
+DEBUG ?= 0
+
+ifeq ($(DEBUG), 1)
+	CFLAGS += -DDEBUG -fsanitize=address
+else
+	CFLAGS += -Ofast
+endif
+
+SRCDIR   = srcs
+OBJDIR   = objs
+BINDIR   = .
+INCLUDESDIR = includes
+
+LIBFTDIR = libft
+LIBFT_INCLUDEDIR = includes
+
+LIBMATDIR = libmat
+LIBMAT_INCLUDEDIR = includes
+
+LIBSDL2DIR = SDL2-2.0.8
+LIBSDL2_INCLUDEDIR = include
+LIBSDL2_LIBDIR = build/.libs
+
+SRCS_NO_PREFIX = camera_rotations.c\
+				 colors.c\
+				 debug.c\
+				 input.c\
+				 intersections.c\
+				 lights.c\
+				 normals.c\
+				 obj_list.c\
+				 paint_threaded.c\
+				 parse_objects.c\
+				 parse_settings.c\
+				 parser.c\
+				 populate_world.c\
+				 renderer.c\
+				 rotations.c\
+				 rt.c\
+				 shadows.c\
+				 tracer.c\
+				 translations.c\
+				 vectors.c\
+				 vectors2.c\
+				 world_maker.c\
+				 loop.c\
+				 events.c\
+				 process.c \
+				 world_init.c 
+
+INCLUDES_NO_PREFIX = rt.h
+
+SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
+OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
+INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
+
+LIBSDL2 = ./$(LIBSDL2DIR)/$(LIBSDL2_LIBDIR)/libSDL2-2.0.0.dylib
+
+INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
+	  -I $(LIBMATDIR)/$(LIBMAT_INCLUDEDIR) \
+	  -I $(LIBSDL2DIR)/$(LIBSDL2_INCLUDEDIR)
+
+CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror $(INC)
+
+LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
+		 -L $(LIBSDL2DIR)/$(LIBSDL2_LIBDIR) -lsdl2
+
+opti:
+	@make -j all
+
+all: $(BINDIR)/$(NAME)
+
+debug:
+	@make -j all DEBUG=1
+
+$(LIBSDL2):
+	@cd $(LIBSDL2DIR);./configure
+	@echo "$(OK_COLOR)$(NAME) SDL2 configured with success !$(EOC)"
+	@make -C $(LIBSDL2DIR)
+	@echo "$(OK_COLOR)SDL2 linked with success !$(EOC)"
+
+$(BINDIR)/$(NAME): $(OBJECTS) $(LIBSDL2)
+	@make -C $(LIBFTDIR)
+	@make -C $(LIBMATDIR)
+	$(CC) -o $@ $^ $(LFLAGS) -fsanitize=address
+	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
+	@install_name_tool -change /usr/local/lib/libSDL2-2.0.0.dylib \
+		$(LIBSDL2) $(NAME)
+	@echo $(NAME) > .gitignore
+	@echo $(OBJECTS) >> .gitignore
+
+$(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
-	@echo "removing $(NAME) objectct files"
-	@rm -f $(OBJ)
-	@echo "$(NAME) object files removed"
-	@make -C libft/ clean
-	@make -C minilibx_macos/ clean
+	@make clean -C $(LIBFTDIR)
+	@make clean -C $(LIBMATDIR)
+	@rm -f $(OBJECTS)
 
-fclean:	clean
-	@echo "cleaning $(NAME)"
+fclean: clean
 	@rm -f $(NAME)
-	@make -C libft/ fclean
-	@make -C minilibx_macos/ clean
+	@make fclean -C $(LIBFTDIR)
+	@make fclean -C $(LIBMATDIR)
+	@make clean -C $(LIBSDL2DIR)
 
-re:	fclean all
+re: fclean opti
+
+.PHONY: all clean fclean re
