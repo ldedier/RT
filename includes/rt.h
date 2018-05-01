@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 04:15:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/01 05:59:07 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 
 # define NTHREADS 8
 
-# define HRES 160
-# define VRES 120
+# define HRES 600
+# define VRES 400
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
@@ -230,9 +230,10 @@ typedef struct			s_hit
 
 typedef struct			s_light
 {
-	double				intensity;
 	t_point3d			o;
 	t_color				c;
+	double				intensity;
+	char				type;
 }						t_light;
 
 typedef struct			s_illum

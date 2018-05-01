@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 23:52:56 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/04/24 19:13:24 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/01 05:59:08 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ int		parse_light(char *line, t_light *rlight)
 		!(read_hex(&line, &color)))
 		return (0);
 	rlight->c = get_color(color);
+	rlight->type = 'd';
 	return (1);
 }
