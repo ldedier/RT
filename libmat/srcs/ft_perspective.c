@@ -6,13 +6,13 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 23:58:47 by ldedier           #+#    #+#             */
-/*   Updated: 2018/03/30 22:00:21 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/01 05:03:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmat.h"
 
-t_mat4	ft_mat4_perspective(t_camera cam)
+t_mat4	ft_mat4_perspective(t_camera_l cam)
 {
 	t_mat4 res;
 	float right;

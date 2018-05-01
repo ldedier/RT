@@ -102,7 +102,7 @@ t_mat4	ft_mat4_rotate(float alpha, float beta, float gamma)
 	return (ft_mat4_mult(ft_mat4_mult(mat_x, mat_y),mat_z));
 }
 
-t_mat4	ft_mat4_rotate_vec(t_vec3 vec)
+t_mat4	ft_mat4_rotate_vec(t_point3d vec)
 {
 	t_mat4 mat_x;
 	t_mat4 mat_y;

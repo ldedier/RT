@@ -12,7 +12,7 @@
 
 #include "libmat.h"
 
-t_mat4	ft_mat4_translate_vec(t_vec3 vec)
+t_mat4	ft_mat4_translate_vec(t_point3d vec)
 {
 	t_mat4 mat;
 

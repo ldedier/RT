@@ -12,7 +12,7 @@
 
 #include "libmat.h"
 
-t_mat4	ft_mat4_model_view_matrix_vec(t_vec3 translate, t_vec3 rotate, t_vec3 scale)
+t_mat4	ft_mat4_model_view_matrix_vec(t_point3d translate, t_point3d rotate, t_point3d scale)
 {
 	return ft_mat4_mult(ft_mat4_translate_vec(translate), ft_mat4_mult(ft_mat4_rotate_vec(rotate), ft_mat4_scale_vec(scale)));
 }

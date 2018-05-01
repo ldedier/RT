@@ -12,7 +12,7 @@
 
 #include "libmat.h"
 
-t_mat4	ft_mat4_view(t_vec3 x_axis, t_vec3 y_axis, t_vec3 z_axis, t_vec3 cam_pos)
+t_mat4	ft_mat4_view(t_point3d x_axis, t_point3d y_axis, t_point3d z_axis, t_point3d cam_pos)
 {
 	t_mat4 res;
 
@@ -39,7 +39,7 @@ t_mat4	ft_mat4_view(t_vec3 x_axis, t_vec3 y_axis, t_vec3 z_axis, t_vec3 cam_pos)
 	return (res);
 }
 
-t_mat4	ft_mat4_orientation(t_vec3 x_axis, t_vec3 y_axis, t_vec3 z_axis)
+t_mat4	ft_mat4_orientation(t_point3d x_axis, t_point3d y_axis, t_point3d z_axis)
 {
 	t_mat4 res;
 
@@ -70,23 +70,23 @@ t_mat4	ft_mat4_orientation(t_vec3 x_axis, t_vec3 y_axis, t_vec3 z_axis)
 
 
 
-t_mat4	ft_mat4_look_at(t_vec3 cam_pos, t_vec3 target_pos, t_vec3 up_axis)
+t_mat4	ft_mat4_look_at(t_point3d cam_pos, t_point3d target_pos, t_point3d up_axis)
 {
 
-	t_vec3	forward;
-	t_vec3	left;
-	t_vec3	up;
+	t_point3d	forward;
+	t_point3d	left;
+	t_point3d	up;
 	t_mat4	res;
 
-	forward = ft_vec3_cmp(cam_pos, target_pos);
+	forward = ft_point3d_cmp(cam_pos, target_pos);
 
-	ft_vec3_normalize(&forward);
+	ft_point3d_normalize(&forward);
 
 
-	left = ft_vec3_cross_product(up_axis, forward);
-	ft_vec3_normalize(&left);
+	left = ft_point3d_cross_product(up_axis, forward);
+	ft_point3d_normalize(&left);
 
-	up = ft_vec3_cross_product(forward, left);
+	up = ft_point3d_cross_product(forward, left);
 
 	res = ft_mat4_eye();
 	res.as_mat[0] = left.x;
@@ -111,12 +111,12 @@ t_mat4	ft_mat4_look_at(t_vec3 cam_pos, t_vec3 target_pos, t_vec3 up_axis)
 }
 
 
-t_mat4	ft_mat4_look_fps(t_vec3 cam_pos, float yaw, float pitch)
+t_mat4	ft_mat4_look_fps(t_point3d cam_pos, float yaw, float pitch)
 {
 
-	t_vec3	forward;
-	t_vec3	left;
-	t_vec3	up;
+	t_point3d	forward;
+	t_point3d	left;
+	t_point3d	up;
 	t_mat4	res;
 
 	float cosPitch = cos(pitch);
