@@ -12,17 +12,17 @@
 
 #include "libmat.h"
 
-float	ft_vec3_get_norm(t_vec3 vec)
+float	ft_point3d_get_norm(t_point3d vec)
 {
 	return (sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z));
 }
 
-void	ft_vec3_normalize(t_vec3 *vec)
+void	ft_point3d_normalize(t_point3d *vec)
 {
 	float norm;
 	float invnorm;
 
-	norm = ft_vec3_get_norm(*vec);
+	norm = ft_point3d_get_norm(*vec);
 	if (norm != 0)
 	{
 		invnorm = 1 / norm;

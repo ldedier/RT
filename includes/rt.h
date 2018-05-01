@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 05:59:07 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/01 06:13:29 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 # include <errno.h>
 # include <math.h>
 # include "libft.h"
+# include "libmat.h"
 # include <fcntl.h>
 # include <unistd.h>
 # include <pthread.h>
-
 # define NTHREADS 8
 
 # define HRES 600
@@ -132,13 +132,6 @@ typedef struct			s_quadsol
 	double				t2;
 }						t_quadsol;
 
-typedef struct			s_point3d
-{
-	double				x;
-	double				y;
-	double				z;
-}						t_point3d;
-
 /*
 ** o = origin
 ** v = vector
@@ -179,6 +172,10 @@ typedef struct			s_color
 */
 typedef struct			s_object
 {
+	t_mat4				transform_pos;
+	t_mat4				transform_dir;
+	t_mat4				transform_dir_inv;
+	t_mat4				transform_pos_inv;
 	int					(*intersect_func)(t_line, struct s_object, t_point3d*);
 	t_point3d			(*normal_func)(struct s_object, t_point3d);
 	t_point3d			o;
@@ -375,6 +372,13 @@ void					rotate_hor(t_camera *cam, double angle);
 void					rotate_ver(t_camera *cam, double angle);
 void					camera_reset(t_camera *cam);
 void					apply_rotation(t_camera *cam);
+
+/*
+** matrices
+*/
+
+void	ft_compute_matrix(t_object *object);
+void	ft_compute_matrices_list(t_objlist *objects);
 
 //DEBUG OJU CUIDOA BORRAR OSTIEeeeeS
 void print_list(t_objlist *lst);

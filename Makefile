@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/01 03:39:56 by ldedier          ###   ########.fr        #
+#    Updated: 2018/05/01 05:01:06 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 loop.c\
 				 events.c\
 				 process.c \
-				 world_init.c 
+				 world_init.c\
+				compute_matrix.c 
 
 INCLUDES_NO_PREFIX = rt.h
 

@@ -12,7 +12,7 @@
 
 #include "libmat.h"
 
-t_mat4	ft_enhance(t_vec3 vec)
+t_mat4	ft_enhance(t_point3d vec)
 {
 	t_mat4 mat;
 

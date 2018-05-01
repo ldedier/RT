@@ -36,7 +36,7 @@ void	ft_print_mat4(t_mat4 mat)
 	printf("\n");
 }
 
-void	ft_print_vec3(t_vec3 vec)
+void	ft_print_point3d(t_point3d vec)
 {
 		printf("x:%.2f\ny:%.2f\nz:%.2f\n\n", vec.x, vec.y, vec.z);
 }
