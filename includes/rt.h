@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 09:02:39 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/02 09:35:06 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 //TODO	negative object
 //TODO	antialiasing / other filters
 //TODO	cartoon shading
-//TODO	low resolution when moving camera
+//DONE	low resolution when moving camera
+//TODO	start rendering detailed scene when not moving, cancel if move again
+//TODO	fps counter
+//TODO	diffuse reflections/shine (randomize the bounce vector within an angle)
 //DONE	mr bean
 
 #ifndef RT_H
@@ -32,10 +35,13 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <pthread.h>
+
 # define NTHREADS 8
 
-# define HRES 160
-# define VRES 120
+# define FAST_HRES 160
+# define FAST_VRES 120
+# define HRES 1600
+# define VRES 1200
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
@@ -332,11 +338,13 @@ t_color					scale_color(t_color c, double t);
 */
 void					ft_loop(t_world *world);
 void					paint_threaded(t_world *world);
-t_color					render_pixel(t_world *world, t_pixel pix);
+void					paint_threaded_fast(t_world *world);
+void					fill_canvas(t_world *world);
+t_color					render_pixel(t_world *world, t_pixel pix, int fast);
 void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
 t_hit					*trace(t_line line, t_objlist *objlist);
 void					castshadows(t_world *w, t_hit *h, t_line **rays);
-t_color					illuminate(t_world *world, t_hit *hit, t_line **srays);
+t_color					illuminate(t_world *world, t_hit *hit, t_line **srays, int fast);
 
 /*
 ** intersections

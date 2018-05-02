@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 01:01:52 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/04/29 05:38:21 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/02 09:35:18 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int					intersect_sphere(t_line line, t_object obj,
 	double		t;
 	double		radic;
 
-	(*hitpoint) = translate_vec(line.o, line.v, -EPSILON);
+//	(*hitpoint) = translate_vec(line.o, line.v, -EPSILON);
 	tmpvec = newvector(obj.o, line.o);
 	equa = (t_quadratic){.a = 1, .b = dotprod(tmpvec, line.v),
 		.c = dotprod(tmpvec, tmpvec) - obj.s.x * obj.s.x};

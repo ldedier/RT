@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 23:52:56 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 09:02:43 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/02 00:38:13 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int		parse_light(char *line, t_light *rlight)
 		!(read_hex(&line, &color)))
 		return (0);
 	rlight->c = get_color(color);
-	rlight->type = 's';
+	rlight->type = 'p';
 	rlight->v = (t_point3d){.x = 0, .y = 1, .z = 0};
 	rlight->angle = 0.8;
 	return (1);

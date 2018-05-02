@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 08:53:44 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/02 09:35:08 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_line **srays, t_color lc)
 	return (shine);
 }
 
-t_color			illuminate(t_world *world, t_hit *hit, t_line **srays)
+t_color			illuminate(t_world *world, t_hit *hit, t_line **srays, int fast)
 {
 	t_illum	illu;
 	t_illum	shine;
@@ -95,6 +95,8 @@ t_color			illuminate(t_world *world, t_hit *hit, t_line **srays)
 	illu = getillum(world, hit, srays);
 	lightcol = interpole_color(illu.in, BLACK_COLOR, interpole_color(
 				getwhiteratio(illu.color, 0.3, 1), illu.color, hit->obj.c));
+	if (fast)
+		return (lightcol);
 	shine = getshine(world, hit, srays, lightcol);
 	return (interpole_color(shine.in, lightcol, shine.color));
 }

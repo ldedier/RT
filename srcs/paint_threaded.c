@@ -6,12 +6,23 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 03:25:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/02 09:35:12 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
+void		fill_canvas(t_world *world)
+{
+	if (!(world->canvas->texture = SDL_CreateTextureFromSurface(world->
+					canvas->renderer, world->canvas->surface))) // ???
+		exit(1);
+	SDL_FillRect(world->canvas->surface, NULL, 0x00FF00);
+	SDL_RenderCopy(world->canvas->renderer, world->canvas->texture, NULL,
+			&(world->canvas->screen));
+	SDL_RenderPresent(world->canvas->renderer);
+}
+/*
 static void	*render_thr(void *thpar)
 {
 	t_world		*world;
@@ -26,7 +37,7 @@ static void	*render_thr(void *thpar)
 		p.y = p_y;
 		while (p.y < p_y + world->canvas->win_size.y / NTHREADS)
 		{
-			paint_pixel(p, render_pixel(world, p), world->canvas);
+			paint_pixel(p, render_pixel(world, p, 0), world->canvas);
 			p.y++;
 		}
 		p.x++;
@@ -34,17 +45,18 @@ static void	*render_thr(void *thpar)
 	free(thpar);
 	return (NULL);
 }
-
+*/
 void		paint_threaded(t_world *world)
 {
-	pthread_t	ids[NTHREADS];
-	t_thr_par	*tpar;
+//	pthread_t	ids[NTHREADS];
+//	t_thr_par	*tpar;
 	int			p_y;
 	int			i;
 
 	i = -1;
 	p_y = 0;
-	while (++i < NTHREADS)
+	paint_threaded_fast(world);
+/*	while (++i < NTHREADS)
 	{
 		if (!(tpar = malloc(sizeof(t_thr_par))))
 			exit(0);
@@ -57,11 +69,5 @@ void		paint_threaded(t_world *world)
 	while (--i >= 0)
 		if (pthread_join(ids[i], NULL))
 			exit(0);
-		if (!(world->canvas->texture = SDL_CreateTextureFromSurface(world->
-				canvas->renderer, world->canvas->surface)))
-			exit(1);
-	SDL_FillRect(world->canvas->surface, NULL, 0x00FF00);
-	SDL_RenderCopy(world->canvas->renderer, world->canvas->texture, NULL,
-			&(world->canvas->screen));
-	SDL_RenderPresent(world->canvas->renderer);
+	fill_canvas(world);*/
 }

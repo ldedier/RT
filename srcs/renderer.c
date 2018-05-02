@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 08:23:03 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/02 09:35:14 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static t_color		freeret(t_color c, t_hit **hit, t_shadowsfree *aux)
 	return (c);
 }
 
-static t_color		ray_color(t_line ray, t_world *world, int bounce)
+static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 {
 	t_hit			*hit;
 	t_line			*srays[MAX_LIGHTS];
@@ -71,31 +71,37 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce)
 
 	if ((hit = trace(ray, world->objlist)))
 	{
-	fog = magnitude(newvector(hit->point, world->cam->o)) * world->fog.in;
+	//FIRST OPTION FOR GOING FAST. NO ILLUMINATION, ONLY PLAIN OBJECTS COLORS
+//		if (fast)
+//			return (freeret(hit->obj.c, &hit, NULL));
+		fog = magnitude(newvector(hit->point, world->cam->o)) * world->fog.in;
 		fog = fog > 1.0 ? 1.0 : fog;
 		castshadows(world, hit, srays);
 		aux = (t_shadowsfree){.srays = srays, .nlights = world->nlights};
-		if (bounce < MAX_BOUNCE)
+		//SECOND OPTION FOR GOING FAST: PASS "fast" TO illuminate(), AND SKIP
+		//ONLY PHONG, BUT STILL LIGHTS
+		if (!fast && bounce < MAX_BOUNCE)
 		{
 			reflect_c = ray_color(newray(translate_vec(hit->point, hit->bounce,
-							EPSILON), hit->bounce), world, bounce + 1);
+							EPSILON), hit->bounce), world, bounce + 1, 0);
 			return (freeret(interpole_color(hit->obj.reflect,
-							interpole_color(fog, illuminate(world, hit, srays),
+							interpole_color(fog, illuminate(world, hit, srays, fast),
 								world->fog.color), reflect_c), &hit, &aux));
 		}
 		else
-			return (freeret(interpole_color(fog, illuminate(world, hit, srays),
+			return (freeret(interpole_color(fog, illuminate(world, hit, srays, fast),
 							world->fog.color), &hit, &aux));
 	}
 	return (freeret(world->fog.color, &hit, NULL));
 }
 
-t_color				render_pixel(t_world *world, t_pixel pix) // param paint_fast
+t_color				render_pixel(t_world *world, t_pixel pix, int fast)
 {
 	t_point3d	point;
 	t_color		ret;
 
 	point = screen2world(pix, world);
-	ret = ray_color(newray(point, newvector(world->cam->o, point)), world, 0);
+	ret = ray_color(newray(point, newvector(world->cam->o, point)),
+			world, 0, fast);
 	return (ret);
 }
