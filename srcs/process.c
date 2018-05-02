@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:28:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/01 04:18:10 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/01 18:53:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,22 @@ void    ft_process(t_world *e)
 	if (e->keys.key_space)
 		e->cam->o = translate_vec(e->cam->o, e->cam->up, e->cam->speed);
 
-/*
 	if (e->keys.key_1)
 		e->selected_object->o.z += e->cam->speed;
 	if (e->keys.key_2)
 		e->selected_object->o.z -= e->cam->speed;
 	if (e->keys.key_o)
 	{
-		e->selected_object->scale.x += e->cam->speed;
-		e->selected_object->scale.y += e->cam->speed;
-		e->selected_object->scale.z += e->cam->speed;
+		e->selected_object->s.x += e->cam->speed;
+		e->selected_object->s.y += e->cam->speed;
+		e->selected_object->s.z += e->cam->speed;
 	}
 	if (e->keys.key_p)
 	{
-		e->selected_object->scale.x -= e->cam->speed;
-		e->selected_object->scale.y -= e->cam->speed;
-		e->selected_object->scale.z -= e->cam->speed;
+		e->selected_object->s.x -= e->cam->speed;
+		e->selected_object->s.y -= e->cam->speed;
+		e->selected_object->s.z -= e->cam->speed;
 	}
-*/
 	if (e->keys.key_7)
 		e->cam->rotation.z += M_PI / 16;
 	if (e->keys.key_8)
@@ -63,10 +61,9 @@ void    ft_process(t_world *e)
 		e->cam->rotation.x += M_PI / 16;
 	if (e->keys.key_5)
 		e->cam->rotation.x -= M_PI / 16;
-/*	
 	if (e->keys.key_e)
-		e->selected_object->rotation.x += M_PI / 16;
+		e->selected_object->r.z += M_PI / 16;
 	if (e->keys.key_q)
-		e->selected_object->rotation.x -= M_PI / 16;
-*/
+		e->selected_object->r.z -= M_PI / 16;
+	ft_compute_matrices_list(e->objlist);
 }

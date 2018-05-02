@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/04/30 23:58:05 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/02 18:16:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,13 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce)
 		castshadows(world, hit, srays);
 		aux = (t_shadowsfree){.srays = srays, .nlights = world->nlights};
 		if (bounce < MAX_BOUNCE)
+		{
 			return (freeret(interpole_color(0.5,ray_color(newray(translate_vec(
 										hit->point, hit->bounce, EPSILON),
 									hit->bounce), world, bounce + 1),
 							interpole_color(fog, illuminate(world, hit, srays),
 								world->fog.color)), &hit, &aux));
+		}
 		else
 			return (freeret(interpole_color(fog, illuminate(world, hit, srays),
 							world->fog.color), &hit, &aux));

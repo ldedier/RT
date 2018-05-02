@@ -1,40 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_enhance.c                                       :+:      :+:    :+:   */
+/*   objects.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/27 00:45:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/03/27 00:48:08 by ldedier          ###   ########.fr       */
+/*   Created: 2018/04/05 21:04:53 by ldedier           #+#    #+#             */
+/*   Updated: 2018/05/02 19:05:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libmat.h"
+#ifndef FT_OBJECTS_H
+# define FT_OBJECTS_H
 
-t_mat4	ft_enhance(t_point3d vec)
+typedef struct		s_sphere
 {
-	t_mat4 mat;
+	double			radius;
+}					t_sphere;
 
-	mat = (double *)malloc(sizeof(double) * 16);
-	mat[0] = vec.x;
-	mat[1] = 0;
-	mat[2] = 0;
-	mat[3] = 0;
+typedef struct		s_cone
+{
+	double			angle;
+}					t_cone;
 
-	mat[4] = 0;
-	mat[5] = vec.y;
-	mat[6] = 0;
-	mat[7] = 0;
+typedef struct		s_plane
+{
+}					t_plane;
 
-	mat[8] = 0;
-	mat[9] = 0;
-	mat[10] = vec.z;
-	mat[11] = 0;
-
-	mat[12] = 0;
-	mat[13] = 0;
-	mat[14] = 0;
-	mat[15] = 1;
-	return(mat);
-}
+typedef struct		s_cylinder
+{
+	double			radius;
+}					t_cylinder;
+#endif

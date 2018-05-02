@@ -38,7 +38,7 @@ t_mat4	ft_mat4_translate_vec(t_point3d vec)
 	return(mat);
 }
 
-t_mat4	ft_mat4_translate(float x, float y, float z)
+t_mat4	ft_mat4_translate(double x, double y, double z)
 {
 	t_mat4 mat;
 

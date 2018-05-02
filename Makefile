@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/01 05:01:06 by ldedier          ###   ########.fr        #
+#    Updated: 2018/05/01 20:07:39 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 world_init.c\
 				compute_matrix.c 
 
-INCLUDES_NO_PREFIX = rt.h
+INCLUDES_NO_PREFIX = rt.h objects.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
 OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))

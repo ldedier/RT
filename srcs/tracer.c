@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 05:59:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/02 18:14:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,47 +34,127 @@ t_hit				*retfree(int r, t_hit **hit)
 	return (*hit);
 }
 
-void				ft_transform_line(t_line *line, t_object object)
+void				ft_transform_line(t_line *line, t_object object, t_line t)
 {
-//	ft_print_mat4(object.transform_pos_inv);
-	line->o = ft_point3d_mat4_mult(line->o, object.transform_pos_inv);
-	line->v = normalize(ft_point3d_mat4_mult(line->v,
+	line->o = ft_point3d_mat4_mult(t.o, object.transform_pos_inv);
+	line->v = normalize(ft_point3d_mat4_mult(t.v,
 				object.transform_dir_inv));
 }
 
 void				ft_transform_hit_back(t_hit *hit)
 {
-	hit->point = ft_point3d_mat4_mult(hit->point, hit->obj.transform_pos);
-	hit->normal = ft_point3d_mat4_mult(hit->normal, hit->obj.transform_dir);
+	t_hit tmp;
+
+	tmp = *hit;
+	hit->point = ft_point3d_mat4_mult(tmp.point, tmp.obj.transform_pos);
+	hit->normal = normalize(ft_point3d_mat4_mult(tmp.normal, tmp.obj.transform_dir));
 }
 
 t_hit				*trace(t_line line, t_objlist *objlist)
 {
-	t_point3d	newhit;
+	t_hit		newhit;
 	t_object	obj;
 	t_hit		*hit;
-	
+	//static int k;	
 	hit = malloc(sizeof(t_hit));
-	hit->point = translate_vec(line.o, line.v, -EPSILON);
+	hit->t = -1;
+	t_line tmp = line;
 	while (objlist)
 	{
 		obj = *(objlist->object);
-//		ft_transform_line(&line, obj);
-		if (obj.intersect_func(line, obj, &newhit) &&
-				((dotprod(newvector(line.o, newhit), line.v) > 0 &&
-				magnitude(newvector(line.o, newhit)) <
-				magnitude(newvector(line.o, hit->point))) ||
-				dotprod(newvector(line.o, hit->point), line.v) < 0))
+		line = tmp;
+		ft_transform_line(&line, obj, tmp);
+		if (obj.intersect_func(line, obj, &newhit) && (newhit.t < hit->t || (hit->t == -1 && newhit.t > 0)))
 		{
-			hit->point = newhit;
-			hit->obj = *(objlist->object);
-			hit->normal = hit->obj.normal_func(hit->obj, hit->point);
-		//	ft_transform_hit_back(hit);
-			hit->bounce = reflection(hit->normal, line.v);
+				newhit.obj = obj;
+				ft_transform_hit_back(&newhit);
+			//	if (bounce == 1000)
+			//	{
+			//		//	printf("OKOKOK %d\n", k++);
+			//	}
+				*hit = newhit;
+				//hit->normal = hit->obj.normal_func(hit->obj, hit->point);
+				hit->bounce = reflection(hit->normal, tmp.v);
 		}
 		objlist = objlist->next;
 	}
-	if (dotprod(newvector(line.o, hit->point), line.v) > 0)
+	if (hit->t > 0)
+	{
+		/*
+		if (bounce == 1000)
+		{
+			
+					printf("normal \n");
+					ft_print_point3d(hit->normal);
+					printf("point \n");
+					ft_print_point3d(hit->point);
+					printf("t: %f\n", hit->t);
+					printf("bounce \n");
+					ft_print_point3d(hit->bounce);
+					printf("\n\n\n");
+					printf("line o\n");
+					ft_print_point3d(line.o);
+					printf("line v\n");
+					ft_print_point3d(line.v);
+
+					printf("line o tmp\n");
+					ft_print_point3d(tmp.o);
+					printf("line v tmp\n");
+					ft_print_point3d(tmp.v);
+		}
+		*/
 		return (retfree(1, &hit));
+	}
 	return (retfree(0, &hit));
 }
+
+/*
+t_hit				*trace(t_line line, t_objlist *objlist, int bounce)
+{
+	t_hit		newhit;
+	t_object	obj;
+	t_hit		*hit;
+	t_line	tmp;
+	int intersect;
+
+	intersect = 0;
+	hit = malloc(sizeof(t_hit));
+	hit->point = translate_vec(line.o, line.v, -EPSILON);
+	hit->t = -1;
+	tmp = line;
+	while (objlist)
+	{
+		obj = *(objlist->object);
+	//	ft_transform_line(&line, obj, tmp);
+		if (obj.intersect_func(line, obj, &newhit) && (newhit.t < hit->t || (
+				newhit.t > 0 &&  hit->t < 0)))
+		{
+
+			intersect = 1;
+			*hit = newhit;
+		//	hit->point = newhit;
+			hit->obj = *(objlist->object);
+		//	hit->normal = hit->obj.normal_func(hit->obj, hit->point);
+//			printf("AVANT LA TRANSFO\n");
+//			ft_print_point3d(hit->point);
+		//	ft_transform_hit_back(hit);
+		//
+		if (bounce > 0)
+			ft_print_point3d(hit->normal);
+			hit->bounce = reflection(hit->normal, tmp.v);
+		//			printf("APRES LA TRANSFO\n");
+//			ft_print_point3d(hit->point);
+//			exit(0);
+		}
+		objlist = objlist->next;
+	}
+	if (intersect)
+	{
+		return (retfree(1, &hit));
+	}
+//	if (bounce > 0)
+//		printf("Pas d'intersection !\n");
+
+	return (retfree(0, &hit));
+}
+*/

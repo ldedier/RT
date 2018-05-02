@@ -38,7 +38,7 @@ t_mat4	ft_mat4_scale_vec(t_point3d vec)
 	return(mat);
 }
 
-t_mat4	ft_mat4_scale(float zoom)
+t_mat4	ft_mat4_scale(double zoom)
 {
 	t_mat4 mat;
 

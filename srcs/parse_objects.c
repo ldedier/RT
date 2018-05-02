@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 23:52:56 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/04/24 19:13:24 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/02 19:04:35 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@ int		parse_sphere(char *line, t_object *rsphere)
 	int			color;
 
 	rsphere->intersect_func = intersect_sphere;
-	rsphere->normal_func = normal_sphere;
+//	rsphere->normal_func = normal_sphere;
 	if (!(read_double(&line, &(rsphere->o.x))) ||
 		!(read_double(&line, &(rsphere->o.y))) ||
 		!(read_double(&line, &(rsphere->o.z))) ||
 		!(read_double(&line, &(rsphere->s.x))) ||
+		!(read_double(&line, &(rsphere->s.y))) ||
+		!(read_double(&line, &(rsphere->s.z))) ||
+		!(read_double(&line, &(rsphere->object_union.sphere.radius))) ||
 		!(read_hex(&line, &(color))))
 		return (0);
 	rsphere->s.x = fabs(rsphere->s.x);
@@ -35,7 +38,7 @@ int		parse_plane(char *line, t_object *rplane)
 	int			color;
 
 	rplane->intersect_func = intersect_plane;
-	rplane->normal_func = normal_plane;
+//	rplane->normal_func = normal_plane;
 	if (!(read_double(&line, &(rplane->o.x))) ||
 		!(read_double(&line, &(rplane->o.y))) ||
 		!(read_double(&line, &(rplane->o.z))) ||
@@ -55,7 +58,7 @@ int		parse_cone(char *line, t_object *rcone)
 	int			color;
 
 	rcone->intersect_func = intersect_cone;
-	rcone->normal_func = normal_cone;
+//	rcone->normal_func = normal_cone;
 	if (!(read_double(&line, &(rcone->o.x))) ||
 		!(read_double(&line, &(rcone->o.y))) ||
 		!(read_double(&line, &(rcone->o.z))) ||
@@ -76,7 +79,7 @@ int		parse_cylinder(char *line, t_object *rcyl)
 	int			color;
 
 	rcyl->intersect_func = intersect_cylinder;
-	rcyl->normal_func = normal_cylinder;
+//	rcyl->normal_func = normal_cylinder;
 	if (!(read_double(&line, &(rcyl->o.x))) ||
 		!(read_double(&line, &(rcyl->o.y))) ||
 		!(read_double(&line, &(rcyl->o.z))) ||

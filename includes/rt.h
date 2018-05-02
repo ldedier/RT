@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 05:25:48 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/02 18:58:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <errno.h>
 # include <math.h>
 # include "libft.h"
+# include "objects.h"
 # include "libmat.h"
 # include <fcntl.h>
 # include <unistd.h>
@@ -64,7 +65,7 @@
 # define AMBIENT_LIGHT 0.17
 # define AMBIENT_LIGHT_COL get_color(0xFFFFFF)
 # define PHONG 30.0
-# define EPSILON 0.00000000001
+# define EPSILON 0.00001
 # define SPEED 0.1
 # define MAX_BOUNCE 2
 
@@ -73,6 +74,7 @@
 # define WHITE_COLOR (t_color){.r=255,.g=255,.b=255,.col=0XFFFFFF}
 # define BACKGROUND_COLOR get_color(0x222222)
 
+typedef struct	s_hit t_hit;
 
 typedef struct	s_keys
 {
@@ -170,19 +172,42 @@ typedef struct			s_color
 ** the scanhit function is what determines what the object is, as we
 ** only need the object to calculate the intersection with the ray
 */
+
+typedef union			s_object_union
+{
+	t_sphere			sphere;
+	t_cone				cone;
+	t_plane				plane;
+	t_cylinder			cylinder;
+}						t_object_union;
+
 typedef struct			s_object
 {
 	t_mat4				transform_pos;
 	t_mat4				transform_dir;
 	t_mat4				transform_dir_inv;
 	t_mat4				transform_pos_inv;
-	int					(*intersect_func)(t_line, struct s_object, t_point3d*);
-	t_point3d			(*normal_func)(struct s_object, t_point3d);
+	t_object_union		object_union;
+	int					(*intersect_func)(t_line, struct s_object, t_hit*);
+//	t_point3d			(*normal_func)(struct s_object, t_point3d);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
 	t_color				c;
+	double				shine;
+	double				reflect;
+	double				refract;
+	double				transp;
 }						t_object;
+
+struct			s_hit
+{
+	t_object			obj;
+	t_point3d			point;
+	t_point3d			normal;
+	t_point3d			bounce;
+	double				t;
+};
 
 typedef struct			s_auxcone
 {
@@ -217,14 +242,6 @@ typedef struct			s_objlist
 	struct s_objlist	*next;
 }						t_objlist;
 
-typedef struct			s_hit
-{
-	t_object			obj;
-	t_point3d			point;
-	t_point3d			normal;
-	t_point3d			bounce;
-}						t_hit;
-
 typedef struct			s_light
 {
 	double				intensity;
@@ -245,6 +262,7 @@ typedef struct			s_world
 	t_camera			*cam;
 	t_keys				keys;
 	t_objlist			*objlist;
+	t_object			*selected_object;
 	t_illum				ambient;
 	t_illum				fog;
 	int					nlights;
@@ -335,13 +353,13 @@ t_color					illuminate(t_world *world, t_hit *hit, t_line **srays);
 ** intersections
 */
 int						intersect_sphere(t_line line, t_object obj,
-		t_point3d *hit);
+		t_hit *hit);
 int						intersect_cone(t_line line, t_object obj,
-		t_point3d *hit);
+		t_hit *hit);
 int						intersect_plane(t_line line, t_object obj,
-		t_point3d *hit);
+		t_hit *hit);
 int						intersect_cylinder(t_line line, t_object obj,
-		t_point3d *hit);
+		t_hit *hit);
 /*
 **normals
 */

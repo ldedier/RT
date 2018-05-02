@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 03:25:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/01 23:50:58 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ static void	*render_thr(void *thpar)
 
 void		paint_threaded(t_world *world)
 {
+//	static int j = 0;
 	pthread_t	ids[NTHREADS];
 	t_thr_par	*tpar;
 	int			p_y;
 	int			i;
+//	printf("paint_threaded %d\n", j++);
 
 	i = -1;
 	p_y = 0;
