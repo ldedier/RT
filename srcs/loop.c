@@ -6,11 +6,22 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/01 03:26:51 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/03 15:52:18 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+static int	any_key_pressed(t_world *world)
+{
+	int i;
+
+	i = -1;
+	while (++i < nkeys)
+		if (world->keys[i])
+			return (1);
+	return (0);
+}
 
 void	ft_loop(t_world *e)
 {
@@ -24,9 +35,9 @@ void	ft_loop(t_world *e)
 	{
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_KEYDOWN)
-				ft_keys_down(e, event);
+				ft_keys_event(e, event, 1);
 			if (event.type == SDL_KEYUP)
-				ft_keys_up(e, event);
+				ft_keys_event(e, event, 0);
 			if (event.type == SDL_MOUSEMOTION)
 				ft_mouse_motion(e, event);
 			if (event.window.event == SDL_WINDOWEVENT_CLOSE ||
@@ -34,7 +45,7 @@ void	ft_loop(t_world *e)
 					 && event.type == SDL_KEYDOWN))
 				end = 1;
 		}
-		if(1) // KEY PRESSED
+		if(any_key_pressed(e))
 		{
 			ft_process(e);
 			paint_threaded(e);

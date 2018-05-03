@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/01 03:49:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/03 15:40:35 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,11 @@
 
 void	ft_init_keys(t_world *e)
 {
-	e->keys.up = 0;
-	e->keys.down = 0;
-	e->keys.left = 0;
-	e->keys.right = 0;
-	e->keys.key_o = 0;
-	e->keys.key_p = 0;
-	e->keys.key_7 = 0;
-	e->keys.key_8 = 0;
-	e->keys.key_5 = 0;
-	e->keys.key_4 = 0;
-	e->keys.key_2 = 0;
-	e->keys.key_1 = 0;
-	e->keys.key_w = 0;
-	e->keys.key_a = 0;
-	e->keys.key_s = 0;
-	e->keys.key_d = 0;
-	e->keys.key_e = 0;
-	e->keys.key_q = 0;
-	e->keys.key_ctrl = 0;
-	e->keys.key_space = 0;
-	e->keys.key_shift = 0;
+	int i;
+
+	i = -1;
+	while (++i < nkeys)
+		e->keys[i] = 0;
 }
 
 void			set_defaults(t_world *world)

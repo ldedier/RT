@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/02 09:35:06 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/03 15:52:10 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 //TODO	antialiasing / other filters
 //TODO	cartoon shading
 //DONE	low resolution when moving camera
+//DONE	paint_threaded only when a key is pressed, and not always
 //TODO	start rendering detailed scene when not moving, cancel if move again
 //TODO	fps counter
+//TODO	progress bar
 //TODO	diffuse reflections/shine (randomize the bounce vector within an angle)
 //DONE	mr bean
 
@@ -80,29 +82,30 @@
 # define BACKGROUND_COLOR get_color(0x222222)
 
 
-typedef struct	s_keys
+typedef enum	e_keys
 {
-	int			up;
-	int			down;
-	int			left;
-	int			right;
-	int			key_o;
-	int			key_p;
-	int			key_7;
-	int			key_8;
-	int			key_5;
-	int			key_4;
-	int			key_2;
-	int			key_1;
-	int			key_w;
-	int			key_a;
-	int			key_s;
-	int			key_d;
-	int			key_e;
-	int			key_q;
-	int			key_ctrl;
-	int			key_space;
-	int			key_shift;
+				up,
+				down,
+				left,
+				right,
+				key_o,
+				key_p,
+				key_7,
+				key_8,
+				key_5,
+				key_4,
+				key_2,
+				key_1,
+				key_w,
+				key_a,
+				key_s,
+				key_d,
+				key_e,
+				key_q,
+				key_ctrl,
+				key_space,
+				key_shift,
+				nkeys
 }				t_keys;
 
 typedef struct			s_pixel
@@ -256,7 +259,7 @@ typedef struct			s_world
 	t_light				lights[MAX_LIGHTS];
 	t_canvas			*canvas;
 	t_camera			*cam;
-	t_keys				keys;
+	int					keys[nkeys];
 	t_objlist			*objlist;
 	t_illum				ambient;
 	t_illum				fog;
@@ -281,8 +284,7 @@ typedef struct			s_shadowsfree
 int						draw_frame(void *param);
 int						key_press(int keycode, void *param);
 int						end(t_world *world);
-void					ft_keys_down(t_world *world, SDL_Event event);
-void					ft_keys_up(t_world *world, SDL_Event event);
+void					ft_keys_event(t_world *world, SDL_Event event, int down);
 void					ft_process(t_world *world);
 void					ft_mouse_motion(t_world *world, SDL_Event event);
 
