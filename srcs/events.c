@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 22:25:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/03 15:52:14 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/04 19:06:33 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press)
 		e->keys[key_s] = press;
 	else if (event.key.keysym.sym == SDLK_d)
 		e->keys[key_d] = press;
-
 	else if (event.key.keysym.sym == SDLK_q)
 		e->keys[key_q] = press;
 	else if (event.key.keysym.sym == SDLK_e)
@@ -51,11 +50,12 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press)
 		e->keys[key_o] = press;
 	else if (event.key.keysym.sym == SDLK_p)
 		e->keys[key_p] = press;
-
 	else if (event.key.keysym.sym == SDLK_LCTRL)
 		e->keys[key_ctrl] = press;
 	else if (event.key.keysym.sym == SDLK_SPACE)
 		e->keys[key_space] = press;
+	else if (event.key.keysym.sym == SDLK_RETURN)
+		e->keys[key_enter] = press;
 	else if (event.key.keysym.sym == SDLK_LSHIFT)
 	{
 		if (press == 1)
@@ -69,4 +69,5 @@ void	ft_mouse_motion(t_world *e, SDL_Event event)
 	e->cam->rotation.x = e->cam->rotation.x - (event.motion.xrel) * M_PI / 1024.0;
 	e->cam->rotation.y = ft_fclamp(-M_PI / 2, e->cam->rotation.y - (event.motion.yrel) * M_PI / 1024.0, M_PI / 2);
 	apply_rotation(e->cam);
+	e->keys[mouse_move] = 1;
 }

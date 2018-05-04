@@ -6,68 +6,114 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/02 09:35:12 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/04 19:06:39 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void		fill_canvas(t_world *world)
-{
-	if (!(world->canvas->texture = SDL_CreateTextureFromSurface(world->
-					canvas->renderer, world->canvas->surface))) // ???
-		exit(1);
-	SDL_FillRect(world->canvas->surface, NULL, 0x00FF00);
-	SDL_RenderCopy(world->canvas->renderer, world->canvas->texture, NULL,
-			&(world->canvas->screen));
-	SDL_RenderPresent(world->canvas->renderer);
-}
-/*
 static void	*render_thr(void *thpar)
 {
 	t_world		*world;
 	t_pixel		p;
 	int			p_y;
+	int			selfid;
 
 	world = ((t_thr_par *)thpar)->world;
+	selfid = ((t_thr_par *)thpar)->id;
+	printf("##thread started: %i\n",selfid);
 	p.x = 0;
 	p_y = ((t_thr_par*)thpar)->p_y;
-	while (p.x < world->canvas->win_size.x)
+	while (world->cancel_render == 0 && p.x < world->canvas->win_size.x)
 	{
 		p.y = p_y;
-		while (p.y < p_y + world->canvas->win_size.y / NTHREADS)
+		while (world->cancel_render == 0 &&
+				p.y < p_y + world->canvas->win_size.y / NTHREADS)
 		{
+			//	printf("=====%i\n",world->cancel_render);
 			paint_pixel(p, render_pixel(world, p, 0), world->canvas);
+			world->progress++;
+			//update_progress_bar(world);
 			p.y++;
 		}
 		p.x++;
 	}
 	free(thpar);
+//	if (world->cancel_render) printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAi\n\n");
+	world->thr_state[selfid] = 2;
 	return (NULL);
 }
-*/
+
+static int	working_count(t_world *world)
+{
+	int i;
+	int	count;
+
+	i = -1;
+	count = 0;
+//	printf("---------------------\n");
+	while (++i < NTHREADS)
+	{
+//		printf("thread %i: state %i\n", i, world->thr_state[i]);
+		if (world->thr_state[i] != 0)
+			count++;
+	}
+	return (count);
+}
+
+void	join_threads(t_world *world)
+{
+	int	i;
+
+	i = -1;
+//	printf("cancel_render: %i, working: %i\n", world->cancel_render, working_count(world));
+//	printf("in da join_threasd");
+	while (working_count(world) > 0)
+	{
+		update_progress_bar(world);
+		if (world->thr_state[++i] == 2 || 
+				(world->thr_state[i] == 1 && world->cancel_render == 1))
+		{
+			printf("joining thread %i of %i\n",i , NTHREADS);
+			if (pthread_join(world->threads[i], NULL))
+			{
+				printf("cannot join thread %i!!!! exit...\n", i);
+				exit(0);
+			}
+			world->thr_state[i] = 0;
+		}
+//		printf("holi");
+		if (i  == NTHREADS)
+			i = -1;
+		if (get_input(world))
+			end(world);
+	}
+//	printf("out of da while");
+	if (world->cancel_render == 1) printf("all threads cancelled\n");
+	world->progress = 0;
+	world->cancel_render = 0;
+}
+
 void		paint_threaded(t_world *world)
 {
-//	pthread_t	ids[NTHREADS];
-//	t_thr_par	*tpar;
+	t_thr_par	*tpar;
 	int			p_y;
 	int			i;
 
 	i = -1;
 	p_y = 0;
-	paint_threaded_fast(world);
-/*	while (++i < NTHREADS)
+	while (++i < NTHREADS)
 	{
 		if (!(tpar = malloc(sizeof(t_thr_par))))
 			exit(0);
 		tpar->world = world;
 		tpar->p_y = p_y;
-		if (pthread_create(&(ids[i]), NULL, render_thr, (void*)tpar))
+		tpar->id = i;
+		world->thr_state[i] = 1;
+		if (pthread_create(&(world->threads[i]), NULL, render_thr, (void*)tpar))
 			exit(0);
 		p_y += world->canvas->win_size.y / NTHREADS;
 	}
-	while (--i >= 0)
-		if (pthread_join(ids[i], NULL))
-			exit(0);
-	fill_canvas(world);*/
+	join_threads(world);
+	fill_canvas(world);
 }

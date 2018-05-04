@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:36:26 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 03:45:00 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/03 23:51:56 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int					new_world(char *file, t_world **world)
 		return (-3);
 	}
 	(*world)->canvas = canvas;
-
 	set_defaults(*world);
 	if ((rw_err = read_world(*world, file)))
 	{

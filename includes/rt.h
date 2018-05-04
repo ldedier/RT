@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/03 15:52:10 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/04 19:06:31 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,14 @@
 //TODO	cartoon shading
 //DONE	low resolution when moving camera
 //DONE	paint_threaded only when a key is pressed, and not always
-//TODO	start rendering detailed scene when not moving, cancel if move again
+//DONE	paint threaded on enter press.
+//TODO	fix weird threading shiet when you keep enter pressed for a while (it works but i think it leaks)
 //TODO	fps counter
 //TODO	progress bar
+//TODO	better distribution of pixels in threads, to avoid very expensive zones
 //TODO	diffuse reflections/shine (randomize the bounce vector within an angle)
 //DONE	mr bean
+//TODO	(?)start rendering detailed scene when not moving, cancel if move again
 
 #ifndef RT_H
 # define RT_H
@@ -44,6 +47,7 @@
 # define FAST_VRES 120
 # define HRES 1600
 # define VRES 1200
+# define PROGRESS_BAR_HEIGHT 100
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
@@ -105,6 +109,8 @@ typedef enum	e_keys
 				key_ctrl,
 				key_space,
 				key_shift,
+				mouse_move,
+				key_enter,
 				nkeys
 }				t_keys;
 
@@ -120,9 +126,11 @@ typedef struct			s_canvas
 	SDL_Window			*window;
 	SDL_Texture			*texture;
 	SDL_Surface			*surface;
+	SDL_Rect			pb_rect;
 	SDL_Rect			screen;
 	t_pixel				win_size;
 	t_pixel				halved_win_size;
+	int					npixels;
 	double				ratio;
 
 }						t_canvas;
@@ -260,16 +268,21 @@ typedef struct			s_world
 	t_canvas			*canvas;
 	t_camera			*cam;
 	int					keys[nkeys];
+	pthread_t			threads[NTHREADS];
+	int					thr_state[NTHREADS];
 	t_objlist			*objlist;
 	t_illum				ambient;
 	t_illum				fog;
 	int					nlights;
+	int					progress;
+	int					cancel_render;
 }						t_world;
 
 typedef struct			s_thr_par
 {
 	t_world				*world;
 	int					p_y;
+	int					id;
 }						t_thr_par;
 
 typedef struct			s_shadowsfree
@@ -281,9 +294,11 @@ typedef struct			s_shadowsfree
 /*
 ** input
 */
+void					ft_loop(t_world *world);
 int						draw_frame(void *param);
 int						key_press(int keycode, void *param);
 int						end(t_world *world);
+int						get_input(t_world *e);
 void					ft_keys_event(t_world *world, SDL_Event event, int down);
 void					ft_process(t_world *world);
 void					ft_mouse_motion(t_world *world, SDL_Event event);
@@ -338,15 +353,20 @@ t_color					scale_color(t_color c, double t);
 /*
 **render
 */
-void					ft_loop(t_world *world);
-void					paint_threaded(t_world *world);
-void					paint_threaded_fast(t_world *world);
-void					fill_canvas(t_world *world);
 t_color					render_pixel(t_world *world, t_pixel pix, int fast);
 void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
 t_hit					*trace(t_line line, t_objlist *objlist);
 void					castshadows(t_world *w, t_hit *h, t_line **rays);
 t_color					illuminate(t_world *world, t_hit *hit, t_line **srays, int fast);
+
+/*
+**paint window
+*/
+void					paint_threaded_fast(t_world *world);
+void					fill_canvas(t_world *world);
+void					join_threads(t_world *world);
+void					paint_threaded(t_world *world);
+void					update_progress_bar(t_world *world);
 
 /*
 ** intersections

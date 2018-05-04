@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/03 15:40:35 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/04 19:06:37 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	ft_init_keys(t_world *e)
 
 void			set_defaults(t_world *world)
 {
+	int	i;
+
 	world->cam->o = CAMERA_POS;
 	world->cam->look = normalize(CAMERA_LOOK);
 	world->cam->up = normalize(CAMERA_UP);
@@ -37,6 +39,13 @@ void			set_defaults(t_world *world)
 	world->fog.in = 0.0;
 	world->fog.color = BACKGROUND_COLOR;
 	world->cam->speed = SPEED;
+	world->progress = 0;
+	world->cancel_render = 0;
+	world->canvas->npixels = world->canvas->win_size.x *
+		world->canvas->win_size.y;
+	i = -1;
+	while (++i < NTHREADS)
+		world->thr_state[i] = 0;
 	ft_init_keys(world);
 }
 
@@ -56,6 +65,14 @@ t_canvas		*new_canvas(void)
 	return (canvas);
 }
 
+static void	set_pb_rect(t_canvas *canvas)
+{
+	canvas->pb_rect.x = 0;
+	canvas->pb_rect.y = canvas->win_size.y;
+	canvas->pb_rect.w = 0;
+	canvas->pb_rect.h = PROGRESS_BAR_HEIGHT;
+}
+
 int			ft_init_all(t_canvas *canvas)
 {
 	canvas->screen.x = 0;
@@ -63,13 +80,12 @@ int			ft_init_all(t_canvas *canvas)
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		return (0);
 	canvas->screen.w = canvas->win_size.x;
-	canvas->screen.h = canvas->win_size.y;
+	canvas->screen.h = canvas->win_size.y + PROGRESS_BAR_HEIGHT;
 	if (!(canvas->window = SDL_CreateWindow("rt",
-		canvas->screen.x, canvas->screen.y, canvas->screen.w, canvas->screen.h, 0)))
+		canvas->screen.x, canvas->screen.y,
+		canvas->screen.w, canvas->screen.h, 0)))
 			return (0);
 	if(!(canvas->renderer = SDL_CreateRenderer(canvas->window, -1, 0)))
-		return (0);
-	if (!(canvas->surface = SDL_CreateRGBSurface(0, canvas->screen.w, canvas->screen.h, 32, 0, 0, 0, 0)))
 		return (0);
 	if (SDL_RenderSetLogicalSize(canvas->renderer,
 				canvas->screen.w, canvas->screen.h) < 0)
@@ -79,5 +95,6 @@ int			ft_init_all(t_canvas *canvas)
 	if (!(canvas->surface = SDL_CreateRGBSurface(0,
 			canvas->screen.w, canvas->screen.h, 32, 0, 0, 0, 0)))
 		return (0);
+	set_pb_rect(canvas);
 	return (1);
 }

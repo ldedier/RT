@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 08:29:48 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 04:10:28 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/04 16:19:41 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			end(t_world *world)
 //	free(world->canvas->mlx);
 	free(world->cam);
 	free(world->canvas);
-	del_lst(&(world->objlist));
+//	del_lst(&(world->objlist));
 	free(world);
 	exit(0);
 	return (0);

@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/02 09:04:34 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/05/04 12:07:48 by lcavalle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 process.c \
 				 world_init.c\
 				 compute_matrix.c \
-				 paint_fast.c
+				 paint_fast.c \
+				 paint_canvas.c
 
 INCLUDES_NO_PREFIX = rt.h
 
