@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 22:25:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/04 19:06:33 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/07 19:10:04 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press)
 		e->keys[key_ctrl] = press;
 	else if (event.key.keysym.sym == SDLK_SPACE)
 		e->keys[key_space] = press;
-	else if (event.key.keysym.sym == SDLK_RETURN)
+	else if (event.key.keysym.sym == SDLK_RETURN && e->progress == 0)
 		e->keys[key_enter] = press;
 	else if (event.key.keysym.sym == SDLK_LSHIFT)
 	{

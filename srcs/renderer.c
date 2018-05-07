@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/03 15:52:16 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/07 19:10:02 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,30 +67,26 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 	t_line			*srays[MAX_LIGHTS];
 	t_shadowsfree	aux;
 	t_color			reflect_c;
+	t_color			fogged_c;
 	double			fog;
 
 	if ((hit = trace(ray, world->objlist)))
 	{
-	//FIRST OPTION FOR GOING FAST. NO ILLUMINATION, ONLY PLAIN OBJECTS COLORS
-//		if (fast)
-//			return (freeret(hit->obj.c, &hit, NULL));
 		fog = magnitude(newvector(hit->point, world->cam->o)) * world->fog.in;
 		fog = fog > 1.0 ? 1.0 : fog;
 		castshadows(world, hit, srays);
 		aux = (t_shadowsfree){.srays = srays, .nlights = world->nlights};
-		//SECOND OPTION FOR GOING FAST: PASS "fast" TO illuminate(), AND SKIP
-		//ONLY PHONG, BUT STILL LIGHTS
-		if (!fast && bounce < MAX_BOUNCE)
-		{
-			reflect_c = ray_color(newray(translate_vec(hit->point, hit->bounce,
-							EPSILON), hit->bounce), world, bounce + 1, 0);
-			return (freeret(interpole_color(hit->obj.reflect,
-							interpole_color(fog, illuminate(world, hit, srays, fast),
-								world->fog.color), reflect_c), &hit, &aux));
-		}
-		else
-			return (freeret(interpole_color(fog, illuminate(world, hit, srays, fast),
-							world->fog.color), &hit, &aux));
+		fogged_c = interpole_color(fog, illuminate(world, hit, srays, fast),
+				world->fog.color);
+			if (!fast && bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON)
+			{
+				reflect_c = ray_color(newray(translate_vec(hit->point,
+								hit->bounce, EPSILON), hit->bounce),
+						world, bounce + 1, 0);
+				return (freeret(interpole_color(hit->obj.reflect,
+								fogged_c, reflect_c), &hit, &aux));
+			}
+		return (freeret(fogged_c, &hit, &aux));
 	}
 	return (freeret(world->fog.color, &hit, NULL));
 }

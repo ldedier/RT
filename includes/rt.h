@@ -6,24 +6,25 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/04 19:06:31 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/07 19:10:08 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //DONE	reflexion
 //DONE	directional light
-//TODO	perturbation
+//DONE	nimin valors atribut (si reflection es 0 no cal calcular...)
+//TODO	perturbation (wave, random, spikes...)
 //TODO	negative object
 //TODO	antialiasing / other filters
-//TODO	cartoon shading
+//TODO	cartoon shading: if radic ~= 0, its a border.
+//		then just check illum < val for shadow
 //DONE	low resolution when moving camera
 //DONE	paint_threaded only when a key is pressed, and not always
 //DONE	paint threaded on enter press.
-//TODO	fix weird threading shiet when you keep enter pressed for a while (it works but i think it leaks)
+//DONE	fix enter detection (only push start threading)
 //TODO	fps counter
 //TODO	progress bar
 //TODO	better distribution of pixels in threads, to avoid very expensive zones
-//TODO	diffuse reflections/shine (randomize the bounce vector within an angle)
 //DONE	mr bean
 //TODO	(?)start rendering detailed scene when not moving, cancel if move again
 
@@ -337,10 +338,12 @@ t_point3d				newvector(t_point3d from, t_point3d to);
 double					dotprod(t_point3d v1, t_point3d v2);
 t_point3d				crossprod(t_point3d v1, t_point3d v2);
 double					magnitude(t_point3d v);
+t_point3d				reflection(t_point3d n, t_point3d v);
 t_point3d				normalize(t_point3d v);
 t_point3d				addvecs(t_point3d v1, t_point3d v2);
 double					proj(t_point3d v1, t_point3d v2);
 t_point3d				create_vec(double x, double y, double z);
+t_point3d				reflection(t_point3d n, t_point3d v);
 
 /*
 **colors 

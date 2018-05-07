@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/04 19:06:45 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/07 19:10:06 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int		get_input(t_world *e)
 			printf("INPUT PRESSED, CANCELING RENDERING\n");
 			join_threads(e);
 			if (e->keys[key_enter] == 1)
+			{
+				e->keys[key_enter] = 0;
 				paint_threaded(e);
+			}
 			else
 				paint_threaded_fast(e);
 		}
