@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:35:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/28 21:21:31 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 23:17:26 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int		ft_pf_d(t_pf *pf, va_list va, char c)
 	ft_add_padding_pre_standard(*pf, no_padding_bytes);
 	ft_add_prefix(*pf);
 	if (pf->var.integer < 0)
-		ft_putchar_buff('-');
+		ft_putchar_buff('-', pf->fd);
 	ft_add_padding_pre_zeros(*pf, no_padding_bytes);
 	ft_add_precision_base(*pf, 10);
 	if (!pf->precised_precision || pf->flags.precision || pf->var.integer)
-		ft_putnbr_max(ft_abs_max(pf->var.integer));
+		ft_putnbr_max(ft_abs_max(pf->var.integer), pf->fd);
 	ft_add_padding_post(*pf, no_padding_bytes);
 	return (1);
 }
@@ -49,7 +49,7 @@ int		ft_pf_u(t_pf *pf, va_list va, char c)
 	ft_add_padding_pre(*pf, no_padding_bytes);
 	ft_add_precision_base(*pf, 10);
 	if (!pf->precised_precision || pf->flags.precision || pf->var.integer)
-		ft_putnbr_max(pf->var.integer);
+		ft_putnbr_max(pf->var.integer, pf->fd);
 	ft_add_padding_post(*pf, no_padding_bytes);
 	return (1);
 }
@@ -66,7 +66,7 @@ int		ft_pf_c(t_pf *pf, va_list va, char c)
 		return (ft_pf_c_maj(pf, va, c));
 	pf->var.integer = va_arg(va, int);
 	ft_add_padding_pre(*pf, 1);
-	ft_putchar_buff(pf->var.integer);
+	ft_putchar_buff(pf->var.integer, pf->fd);
 	ft_add_padding_post(*pf, 1);
 	return (1);
 }

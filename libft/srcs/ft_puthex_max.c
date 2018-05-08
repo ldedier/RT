@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/28 18:54:49 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/06 21:15:19 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 22:57:35 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ static char	ft_get_char_from_index(int index, int maj)
 	}
 }
 
-void		ft_puthex_max(uintmax_t nb, int maj)
+void		ft_puthex_max(uintmax_t nb, int maj, int fd)
 {
 	if ((nb / 16) == 0)
-		ft_putchar_buff(ft_get_char_from_index(nb % 16, maj));
+		ft_putchar_buff(ft_get_char_from_index(nb % 16, maj), fd);
 	else
 	{
-		ft_puthex_max((uintmax_t)nb / (uintmax_t)16, maj);
-		ft_putchar_buff(ft_get_char_from_index(nb % 16, maj));
+		ft_puthex_max((uintmax_t)nb / (uintmax_t)16, maj, fd);
+		ft_putchar_buff(ft_get_char_from_index(nb % 16, maj), fd);
 	}
 }

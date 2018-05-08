@@ -6,25 +6,25 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:37:22 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/06 21:18:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 23:21:45 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putwstr(int *data)
+void	ft_putwstr(int *data, int fd)
 {
 	int i;
 
 	i = 0;
 	while (data[i])
 	{
-		ft_put_wchar(data[i]);
+		ft_put_wchar(data[i], fd);
 		i++;
 	}
 }
 
-void	ft_putwnstr(int *data, int precision)
+void	ft_putwnstr(int *data, int precision, int fd)
 {
 	int i;
 	int bytes_wrote;
@@ -37,7 +37,7 @@ void	ft_putwnstr(int *data, int precision)
 		len_towrite = ft_wchar_len(data[i]);
 		if (bytes_wrote + len_towrite <= precision)
 		{
-			ft_put_wchar(data[i]);
+			ft_put_wchar(data[i], fd);
 			bytes_wrote += len_towrite;
 		}
 		else
@@ -56,7 +56,7 @@ int		ft_pf_c_maj(t_pf *pf, va_list va, char c)
 			(len > MB_CUR_MAX && pf->var.integer >= 255))
 		return (-1);
 	ft_add_padding_pre(*pf, len);
-	ft_put_wchar(pf->var.integer);
+	ft_put_wchar(pf->var.integer, pf->fd);
 	ft_add_padding_post(*pf, len);
 	return (1);
 }

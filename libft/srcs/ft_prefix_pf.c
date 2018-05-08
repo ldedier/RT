@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:24:49 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/06 21:16:35 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 23:13:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	ft_add_prefix(t_pf pf)
 	if (pf.var.integer >= 0)
 	{
 		if (pf.flags.prefix == e_prefix_plus)
-			ft_putchar_buff('+');
+			ft_putchar_buff('+', pf.fd);
 		else if (pf.flags.prefix == e_prefix_blank)
-			ft_putchar_buff(' ');
+			ft_putchar_buff(' ', pf.fd);
 	}
 }

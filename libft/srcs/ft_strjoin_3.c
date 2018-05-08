@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_max.c                                    :+:      :+:    :+:   */
+/*   ft_strjoin_3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/28 16:42:01 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/08 22:58:39 by ldedier          ###   ########.fr       */
+/*   Created: 2018/05/08 17:27:19 by ldedier           #+#    #+#             */
+/*   Updated: 2018/05/08 17:27:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	ft_putnbr_max(uintmax_t nb, int fd)
+char	*ft_strjoin_3(char const *s1, char const *s2, char const *s3)
 {
-	if ((uintmax_t)((uintmax_t)nb / (uintmax_t)10) == 0)
-		ft_putchar_buff(nb % 10 + '0', fd);
-	else
-	{
-		ft_putnbr_max((uintmax_t)((uintmax_t)nb / (uintmax_t)10), fd);
-		ft_putchar_buff(nb % 10 + '0', fd);
-	}
+	char *res;
+
+	if (s1 == NULL || s2 == NULL || s3 == NULL)
+		return (NULL);
+	res = ft_strnew(ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1);
+	if (res == NULL)
+		return (NULL);
+	ft_strcat(res, s1);
+	ft_strcat(res, s2);
+	ft_strcat(res, s3);
+	return (res);
 }

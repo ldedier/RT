@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 01:01:52 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/02 18:57:12 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 00:37:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int					intersect_sphere(t_line line, t_object obj,
 	(void)obj;
 	equa = (t_quadratic){.a = dotprod(line.v, line.v), .b = 2 *
 		dotprod(line.o, line.v),
-		.c = dotprod(line.o, line.o) - (1 * 1)};
+		.c = dotprod(line.o, line.o) - (obj.object_union.sphere.radius * 
+				obj.object_union.sphere.radius)};
 	radic = (equa.b * equa.b) - (4 * equa.a * equa.c);
 	if (radic < 0.0)
 		return (0);
@@ -92,10 +93,12 @@ int					intersect_cone(t_line line, t_object obj,
 int					intersect_plane(t_line line, t_object obj,
 		t_hit *hit)
 {
-
-	(void)line;
 	(void)obj;
-	(void)hit;
+	if (line.v.y < EPSILON && line.v.y > -EPSILON)
+		return (0);
+	hit->t = -line.o.y / line.v.y;
+	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
+	hit->normal = ft_new_vec3(0, -1, 0);
 	/*
 	double	den;
 	double	sol;

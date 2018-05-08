@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 05:06:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 07:44:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/07 22:46:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ static int	parse_line(char *line, t_world *world)
 			(line[0] == 'c' && parse_cone(line + 2, obj)))
 	{
 		add_obj(&(world->objlist), obj);
-		if (line[0] == 's')
-			world->selected_object = obj;
+		world->selected_object = obj;
 	}
 	else if (line[0] == 'l')
 	{

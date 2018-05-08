@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 23:50:58 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 22:13:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void		paint_threaded(t_world *world)
 		if (!(world->canvas->texture = SDL_CreateTextureFromSurface(world->
 				canvas->renderer, world->canvas->surface)))
 			exit(1);
-	SDL_FillRect(world->canvas->surface, NULL, 0x00FF00);
+//	SDL_FillRect(world->canvas->surface, NULL, 0x00FF00);
 	SDL_RenderCopy(world->canvas->renderer, world->canvas->texture, NULL,
 			&(world->canvas->screen));
 	SDL_RenderPresent(world->canvas->renderer);

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/02 18:58:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 18:43:53 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@
 # include <errno.h>
 # include <math.h>
 # include "libft.h"
-# include "objects.h"
 # include "libmat.h"
+# include "objects.h"
+# include "export.h"
 # include <fcntl.h>
 # include <unistd.h>
 # include <pthread.h>
@@ -345,7 +346,7 @@ void					ft_loop(t_world *world);
 void					paint_threaded(t_world *world);
 t_color					render_pixel(t_world *world, t_pixel pix);
 void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
-t_hit					*trace(t_line line, t_objlist *objlist);
+t_hit					*trace(t_line line, t_objlist *objlist, int bounce);
 void					castshadows(t_world *w, t_hit *h, t_line **l);
 t_color					illuminate(t_world *world, t_hit *hit, t_line **srays);
 
@@ -396,6 +397,12 @@ void					apply_rotation(t_camera *cam);
 
 void	ft_compute_matrix(t_object *object);
 void	ft_compute_matrices_list(t_objlist *objects);
+
+/*
+** export
+*/
+
+int					ft_export_rt(t_world *world, char *extension);
 
 //DEBUG OJU CUIDOA BORRAR OSTIEeeeeS
 void print_list(t_objlist *lst);

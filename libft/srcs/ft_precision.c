@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:15:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/06 21:17:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 23:15:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_add_precision_base(t_pf pf, int base)
 	nb_diff = pf.flags.precision - res;
 	while (nb_diff > 0)
 	{
-		ft_putchar_buff('0');
+		ft_putchar_buff('0', pf.fd);
 		nb_diff--;
 	}
 }
@@ -45,7 +45,7 @@ void	ft_add_precision_o(t_pf pf)
 	nb_diff = pf.flags.precision - res;
 	while (nb_diff > 0)
 	{
-		ft_putchar_buff('0');
+		ft_putchar_buff('0', pf.fd);
 		nb_diff--;
 	}
 }
@@ -66,7 +66,7 @@ void	ft_add_precision_base_u(t_pf pf, int base)
 	nb_diff = pf.flags.precision - res;
 	while (nb_diff > 0)
 	{
-		ft_putchar_buff('0');
+		ft_putchar_buff('0', pf.fd);
 		nb_diff--;
 	}
 }

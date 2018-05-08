@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_max.c                                    :+:      :+:    :+:   */
+/*   ft_print_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/28 16:42:01 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/08 22:58:39 by ldedier          ###   ########.fr       */
+/*   Created: 2018/05/07 22:32:34 by ldedier           #+#    #+#             */
+/*   Updated: 2018/05/08 23:28:38 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	ft_putnbr_max(uintmax_t nb, int fd)
+static int		ft_strlen_line(char *str)
 {
-	if ((uintmax_t)((uintmax_t)nb / (uintmax_t)10) == 0)
-		ft_putchar_buff(nb % 10 + '0', fd);
-	else
-	{
-		ft_putnbr_max((uintmax_t)((uintmax_t)nb / (uintmax_t)10), fd);
-		ft_putchar_buff(nb % 10 + '0', fd);
-	}
+	int i;
+
+	i = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	return (i);
+}
+
+void			ft_print_line(char *str)
+{
+	write(1, str, ft_strlen_line(str));
 }

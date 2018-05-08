@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 23:52:56 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/02 19:04:35 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/07 22:36:30 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,20 @@ int		parse_sphere(char *line, t_object *rsphere)
 
 int		parse_plane(char *line, t_object *rplane)
 {
-	t_point3d	n;
 	int			color;
 
 	rplane->intersect_func = intersect_plane;
 //	rplane->normal_func = normal_plane;
+	printf("PLAAAAAAAAAAANE\n");
 	if (!(read_double(&line, &(rplane->o.x))) ||
 		!(read_double(&line, &(rplane->o.y))) ||
 		!(read_double(&line, &(rplane->o.z))) ||
-		!(read_double(&line, &(n.x))) ||
-		!(read_double(&line, &(n.y))) ||
-		!(read_double(&line, &(n.z))) ||
 		!(read_hex(&line, &color)))
+	{
+		printf("PBPPBPBPB\n");
 		return (0);
+	}
 	rplane->c = get_color(color);
-	rplane->r = normalize(n);
 	return (1);
 }
 

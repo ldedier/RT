@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:39:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/07 22:48:58 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 22:55:47 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_2_bytes_len(unsigned char str[4], int value)
 	str[1] = 128 | (value & 63);
 }
 
-int		ft_put_wchar(int value)
+int		ft_put_wchar(int value, int fd)
 {
 	int				len;
 	unsigned char	str[4];
@@ -39,9 +39,9 @@ int		ft_put_wchar(int value)
 	if (len <= MB_CUR_MAX)
 	{
 		while (i < len && i < MB_CUR_MAX)
-			ft_putchar_buff(str[i++]);
+			ft_putchar_buff(str[i++], fd);
 	}
 	else
-		ft_putchar_buff(value);
+		ft_putchar_buff(value, fd);
 	return (0);
 }

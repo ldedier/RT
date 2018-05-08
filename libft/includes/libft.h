@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 18:21:30 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/01 02:32:13 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 17:26:30 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,7 @@ int					ft_patoi(char **str);
 unsigned int		ft_patoi_hex(char **str, int *scss);
 int					ft_isspace(int c);
 int					ft_onesign(int n);
+void				ft_print_line(char *str);
+char 				*ft_strjoin_3(char const *s1, char const *s2,
+					char const *s3);
 #endif

@@ -6,13 +6,13 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 17:17:50 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/27 20:58:55 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 23:01:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putstr_non_printable(char const *s, size_t n)
+void	ft_putstr_non_printable(char const *s, size_t n, int fd)
 {
 	int display;
 	int i;
@@ -22,9 +22,9 @@ void	ft_putstr_non_printable(char const *s, size_t n)
 	{
 		display = 0;
 		if (ft_isprint(s[i]))
-			ft_get_buffer(&(s[i]), 1, &display);
+			ft_get_buffer(&(s[i]), 1, &display, fd);
 		else
-			ft_get_buffer(".", 1, &display);
+			ft_get_buffer(".", 1, &display, fd);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/02 18:16:01 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 00:19:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce)
 	t_shadowsfree	aux;
 	double			fog;
 
-	if ((hit = trace(ray, world->objlist)))
+	if ((hit = trace(ray, world->objlist, bounce)))
 	{
 	fog = magnitude(newvector(hit->point, world->cam->o)) * world->fog.in;
 		fog = fog > 1.0 ? 1.0 : fog;
@@ -96,6 +96,10 @@ t_color				render_pixel(t_world *world, t_pixel pix)
 	t_color		ret;
 
 	point = screen2world(pix, world);
+	if (pix.x == HRES / 2 && pix.y == VRES / 2){
+		ret = ray_color(newray(point, newvector(world->cam->o, point)), world, 1000);
+		return get_color(0x00ff00);
+	}	
 	ret = ray_color(newray(point, newvector(world->cam->o, point)), world, 0);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/02 18:14:48 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 00:49:22 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,26 @@ t_hit				*retfree(int r, t_hit **hit)
 
 void				ft_transform_line(t_line *line, t_object object, t_line t)
 {
-	line->o = ft_point3d_mat4_mult(t.o, object.transform_pos_inv);
-	line->v = normalize(ft_point3d_mat4_mult(t.v,
+	(void)t;
+	line->o = ft_point3d_mat4_mult(line->o, object.transform_pos_inv);
+	line->v = normalize(ft_point3d_mat4_mult(line->v,
 				object.transform_dir_inv));
 }
 
 void				ft_transform_hit_back(t_hit *hit)
 {
 	t_hit tmp;
-
 	tmp = *hit;
 	hit->point = ft_point3d_mat4_mult(tmp.point, tmp.obj.transform_pos);
 	hit->normal = normalize(ft_point3d_mat4_mult(tmp.normal, tmp.obj.transform_dir));
 }
 
-t_hit				*trace(t_line line, t_objlist *objlist)
+t_hit				*trace(t_line line, t_objlist *objlist, int bounce)
 {
 	t_hit		newhit;
 	t_object	obj;
 	t_hit		*hit;
+	static int i = 0;
 	//static int k;	
 	hit = malloc(sizeof(t_hit));
 	hit->t = -1;
@@ -80,9 +81,12 @@ t_hit				*trace(t_line line, t_objlist *objlist)
 	}
 	if (hit->t > 0)
 	{
-		/*
 		if (bounce == 1000)
 		{
+			if(hit->obj.intersect_func == intersect_sphere)
+				printf("SPHERE %d\n", i++);
+			else
+				printf("PLANE %d\n", i++);
 			
 					printf("normal \n");
 					ft_print_point3d(hit->normal);
@@ -101,8 +105,10 @@ t_hit				*trace(t_line line, t_objlist *objlist)
 					ft_print_point3d(tmp.o);
 					printf("line v tmp\n");
 					ft_print_point3d(tmp.v);
+
+					printf("NORMAL\n");
+					ft_print_point3d(hit->normal);
 		}
-		*/
 		return (retfree(1, &hit));
 	}
 	return (retfree(0, &hit));
