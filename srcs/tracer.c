@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/08 00:49:22 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/09 19:51:13 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,19 @@ t_hit				*retfree(int r, t_hit **hit)
 	return (*hit);
 }
 
-void				ft_transform_line(t_line *line, t_object object, t_line t)
+t_line				ft_transform_line(t_object object, t_line t)
 {
-	(void)t;
-	line->o = ft_point3d_mat4_mult(line->o, object.transform_pos_inv);
-	line->v = normalize(ft_point3d_mat4_mult(line->v,
-				object.transform_dir_inv));
+	t_line line;
+
+	line.o = ft_point3d_mat4_mult(t.o, object.transform_pos_inv);
+	line.v = normalize(ft_point3d_mat4_mult(t.v, object.transform_dir_inv));
+	return line;
 }
 
 void				ft_transform_hit_back(t_hit *hit)
 {
 	t_hit tmp;
+
 	tmp = *hit;
 	hit->point = ft_point3d_mat4_mult(tmp.point, tmp.obj.transform_pos);
 	hit->normal = normalize(ft_point3d_mat4_mult(tmp.normal, tmp.obj.transform_dir));
@@ -63,18 +65,12 @@ t_hit				*trace(t_line line, t_objlist *objlist, int bounce)
 	while (objlist)
 	{
 		obj = *(objlist->object);
-		line = tmp;
-		ft_transform_line(&line, obj, tmp);
-		if (obj.intersect_func(line, obj, &newhit) && (newhit.t < hit->t || (hit->t == -1 && newhit.t > 0)))
+		line = ft_transform_line(obj, tmp);
+		if (obj.intersect_func(line, obj, &newhit) && (newhit.t > 0 && (newhit.t < hit->t || hit->t == -1)))
 		{
 				newhit.obj = obj;
 				ft_transform_hit_back(&newhit);
-			//	if (bounce == 1000)
-			//	{
-			//		//	printf("OKOKOK %d\n", k++);
-			//	}
 				*hit = newhit;
-				//hit->normal = hit->obj.normal_func(hit->obj, hit->point);
 				hit->bounce = reflection(hit->normal, tmp.v);
 		}
 		objlist = objlist->next;

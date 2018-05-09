@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 07:11:54 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/02/28 11:34:02 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/09 22:07:06 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,13 @@ t_point3d	normalize(t_point3d v)
 	double		mag;
 
 	mag = magnitude(v);
-	res.x = v.x / mag;
-	res.y = v.y / mag;
-	res.z = v.z / mag;
+	if (mag != 0)
+	{
+		res.x = v.x / mag;
+		res.y = v.y / mag;
+		res.z = v.z / mag;
+	}
+	else
+		res = v;
 	return (res);
 }

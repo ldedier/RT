@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 04:57:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/02 17:42:28 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/10 00:49:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_mat4  ft_mat4_inv_translate(t_mat4 scale)
 
 void	ft_compute_matrix(t_object *object)
 {
-	object->s = ft_new_vec3(1,1.3,1);
+//	object->s = ft_new_vec3(1,1,1);
 //	object->r = ft_new_vec3(0, 0, 0);
 
 	t_mat4 rotate = ft_mat4_mult(ft_mat4_rotate_x(object->r.x), ft_mat4_mult(ft_mat4_rotate_y(object->r.y), ft_mat4_rotate_z(object->r.z)));
@@ -51,12 +51,6 @@ void	ft_compute_matrix(t_object *object)
 	t_mat4 translate = ft_mat4_translate_vec(object->o);
 	// ft_printf("translate\n");
 	// ft_print_mat4(translate);
-	t_point3d vec;
-
-	vec = ft_new_vec3(1,1,1);
-	vec = ft_point3d_mat4_mult(vec, translate);
-
-	// ft_print_point3d(vec);
 	t_mat4 scale = ft_mat4_scale_vec(object->s);
 	// ft_printf("scale\n");
 	// ft_print_mat4(scale);

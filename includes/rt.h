@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/08 18:43:53 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/09 21:52:35 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,7 @@ typedef struct			s_world
 	t_illum				ambient;
 	t_illum				fog;
 	int					nlights;
+	int					can_export;
 }						t_world;
 
 typedef struct			s_thr_par

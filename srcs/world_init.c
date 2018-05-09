@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/01 03:49:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/09 18:26:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void			set_defaults(t_world *world)
 	world->fog.in = 0.0;
 	world->fog.color = BACKGROUND_COLOR;
 	world->cam->speed = SPEED;
+	world->can_export = 1;
 	ft_init_keys(world);
 }
 

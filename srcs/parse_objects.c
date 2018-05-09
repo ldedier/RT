@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 23:52:56 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/07 22:36:30 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/09 23:53:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int		parse_sphere(char *line, t_object *rsphere)
 		!(read_double(&line, &(rsphere->object_union.sphere.radius))) ||
 		!(read_hex(&line, &(color))))
 		return (0);
-	rsphere->s.x = fabs(rsphere->s.x);
 	rsphere->c = get_color(color);
 	return (1);
 }
@@ -38,15 +37,11 @@ int		parse_plane(char *line, t_object *rplane)
 
 	rplane->intersect_func = intersect_plane;
 //	rplane->normal_func = normal_plane;
-	printf("PLAAAAAAAAAAANE\n");
 	if (!(read_double(&line, &(rplane->o.x))) ||
 		!(read_double(&line, &(rplane->o.y))) ||
 		!(read_double(&line, &(rplane->o.z))) ||
 		!(read_hex(&line, &color)))
-	{
-		printf("PBPPBPBPB\n");
 		return (0);
-	}
 	rplane->c = get_color(color);
 	return (1);
 }
@@ -65,6 +60,9 @@ int		parse_cone(char *line, t_object *rcone)
 		!(read_double(&line, &(v.y))) ||
 		!(read_double(&line, &(v.z))) ||
 		!(read_double(&line, &(rcone->s.x))) ||
+		!(read_double(&line, &(rcone->s.y))) ||
+		!(read_double(&line, &(rcone->s.z))) ||
+		!(read_double(&line, &(rcone->object_union.cone.angle))) ||
 		!(read_hex(&line, &color)))
 		return (0);
 	rcone->c = get_color(color);
@@ -86,6 +84,9 @@ int		parse_cylinder(char *line, t_object *rcyl)
 		!(read_double(&line, &(v.y))) ||
 		!(read_double(&line, &(v.z))) ||
 		!(read_double(&line, &(rcyl->s.x))) ||
+		!(read_double(&line, &(rcyl->s.y))) ||
+		!(read_double(&line, &(rcyl->s.z))) ||
+		!(read_double(&line, &(rcyl->object_union.cylinder.radius))) ||
 		!(read_hex(&line, &color)))
 		return (0);
 	rcyl->c = get_color(color);
