@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 19:51:48 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/06 21:14:12 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 23:10:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		ft_pf_nothing(t_pf *pf, va_list va, char c)
 	(void)pf;
 	(void)va;
 	ft_add_padding_pre(*pf, 1);
-	ft_putchar_buff(c);
+	ft_putchar_buff(c, pf->fd);
 	ft_add_padding_post(*pf, 1);
 	return (1);
 }

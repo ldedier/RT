@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 05:06:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/04/24 15:05:48 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/07 22:46:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ static int	parse_line(char *line, t_world *world)
 			(line[0] == 'p' && parse_plane(line + 2, obj)) ||
 			(line[0] == 'y' && parse_cylinder(line + 2, obj)) ||
 			(line[0] == 'c' && parse_cone(line + 2, obj)))
+	{
 		add_obj(&(world->objlist), obj);
+		world->selected_object = obj;
+	}
 	else if (line[0] == 'l')
 	{
 		if (world->nlights >= MAX_LIGHTS ||

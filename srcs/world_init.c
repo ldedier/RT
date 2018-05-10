@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/04 19:06:37 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/10 21:37:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void			set_defaults(t_world *world)
 	i = -1;
 	while (++i < NTHREADS)
 		world->thr_state[i] = 0;
+	world->can_export = 1;
 	ft_init_keys(world);
 }
 

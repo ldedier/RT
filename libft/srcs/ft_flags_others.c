@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:34:24 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/06 21:18:58 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 23:23:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		ft_pf_percent(t_pf *pf, va_list va, char c)
 	(void)c;
 	(void)va;
 	ft_add_padding_pre(*pf, 1);
-	ft_putchar_buff('%');
+	ft_putchar_buff('%', pf->fd);
 	ft_add_padding_post(*pf, 1);
 	return (1);
 }

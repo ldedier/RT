@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 01:01:52 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/02 09:35:18 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/10 22:11:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,26 @@
 */
 
 int					intersect_sphere(t_line line, t_object obj,
-		t_point3d *hitpoint)
+		t_hit *hit)
 {
-	t_point3d	tmpvec;
 	t_quadratic	equa;
 	t_quadsol	sols;
-	double		t;
 	double		radic;
 
-//	(*hitpoint) = translate_vec(line.o, line.v, -EPSILON);
-	tmpvec = newvector(obj.o, line.o);
-	equa = (t_quadratic){.a = 1, .b = dotprod(tmpvec, line.v),
-		.c = dotprod(tmpvec, tmpvec) - obj.s.x * obj.s.x};
-	radic = equa.b * equa.b - equa.c;
+		equa = (t_quadratic){.a = dotprod(line.v, line.v), .b = 2 *
+		dotprod(line.o, line.v),
+		.c = dotprod(line.o, line.o) - (obj.object_union.sphere.radius * 
+				obj.object_union.sphere.radius)};
+	radic = (equa.b * equa.b) - (4 * equa.a * equa.c);
 	if (radic < 0.0)
 		return (0);
-	sols.t1 = -equa.b + sqrt(radic);
-	sols.t2 = -equa.b - sqrt(radic);
-	t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
-	(*hitpoint).x = line.o.x + line.v.x * t;
-	(*hitpoint).y = line.o.y + line.v.y * t;
-	(*hitpoint).z = line.o.z + line.v.z * t;
+	sols.t1 = (-equa.b + sqrt(radic)) / (2.0 * equa.a);
+	sols.t2 = (-equa.b - sqrt(radic)) / (2.0 * equa.a);
+	hit->t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
+	if (hit->t < 0)
+		return 0;
+	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
+	hit->normal = normalize(hit->point);
 	return (1);
 }
 
@@ -46,50 +45,57 @@ static t_auxcone	getauxcone(t_line line, t_object obj)
 {
 	t_auxcone	aux;
 
-	aux.dv = dotprod(line.v, obj.r);
-	aux.colo = newvector(obj.o, line.o);
-	aux.slvdv = scale(obj.r, aux.dv);
-	aux.slvdvv = newvector(aux.slvdv, line.v);
-	aux.colod = dotprod(aux.colo, obj.r);
-	aux.sdcolod = scale(obj.r, aux.colod);
-	aux.sdcolo2d = newvector(aux.sdcolod, aux.colo);
-	aux.sqcos = cos(obj.s.x) * cos(obj.s.x);
-	aux.sqsin = sin(obj.s.x) * sin(obj.s.x);
+	(void) line;
+	aux.sqcos = cos(obj.object_union.cone.angle) * 
+		cos(obj.object_union.cone.angle);
+	aux.sqsin = sin(obj.object_union.cone.angle) * 
+		sin(obj.object_union.cone.angle);
 	return (aux);
 }
 
 int					intersect_cone(t_line line, t_object obj,
-		t_point3d *hitpoint)
+		t_hit *hit)
 {
 	t_auxcone	aux;
 	t_quadratic	equa;
 	t_quadsol	sols;
-	double		t;
 	double		radic;
 
-	(*hitpoint) = translate_vec(line.o, line.v, -EPSILON);
 	aux = getauxcone(line, obj);
-	equa.a = dotprod(aux.slvdvv, aux.slvdvv) * aux.sqcos -
-		aux.dv * aux.dv * aux.sqsin;
-	equa.b = dotprod(aux.slvdvv, aux.sdcolo2d) * aux.sqcos * 2 -
-		aux.sqsin * 2 * aux.dv * aux.colod;
-	equa.c = dotprod(aux.sdcolo2d, aux.sdcolo2d) * aux.sqcos -
-		aux.sqsin * aux.colod * aux.colod;
-	radic = equa.b * equa.b - 4 * equa.a * equa.c;
+	equa.a = aux.sqcos * ((line.v.y * line.v.y) + (line.v.z * line.v.z))
+		- aux.sqsin * (line.v.x * line.v.x);
+	equa.b = 2 * (aux.sqcos * ((line.o.y * line.v.y) + (line.o.z * line.v.z))
+		- aux.sqsin * (line.o.x * line.v.x));
+	equa.c = aux.sqcos * ((line.o.y * line.o.y) + (line.o.z * line.o.z))
+		- aux.sqsin * (line.o.x * line.o.x);
+	radic = (equa.b * equa.b) - (4 * equa.a * equa.c);
 	if (radic < 0.0)
 		return (0);
-	sols.t1 = (-equa.b + sqrt(radic)) / (2 * equa.a);
-	sols.t2 = (-equa.b - sqrt(radic)) / (2 * equa.a);
-	t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
-	(*hitpoint).x = line.o.x + line.v.x * t;
-	(*hitpoint).y = line.o.y + line.v.y * t;
-	(*hitpoint).z = line.o.z + line.v.z * t;
+	sols.t1 = (-equa.b + sqrt(radic)) / (2.0 * equa.a);
+	sols.t2 = (-equa.b - sqrt(radic)) / (2.0 * equa.a);
+	hit->t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
+	if (hit->t < 0)
+		return 0;
+	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
+	hit->normal.x = (hit->point.x > 0 ? -1 : 1) *
+		sqrt(hit->point.z * hit->point.z + hit->point.y * hit->point.y) *
+			tan(obj.object_union.cone.angle);
+	hit->normal.y = hit->point.y;
+	hit->normal.z = hit->point.z;
 	return (1);
 }
 
 int					intersect_plane(t_line line, t_object obj,
-		t_point3d *hitpoint)
+		t_hit *hit)
 {
+	(void)obj;
+	if (line.v.y < EPSILON && line.v.y > -EPSILON)
+		return (0);
+	hit->t = -line.o.y / line.v.y;
+	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
+	hit->normal = ft_new_vec3(0, (line.v.y > 0 ) ? 1 : -1, 0);
+
+	/*
 	double	den;
 	double	sol;
 
@@ -100,34 +106,30 @@ int					intersect_plane(t_line line, t_object obj,
 	(*hitpoint).x = line.o.x + line.v.x * sol;
 	(*hitpoint).y = line.o.y + line.v.y * sol;
 	(*hitpoint).z = line.o.z + line.v.z * sol;
+	*/
 	return (1);
 }
 
 int					intersect_cylinder(t_line line, t_object obj,
-		t_point3d *hitpoint)
+		t_hit *hit)
 {
-	t_auxcyl	aux;
 	t_quadratic	equa;
 	t_quadsol	sols;
-	double		t;
 	double		radic;
 
-	(*hitpoint) = translate_vec(line.o, line.v, -EPSILON);
-	aux.colo = newvector(obj.o, line.o);
-	aux.ddv = newvector(scale(obj.r, dotprod(line.v, obj.r)), line.v);
-	aux.scolol = scale(obj.r, dotprod(aux.colo, obj.r));
-	aux.scolol2 = newvector(aux.scolol, aux.colo);
-	equa = (t_quadratic){.a = dotprod(aux.ddv, aux.ddv),
-		.b = 2 * dotprod(aux.ddv, aux.scolol2),
-		.c = dotprod(aux.scolol2, aux.scolol2) - obj.s.x * obj.s.x};
-	radic = equa.b * equa.b - 4 * equa.a * equa.c;
+	equa = (t_quadratic){.a = (line.v.z * line.v.z) + (line.v.y * line.v.y),
+		.b = 2 * ((line.o.z * line.v.z) + (line.o.y * line.v.y)),
+		.c = (line.o.z * line.o.z) + (line.o.y * line.o.y) - 
+		(obj.object_union.cylinder.radius * obj.object_union.cylinder.radius)};
+	radic = (equa.b * equa.b) - (4 * equa.a * equa.c);
 	if (radic < 0.0)
 		return (0);
-	sols.t1 = (-equa.b + sqrt(radic)) / (2 * equa.a);
-	sols.t2 = (-equa.b - sqrt(radic)) / (2 * equa.a);
-	t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
-	(*hitpoint).x = line.o.x + line.v.x * t;
-	(*hitpoint).y = line.o.y + line.v.y * t;
-	(*hitpoint).z = line.o.z + line.v.z * t;
+	sols.t1 = (-equa.b + sqrt(radic)) / (2.0 * equa.a);
+	sols.t2 = (-equa.b - sqrt(radic)) / (2.0 * equa.a);
+	hit->t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
+	if (hit->t < 0)
+		return 0;
+	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
+	hit->normal = normalize(ft_new_vec3(0, hit->point.y, hit->point.z));
 	return (1);
 }

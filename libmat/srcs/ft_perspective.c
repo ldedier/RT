@@ -15,10 +15,10 @@
 t_mat4	ft_mat4_perspective(t_camera_l cam)
 {
 	t_mat4 res;
-	float right;
-	float left;
-	float top;
-	float bottom;
+	double right;
+	double left;
+	double top;
+	double bottom;
 
 	top = cam.near * tan(cam.fov / 2.0);
 	bottom = -top;

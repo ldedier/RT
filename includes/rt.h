@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/07 19:10:08 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/11 01:37:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # include <math.h>
 # include "libft.h"
 # include "libmat.h"
+# include "objects.h"
+# include "export.h"
 # include <fcntl.h>
 # include <unistd.h>
 # include <pthread.h>
@@ -77,15 +79,16 @@
 # define AMBIENT_LIGHT 0.17
 # define AMBIENT_LIGHT_COL get_color(0xFFFFFF)
 # define PHONG 30.0
-# define EPSILON 0.00000000001
+# define EPSILON 0.00001
 # define SPEED 0.1
-# define MAX_BOUNCE 2
+# define MAX_BOUNCE 0
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
 # define WHITE_COLOR (t_color){.r=255,.g=255,.b=255,.col=0XFFFFFF}
 # define BACKGROUND_COLOR get_color(0x222222)
 
+typedef struct	s_hit t_hit;
 
 typedef enum	e_keys
 {
@@ -188,14 +191,24 @@ typedef struct			s_color
 ** the scanhit function is what determines what the object is, as we
 ** only need the object to calculate the intersection with the ray
 */
+
+typedef union			s_object_union
+{
+	t_sphere			sphere;
+	t_cone				cone;
+	t_plane				plane;
+	t_cylinder			cylinder;
+}						t_object_union;
+
 typedef struct			s_object
 {
 	t_mat4				transform_pos;
 	t_mat4				transform_dir;
 	t_mat4				transform_dir_inv;
 	t_mat4				transform_pos_inv;
-	int					(*intersect_func)(t_line, struct s_object, t_point3d*);
-	t_point3d			(*normal_func)(struct s_object, t_point3d);
+	t_object_union		object_union;
+	int					(*intersect_func)(t_line, struct s_object, t_hit*);
+//	t_point3d			(*normal_func)(struct s_object, t_point3d);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
@@ -205,6 +218,15 @@ typedef struct			s_object
 	double				refract;
 	double				transp;
 }						t_object;
+
+struct			s_hit
+{
+	t_object			obj;
+	t_point3d			point;
+	t_point3d			normal;
+	t_point3d			bounce;
+	double				t;
+};
 
 typedef struct			s_auxcone
 {
@@ -239,14 +261,6 @@ typedef struct			s_objlist
 	struct s_objlist	*next;
 }						t_objlist;
 
-typedef struct			s_hit
-{
-	t_object			obj;
-	t_point3d			point;
-	t_point3d			normal;
-	t_point3d			bounce;
-}						t_hit;
-
 typedef struct			s_light
 {
 	t_point3d			o;
@@ -272,11 +286,13 @@ typedef struct			s_world
 	pthread_t			threads[NTHREADS];
 	int					thr_state[NTHREADS];
 	t_objlist			*objlist;
+	t_object			*selected_object;
 	t_illum				ambient;
 	t_illum				fog;
 	int					nlights;
 	int					progress;
 	int					cancel_render;
+	int					can_export;
 }						t_world;
 
 typedef struct			s_thr_par
@@ -369,19 +385,20 @@ void					paint_threaded_fast(t_world *world);
 void					fill_canvas(t_world *world);
 void					join_threads(t_world *world);
 void					paint_threaded(t_world *world);
+void					paint_not_threaded(t_world *world);
 void					update_progress_bar(t_world *world);
 
 /*
 ** intersections
 */
 int						intersect_sphere(t_line line, t_object obj,
-		t_point3d *hit);
+		t_hit *hit);
 int						intersect_cone(t_line line, t_object obj,
-		t_point3d *hit);
+		t_hit *hit);
 int						intersect_plane(t_line line, t_object obj,
-		t_point3d *hit);
+		t_hit *hit);
 int						intersect_cylinder(t_line line, t_object obj,
-		t_point3d *hit);
+		t_hit *hit);
 /*
 **normals
 */
@@ -418,6 +435,12 @@ void					apply_rotation(t_camera *cam);
 
 void	ft_compute_matrix(t_object *object);
 void	ft_compute_matrices_list(t_objlist *objects);
+
+/*
+** export
+*/
+
+int					ft_export_rt(t_world *world, char *extension);
 
 //DEBUG OJU CUIDOA BORRAR OSTIEeeeeS
 void print_list(t_objlist *lst);

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/07 19:10:06 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/11 01:20:28 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static int	any_key_pressed(t_world *world)
 int		get_input(t_world *e)
 {
 	SDL_Event event;
-	while (SDL_PollEvent(&event)) {
+	while (SDL_PollEvent(&event))
+	{
 		if (event.type == SDL_KEYDOWN)
 			ft_keys_event(e, event, 1);
 		if (event.type == SDL_KEYUP)
@@ -55,6 +56,7 @@ int		get_input(t_world *e)
 			{
 				e->keys[key_enter] = 0;
 				paint_threaded(e);
+				//paint_not_threaded(e);
 			}
 			else
 				paint_threaded_fast(e);

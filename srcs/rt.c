@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 04:37:03 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 06:10:23 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 18:25:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int				main(int argc, char **args)
 	t_world	*world;
 	int		err;
 
+	//char *s = ft_get_name(".bmp");
+
 	world = NULL;
 	if (argc != 2)
 		return (display_usage(0));
@@ -50,7 +52,7 @@ int				main(int argc, char **args)
 		return (display_usage(err));
 	print_list(world->objlist);
 	print_lights(world);
-//	ft_compute_matrices_list(world->objlist);
+	ft_compute_matrices_list(world->objlist);
 	ft_loop(world);
 //	paint_threaded(world);
 	return (0);

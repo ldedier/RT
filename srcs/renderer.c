@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/07 19:10:02 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/10 22:05:20 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		aux = (t_shadowsfree){.srays = srays, .nlights = world->nlights};
 		fogged_c = interpole_color(fog, illuminate(world, hit, srays, fast),
 				world->fog.color);
-			if (!fast && bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON)
-			{
-				reflect_c = ray_color(newray(translate_vec(hit->point,
-								hit->bounce, EPSILON), hit->bounce),
-						world, bounce + 1, 0);
-				return (freeret(interpole_color(hit->obj.reflect,
-								fogged_c, reflect_c), &hit, &aux));
-			}
+		if (!fast && bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON)
+		{
+			reflect_c = ray_color(newray(translate_vec(hit->point,
+							hit->bounce, EPSILON), hit->bounce),
+					world, bounce + 1, 0);
+			return (freeret(interpole_color(hit->obj.reflect,
+							fogged_c, reflect_c), &hit, &aux));
+		}
 		return (freeret(fogged_c, &hit, &aux));
 	}
 	return (freeret(world->fog.color, &hit, NULL));

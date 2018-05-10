@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/07 12:29:46 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/11 01:20:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void		paint_threaded(t_world *world)
 	t_thr_par	*tpar;
 	int			p_y;
 	int			i;
-
+//	printf("paint_threaded %d\n", j++);
 	i = -1;
 	p_y = 0;
 	while (++i < NTHREADS)
@@ -115,5 +115,23 @@ void		paint_threaded(t_world *world)
 		p_y += world->canvas->win_size.y / NTHREADS;
 	}
 	join_threads(world);
+	fill_canvas(world);
+}
+
+void	paint_not_threaded(t_world *world)
+{
+	t_pixel p;
+
+	p.y = 0;
+	while (world->cancel_render == 0 && p.y < world->canvas->win_size.y)
+	{
+		p.x = 0;
+		while (world->cancel_render == 0 &&  p.x < world->canvas->win_size.x)
+		{
+			paint_pixel(p, render_pixel(world, p, 0), world->canvas);
+			p.x++;
+		}
+		p.y++;
+	}
 	fill_canvas(world);
 }

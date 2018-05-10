@@ -12,7 +12,7 @@
 
 #include "libmat.h"
 
-t_point3d	ft_new_vec3(float x, float y, float z)
+t_point3d	ft_new_vec3(double x, double y, double z)
 {
 	t_point3d	vec;
 

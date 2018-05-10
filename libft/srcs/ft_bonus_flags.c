@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:27:15 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/28 21:21:15 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 23:16:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		ft_pf_r(t_pf *pf, va_list va, char c)
 		pf->var.str = "(null)";
 	no_padding_bytes = ft_pf_len_s(*pf);
 	ft_add_padding_pre(*pf, no_padding_bytes);
-	ft_putstr_non_printable(pf->var.str, no_padding_bytes);
+	ft_putstr_non_printable(pf->var.str, no_padding_bytes, pf->fd);
 	ft_add_padding_post(*pf, no_padding_bytes);
 	return (1);
 }
@@ -64,7 +64,7 @@ int		ft_pf_b(t_pf *pf, va_list va, char c)
 	no_padding_bytes = ft_pf_len_b(*pf);
 	ft_add_padding_pre(*pf, no_padding_bytes);
 	ft_add_precision_base(*pf, 2);
-	ft_putbin(pf->var.integer);
+	ft_putbin(pf->var.integer, pf->fd);
 	ft_add_padding_post(*pf, no_padding_bytes);
 	return (1);
 }
@@ -76,7 +76,7 @@ int		ft_pf_n(t_pf *pf, va_list va, char c)
 	(void)pf;
 	(void)c;
 	data = va_arg(va, int *);
-	ft_empty_buffer();
+	ft_empty_buffer(pf->fd);
 	*data = ft_add_return(0);
 	return (1);
 }

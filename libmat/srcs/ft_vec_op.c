@@ -32,7 +32,7 @@ t_point3d	ft_point3d_cmp(t_point3d vec1, t_point3d vec2)
 	return (res);
 }
 
-float	ft_dot_product(t_point3d vec1, t_point3d vec2)
+double	ft_dot_product(t_point3d vec1, t_point3d vec2)
 {
 	return (vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z);
 }
@@ -44,7 +44,7 @@ t_point3d	ft_point3d_cross_product(t_point3d vec1, t_point3d vec2)
 		  	(vec1.x * vec2.y) - (vec1.y * vec2.x)));
 }
 
-t_point3d	ft_point3d_scalar(t_point3d vec, float k)
+t_point3d	ft_point3d_scalar(t_point3d vec, double k)
 {
 		return (ft_new_vec3(vec.x * k,
 		  	 vec.y * k,

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:07:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/06 21:16:45 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 23:14:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_add_padding_pre(t_pf pf, int no_padding_byte)
 	{
 		while (i < pf.flags.padding - no_padding_byte)
 		{
-			ft_putchar_buff(' ');
+			ft_putchar_buff(' ', pf.fd);
 			i++;
 		}
 	}
@@ -29,7 +29,7 @@ void	ft_add_padding_pre(t_pf pf, int no_padding_byte)
 	{
 		while (i < pf.flags.padding - no_padding_byte)
 		{
-			ft_putchar_buff('0');
+			ft_putchar_buff('0', pf.fd);
 			i++;
 		}
 	}
@@ -44,7 +44,7 @@ void	ft_add_padding_post(t_pf pf, int no_padding_byte)
 		i = 0;
 		while (i < pf.flags.padding - no_padding_byte)
 		{
-			ft_putchar_buff(' ');
+			ft_putchar_buff(' ', pf.fd);
 			i++;
 		}
 	}
@@ -61,7 +61,7 @@ void	ft_add_padding_pre_standard(t_pf pf, int no_padding_byte)
 		i = 0;
 		while (i < pf.flags.padding - no_padding_byte)
 		{
-			ft_putchar_buff(' ');
+			ft_putchar_buff(' ', pf.fd);
 			i++;
 		}
 	}
@@ -76,7 +76,7 @@ void	ft_add_padding_pre_zeros(t_pf pf, int no_padding_byte)
 		i = 0;
 		while (i < pf.flags.padding - no_padding_byte)
 		{
-			ft_putchar_buff('0');
+			ft_putchar_buff('0', pf.fd);
 			i++;
 		}
 	}

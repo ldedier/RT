@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 19:10:23 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/04/24 19:16:56 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/01 07:32:26 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,10 @@ void	print_lights(t_world *world)
 		i++;
 	}
 }
-
 void	print_object(t_object obj)
 {
 	char	*shape;
-
+/*
 	if (obj.intersect_func == intersect_sphere)
 		shape = "sphere";
 	else if (obj.intersect_func == intersect_plane)
@@ -54,7 +53,7 @@ void	print_object(t_object obj)
 		shape = "cone";
 	else if (obj.intersect_func == intersect_cylinder)
 		shape = "cylinder";
-	else
+	else*/
 		shape = "UNKNOWN";
 	printf("object: %s\n"
 			"---origin: (%f, %f, %f)\n"

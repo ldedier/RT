@@ -6,13 +6,13 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/27 21:20:43 by ldedier           #+#    #+#             */
-/*   Updated: 2018/03/11 15:45:22 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/08 22:56:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putchar_buff(char c)
+void	ft_putchar_buff(char c, int fd)
 {
 	int		display;
 	char	str[2];
@@ -20,5 +20,5 @@ void	ft_putchar_buff(char c)
 	display = 0;
 	str[0] = c;
 	str[1] = '\0';
-	ft_get_buffer((char *)str, 1, &display);
+	ft_get_buffer((char *)str, 1, &display, fd);
 }

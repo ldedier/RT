@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/06 18:54:29 by ldedier           #+#    #+#             */
-/*   Updated: 2018/02/06 21:07:48 by ldedier          ###   ########.fr       */
+/*   Created: 2018/05/08 23:26:23 by ldedier           #+#    #+#             */
+/*   Updated: 2018/05/08 23:27:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
 void	ft_putnbr(int n)
 {
@@ -19,15 +19,15 @@ void	ft_putnbr(int n)
 	if (n < 0)
 	{
 		nb = -n;
-		ft_putchar_buff('-');
+		ft_putchar('-');
 	}
 	else
 		nb = n;
 	if ((nb / 10) == 0)
-		ft_putchar_buff(nb % 10 + '0');
+		ft_putchar(nb % 10 + '0');
 	else
 	{
 		ft_putnbr(nb / 10);
-		ft_putchar_buff(nb % 10 + '0');
+		ft_putchar(nb % 10 + '0');
 	}
 }

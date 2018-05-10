@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/04 12:07:48 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/05/10 22:04:09 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ EOC = \033[0m
 DEBUG ?= 0
 
 ifeq ($(DEBUG), 1)
-	CFLAGS += -DDEBUG -fsanitize=address
+	CFLAGS += -DDEBUG
 else
 	CFLAGS += -Ofast
 endif
@@ -70,9 +70,15 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 world_init.c\
 				 compute_matrix.c \
 				 paint_fast.c \
-				 paint_canvas.c
+				 paint_canvas.c\
+				 compute_matrix.c\
+				 ft_export_ppm.c\
+				 ft_export_bmp.c\
+				 ft_new_image.c\
+				 ft_get_name.c\
+				 ft_export.c
 
-INCLUDES_NO_PREFIX = rt.h
+INCLUDES_NO_PREFIX = rt.h objects.h export.h
 
 SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
 OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
@@ -81,13 +87,13 @@ INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
 LIBSDL2 = ./$(LIBSDL2DIR)/$(LIBSDL2_LIBDIR)/libSDL2-2.0.0.dylib
 
 INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
-	  -I $(LIBMATDIR)/$(LIBMAT_INCLUDEDIR) \
-	  -I $(LIBSDL2DIR)/$(LIBSDL2_INCLUDEDIR)
+	  -I $(LIBMATDIR)/$(LIBMAT_INCLUDEDIR)\
+	  -I $(LIBSDL2DIR)/$(LIBSDL2_INCLUDEDIR)\
 
 CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror $(INC)
 
 LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
-		 -L $(LIBSDL2DIR)/$(LIBSDL2_LIBDIR) -lsdl2
+		 -L $(LIBSDL2DIR)/$(LIBSDL2_LIBDIR) -lsdl2\
 
 opti:
 	@make -j all
@@ -105,8 +111,8 @@ $(LIBSDL2):
 
 $(BINDIR)/$(NAME): $(OBJECTS) $(LIBSDL2)
 	@make -C $(LIBFTDIR)
-	@make -C $(LIBMATDIR)
-	$(CC) -o $@ $^ $(LFLAGS) -fsanitize=address
+	@make -C $(LIBMATDIR) 
+	$(CC) -o $@ $^ $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 	@install_name_tool -change /usr/local/lib/libSDL2-2.0.0.dylib \
 		$(LIBSDL2) $(NAME)

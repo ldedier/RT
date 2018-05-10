@@ -16,7 +16,7 @@ t_mat4	ft_enhance(t_point3d vec)
 {
 	t_mat4 mat;
 
-	mat = (float *)malloc(sizeof(float) * 16);
+	mat = (double *)malloc(sizeof(double) * 16);
 	mat[0] = vec.x;
 	mat[1] = 0;
 	mat[2] = 0;

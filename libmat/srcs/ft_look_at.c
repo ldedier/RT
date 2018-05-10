@@ -111,7 +111,7 @@ t_mat4	ft_mat4_look_at(t_point3d cam_pos, t_point3d target_pos, t_point3d up_axi
 }
 
 
-t_mat4	ft_mat4_look_fps(t_point3d cam_pos, float yaw, float pitch)
+t_mat4	ft_mat4_look_fps(t_point3d cam_pos, double yaw, double pitch)
 {
 
 	t_point3d	forward;
@@ -119,10 +119,10 @@ t_mat4	ft_mat4_look_fps(t_point3d cam_pos, float yaw, float pitch)
 	t_point3d	up;
 	t_mat4	res;
 
-	float cosPitch = cos(pitch);
-	float sinPitch = sin(pitch);
-	float cosYaw = cos(yaw);
-	float sinYaw = sin(yaw);
+	double cosPitch = cos(pitch);
+	double sinPitch = sin(pitch);
+	double cosYaw = cos(yaw);
+	double sinYaw = sin(yaw);
 
 	left = ft_new_vec3(cosYaw, 0, -sinYaw);
 	up = ft_new_vec3(sinYaw* sinPitch, cosPitch, cosYaw * sinPitch);

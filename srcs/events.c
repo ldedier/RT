@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 22:25:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/07 19:10:04 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/11 01:29:32 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,21 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press)
 		else
 			e->cam->speed = 0.2;
 	}
+	else if (event.key.keysym.sym == SDLK_r)
+	{
+		if (press == 1)
+		{
+			if (e->can_export)
+			{
+				ft_export_rt(e, ".ppm");
+				e->can_export = 0;
+			}
+		}
+		else
+			e->can_export = 1;
+	}
 }
+
 void	ft_mouse_motion(t_world *e, SDL_Event event)
 {
 	e->cam->rotation.x = e->cam->rotation.x - (event.motion.xrel) * M_PI / 1024.0;
