@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/10 22:05:20 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/11 17:27:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 	t_color			fogged_c;
 	double			fog;
 
-	if ((hit = trace(ray, world->objlist)))
+	if ((hit = trace(ray, world->cobjlist)))
 	{
 		fog = magnitude(newvector(hit->point, world->cam->o)) * world->fog.in;
 		fog = fog > 1.0 ? 1.0 : fog;

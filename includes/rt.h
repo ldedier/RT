@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/11 01:37:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/11 17:54:06 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@
 # define PHONG 30.0
 # define EPSILON 0.00001
 # define SPEED 0.1
-# define MAX_BOUNCE 0
+# define MAX_BOUNCE 2
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
@@ -261,6 +261,26 @@ typedef struct			s_objlist
 	struct s_objlist	*next;
 }						t_objlist;
 
+typedef struct			s_cobject
+{
+	t_point3d			o;
+	t_point3d			s;
+	t_point3d			r;
+	t_color				c;
+	double				shine;
+	double				reflect;
+	double				refract;
+	double				transp;
+	t_objlist			*objlist;
+}						t_cobject;
+
+typedef struct			s_cobjlist
+{
+
+	t_cobject			*cobject;
+	struct s_cobjlist	*next;
+}						t_cobjlist;
+
 typedef struct			s_light
 {
 	t_point3d			o;
@@ -285,8 +305,8 @@ typedef struct			s_world
 	int					keys[nkeys];
 	pthread_t			threads[NTHREADS];
 	int					thr_state[NTHREADS];
-	t_objlist			*objlist;
-	t_object			*selected_object;
+	t_cobjlist			*cobjlist;
+	t_cobject			*selected_cobject;
 	t_illum				ambient;
 	t_illum				fog;
 	int					nlights;
@@ -307,6 +327,12 @@ typedef struct			s_shadowsfree
 	t_line				**srays;
 	int					nlights;
 }						t_shadowsfree;
+
+typedef struct			s_parser
+{
+	int					nb_lines;
+
+}						t_parser;
 
 /*
 ** input
@@ -332,6 +358,7 @@ int						read_world(t_world *world, char *file);
 void					populate_world(t_world *world, unsigned char scene);
 t_object				create_sphere(t_point3d pos, double red, t_color color);
 void					add_obj(t_objlist **lst, t_object *object);
+void					del_clst(t_cobjlist **lst);
 void					del_lst(t_objlist **lst);
 
 /*
@@ -374,7 +401,7 @@ t_color					scale_color(t_color c, double t);
 */
 t_color					render_pixel(t_world *world, t_pixel pix, int fast);
 void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
-t_hit					*trace(t_line line, t_objlist *objlist);
+t_hit					*trace(t_line line, t_cobjlist *cobjlist);
 void					castshadows(t_world *w, t_hit *h, t_line **rays);
 t_color					illuminate(t_world *world, t_hit *hit, t_line **srays, int fast);
 
@@ -434,7 +461,7 @@ void					apply_rotation(t_camera *cam);
 */
 
 void	ft_compute_matrix(t_object *object);
-void	ft_compute_matrices_list(t_objlist *objects);
+void	ft_compute_matrices_clist(t_cobjlist *cobjects);
 
 /*
 ** export
@@ -443,7 +470,8 @@ void	ft_compute_matrices_list(t_objlist *objects);
 int					ft_export_rt(t_world *world, char *extension);
 
 //DEBUG OJU CUIDOA BORRAR OSTIEeeeeS
-void print_list(t_objlist *lst);
+void print_clist(t_cobjlist *lst);
+void print_list(t_objlist *lst, int i);
 void print_object(t_object obj);
 void print_lights(t_world *world);
 

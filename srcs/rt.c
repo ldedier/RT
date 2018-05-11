@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 04:37:03 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/08 18:25:01 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/11 17:54:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int				main(int argc, char **args)
 		return (display_usage(0));
 	if ((err = new_world(args[1], &world)))
 		return (display_usage(err));
-	print_list(world->objlist);
+	print_clist(world->cobjlist);
 	print_lights(world);
-	ft_compute_matrices_list(world->objlist);
+	ft_compute_matrices_clist(world->cobjlist);
 	ft_loop(world);
 //	paint_threaded(world);
 	return (0);

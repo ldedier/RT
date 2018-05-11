@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/10 21:37:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/11 17:36:46 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void			set_defaults(t_world *world)
 	world->cam->pd = ZOOM / HRES;
 	world->cam->rotation = POINT_ZERO;
 	world->nlights = 0;
-	world->objlist = NULL;
+	world->cobjlist = NULL;
 	world->ambient.in = AMBIENT_LIGHT;
 	world->ambient.color = AMBIENT_LIGHT_COL;
 	world->fog.in = 0.0;

@@ -6,18 +6,31 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 19:10:23 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 07:32:26 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/11 17:28:45 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	print_list(t_objlist *lst)
+void	print_list(t_objlist *lst, int i)
 {
-	ft_putendl("LIST OF OBJECTS:");
+	ft_printf("COBJECT #%d\n", i);
 	while (lst != NULL)
 	{
 		print_object(*lst->object);
+		lst = lst->next;
+	}
+}
+
+void	print_clist(t_cobjlist *lst)
+{
+	int i;
+
+	i = 1;
+	ft_putendl("LIST OF COBJECTS:");
+	while (lst != NULL)
+	{
+		print_list(lst->cobject->objlist, i++);
 		lst = lst->next;
 	}
 }
@@ -41,6 +54,7 @@ void	print_lights(t_world *world)
 		i++;
 	}
 }
+
 void	print_object(t_object obj)
 {
 	char	*shape;

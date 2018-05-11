@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 16:14:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/08 18:03:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/11 18:12:32 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,6 @@ char	*ft_get_name(char *extension)
 	ft_remove_backslash(s);
 	i = 0;
 	while (!(str = ft_already_exists(s, extension, i)))
-	{
-		printf("CA EXISTE\n");
 		i++;
-	}
 	return (str);
 }

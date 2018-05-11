@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 05:06:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/11 02:36:22 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/11 17:20:29 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int			read_double(char **line, double *to)
 	*to = ft_patof(line, &scss);
 	return (scss);
 }
-
+/*
 static int	read_param(char *line, t_world *world, int line_count)
 {
 	if (line[0] == '#')
@@ -73,6 +73,19 @@ static int	parse_line(char *line, t_world *world)
 		return (line_count);
 	return (0);
 }
+*/
+void		ft_init_parser(t_parser *parser)
+{
+	parser->nb_lines = 0;
+}
+
+static int	parse_line_new(char *line, t_world *world, t_parser *parser)
+{
+	parser->nb_lines++;
+	(void)world;
+	(void)line;
+	return (0);
+}
 
 int			read_world(t_world *world, char *file)
 {
@@ -80,13 +93,15 @@ int			read_world(t_world *world, char *file)
 	int		fd;
 	int		gnl_ret;
 	int		pl_ret;
+	t_parser parser;
 
+	ft_init_parser(&parser);
 	if ((fd = open(file, O_RDONLY)) == -1)
 		return (-1);
 	line = NULL;
 	while ((gnl_ret = get_next_line(fd, &line)) == 1)
 	{
-		if ((pl_ret = parse_line(line, world)))
+		if ((pl_ret = parse_line_new(line, world, &parser)))
 		{
 			free(line);
 			close(fd);
