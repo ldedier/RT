@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 16:07:03 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/09 01:11:14 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/11 02:38:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int		ft_export_ppm(char *name, t_image image)
 		while (j < image.width)
 		{
 			ft_dprintf(fd, "%d	%d	%d	",
-					image.pix[j + i * image.width] & 0xff,
+					(image.pix[j + i * image.width] >> 16) & 0xff,
 				(image.pix[j + i * image.width] >> 8) & 0xff,
-					(image.pix[j + i * image.width] >> 16) & 0xff);
+					image.pix[j + i * image.width] & 0xff);
 			j++;
 		}
 		ft_dprintf(fd, "\n");
