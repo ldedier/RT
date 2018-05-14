@@ -6,13 +6,13 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 22:42:29 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/11 18:13:55 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/13 15:39:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	add_cobj(t_objlist **lst, t_cobject *cobject)
+void	add_cobj(t_cobjlist **lst, t_cobject *cobject)
 {
 	t_cobjlist	*prev;
 	t_cobjlist	*first;

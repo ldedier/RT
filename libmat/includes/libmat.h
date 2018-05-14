@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 00:16:34 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/01 05:16:12 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/14 17:53:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ double				ft_point3d_get_norm(t_point3d vec);
 void				ft_point3d_normalize(t_point3d *vec);
 
 t_point3d				ft_point3d_add(t_point3d vec1, t_point3d vec2);
+t_point3d				ft_point3d_mult(t_point3d vec1, t_point3d vec2);
 t_point3d				ft_point3d_cmp(t_point3d vec1, t_point3d vec2);
 t_point3d				ft_point3d_scalar(t_point3d vec1, double k);
 t_point3d				ft_point3d_cross_product(t_point3d vec1, t_point3d vec2);

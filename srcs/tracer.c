@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/11 17:37:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/13 23:19:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void				ft_transform_hit_back(t_hit *hit)
 
 t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 {
+//	static int i = 0;
 	t_hit		newhit;
 	t_cobject	cobj;
 	t_object	obj;
@@ -52,6 +53,7 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 	while (cobjlist)
 	{
 		cobj = *(cobjlist->cobject);
+		//printf("ouai%d \n", i++);
 		while(cobj.objlist)
 		{
 			obj = *(cobj.objlist->object);

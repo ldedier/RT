@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:28:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/11 18:00:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/14 17:36:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,54 +36,39 @@ void    ft_process(t_world *e)
 	if (e->keys[key_space])
 		e->cam->o = translate_vec(e->cam->o, e->cam->up, e->cam->speed);
 
-//<<<<<<< HEAD
-/*
-	if (e->keys[key_1)
-=======
-	if (e->keys.key_1)
->>>>>>> ldedier
-		e->selected_object->o.z += e->cam->speed;
-	if (e->keys[key_2)
-		e->selected_object->o.z -= e->cam->speed;
-	if (e->keys[key_o)
+	if (e->keys[key_o])
 	{
-		e->selected_object->s.x += e->cam->speed;
-		e->selected_object->s.y += e->cam->speed;
-		e->selected_object->s.z += e->cam->speed;
+		e->selected_cobject->s.x += e->cam->speed;
+		e->selected_cobject->s.y += e->cam->speed;
+		e->selected_cobject->s.z += e->cam->speed;
 	}
-	if (e->keys[key_p)
+	if (e->keys[key_p])
 	{
-		e->selected_object->s.x -= e->cam->speed;
-		e->selected_object->s.y -= e->cam->speed;
-		e->selected_object->s.z -= e->cam->speed;
+		e->selected_cobject->s.x -= e->cam->speed;
+		e->selected_cobject->s.y -= e->cam->speed;
+		e->selected_cobject->s.z -= e->cam->speed;
 	}
-<<<<<<< HEAD
-*/
-	/*
+
 	if (e->keys[key_7])
-=======
-	if (e->keys.key_7)
->>>>>>> ldedier
-		e->cam->rotation.z += M_PI / 16;
+		e->selected_cobject->o.y += e->cam->speed;
 	if (e->keys[key_8])
-		e->cam->rotation.z -= M_PI / 16;
+		e->selected_cobject->o.y -= e->cam->speed;
+
 
 	if (e->keys[key_4])
-		e->cam->rotation.x += M_PI / 16;
+		e->selected_cobject->o.x += e->cam->speed;
 	if (e->keys[key_5])
-		e->cam->rotation.x -= M_PI / 16;
-<<<<<<< HEAD
-*/
+		e->selected_cobject->o.x -= e->cam->speed;
+
+	if (e->keys[key_1])
+		e->selected_cobject->o.z += e->cam->speed;
+	if (e->keys[key_2])
+		e->selected_cobject->o.z -= e->cam->speed;
+
 	if (e->keys[key_e])
-		e->selected_cobject->r.y += M_PI / 16;
+		e->selected_cobject->r.x += M_PI / 16;
 	if (e->keys[key_q])
-		e->selected_cobject->r.y -= M_PI / 16;
-	/*
-=======
-	if (e->keys.key_e)
-		e->selected_object->r.z += M_PI / 16;
-	if (e->keys.key_q)
-		e->selected_object->r.z -= M_PI / 16;
-	*/
+		e->selected_cobject->r.x -= M_PI / 16;
+	
 	ft_compute_matrices_clist(e->cobjlist);
 }

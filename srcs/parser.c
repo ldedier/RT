@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/22 05:06:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/11 17:20:29 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/14 18:04:53 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,92 @@ static int	parse_line_new(char *line, t_world *world, t_parser *parser)
 	return (0);
 }
 
+t_cobject		*ft_new_cobject(void)
+{
+	t_cobject *res;
+
+	if (!(res = ft_memalloc(sizeof(t_cobject))))
+		return (NULL);
+	res->objlist = NULL;
+	return (res);
+}
+
+void	ft_add_obj_to_cobj(t_cobject *cobject, t_object *object)
+{
+	add_obj(&(cobject->objlist), object);
+}
+
+void		ft_fake_objects(t_world *world)
+{
+	t_object *obj = ft_memalloc(sizeof(t_object));
+	t_object *obj2 = ft_memalloc(sizeof(t_object));
+	t_object *obj3 = ft_memalloc(sizeof(t_object));
+	t_object *obj4 = ft_memalloc(sizeof(t_object));
+	t_object *obj5 = ft_memalloc(sizeof(t_object));
+
+
+	obj->intersect_func = intersect_sphere;
+	obj2->intersect_func = intersect_cylinder;
+	obj3->intersect_func = intersect_sphere;
+	obj4->intersect_func = intersect_cylinder;
+	obj5->intersect_func = intersect_sphere;
+
+	obj->o = ft_new_vec3(0, 2, 0);
+	obj2->o = ft_new_vec3(0, 0, 0);
+	obj3->o = ft_new_vec3(0, -2, 0);
+
+	obj4->o = ft_new_vec3(0,-10,0);
+	obj5->o = ft_new_vec3(0,6,0);
+
+	obj->c = get_color(0xFF0000);
+	obj2->c = get_color(0xFF0000);
+	obj3->c = get_color(0xFF0000);
+	obj4->c = get_color(0xFF0000);
+	obj5->c = get_color(0xFF0000);
+
+	obj->r = ft_new_vec3(0,0,0);
+	obj2->r = ft_new_vec3(0,0,0);
+	obj3->r = ft_new_vec3(0,0,0);
+	obj4->r = ft_new_vec3(0,0,0);
+	obj5->r = ft_new_vec3(0,0,0);
+
+	obj->s = ft_new_vec3(1,1,1);
+	obj2->s = ft_new_vec3(1,1,1);
+	obj3->s = ft_new_vec3(1,1,1);
+	obj4->s = ft_new_vec3(1,1,1);
+	obj5->s = ft_new_vec3(1,1,1);
+
+
+	obj->object_union.sphere.radius = 1;
+	obj2->object_union.cylinder.radius = 1;
+	obj3->object_union.sphere.radius = 1;
+	obj4->object_union.cylinder.radius = 1;
+	obj5->object_union.sphere.radius = 1;
+	
+	t_cobject *cobj = ft_new_cobject();
+	t_cobject *cobj2 = ft_new_cobject();
+
+	cobj->s = ft_new_vec3(1,1,1);
+	cobj2->s = ft_new_vec3(1,1,1);
+
+	cobj->o = ft_new_vec3(0,0,0);
+	cobj2->o = ft_new_vec3(0,0,0);
+
+	cobj->r = ft_new_vec3(0,0,0);
+	cobj2->r = ft_new_vec3(0,0,0);
+	
+	ft_add_obj_to_cobj(cobj, obj);
+	ft_add_obj_to_cobj(cobj, obj2);
+	ft_add_obj_to_cobj(cobj, obj3);
+
+	ft_add_obj_to_cobj(cobj2, obj4);
+	ft_add_obj_to_cobj(cobj2, obj5);
+
+	add_cobj(&(world->cobjlist), cobj);
+//	add_cobj(&(world->cobjlist), cobj2);
+	world->selected_cobject = cobj;
+}
+
 int			read_world(t_world *world, char *file)
 {
 	char	*line;
@@ -96,6 +182,7 @@ int			read_world(t_world *world, char *file)
 	t_parser parser;
 
 	ft_init_parser(&parser);
+	ft_fake_objects(world);
 	if ((fd = open(file, O_RDONLY)) == -1)
 		return (-1);
 	line = NULL;

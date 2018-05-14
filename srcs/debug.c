@@ -6,11 +6,24 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 19:10:23 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/11 17:28:45 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/13 17:02:06 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+void	print_cobject(t_cobject cobj)
+{
+	printf("cobject: COMPOSED\n"
+			"---origin: (%f, %f, %f)\n"
+			"---scale: (%f, %f, %f)\n"
+			"---direction: (%f, %f, %f)\n"
+			"---col: 0x%X\n",
+			cobj.o.x, cobj.o.y, cobj.o.z,
+			cobj.s.x, cobj.s.y, cobj.s.z,
+			cobj.r.x, cobj.r.y, cobj.r.z,
+			cobj.c.col);
+}
 
 void	print_list(t_objlist *lst, int i)
 {
@@ -22,6 +35,7 @@ void	print_list(t_objlist *lst, int i)
 	}
 }
 
+
 void	print_clist(t_cobjlist *lst)
 {
 	int i;
@@ -30,6 +44,7 @@ void	print_clist(t_cobjlist *lst)
 	ft_putendl("LIST OF COBJECTS:");
 	while (lst != NULL)
 	{
+		print_cobject(*(lst->cobject));
 		print_list(lst->cobject->objlist, i++);
 		lst = lst->next;
 	}

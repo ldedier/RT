@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/11 17:54:06 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/13 17:02:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,6 +358,7 @@ int						read_world(t_world *world, char *file);
 void					populate_world(t_world *world, unsigned char scene);
 t_object				create_sphere(t_point3d pos, double red, t_color color);
 void					add_obj(t_objlist **lst, t_object *object);
+void					add_cobj(t_cobjlist **lst, t_cobject *cobject);
 void					del_clst(t_cobjlist **lst);
 void					del_lst(t_objlist **lst);
 
@@ -470,6 +471,7 @@ void	ft_compute_matrices_clist(t_cobjlist *cobjects);
 int					ft_export_rt(t_world *world, char *extension);
 
 //DEBUG OJU CUIDOA BORRAR OSTIEeeeeS
+void print_cobject(t_cobject cobj);
 void print_clist(t_cobjlist *lst);
 void print_list(t_objlist *lst, int i);
 void print_object(t_object obj);
