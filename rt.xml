@@ -1,71 +1,31 @@
 <scene>
 	<camera>
-		<position>
-			<x>10</x>
-			<y>10</y>
-			<z>10</z>
-		</position>
-		<rotation>
-			<x>0</x>
-			<y>12</y>
-			<z>0</z>
-		</rotation>
+		<positionXYZ>120 45 256</positionXYZ>
+		<rotationXYZ>0 0 0</rotationXYZ>
 	</camera>
 	<objlist>
 		<cobject>
-			<position>
-				<x>10</x>
-				<y>10</y>
-				<z>10</z>
-			</position>
-			<rotation>
-				<x>0</x>
-				<y>12</y>
-				<z>0</z>
-			</rotation>
+			<positionXYZ>120 45 256</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
 			<object name="sphere">
 				<radius>10</radius>
-				<position>
-					<x>10</x>
-					<y>10</y>
-					<z>10</z>
-				</position>
-				<rotation>
-					<x>0</x>
-					<y>12</y>
-					<z>0</z>
-				</rotation>
+				<positionXYZ>120 45 256</positionXYZ>
+				<rotationXYZ>0 0 0</rotationXYZ>
 				<color>0xFF0000</color>
 			</object>
 			<object name="cylinder">
 				<radius> 10 </radius>
-				<position>
-					<x>10</x>
-					<y>10</y>
-					<z>10</z>
-				</position>
-				<rotation>
-					<x>0.442</x>
-					<y>0.441</y>
-					<z>0.845</z>
-				</rotation>
+				<positionXYZ>120 45 256</positionXYZ>
+				<rotationXYZ>0 0 0</rotationXYZ>
 				<color> 0x00FF00 </color>
 			</object>
 		</cobject>
 		<cobject>
 			<object name="cone">
 				<angle>0.12</angle>
-				<position>
-					<x>10</x>
-					<y>10</y>
-					<z>10</z>
-				</position>
-				<rotation>
-					<x>0.442</x>
-					<y>0.441</y>
-					<z>0.844</z>
-				</rotation>
 				<color>0xff0000</color>
+				<positionXYZ>120 45 256</positionXYZ>
+				<rotationXYZ>0 0 0</rotationXYZ>
 			</object>
 		</cobject>
 		<cobject type="obj">
@@ -74,26 +34,13 @@
 	</objlist>
 	<lightlist>
 		<light type ="diffuse">
-			<position>
-				<x>10</x>
-				<y>10</y>
-				<z>10</z>
-			</position>
 			<color>0xFF0000</color>
+			<positionXYZ>120 45 256</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
 		</light>
-		<light type ="spotlight">
-			<position>
-				<x>10</x>
-				<y>10</y>
-				<z>10</z>
-			</position>
-			<rotation>
-				<x>10</x>
-				<y>10</z>
-				<y>10</z>
-			</rotation>
+		<light type="spotlight">
 			<color>0xFF0000</color>
 		</light>
 	</lightlist>
-	<ambiantlight>0.485</ambiant>
+	<ambientlight>0.485</ambientlight>
 </scene>

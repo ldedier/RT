@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/13 17:02:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/15 00:52:40 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@
 # include <pthread.h>
 
 # define NTHREADS 8
+# define STACK 0
+# define POP 1
 
 # define FAST_HRES 160
 # define FAST_VRES 120
@@ -328,10 +330,26 @@ typedef struct			s_shadowsfree
 	int					nlights;
 }						t_shadowsfree;
 
+typedef enum			e_parse_enum
+{
+	e_parse_camera,
+	e_parse_object,
+	e_parse_cobject,
+	e_parse_light
+}						t_parse_enum;
+
+
 typedef struct			s_parser
 {
+	t_cobject			cobject;
+	t_object			object;
+	t_camera			camera;
+	t_list				*tag_stack;
+	char				*tag;
+	char				*attribute;
+	t_parse_enum		parse_enum;
 	int					nb_lines;
-
+	int					op;
 }						t_parser;
 
 /*
@@ -374,6 +392,11 @@ int						read_hex(char **line, int *to);
 int						read_double(char **line, double *to);
 int						parse_ambient(char *line, t_illum *rillum);
 int						parse_fog(char *line, t_illum *rillum);
+void					ft_process_parsing(t_parser *prsr, t_world *world, char *line);
+void					ft_process_parsing_pos(t_parser *prsr, t_world *world, char *line);
+void					ft_process_parsing_rot(t_parser *prsr, t_world *world, char *line);
+int						parse_line_new(char *line, t_world *world, t_parser *parser);
+void					ft_init_parser(t_parser *parser);
 
 /*
 **vectors
@@ -469,6 +492,12 @@ void	ft_compute_matrices_clist(t_cobjlist *cobjects);
 */
 
 int					ft_export_rt(t_world *world, char *extension);
+
+/*
+** error
+*/
+
+void				ft_error(char *str);
 
 //DEBUG OJU CUIDOA BORRAR OSTIEeeeeS
 void print_cobject(t_cobject cobj);

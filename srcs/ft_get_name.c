@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 16:14:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/11 18:12:32 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/14 18:53:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	ft_remove_backslash(char *str)
 
 char	*ft_get_name(char *extension)
 {
-	(void)extension;
 	time_t t;
 	struct tm *tm;
 	t = time(NULL);
