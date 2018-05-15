@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/15 00:29:54 by ldedier          ###   ########.fr        #
+#    Updated: 2018/05/15 22:29:18 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 parse_settings.c\
 				 parser.c\
 				 parsing.c\
+				 parse_stack.c\
 				 populate_world.c\
 				 renderer.c\
 				 rotations.c\
@@ -114,7 +115,7 @@ $(LIBSDL2):
 $(BINDIR)/$(NAME): $(OBJECTS) $(LIBSDL2)
 	@make -C $(LIBFTDIR)
 	@make -C $(LIBMATDIR) 
-	$(CC) -o $@ $^ $(LFLAGS) -fsanitize=address
+	$(CC) -o $@ $^ $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 	@install_name_tool -change /usr/local/lib/libSDL2-2.0.0.dylib \
 		$(LIBSDL2) $(NAME)

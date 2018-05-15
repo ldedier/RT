@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 00:34:20 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/15 01:21:26 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/15 22:24:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,69 +16,9 @@ void		ft_init_parser(t_parser *parser)
 {
 	parser->nb_lines = 0;
 	parser->tag_stack = NULL;
-}
-
-int		ft_parse_tag(char **line, char **tag, char **attribute)
-{
-	int		i;
-	int		length;
-	char	*str;
-	int		ret;
-	int		start;
-
-	ret = -1;
-	str = *line;
-
-	i = 0;
-	while (str[i] && str[i] != '<')
-		i++;
-	if (str[i])
-	{
-		ret = STACK;
-		i++;
-		if (str[i] == '/')
-		{
-			i++;
-			ret = POP;
-		}
-		start = i;
-		while (str[i] && (str[i] != ' ' && str[i] != '>'))
-			i++;
-		length = i - start;
-		*tag = ft_strndup(&(str[start]), length);
-		if (str[i] == ' ')
-		{
-			while (str[i] && str[i] != '"')
-				i++;
-			i++;
-			start = i;
-			while (str[i] && str[i] != '"')
-				i++;
-			length = i - start;
-			*attribute = ft_strndup(&(str[start]), length);
-		}
-	}
-	*(line) += i;
-	return (ret);
-}
-
-void	ft_process_tag_stack(t_parser *parser)
-{
-	char *str;
-
-	if (parser->op == POP)
-	{
-		str = (char *)(ft_lstpop(&(parser->tag_stack)));
-		if (strcmp(parser->tag, str))
-		{
-			ft_dprintf(2, "line %d: expected ending tag %s instead of %s\n", 
-					parser->nb_lines, str, parser->tag);
-			exit(1);
-		}
-	}
-	else if (parser->op == STACK)
-		ft_lstadd(&(parser->tag_stack),
-				ft_lstnew_ptr(parser->tag, sizeof(parser->tag)));
+	parser->attribute = NULL;
+	parser->tag = NULL;
+	parser->parse_enum = e_parse_scene;
 }
 
 void	ft_process_parsing_pos(t_parser *parser, t_world *world, char *line)
@@ -87,8 +27,18 @@ void	ft_process_parsing_pos(t_parser *parser, t_world *world, char *line)
 
 	if (parser->parse_enum == e_parse_camera)
 		pos = &(world->cam->o);
+	else if (parser->parse_enum == e_parse_object)
+		pos = &(world->cobjlist->cobject->objlist->object->o);
+	else if(parser->parse_enum == e_parse_cobject)
+		pos = &(world->cobjlist->cobject->o);
+	else if (parser->parse_enum == e_parse_light)
+		pos = &(world->lights[world->nlights - 1].o);
 	else
-		pos = &(parser->object.o);
+	{
+		ft_dprintf(2, "line %d: current object can not have positionXYZ tag\n",
+					parser->nb_lines);
+		exit(1);
+	}
 	read_double(&line, &(pos->x));
 	read_double(&line, &(pos->y));
 	read_double(&line, &(pos->z));
@@ -96,79 +46,272 @@ void	ft_process_parsing_pos(t_parser *parser, t_world *world, char *line)
 	ft_process_tag_stack(parser);
 }
 
-
 void	ft_process_parsing_rot(t_parser *parser, t_world *world, char *line)
 {
-	t_point3d	*pos;
+	t_point3d	*rot;
 
 	if (parser->parse_enum == e_parse_camera)
-		pos = &(world->cam->rotation);
+		rot = &(world->cam->rotation);
+	else if (parser->parse_enum == e_parse_object)
+		rot = &(world->cobjlist->cobject->objlist->object->r);
+	else if(parser->parse_enum == e_parse_cobject)
+		rot = &(world->cobjlist->cobject->r);
+	else if (parser->parse_enum == e_parse_light)
+		rot = &(world->lights[world->nlights - 1].v);
 	else
-		pos = &(parser->object.o);
-	read_double(&line, &(pos->x));
-	read_double(&line, &(pos->y));
-	read_double(&line, &(pos->z));
+	{
+		ft_dprintf(2, "line %d: current object can not have rotationXYZ tag\n",
+					parser->nb_lines);
+		exit(1);
+	}
+	read_double(&line, &(rot->x));
+	read_double(&line, &(rot->y));
+	read_double(&line, &(rot->z));
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
 	ft_process_tag_stack(parser);
+}
+
+void	ft_process_parsing_scale(t_parser *parser, t_world *world, char *line)
+{
+	t_point3d	*scale;
+
+	if (parser->parse_enum == e_parse_object)
+		scale = &(world->cobjlist->cobject->objlist->object->s);
+	else if(parser->parse_enum == e_parse_cobject)
+		scale = &(world->cobjlist->cobject->s);
+	else
+	{
+		ft_dprintf(2, "line %d: current object can not have rotationXYZ tag\n",
+					parser->nb_lines);
+		exit(1);
+	}
+	read_double(&line, &(scale->x));
+	read_double(&line, &(scale->y));
+	read_double(&line, &(scale->z));
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_give_default_characteristics(t_object *object)
+{
+	if (object->intersect_func == intersect_sphere)
+		object->object_union.sphere.radius = 1;
+	else if (object->intersect_func == intersect_cylinder)
+		object->object_union.cylinder.radius = 1;
+	else if(object->intersect_func == intersect_cone)
+		object->object_union.cone.angle = M_PI / 4;
 }
 
 void	ft_process_parsing_object_start(t_parser *parser, t_world *world)
 {
+	t_object *object;
+	if (parser->parse_enum != e_parse_cobject)
+	{
+		printf("%d\n", parser->parse_enum);
+			ft_dprintf(2, "line %d: can only declare object inside cobject\n",
+					parser->nb_lines);
+			exit(1);
+	}
 	parser->parse_enum = e_parse_object;
-	(void)world;
+	if (!(object = ft_new_object(*(world->cobjlist->cobject))))
+		ft_error("could not malloc object");
+	if (!ft_strcmp(parser->attribute, "sphere"))
+		object->intersect_func = intersect_sphere;
+	else if (!ft_strcmp(parser->attribute, "cone"))
+		object->intersect_func = intersect_cone;
+	else if (!ft_strcmp(parser->attribute, "cylinder"))
+		object->intersect_func = intersect_cylinder;
+	else if (!ft_strcmp(parser->attribute, "plane"))
+		object->intersect_func = intersect_plane;
+	else
+	{
+		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines, 
+			parser->attribute);
+		exit(1);
+	}
+	ft_give_default_characteristics(object);
+	add_obj(&(world->cobjlist->cobject->objlist), object);
 
 }
 
 void	ft_process_parsing_cobject_start(t_parser *parser, t_world *world)
 {
+	t_cobject *cobject;
+	if (!(cobject = ft_new_cobject()))
+		ft_error("could not malloc cobject");
+	world->selected_cobject = cobject;
+	add_cobj(&(world->cobjlist), cobject);
 	parser->parse_enum = e_parse_cobject;
-	(void)world;
-}
-
-
-void	ft_process_parsing_object_end(t_parser *parser, t_world *world)
-{
-	(void)world;
-	(void)parser;
-}
-
-void	ft_process_parsing_cobject_end(t_parser *parser, t_world *world)
-{
-	(void)world;
-	(void)parser;
 }
 
 void	ft_process_parsing_light_start(t_parser *parser, t_world *world)
 {
-	parser->parse_enum = e_parse_cobject;
-	(void)world;
+	parser->parse_enum = e_parse_light;
+	
+	if (world->nlights++ > MAX_LIGHTS)
+	{
+		ft_dprintf(2,"line %d: too much lights in the scene (max = %d)\n",
+				parser->nb_lines, MAX_LIGHTS);
+		exit(1);
+	}
+	ft_init_light(&(world->lights[world->nlights - 1]));
 }
 
-
-void	ft_process_parsing_light_end(t_parser *parser, t_world *world)
+void	ft_process_parsing_ambient_start(t_parser *parser, t_world *world)
 {
+	parser->parse_enum = e_parse_ambient;
 	(void)world;
-	(void)parser;
 }
 
-void	ft_process_parsing_color(t_parser *parser, char *line)
+void	ft_parse_color(t_parser *parser, t_world *world, char *line)
 {
 	t_color	*color;
 	int col;
 
-	if (parser->parse_enum == e_parse_cobject)
-		color = &(parser->cobject.c);
-	else if (parser->parse_enum == e_parse_object)
-		color = &(parser->object.c);
-//	else
-//		exit(1);
+	if (parser->parse_enum == e_parse_object)
+		color = &(world->cobjlist->cobject->objlist->object->c);
+	else if (parser->parse_enum == e_parse_cobject)
+		color = &(world->cobjlist->cobject->c);
+	else if (parser->parse_enum == e_parse_light)
+		color = &(world->lights[world->nlights - 1].c);
+	else if (parser->parse_enum == e_parse_ambient)
+		color = &(world->ambient.color);
+	else
+	{
+		ft_dprintf(2, "line %d: current object can not have rotationXYZ tag\n",
+				parser->nb_lines);
+		exit(1);
+	}
 	read_hex(&line, &(col));
 	*color = get_color(col);
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
 	ft_process_tag_stack(parser);
+}
 
-	(void)line;
-	(void)parser;
+void	ft_parse_angle(t_parser* parser, t_world *world, char *line)
+{
+	double *angle;
+
+	if (parser->parse_enum == e_parse_object)
+		angle = &(world->cobjlist->cobject->objlist->object\
+				->object_union.cone.angle);
+	else if (parser->parse_enum == e_parse_light)
+		angle = &(world->lights[world->nlights - 1].angle);
+	else
+	{
+		ft_dprintf(2, "line %d: current object can not have angle tag\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	read_double(&line, angle);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
+{
+	double *radius;
+
+	if (parser->parse_enum == e_parse_object &&
+		   	!ft_strcmp("sphere", parser->attribute))
+		radius = &(world->cobjlist->cobject->objlist->object\
+				->object_union.sphere.radius);
+	else if (parser->parse_enum == e_parse_object &&
+		   	!ft_strcmp("cylinder", parser->attribute))
+		radius = &(world->cobjlist->cobject->objlist->object\
+				->object_union.cylinder.radius);
+	else
+	{
+		ft_dprintf(2, "line %d: current object does not have radius tag",
+				parser->nb_lines);
+		exit(1);
+	}
+	read_double(&line, radius);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_parse_src(t_parser *parser, t_world *world, char *line)
+{
+	(void)world;
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_parse_refraction(t_parser *parser, t_world *world, char *line)
+{
+	double *refraction;
+
+	if (parser->parse_enum == e_parse_object)
+		refraction = &(world->cobjlist->cobject->objlist->object->refract);
+	else if(parser->parse_enum == e_parse_cobject)
+		refraction = &(world->cobjlist->cobject->refract);
+	else
+	{
+		ft_dprintf(2, "line %d: current object does not have refraction tag",
+					parser->nb_lines);
+		exit(1);
+	}
+	read_double(&line, refraction);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_parse_transparency(t_parser *parser, t_world *world, char *line)
+{
+	double *transparency;
+
+	if (parser->parse_enum == e_parse_object)
+		transparency = &(world->cobjlist->cobject->objlist->object->transp);
+	else if(parser->parse_enum == e_parse_cobject)
+		transparency = &(world->cobjlist->cobject->transp);
+	else
+	{
+		ft_dprintf(2,
+			"line %d: current object does not have transparency tag\n",
+					parser->nb_lines);
+		exit(1);
+	}
+	read_double(&line, transparency);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_parse_shine(t_parser *parser, t_world *world, char *line)
+{
+	double *shine;
+
+	if (parser->parse_enum == e_parse_object)
+		shine = &(world->cobjlist->cobject->objlist->object->shine);
+	else if(parser->parse_enum == e_parse_cobject)
+		shine = &(world->cobjlist->cobject->shine);
+	else
+	{
+		ft_dprintf(2, "line %d: current object does not have shine tag",
+					parser->nb_lines);
+		exit(1);
+	}
+	read_double(&line, shine);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_parse_intensity(t_parser *parser, t_world *world, char *line)
+{
+	double	*intensity;
+	if (parser->parse_enum == e_parse_light)
+		intensity = &(world->lights[world->nlights - 1].intensity);
+	else if (parser->parse_enum == e_parse_ambient)
+		intensity = &(world->ambient.in);
+	else
+	{
+		ft_dprintf(2, "line %d: current object does not have intensity tag",
+				parser->nb_lines);
+		exit(1);
+	}
+	read_double(&line, intensity);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
 }
 
 void	ft_process_parsing(t_parser *parser, t_world *world, char *line)
@@ -176,50 +319,38 @@ void	ft_process_parsing(t_parser *parser, t_world *world, char *line)
 	ft_process_tag_stack(parser);
 	if (parser->op == STACK)
 	{
-		if (!ft_strcmp(parser->tag, "camera"))
-			parser->parse_enum = e_parse_camera;
-		else if (!ft_strcmp(parser->tag, "positionXYZ"))
+		if (!ft_strcmp(parser->tag, "positionXYZ"))
 			ft_process_parsing_pos(parser, world, line);
 		else if (!ft_strcmp(parser->tag, "rotationXYZ"))
 			ft_process_parsing_rot(parser, world, line);
+		else if (!ft_strcmp(parser->tag, "scaleXYZ"))
+			ft_process_parsing_scale(parser, world, line);
+		else if (!ft_strcmp(parser->tag, "camera"))
+			parser->parse_enum = e_parse_camera;
 		else if (!ft_strcmp(parser->tag, "object"))
-		{
-
-		}
+			ft_process_parsing_object_start(parser, world);
 		else if (!ft_strcmp(parser->tag, "cobject"))
-		{
-
-		}
-		else if (!ft_strcmp(parser->tag, "radius"))
-		{
-
-		}
-		else if (!ft_strcmp(parser->tag, "angle"))
-		{
-
-		}
-		else if (!ft_strcmp(parser->tag, "light"))
-		{
-
-		}
-		else if (!ft_strcmp(parser->tag, "angle"))
-		{
-
-		}
-		else if (!ft_strcmp(parser->tag, "src"))
-		{
-
-		}
-		else if (!ft_strcmp(parser->tag, "color"))
-			ft_process_parsing_color(parser, line);
-		else if (!ft_strcmp(parser->tag, "lightlist"))
-		{
-
-		}
+			ft_process_parsing_cobject_start(parser, world);
 		else if (!ft_strcmp(parser->tag, "ambientlight"))
-		{
-
-		}
+			ft_process_parsing_ambient_start(parser, world);
+		else if (!ft_strcmp(parser->tag, "light"))
+			ft_process_parsing_light_start(parser, world);
+		else if (!ft_strcmp(parser->tag, "radius"))
+			ft_parse_radius(parser, world, line);
+		else if (!ft_strcmp(parser->tag, "angle"))
+			ft_parse_angle(parser, world, line);
+		else if (!ft_strcmp(parser->tag, "src"))
+			ft_parse_src(parser, world, line);
+		else if (!ft_strcmp(parser->tag, "color"))
+			ft_parse_color(parser, world, line);
+		else if (!ft_strcmp(parser->tag, "refraction"))
+			ft_parse_refraction(parser, world, line);
+		else if (!ft_strcmp(parser->tag, "transparency"))
+			ft_parse_transparency(parser, world, line);
+		else if (!ft_strcmp(parser->tag, "shine"))
+			ft_parse_shine(parser, world, line);
+		else if (!ft_strcmp(parser->tag, "intensity"))
+			ft_parse_intensity(parser, world, line);
 		else if (strcmp(parser->tag, "scene") &&
 				strcmp(parser->tag, "objlist") &&
 				strcmp(parser->tag, "lightlist"))
@@ -231,20 +362,18 @@ void	ft_process_parsing(t_parser *parser, t_world *world, char *line)
 	}
 	else
 	{
-		if (!ft_strcmp(parser->tag, "objet"))
-			ft_process_parsing_object_end(parser, world);
-		else if (!ft_strcmp(parser->tag, "cobject"))
-			ft_process_parsing_cobject_end(parser, world);
+		if (!ft_strcmp(parser->tag, "object"))
+			parser->parse_enum = e_parse_cobject;
+		else
+			parser->parse_enum = e_parse_scene;
+	//	free(parser->tag);
 	}
 }
 
 int	parse_line_new(char *line, t_world *world, t_parser *parser)
 {
 	parser->nb_lines++;
-	parser->attribute = NULL;
-	parser->tag = NULL;
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	//printf("%s %s %d\n", tag, bis, ret);
 	ft_process_parsing(parser, world, line);
 	return (0);
 }

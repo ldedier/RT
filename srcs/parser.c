@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 22:44:45 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/15 00:29:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/15 23:13:07 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,21 @@ int			read_double(char **line, double *to)
 
 t_cobject		*ft_new_cobject(void)
 {
-	t_cobject *res;
+	t_cobject *cobject;
 
-	if (!(res = ft_memalloc(sizeof(t_cobject))))
+	if (!(cobject = ft_memalloc(sizeof(t_cobject))))
 		return (NULL);
-	res->objlist = NULL;
-	return (res);
+	cobject->objlist = NULL;
+	cobject->o = ft_new_vec3(0, 0, 0);
+	cobject->r = ft_new_vec3(0, 0, 0);
+	cobject->s = ft_new_vec3(1, 1, 1);
+	cobject->c = get_color(0xFFFFFF);
+	cobject->transp = 0;
+	cobject->refract = 0;
+	cobject->reflect = 0;
+	cobject->shine = 0;
+	cobject->objlist = NULL;
+	return (cobject);
 }
 
 void	ft_add_obj_to_cobj(t_cobject *cobject, t_object *object)
@@ -90,21 +99,12 @@ void	ft_add_obj_to_cobj(t_cobject *cobject, t_object *object)
 	add_obj(&(cobject->objlist), object);
 }
 
-void		ft_init_cobject(t_cobject *cobject)
+t_object	*ft_new_object(t_cobject cobject)
 {
-	cobject->o = ft_new_vec3(0, 0, 0);
-	cobject->r = ft_new_vec3(0, 0, 0);
-	cobject->s = ft_new_vec3(1, 1, 1);
-	cobject->c = get_color(0xFF0000);
-	cobject->transp = 0;
-	cobject->refract = 0;
-	cobject->reflect = 0;
-	cobject->shine = 0;
-	cobject->objlist = NULL;
-}
+	t_object *object;
 
-void		ft_init_object(t_cobject cobject, t_object *object)
-{
+	if (!(object = ft_memalloc(sizeof(t_object))))
+		return (NULL);
 	object->o = ft_new_vec3(0, 0, 0);
 	object->r = ft_new_vec3(0, 0, 0);
 	object->s = ft_new_vec3(1, 1, 1);
@@ -113,7 +113,19 @@ void		ft_init_object(t_cobject cobject, t_object *object)
 	object->refract = cobject.refract;
 	object->reflect = cobject.reflect;
 	object->shine = cobject.shine;
+	return (object);
 }
+
+void	ft_init_light(t_light *light)
+{
+	light->o = ft_new_vec3(0, 0, 0);
+	light->v = ft_new_vec3(0, 1, 0);
+	light->c = get_color(0xFFFFFF);
+	light->intensity = 1;
+	light->angle = M_PI / 4;
+}
+
+
 
 void		ft_fake_objects(t_world *world)
 {
@@ -185,6 +197,33 @@ void		ft_fake_objects(t_world *world)
 	world->selected_cobject = cobj;
 }
 
+void	ft_free_parser(t_parser *parser)
+{
+	int i;
+	t_list **ptr;
+	t_list *tmp;
+
+	i = 0;
+	if (parser->attribute != NULL)
+		free(parser->attribute);
+	if (parser->tag != NULL)
+		free(parser->tag);
+	ptr = &(parser->tag_stack);
+	while (*ptr)
+	{
+		tmp = *ptr;
+		free(tmp->content);
+		free(tmp);
+		*ptr = (*ptr)->next;
+		i++;
+	}
+	if (i)
+	{
+		ft_dprintf(2, "some opening tags are not closed\n");
+		exit(1);
+	}
+}
+
 int			read_world(t_world *world, char *file)
 {
 	char	*line;
@@ -194,7 +233,6 @@ int			read_world(t_world *world, char *file)
 	t_parser parser;
 
 	ft_init_parser(&parser);
-	ft_fake_objects(world);
 	if ((fd = open(file, O_RDONLY)) == -1)
 		return (-1);
 	line = NULL;
@@ -206,7 +244,9 @@ int			read_world(t_world *world, char *file)
 			close(fd);
 			return (pl_ret);
 		}
+		free(line);
 	}
+	ft_free_parser(&parser);
 	close(fd);
 	if (gnl_ret == -1)
 		return (-2);

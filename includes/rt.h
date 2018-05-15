@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/15 00:52:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/15 20:12:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -335,15 +335,14 @@ typedef enum			e_parse_enum
 	e_parse_camera,
 	e_parse_object,
 	e_parse_cobject,
-	e_parse_light
+	e_parse_light,
+	e_parse_ambient,
+	e_parse_scene
 }						t_parse_enum;
 
 
 typedef struct			s_parser
 {
-	t_cobject			cobject;
-	t_object			object;
-	t_camera			camera;
 	t_list				*tag_stack;
 	char				*tag;
 	char				*attribute;
@@ -379,7 +378,9 @@ void					add_obj(t_objlist **lst, t_object *object);
 void					add_cobj(t_cobjlist **lst, t_cobject *cobject);
 void					del_clst(t_cobjlist **lst);
 void					del_lst(t_objlist **lst);
-
+t_object				*ft_new_object(t_cobject cobject);
+t_cobject				*ft_new_cobject(void);
+void					ft_init_light(t_light *light);
 /*
 ** parser
 */
@@ -397,7 +398,8 @@ void					ft_process_parsing_pos(t_parser *prsr, t_world *world, char *line);
 void					ft_process_parsing_rot(t_parser *prsr, t_world *world, char *line);
 int						parse_line_new(char *line, t_world *world, t_parser *parser);
 void					ft_init_parser(t_parser *parser);
-
+int						ft_parse_tag(char **line, char **tag, char **attribute);
+void					ft_process_tag_stack(t_parser *parser);
 /*
 **vectors
 */
@@ -502,8 +504,9 @@ void				ft_error(char *str);
 //DEBUG OJU CUIDOA BORRAR OSTIEeeeeS
 void print_cobject(t_cobject cobj);
 void print_clist(t_cobjlist *lst);
-void print_list(t_objlist *lst, int i);
+void print_list(t_objlist *lst);
 void print_object(t_object obj);
 void print_lights(t_world *world);
+void print_camera(t_camera *cam);
 
 #endif

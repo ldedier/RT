@@ -6,38 +6,41 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 22:42:29 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/13 15:39:23 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/15 16:23:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	add_cobj(t_cobjlist **lst, t_cobject *cobject)
+void	add_obj(t_objlist **lst, t_object *object)
 {
-	t_cobjlist	*prev;
-	t_cobjlist	*first;
+	t_objlist *new;
 
-	prev = *lst;
-	first = *lst;
-	while (*lst != NULL)
+	if (!(new = malloc(sizeof(t_objlist))))
 	{
-		prev = *lst;
-		*lst = (*lst)->next;
-	}
-	if (!(*lst = malloc(sizeof(t_cobjlist))))
-	{
-		perror("cant malloc new object");
+		perror("cant malloc new node");
 		exit(errno);
 	}
-	if (first == NULL)
-		first = *lst;
-	(*lst)->next = NULL;
-	(*lst)->cobject = cobject;
-	if (prev != NULL)
-		prev->next = *lst;
-	*lst = first;
+	new->object = object;
+	new->next = *lst;
+	*lst = new;
 }
 
+void	add_cobj(t_cobjlist **lst, t_cobject *cobject)
+{
+	t_cobjlist *new;
+
+	if (!(new = malloc(sizeof(t_cobjlist))))
+	{
+		perror("cant malloc new node");
+		exit(errno);
+	}
+	new->cobject = cobject;
+	new->next = *lst;
+	*lst = new;
+}
+
+/*
 void	add_obj(t_objlist **lst, t_object *object)
 {
 	t_objlist	*prev;
@@ -63,7 +66,34 @@ void	add_obj(t_objlist **lst, t_object *object)
 		prev->next = *lst;
 	*lst = first;
 }
+*/
+/*
+void	add_cobj(t_cobjlist **lst, t_cobject *cobject)
+{
+	t_cobjlist	*prev;
+	t_cobjlist	*first;
 
+	prev = *lst;
+	first = *lst;
+	while (*lst != NULL)
+	{
+		prev = *lst;
+		*lst = (*lst)->next;
+	}
+	if (!(*lst = malloc(sizeof(t_cobjlist))))
+	{
+		perror("cant malloc new object");
+		exit(errno);
+	}
+	if (first == NULL)
+		first = *lst;
+	(*lst)->next = NULL;
+	(*lst)->cobject = cobject;
+	if (prev != NULL)
+		prev->next = *lst;
+	*lst = first;
+}
+*/
 void	del_list(t_objlist **lst)
 {
 	t_objlist	*aux;

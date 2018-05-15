@@ -1,46 +1,56 @@
 <scene>
 	<camera>
-		<positionXYZ>120 45 256</positionXYZ>
+		<positionXYZ>0 0 0</positionXYZ>
 		<rotationXYZ>0 0 0</rotationXYZ>
 	</camera>
 	<objlist>
-		<cobject>
-			<positionXYZ>120 45 256</positionXYZ>
-			<rotationXYZ>0 0 0</rotationXYZ>
-			<object name="sphere">
-				<radius>10</radius>
-				<positionXYZ>120 45 256</positionXYZ>
-				<rotationXYZ>0 0 0</rotationXYZ>
-				<color>0xFF0000</color>
-			</object>
-			<object name="cylinder">
-				<radius> 10 </radius>
-				<positionXYZ>120 45 256</positionXYZ>
-				<rotationXYZ>0 0 0</rotationXYZ>
-				<color> 0x00FF00 </color>
-			</object>
+		<cobject type="obj">
+			<src>objs/teapot.obj</src>
 		</cobject>
 		<cobject>
 			<object name="cone">
 				<angle>0.12</angle>
 				<color>0xff0000</color>
-				<positionXYZ>120 45 256</positionXYZ>
+				<positionXYZ>0 0 0</positionXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
 			</object>
 		</cobject>
-		<cobject type="obj">
-			<src>objs/teapot.obj</src>
+		<cobject>
+			<positionXYZ>0 0 10</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<refraction>1</refraction>
+			<object name="sphere">
+				<radius>1</radius>
+				<positionXYZ>0 2 0</positionXYZ>
+				<rotationXYZ>0 0 0</rotationXYZ>
+				<color>0xFF0000</color>
+			</object>
+			<object name="cylinder">
+				<radius> 1 </radius>
+				<positionXYZ>0 0 0</positionXYZ>
+				<scaleXYZ>1 1 1</scaleXYZ>
+				<rotationXYZ>0 0 0</rotationXYZ>
+				<shine>0.5</shine>
+				<refraction>125</refraction>
+				<transparency>12</transparency>
+				<color> 0x00FF00 </color>
+			</object>
 		</cobject>
 	</objlist>
 	<lightlist>
 		<light type ="diffuse">
-			<color>0xFF0000</color>
-			<positionXYZ>120 45 256</positionXYZ>
+			<color>0xFFFFFF</color>
+			<positionXYZ>0 -5 0</positionXYZ>
 			<rotationXYZ>0 0 0</rotationXYZ>
+			<angle>1.2</angle>
+			<intensity>0.7</intensity>
 		</light>
 		<light type="spotlight">
 			<color>0xFF0000</color>
 		</light>
 	</lightlist>
-	<ambientlight>0.485</ambientlight>
+	<ambientlight>
+		<intensity>0.485</intensity>
+		<color>0xFFFFFF</color>
+	</ambientlight>
 </scene>
