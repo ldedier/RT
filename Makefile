@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/16 03:46:09 by ldedier          ###   ########.fr        #
+#    Updated: 2018/05/16 22:43:54 by lcavalle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,8 +44,8 @@ LIBSDL2_LIBDIR = build/.libs
 
 SRCS_NO_PREFIX = camera_rotations.c\
 				 colors.c\
-				 debug.c\
 				 input.c\
+				 debug.c\
 				 intersections.c\
 				 lights.c\
 				 normals.c\
@@ -85,7 +85,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_new_image.c\
 				 ft_get_name.c\
 				 ft_export.c\
-				 errors.c
+				 errors.c \
+				 lights_toon.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 

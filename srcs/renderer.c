@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/11 17:27:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/17 00:03:20 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 	t_shadowsfree	aux;
 	t_color			reflect_c;
 	t_color			fogged_c;
+	t_color			illuminated_c;
 	double			fog;
 
 	if ((hit = trace(ray, world->cobjlist)))
@@ -76,8 +77,11 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		fog = fog > 1.0 ? 1.0 : fog;
 		castshadows(world, hit, srays);
 		aux = (t_shadowsfree){.srays = srays, .nlights = world->nlights};
-		fogged_c = interpole_color(fog, illuminate(world, hit, srays, fast),
-				world->fog.color);
+		if (SHADER == 1)
+			illuminated_c = illuminate(world, hit, srays, fast);
+		else if (SHADER == 2)
+			illuminated_c = illuminate_toon(world, hit, srays, fast);
+		fogged_c = interpole_color(fog, illuminated_c, world->fog.color);
 		if (!fast && bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON)
 		{
 			reflect_c = ray_color(newray(translate_vec(hit->point,

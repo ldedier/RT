@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/16 22:13:52 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/17 00:02:39 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,10 @@ static t_illum	getillum(t_world *world, t_hit *hit, t_line **srays)
 			light = world->lights[i];
 			if (light.type != 'd')
 				light.intensity = 1.0 * (1.0 - world->fog.in) /
-					sqrt(magnitude(newvector(hit->point, light.o)));
+					sqrt(magnitude(newvector(hit->point, light.o))) * 3;
 			newillu = dotprod(hit->normal, srays[i]->v) *
 				light.intensity / world->nlights;
-			newillu = newillu > 0 ? newillu : newillu * -1;
-			newillu = newillu > 1.0 ? 1.0 : newillu;
+			newillu = newillu < 0.6 ? 0.45 : 0.85;
 			illu.in += newillu;
 			illu.color = add_colors(
 					illu.color, scale_color(light.c, newillu));
@@ -80,6 +79,7 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_line **srays, t_color lc)
 				(1.0 - world->fog.in);
 			newsh = dotprod(hit->bounce, srays[i]->v);
 			newsh = newsh > 0 ? pow(newsh, PHONG * light.intensity) : 0;
+			newsh = newsh < 0.6 ? 0.2 : 0.85;
 			shine.color = add_colors(
 					shine.color, scale_color(light.c, newsh));
 			shine.in = shine.in + newsh > 1.0 ? 1.0 : shine.in + newsh;
@@ -87,7 +87,8 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_line **srays, t_color lc)
 	return (shine);
 }
 
-t_color			illuminate(t_world *world, t_hit *hit, t_line **srays, int fast)
+t_color			illuminate_toon(t_world *world, t_hit *hit, t_line **srays,
+		int fast)
 {
 	t_illum	illu;
 	t_illum	shine;
