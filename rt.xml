@@ -96,7 +96,7 @@
 		</light>
 	</lightlist>
 	<ambientlight>
-		<intensity>0.485</intensity>
+		<intensity>0.37</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
 </scene>

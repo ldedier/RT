@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/16 21:13:26 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/17 00:44:07 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@
 # define FAST_VRES 120
 # define HRES 1600
 # define VRES 1200
-# define PROGRESS_BAR_HEIGHT 100
+# define PROGRESS_BAR_HEIGHT 20
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
+# define SHADER 2
 
 # define AXIS_X (t_point3d){.x=1.0,.y=0.0,.z=0.0}
 # define AXIS_Y (t_point3d){.x=0.0,.y=1.0,.z=0.0}
@@ -65,25 +66,13 @@
 # define CAMERA_LOOK (t_point3d){.x=-0.0,.y=0.0,.z=1.0}
 # define CAMERA_UP (t_point3d){.x=-0.0,.y=-1.0,.z=0.0}
 
-# define KEY_UP 49
-# define KEY_DOWN 257
-# define KEY_LEFT 0
-# define KEY_RIGHT 2
-# define KEY_FORWARD 13
-# define KEY_BACKWARD 1
-# define KEY_RESET 15
-# define KEY_TLEFT 124
-# define KEY_TRIGHT 123
-# define KEY_ABOVE 126
-# define KEY_BELOW 125
-
 # define MAX_LIGHTS 10
 # define AMBIENT_LIGHT 0.17
 # define AMBIENT_LIGHT_COL get_color(0xFFFFFF)
 # define PHONG 30.0
 # define EPSILON 0.00001
 # define SPEED 0.1
-# define MAX_BOUNCE 2
+# define MAX_BOUNCE 20
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
@@ -468,7 +457,10 @@ t_color					render_pixel(t_world *world, t_pixel pix, int fast);
 void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
 t_hit					*trace(t_line line, t_cobjlist *cobjlist);
 void					castshadows(t_world *w, t_hit *h, t_line **rays);
-t_color					illuminate(t_world *world, t_hit *hit, t_line **srays, int fast);
+t_color					illuminate(t_world *world, t_hit *hit,
+		t_line **srays, int fast);
+t_color					illuminate_toon(t_world *world, t_hit *hit,
+		t_line **srays, int fast);
 
 /*
 **paint window

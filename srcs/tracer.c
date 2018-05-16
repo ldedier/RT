@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/13 23:19:00 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/17 00:42:13 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_hit				*retfree(int r, t_hit **hit)
 {
-	if (!r)
+	if (r != 1)
 	{
 		free(*hit);
 		*hit = NULL;
@@ -42,34 +42,37 @@ void				ft_transform_hit_back(t_hit *hit)
 
 t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 {
-//	static int i = 0;
 	t_hit		newhit;
+	t_hit		*hit;
 	t_cobject	cobj;
 	t_object	obj;
-	t_hit		*hit;
-	hit = malloc(sizeof(t_hit));
+	t_line		tmp;
+   
+	tmp = line;
+	hit = ft_memalloc(sizeof(t_hit));
 	hit->t = -1;
-	t_line tmp = line;
 	while (cobjlist)
 	{
 		cobj = *(cobjlist->cobject);
-		//printf("ouai%d \n", i++);
 		while(cobj.objlist)
 		{
 			obj = *(cobj.objlist->object);
 			line = ft_transform_line(obj, tmp);
-			if (obj.intersect_func(line, obj, &newhit) && (newhit.t > 0 && (newhit.t < hit->t || hit->t == -1)))
+			if ((obj.intersect_func(line, obj, &newhit)) &&
+					(newhit.t > 0 && (newhit.t < hit->t || hit->t == -1)))
 			{
-				newhit.obj = obj;
-				ft_transform_hit_back(&newhit);
-				*hit = newhit;
-				hit->bounce = reflection(hit->normal, tmp.v);
+					newhit.obj = obj;
+					ft_transform_hit_back(&newhit);
+					*hit = newhit;
 			}
 			cobj.objlist = cobj.objlist->next;
 		}
 		cobjlist = cobjlist->next;
 	}
-	if (hit->t > 0)
+	if (dotprod(newvector(line.o, hit->point), line.v) > 0 && hit->t > 0)
+	{
+		hit->bounce = reflection(hit->normal, tmp.v);
 		return (retfree(1, &hit));
+	}
 	return (retfree(0, &hit));
 }
