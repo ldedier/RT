@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/16 03:05:34 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/16 03:34:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -398,14 +398,45 @@ int						read_hex(char **line, int *to);
 int						read_double(char **line, double *to);
 int						parse_ambient(char *line, t_illum *rillum);
 int						parse_fog(char *line, t_illum *rillum);
-void					ft_process_parsing(t_parser *prsr, t_world *world, char *line);
-void					ft_process_parsing_pos(t_parser *prsr, t_world *world, char *line);
-void					ft_process_parsing_rot(t_parser *prsr, t_world *world, char *line);
-int						parse_line_new(char *line, t_world *world, t_parser *parser);
+void					ft_process_parsing(t_parser *prsr, t_world *world,
+						char *line);
+void					ft_process_parsing_pos(t_parser *prsr,
+						t_world *world, char *line);
+void					ft_process_parsing_rot(t_parser *prsr, t_world *world,
+						char *line);
+int						parse_line_new(char *line, t_world *world,
+						t_parser *parser);
 void					ft_init_parser(t_parser *parser);
 int						ft_parse_tag(char **line, char **tag, char **attribute);
 //int						ft_parse_tag(t_parser *parser, char **line);
 void					ft_process_tag_stack(t_parser *parser);
+void					ft_parse_src(t_parser *parser, t_world *world, char *l);
+void					ft_parse_color(t_parser *pr, t_world *wld, char *l);
+void					ft_parse_transparency(t_parser *pr,
+						t_world *wld, char *l);
+void					ft_parse_shine(t_parser *p, t_world *w, char *l);
+void					ft_parse_refraction(t_parser *p, t_world *w, char *l);
+void					ft_parse_radius(t_parser *p, t_world *w, char *l);
+void					ft_parse_angle(t_parser *p, t_world *w, char *l);
+void					ft_parse_intensity(t_parser *p, t_world *w, char *l);
+void					ft_process_parsing_object_start(t_parser *p,
+						t_world *w);
+void					ft_process_parsing_cobject_start(t_parser *p,
+						t_world *w);
+void					ft_process_parsing_scale(t_parser *p, t_world *w, 
+						char *l);
+void					ft_process_parsing_scale(t_parser *p, t_world *w, 
+						char *l);
+void					ft_process_parsing_stack(t_parser *p, t_world *w, 
+						char *l);
+void					ft_process_parsing_light_start(t_parser *p, t_world *w);
+void					ft_process_parsing_ambient_start(t_parser *p,
+						t_world *w);
+void					ft_process_parsing_ambient_start(t_parser *p,
+						t_world *w);
+void					ft_process_parsing_object_attributes(t_parser *p,
+						t_object *object);
+void					ft_give_default_characteristics(t_object *object);
 /*
 **vectors
 */
