@@ -28,6 +28,7 @@
 			<refraction>1</refraction>
 			<object name="sphere">
 				<radius>1</radius>
+				<shine>1</shine>
 				<positionXYZ>0 2 0</positionXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
 				<color>0xFF0000</color>
@@ -43,17 +44,45 @@
 				<color> 0x00FF00 </color>
 			</object>
 		</cobject>
+		<cobject>
+			<positionXYZ>0 0 -20</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<object name="sphere">
+				<color>0xFFFF00</color>
+			</object>
+			<object name="sphere">
+				<positionXYZ>2 0 0</positionXYZ>
+				<color>0xFF0000</color>
+			</object>
+			<object name="sphere">
+				<positionXYZ>-2 0 0</positionXYZ>
+				<color>0xFF0000</color>
+			</object>
+			<object name="sphere">
+				<positionXYZ>0 2 0</positionXYZ>
+				<color>0xFF0000</color>
+			</object>
+			<object name="sphere">
+				<positionXYZ>0 -2 0</positionXYZ>
+				<color>0xFF0000</color>
+			</object>
+			<object name="cylinder">
+				<positionXYZ>0 4 0</positionXYZ>
+				<color>0xFF0000</color>
+			</object>
+			<object name="cylinder">
+				<positionXYZ>0 -4 0</positionXYZ>
+				<color>0xFF0000</color>
+			</object>
+		</cobject>
 	</objlist>
 	<lightlist>
-		<light type="diffuse">
+		<light type="point">
 			<color>0xFFFFFF</color>
 			<positionXYZ>0 -5 0</positionXYZ>
 			<rotationXYZ>0 0 0</rotationXYZ>
 			<angle>1.2</angle>
 			<intensity>0.7</intensity>
-		</light>
-		<light type="spotlight">
-			<color>0xFF0000</color>
 		</light>
 	</lightlist>
 	<ambientlight>

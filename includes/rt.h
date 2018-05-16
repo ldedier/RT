@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/16 03:34:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/16 16:28:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,6 +341,7 @@ typedef enum			e_parse_enum
 	e_parse_cobject,
 	e_parse_light,
 	e_parse_ambient,
+	e_parse_fog,
 	e_parse_scene
 }						t_parse_enum;
 
@@ -416,6 +417,7 @@ void					ft_parse_transparency(t_parser *pr,
 						t_world *wld, char *l);
 void					ft_parse_shine(t_parser *p, t_world *w, char *l);
 void					ft_parse_refraction(t_parser *p, t_world *w, char *l);
+void					ft_parse_reflection(t_parser *p, t_world *w, char *l);
 void					ft_parse_radius(t_parser *p, t_world *w, char *l);
 void					ft_parse_angle(t_parser *p, t_world *w, char *l);
 void					ft_parse_intensity(t_parser *p, t_world *w, char *l);

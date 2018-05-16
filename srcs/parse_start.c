@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/16 03:50:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/16 17:04:20 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,11 @@ void	ft_process_parsing_light_start(t_parser *parser, t_world *world)
 		ft_dprintf(2, "line %d: light should have a type (e.g. diffuse)");
 		exit(1);
 	}
-	if (!ft_strcmp(parser->attribute, "diffuse"))
+	if (!ft_strcmp(parser->attribute, "point"))
 		world->lights[world->nlights - 1].type = 'p';
 	else if (!ft_strcmp(parser->attribute, "spotlight"))
+		world->lights[world->nlights - 1].type = 's';
+	else if (!ft_strcmp(parser->attribute, "directional"))
 		world->lights[world->nlights - 1].type = 'd';
 	else
 	{
@@ -72,10 +74,4 @@ void	ft_process_parsing_light_start(t_parser *parser, t_world *world)
 				parser->attribute);
 		exit(1);
 	}
-}
-
-void	ft_process_parsing_ambient_start(t_parser *parser, t_world *world)
-{
-	parser->parse_enum = e_parse_ambient;
-	(void)world;
 }

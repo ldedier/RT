@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/16 03:49:41 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/16 16:36:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	ft_process_parsing_stack_2(t_parser *parser, t_world *world, char *line)
 		ft_parse_color(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "refraction"))
 		ft_parse_refraction(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "reflection"))
+		ft_parse_reflection(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "transparency"))
 		ft_parse_transparency(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "shine"))
@@ -51,7 +53,9 @@ void	ft_process_parsing_stack(t_parser *parser, t_world *world, char *line)
 	else if (!ft_strcmp(parser->tag, "cobject"))
 		ft_process_parsing_cobject_start(parser, world);
 	else if (!ft_strcmp(parser->tag, "ambientlight"))
-		ft_process_parsing_ambient_start(parser, world);
+		parser->parse_enum = e_parse_ambient;
+	else if (!ft_strcmp(parser->tag, "fog"))
+		parser->parse_enum = e_parse_fog;
 	else if (!ft_strcmp(parser->tag, "light"))
 		ft_process_parsing_light_start(parser, world);
 	else if (!ft_strcmp(parser->tag, "radius"))

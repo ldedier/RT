@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/16 03:49:20 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/16 16:38:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	ft_parse_color(t_parser *parser, t_world *world, char *line)
 		color = &(world->lights[world->nlights - 1].c);
 	else if (parser->parse_enum == e_parse_ambient)
 		color = &(world->ambient.color);
+	else if (parser->parse_enum == e_parse_fog)
+		color = &(world->fog.color);
 	else
 	{
 		ft_dprintf(2, "line %d: current object can not have rotationXYZ tag\n",

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:27 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/16 03:49:28 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/16 16:58:55 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,30 @@ void	ft_parse_refraction(t_parser *parser, t_world *world, char *line)
 		refraction = &(world->cobjlist->cobject->refract);
 	else
 	{
-		ft_dprintf(2, "line %d: current object does not have refraction tag",
+		ft_dprintf(2, "line %d: current object does not have refraction tag\n",
 				parser->nb_lines);
 		exit(1);
 	}
 	read_double(&line, refraction);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_parse_reflection(t_parser *parser, t_world *world, char *line)
+{
+	double *reflection;
+
+	if (parser->parse_enum == e_parse_object)
+		reflection = &(world->cobjlist->cobject->objlist->object->reflect);
+	else if (parser->parse_enum == e_parse_cobject)
+		reflection = &(world->cobjlist->cobject->reflect);
+	else
+	{
+		ft_dprintf(2, "line %d: current object does not have reflexion tag\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	read_double(&line, reflection);
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
 	ft_process_tag_stack(parser);
 }
@@ -61,7 +80,7 @@ void	ft_parse_shine(t_parser *parser, t_world *world, char *line)
 		shine = &(world->cobjlist->cobject->shine);
 	else
 	{
-		ft_dprintf(2, "line %d: current object does not have shine tag",
+		ft_dprintf(2, "line %d: current object does not have shine tag\n",
 				parser->nb_lines);
 		exit(1);
 	}
@@ -78,9 +97,11 @@ void	ft_parse_intensity(t_parser *parser, t_world *world, char *line)
 		intensity = &(world->lights[world->nlights - 1].intensity);
 	else if (parser->parse_enum == e_parse_ambient)
 		intensity = &(world->ambient.in);
+	else if (parser->parse_enum == e_parse_fog)
+		intensity = &(world->fog.in);
 	else
 	{
-		ft_dprintf(2, "line %d: current object does not have intensity tag",
+		ft_dprintf(2, "line %d: current object does not have intensity tag\n",
 				parser->nb_lines);
 		exit(1);
 	}
