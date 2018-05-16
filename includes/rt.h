@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/15 20:12:52 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/16 03:05:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,10 @@ typedef enum	e_keys
 				key_d,
 				key_e,
 				key_q,
+				key_z,
+				key_c,
+				key_x,
+				key_v,
 				key_ctrl,
 				key_space,
 				key_shift,
@@ -349,6 +353,7 @@ typedef struct			s_parser
 	t_parse_enum		parse_enum;
 	int					nb_lines;
 	int					op;
+	int					got_scene;
 }						t_parser;
 
 /*
@@ -399,6 +404,7 @@ void					ft_process_parsing_rot(t_parser *prsr, t_world *world, char *line);
 int						parse_line_new(char *line, t_world *world, t_parser *parser);
 void					ft_init_parser(t_parser *parser);
 int						ft_parse_tag(char **line, char **tag, char **attribute);
+//int						ft_parse_tag(t_parser *parser, char **line);
 void					ft_process_tag_stack(t_parser *parser);
 /*
 **vectors

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/14 22:44:45 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/15 23:13:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/16 02:29:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int			read_double(char **line, double *to)
 	*to = ft_patof(line, &scss);
 	return (scss);
 }
+
 /*
    static int	read_param(char *line, t_world *world, int line_count)
    {
@@ -125,83 +126,20 @@ void	ft_init_light(t_light *light)
 	light->angle = M_PI / 4;
 }
 
-
-
-void		ft_fake_objects(t_world *world)
+void		ft_check_parser(t_parser parser)
 {
-	t_object *obj = ft_memalloc(sizeof(t_object));
-	t_object *obj2 = ft_memalloc(sizeof(t_object));
-	t_object *obj3 = ft_memalloc(sizeof(t_object));
-	t_object *obj4 = ft_memalloc(sizeof(t_object));
-	t_object *obj5 = ft_memalloc(sizeof(t_object));
-
-	obj->intersect_func = intersect_sphere;
-	obj2->intersect_func = intersect_cylinder;
-	obj3->intersect_func = intersect_sphere;
-	obj4->intersect_func = intersect_cylinder;
-	obj5->intersect_func = intersect_sphere;
-
-	obj->o = ft_new_vec3(0, 2, 0);
-	obj2->o = ft_new_vec3(0, 0, 0);
-	obj3->o = ft_new_vec3(0, -2, 0);
-
-	obj4->o = ft_new_vec3(0,-10,0);
-	obj5->o = ft_new_vec3(0,6,0);
-
-	obj->c = get_color(0xFF0000);
-	obj2->c = get_color(0xFF0000);
-	obj3->c = get_color(0xFF0000);
-	obj4->c = get_color(0xFF0000);
-	obj5->c = get_color(0xFF0000);
-
-	obj->r = ft_new_vec3(0,0,0);
-	obj2->r = ft_new_vec3(0,0,0);
-	obj3->r = ft_new_vec3(0,0,0);
-	obj4->r = ft_new_vec3(0,0,0);
-	obj5->r = ft_new_vec3(0,0,0);
-
-	obj->s = ft_new_vec3(1,1,1);
-	obj2->s = ft_new_vec3(1,1,1);
-	obj3->s = ft_new_vec3(1,1,1);
-	obj4->s = ft_new_vec3(1,1,1);
-	obj5->s = ft_new_vec3(1,1,1);
-	world->ambient.in = 0.2;
-
-	obj->object_union.sphere.radius = 1;
-	obj2->object_union.cylinder.radius = 1;
-	obj3->object_union.sphere.radius = 1;
-	obj4->object_union.cylinder.radius = 1;
-	obj5->object_union.sphere.radius = 1;
-
-	t_cobject *cobj = ft_new_cobject();
-	t_cobject *cobj2 = ft_new_cobject();
-
-	cobj->s = ft_new_vec3(1,1,1);
-	cobj2->s = ft_new_vec3(1,1,1);
-
-	cobj->o = ft_new_vec3(0,0,0);
-	cobj2->o = ft_new_vec3(0,0,0);
-
-	cobj->r = ft_new_vec3(0,0,0);
-	cobj2->r = ft_new_vec3(0,0,0);
-
-	ft_add_obj_to_cobj(cobj, obj);
-	ft_add_obj_to_cobj(cobj, obj2);
-	ft_add_obj_to_cobj(cobj, obj3);
-
-	ft_add_obj_to_cobj(cobj2, obj4);
-	ft_add_obj_to_cobj(cobj2, obj5);
-
-	add_cobj(&(world->cobjlist), cobj);
-	//	add_cobj(&(world->cobjlist), cobj2);
-	world->selected_cobject = cobj;
+	if (!parser.got_scene)
+	{
+		ft_dprintf(2, "every config file must begin with a <scene> tag\n");
+		exit(1);
+	}
 }
 
 void	ft_free_parser(t_parser *parser)
 {
-	int i;
-	t_list **ptr;
-	t_list *tmp;
+	int		i;
+	t_list	**ptr;
+	t_list	*tmp;
 
 	i = 0;
 	if (parser->attribute != NULL)
@@ -222,33 +160,33 @@ void	ft_free_parser(t_parser *parser)
 		ft_dprintf(2, "some opening tags are not closed\n");
 		exit(1);
 	}
+	ft_check_parser(*parser);
 }
 
-int			read_world(t_world *world, char *file)
+int				read_world(t_world *world, char *file)
 {
-	char	*line;
-	int		fd;
-	int		gnl_ret;
-	int		pl_ret;
-	t_parser parser;
+	char		*line;
+	int			fd;
+	int			ret;
+	t_parser	parser;
 
 	ft_init_parser(&parser);
 	if ((fd = open(file, O_RDONLY)) == -1)
 		return (-1);
 	line = NULL;
-	while ((gnl_ret = get_next_line(fd, &line)) == 1)
+	while ((ret = get_next_line(fd, &line)) == 1)
 	{
-		if ((pl_ret = parse_line_new(line, world, &parser)))
+		if ((ret = parse_line_new(line, world, &parser)))
 		{
 			free(line);
 			close(fd);
-			return (pl_ret);
+			return (ret);
 		}
 		free(line);
 	}
 	ft_free_parser(&parser);
 	close(fd);
-	if (gnl_ret == -1)
+	if (ret == -1)
 		return (-2);
 	free(line);
 	return (0);

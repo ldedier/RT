@@ -5,13 +5,20 @@
 	</camera>
 	<objlist>
 		<cobject type="obj">
-			<src>objs/teapot.obj</src>
+			<src>resources/objs/teapot.obj</src>
 		</cobject>
 		<cobject>
 			<object name="cone">
 				<angle>0.12</angle>
 				<color>0xff0000</color>
 				<positionXYZ>0 0 0</positionXYZ>
+				<rotationXYZ>0 0 0</rotationXYZ>
+			</object>
+		</cobject>
+		<cobject>
+			<object name="plane">
+				<color>0xff00ff</color>
+				<positionXYZ>0 5 0</positionXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
 			</object>
 		</cobject>
@@ -38,7 +45,7 @@
 		</cobject>
 	</objlist>
 	<lightlist>
-		<light type ="diffuse">
+		<light type="diffuse">
 			<color>0xFFFFFF</color>
 			<positionXYZ>0 -5 0</positionXYZ>
 			<rotationXYZ>0 0 0</rotationXYZ>

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 04:57:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/14 18:10:15 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/15 23:39:19 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ void	ft_compute_matrices(t_cobject *cobject)
 	// ft_printf("TRANSFORM * INVERSE\n");
 	// ft_print_mat4(ft_mat4_mult(invtransform, transform));
 		t_mat4 rotate_inv_cobj = ft_mat4_mult(ft_mat4_rotate_z(-cobject->r.z), ft_mat4_mult(ft_mat4_rotate_y(-cobject->r.y), ft_mat4_rotate_x(-cobject->r.x)));
-	//	ft_print_mat4(ft_mat4_mult(rotate_inv_cobj, rotate_obj));
+		t_mat4 rotate_cobj = ft_mat4_rotate_vec(cobject->r);
+		//	ft_print_mat4(ft_mat4_mult(rotate_inv_cobj, rotate_obj));
 
 		t_mat4 local_translate = ft_mat4_translate_vec(ft_point3d_mult(cobject->s, object->o));
 		t_mat4 local_translate_inv = ft_mat4_inv_translate(local_translate);
@@ -107,8 +108,10 @@ void	ft_compute_matrices(t_cobject *cobject)
 	//	t_mat4 invpivot = ft_mat4_mult(local_translate, rotate_inv_cobj);
 		
 		(void)invpivot;	
-		t_mat4 transform = ft_mat4_model_view_matrix_mat(translate, rotate, scale);
-		t_mat4 transform_dir = ft_mat4_mult(rotate, scale2);
+		t_mat4 transform_dir = ft_mat4_mult(rotate_cobj, ft_mat4_mult(rotate, scale2));
+//		t_mat4 transform_dir =  ft_mat4_mult(rotate, scale2);
+		
+		t_mat4 transform = ft_mat4_mult(translate, ft_mat4_mult(local_translate_inv, ft_mat4_mult( rotate_cobj, ft_mat4_mult(local_translate,ft_mat4_mult(rotate, scale)))));
 
 	// OUAAAAAI	
 	
@@ -124,8 +127,9 @@ void	ft_compute_matrices(t_cobject *cobject)
 		// ft_printf("TRANSORM DIR \n");
 		// ft_print_mat4(transform_dir);
 
-		// ft_printf("TRANSFORM * INVERSE\n");
-		// ft_print_mat4(ft_mat4_mult(transform_dir_inv, transform_dir));
+		ft_printf("TRANSFORM * INVERSE\n");
+//		ft_print_mat4(ft_mat4_mult(transform_dir_inv, transform_dir));
+		ft_print_mat4(ft_mat4_mult(transform, invtransform));
 		object->transform_pos = transform;
 		object->transform_dir = transform_dir;
 
