@@ -74,6 +74,16 @@
 				<positionXYZ>0 -4 0</positionXYZ>
 				<color>0xFF0000</color>
 			</object>
+			<object name="cylinder">
+				<positionXYZ>4 0 0</positionXYZ>
+				<rotationXYZ>0 0 1.5707</rotationXYZ>
+				<color>0xFF0000</color>
+			</object>
+			<object name="cylinder">
+				<positionXYZ>-4 0 0</positionXYZ>
+				<rotationXYZ>0 0 1.5707</rotationXYZ>
+				<color>0xFF0000</color>
+			</object>
 		</cobject>
 	</objlist>
 	<lightlist>
