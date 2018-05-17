@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/11 01:20:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/17 05:52:06 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,13 @@ static void	*render_thr(void *thpar)
 		while (world->cancel_render == 0 &&
 				p.y < p_y + world->canvas->win_size.y / NTHREADS)
 		{
-			//	printf("=====%i\n",world->cancel_render);
 			paint_pixel(p, render_pixel(world, p, 0), world->canvas);
 			world->progress++;
-			//update_progress_bar(world);
 			p.y++;
 		}
 		p.x++;
 	}
 	free(thpar);
-//	if (world->cancel_render) printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAi\n\n");
 	world->thr_state[selfid] = 2;
 	return (NULL);
 }
@@ -51,10 +48,8 @@ static int	working_count(t_world *world)
 
 	i = -1;
 	count = 0;
-//	printf("---------------------\n");
 	while (++i < NTHREADS)
 	{
-//		printf("thread %i: state %i\n", i, world->thr_state[i]);
 		if (world->thr_state[i] != 0)
 			count++;
 	}
@@ -66,8 +61,6 @@ void	join_threads(t_world *world)
 	int	i;
 
 	i = -1;
-//	printf("cancel_render: %i, working: %i\n", world->cancel_render, working_count(world));
-//	printf("in da join_threasd");
 	while (working_count(world) > 0)
 	{
 		update_progress_bar(world);
@@ -82,14 +75,14 @@ void	join_threads(t_world *world)
 			}
 			world->thr_state[i] = 0;
 		}
-//		printf("holi");
 		if (i  == NTHREADS)
 			i = -1;
 		if (get_input(world))
 			end(world);
 	}
-//	printf("out of da while");
-	if (world->cancel_render == 1) printf("all threads cancelled\n");
+	if (world->cancel_render == 1)
+		printf("all threads cancelled\n");
+	printf("threads joined, %i\n", world->progress);
 	world->progress = 0;
 	world->cancel_render = 0;
 }
@@ -99,7 +92,7 @@ void		paint_threaded(t_world *world)
 	t_thr_par	*tpar;
 	int			p_y;
 	int			i;
-//	printf("paint_threaded %d\n", j++);
+
 	i = -1;
 	p_y = 0;
 	while (++i < NTHREADS)
@@ -115,6 +108,9 @@ void		paint_threaded(t_world *world)
 		p_y += world->canvas->win_size.y / NTHREADS;
 	}
 	join_threads(world);
+	printf("antialiasing...\n");
+	blur(world->canvas);
+	printf("antialiasing finished\n");
 	fill_canvas(world);
 }
 

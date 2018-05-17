@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 08:53:58 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/04 19:06:42 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/17 01:45:45 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ static void	render_big_pixel(t_world *world, t_pixel psize, t_pixel pscaled)
 {
 	t_color	col;
 	t_pixel	filler;
+	t_pixel	center;
 
-	col = render_pixel(world, pscaled, 1);
+	center.x = pscaled.x + psize.x / 2;
+	center.y = pscaled.y + psize.y / 2;
+	col = render_pixel(world, center, 1);
 	filler.x = pscaled.x - 1;
 	while (++filler.x < pscaled.x + psize.x)
 	{
@@ -76,5 +79,5 @@ void		paint_threaded_fast(t_world *world)
 	while (--i >= 0)
 		if (pthread_join(ids[i], NULL))
 			exit(0);
-	fill_canvas(world);
+	update_progress_bar(world);
 }

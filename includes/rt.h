@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 00:44:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/17 05:52:03 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
-# define SHADER 2
+# define SHADER 1
 
 # define AXIS_X (t_point3d){.x=1.0,.y=0.0,.z=0.0}
 # define AXIS_Y (t_point3d){.x=0.0,.y=1.0,.z=0.0}
@@ -73,6 +73,7 @@
 # define EPSILON 0.00001
 # define SPEED 0.1
 # define MAX_BOUNCE 20
+# define FILTER_SIZE 3
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
@@ -181,6 +182,13 @@ typedef struct			s_color
 	unsigned char		b;
 	unsigned int		col;
 }						t_color;
+
+typedef struct			s_intcolor
+{
+	int					r;
+	int					g;
+	int					b;
+}						t_intcolor;
 
 /*
 ** the scanhit function is what determines what the object is, as we
@@ -449,6 +457,20 @@ t_color					interpole_color(double t, t_color c1, t_color c2);
 t_color					get_color(int color);
 t_color					add_colors(t_color c1, t_color c2);
 t_color					scale_color(t_color c, double t);
+
+/*
+**int colors (for filter calculations)
+*/
+t_intcolor				new_intcolor(void);
+t_intcolor				add_scale_intcolors(t_intcolor icol1, t_intcolor icol2,
+		double scale);
+t_intcolor				get_intcolor(int color);
+t_color					scale_convert_color(t_intcolor icol, double t);
+
+/*
+**filters
+*/
+void					blur(t_canvas *canvas);
 
 /*
 **render

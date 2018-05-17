@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 00:42:13 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/17 02:52:09 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 	t_hit		*hit;
 	t_cobject	cobj;
 	t_object	obj;
-	t_line		tmp;
    
-	tmp = line;
 	hit = ft_memalloc(sizeof(t_hit));
 	hit->t = -1;
 	while (cobjlist)
@@ -57,8 +55,7 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 		while(cobj.objlist)
 		{
 			obj = *(cobj.objlist->object);
-			line = ft_transform_line(obj, tmp);
-			if ((obj.intersect_func(line, obj, &newhit)) &&
+			if ((obj.intersect_func(ft_transform_line(obj, line), obj, &newhit)) &&
 					(newhit.t > 0 && (newhit.t < hit->t || hit->t == -1)))
 			{
 					newhit.obj = obj;
@@ -71,7 +68,7 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 	}
 	if (dotprod(newvector(line.o, hit->point), line.v) > 0 && hit->t > 0)
 	{
-		hit->bounce = reflection(hit->normal, tmp.v);
+		hit->bounce = reflection(hit->normal, line.v);
 		return (retfree(1, &hit));
 	}
 	return (retfree(0, &hit));

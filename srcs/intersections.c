@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 01:01:52 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 00:03:42 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/17 01:57:34 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int					intersect_sphere(t_line line, t_object obj,
 	t_quadsol	sols;
 	double		radic;
 
-		equa = (t_quadratic){.a = dotprod(line.v, line.v), .b = 2 *
+	equa = (t_quadratic){.a = dotprod(line.v, line.v), .b = 2 *
 		dotprod(line.o, line.v),
-		.c = dotprod(line.o, line.o) - (obj.object_union.sphere.radius * 
-				obj.object_union.sphere.radius)};
+			.c = dotprod(line.o, line.o) - (obj.object_union.sphere.radius * 
+					obj.object_union.sphere.radius)};
 	radic = (equa.b * equa.b) - (4 * equa.a * equa.c);
 	if (radic < 0.0)
 		return (0);
