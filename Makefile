@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/16 22:43:54 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/05/17 03:11:01 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,8 +85,9 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_new_image.c\
 				 ft_get_name.c\
 				 ft_export.c\
-				 errors.c \
-				 lights_toon.c
+				 errors.c\
+				 lights_toon.c\
+				 refraction.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 

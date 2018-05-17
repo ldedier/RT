@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 04:57:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/15 23:39:19 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/17 04:46:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,6 @@ void	ft_compute_matrices(t_cobject *cobject)
 		// ft_printf("TRANSORM DIR \n");
 		// ft_print_mat4(transform_dir);
 
-		ft_printf("TRANSFORM * INVERSE\n");
-//		ft_print_mat4(ft_mat4_mult(transform_dir_inv, transform_dir));
-		ft_print_mat4(ft_mat4_mult(transform, invtransform));
 		object->transform_pos = transform;
 		object->transform_dir = transform_dir;
 

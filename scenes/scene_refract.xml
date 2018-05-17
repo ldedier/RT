@@ -1,0 +1,61 @@
+<scene>
+	<camera>
+		<positionXYZ>0 0 -15</positionXYZ>
+		<rotationXYZ>0 0 0</rotationXYZ>
+	</camera>
+	<objlist>
+		<cobject>
+			<object name="sphere">
+				<positionXYZ>-2 0 0</positionXYZ>
+				<color>0xFF0000</color>
+			</object>
+			<object name="sphere">
+				<positionXYZ>0 0 0</positionXYZ>
+				<color>0xFFFF00</color>
+			</object>
+			<object name="sphere">
+				<positionXYZ>2 0 0</positionXYZ>
+				<color>0xFF00FF</color>
+			</object>
+			<object name="sphere">
+				<positionXYZ>-2 -2 0</positionXYZ>
+				<color>0x00FFFF</color>
+			</object>
+			<object name="sphere">
+				<positionXYZ>0 2 0</positionXYZ>
+				<color>0xFFA0BF</color>
+			</object>
+			<object name="sphere">
+				<positionXYZ>0 -2 0</positionXYZ>
+				<color>0xF77F0F</color>
+			</object>
+			<object name="sphere">
+				<positionXYZ>2 2 0</positionXYZ>
+				<color>0xFF0077</color>
+			</object>
+			<object name="sphere">
+				<positionXYZ>2 -2 0</positionXYZ>
+				<color>0xAB00EF</color>
+			</object>
+			<object name="sphere">
+				<positionXYZ>-2 2 0</positionXYZ>
+				<color>0xABCDEF</color>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>0 0 -8</positionXYZ>
+			<transparency>0.8</transparency>
+			<refraction>1.8</refraction>
+			<object name="sphere">
+			<radius>2</radius>
+				<color>0x00FF00</color>
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.485</intensity>
+		<color>0xFFFFFF</color>
+	</ambientlight>
+</scene>

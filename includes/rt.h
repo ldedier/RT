@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 00:44:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/17 03:13:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
-# define SHADER 2
+# define SHADER 1
 
 # define AXIS_X (t_point3d){.x=1.0,.y=0.0,.z=0.0}
 # define AXIS_Y (t_point3d){.x=0.0,.y=1.0,.z=0.0}
@@ -441,6 +441,8 @@ t_point3d				addvecs(t_point3d v1, t_point3d v2);
 double					proj(t_point3d v1, t_point3d v2);
 t_point3d				create_vec(double x, double y, double z);
 t_point3d				reflection(t_point3d n, t_point3d v);
+t_point3d				refraction(t_point3d normal, t_point3d incident,
+						double n1, double n2);
 
 /*
 **colors 
