@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 05:31:01 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/17 16:39:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,7 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 			refract_c = ray_color(newray(translate_vec(hit->point,
 							ray.v, EPSILON), refraction(hit->normal, ray.v, 1,
 							   hit->obj.refract)),
-					world, bounce, 0);
-
+					world, bounce + 1, 0);
 		}
 		else
 		{

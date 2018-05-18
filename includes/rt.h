@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 03:13:24 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/18 03:12:55 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 //TODO	better distribution of pixels in threads, to avoid very expensive zones
 //DONE	mr bean
 //TODO	(?)start rendering detailed scene when not moving, cancel if move again
+//TODO separate normals and intersections calculating
 
 #ifndef RT_H
 # define RT_H
@@ -148,6 +149,49 @@ typedef struct			s_quadsol
 	double				t2;
 }						t_quadsol;
 
+typedef struct			s_auxquartic
+{
+	double				b2;
+	double				b3;
+	double				b4;
+	double				alpha;
+	double				alpha2;
+	double				beta;
+	double				gamma;
+	double				rad;
+	double				p;
+	double				q;
+	double				r;
+	double				u;
+	double				y;
+	double				w;
+	double				t;
+	double				r1;
+	double				r2;
+}						t_auxquartic;
+
+typedef struct			s_quartic
+{
+	double				a;
+	double				b;
+	double				c;
+	double				d;
+	double				e;
+	double				b2;
+	double				b3;
+	double				b4;
+	double				radic;
+}						t_quartic;
+
+
+typedef struct			s_quartsol
+{
+	double				t1;
+	double				t2;
+	double				t3;
+	double				t4;
+}						t_quartsol;
+
 /*
 ** o = origin
 ** v = vector
@@ -193,6 +237,8 @@ typedef union			s_object_union
 	t_cone				cone;
 	t_plane				plane;
 	t_cylinder			cylinder;
+	t_ellipsoid			ellipsoid;
+	t_torus				torus;
 }						t_object_union;
 
 typedef struct			s_object
@@ -275,6 +321,18 @@ typedef struct			s_cobjlist
 	t_cobject			*cobject;
 	struct s_cobjlist	*next;
 }						t_cobjlist;
+
+typedef struct			s_auxtorus
+{
+	double				g;
+	double				h;
+	double				i;
+	double				j;
+	double				k;
+	double				l;
+}						t_auxtorus;
+
+
 
 typedef struct			s_light
 {
@@ -410,6 +468,10 @@ void					ft_parse_reflection(t_parser *p, t_world *w, char *l);
 void					ft_parse_radius(t_parser *p, t_world *w, char *l);
 void					ft_parse_angle(t_parser *p, t_world *w, char *l);
 void					ft_parse_intensity(t_parser *p, t_world *w, char *l);
+void					ft_parse_ellipsoid_abc(t_parser *p, t_world *w,
+	   					char *l);
+void					ft_parse_big_radius(t_parser *p, t_world *w, char *l);
+void					ft_parse_small_radius(t_parser *p, t_world *w, char *l);
 void					ft_process_parsing_object_start(t_parser *p,
 						t_world *w);
 void					ft_process_parsing_cobject_start(t_parser *p,
@@ -484,6 +546,10 @@ int						intersect_cone(t_line line, t_object obj,
 int						intersect_plane(t_line line, t_object obj,
 		t_hit *hit);
 int						intersect_cylinder(t_line line, t_object obj,
+		t_hit *hit);
+int						intersect_ellipsoid(t_line line, t_object obj,
+		t_hit *hit);
+int						intersect_torus(t_line line, t_object obj,
 		t_hit *hit);
 /*
 **normals

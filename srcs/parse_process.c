@@ -6,11 +6,29 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/16 16:36:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/17 19:26:46 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+void	ft_process_parsing_stack_3(t_parser *parser, t_world *world, char *line)
+{
+	if (!ft_strcmp(parser->tag, "ellipsoidABC"))
+		ft_parse_ellipsoid_abc(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "big_radius"))
+		ft_parse_big_radius(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "small_radius"))
+		ft_parse_small_radius(parser, world, line);
+	else if (strcmp(parser->tag, "scene") &&
+			strcmp(parser->tag, "objlist") &&
+			strcmp(parser->tag, "lightlist"))
+	{
+		ft_dprintf(2, "line %d: unknown tag <%s>\n", parser->nb_lines,
+				parser->tag);
+		exit(1);
+	}
+}
 
 void	ft_process_parsing_stack_2(t_parser *parser, t_world *world, char *line)
 {
@@ -28,14 +46,8 @@ void	ft_process_parsing_stack_2(t_parser *parser, t_world *world, char *line)
 		ft_parse_shine(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "intensity"))
 		ft_parse_intensity(parser, world, line);
-	else if (strcmp(parser->tag, "scene") &&
-			strcmp(parser->tag, "objlist") &&
-			strcmp(parser->tag, "lightlist"))
-	{
-		ft_dprintf(2, "line %d: unknown tag <%s>\n", parser->nb_lines,
-				parser->tag);
-		exit(1);
-	}
+	else
+		ft_process_parsing_stack_3(parser, world, line);
 }
 
 void	ft_process_parsing_stack(t_parser *parser, t_world *world, char *line)

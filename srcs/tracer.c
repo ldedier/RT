@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 02:50:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/17 18:26:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 	while (cobjlist)
 	{
 		cobj = *(cobjlist->cobject);
-		while(cobj.objlist)
+		while (cobj.objlist)
 		{
 			obj = *(cobj.objlist->object);
 			line = ft_transform_line(obj, tmp);
@@ -62,14 +62,18 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 					(newhit.t > 0 && (newhit.t < hit->t || hit->t == -1)))
 			{
 					newhit.obj = obj;
+				//	if(newhit.point.y >= 0 - EPSILON)
+				//	{
 					ft_transform_hit_back(&newhit);
 					*hit = newhit;
+				//	}
 			}
 			cobj.objlist = cobj.objlist->next;
 		}
 		cobjlist = cobjlist->next;
 	}
-	if (ft_dot_product(newvector(tmp.o, hit->point), tmp.v) > 0 && hit->t > 0)
+	//if (ft_dot_product(newvector(tmp.o, hit->point), tmp.v) > 0 && hit->t > 0)
+	if (hit->t > 0)
 	{
 		hit->bounce = reflection(hit->normal, tmp.v);
 		return retfree(1, &hit);

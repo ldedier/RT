@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/17 03:11:01 by ldedier          ###   ########.fr        #
+#    Updated: 2018/05/17 17:53:24 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 parse_orsc.c\
 				 parse_others.c\
 				 parse_specifics.c\
+				 parse_specifics2.c\
 				 parse_start.c\
 				 parse_tools.c\
 				 parse_process.c\

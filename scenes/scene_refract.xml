@@ -43,12 +43,28 @@
 			</object>
 		</cobject>
 		<cobject>
-			<positionXYZ>0 0 -8</positionXYZ>
+			<positionXYZ>0 0 8</positionXYZ>
 			<transparency>0.8</transparency>
-			<refraction>1.8</refraction>
+			<shine>10</shine>
+			<refraction>1.1</refraction>
 			<object name="sphere">
-			<radius>2</radius>
+				<radius>2</radius>
 				<color>0x00FF00</color>
+			</object>
+		</cobject>
+		<cobject>
+			<color>0xFF0000</color>
+			<positionXYZ>0 0 2</positionXYZ>
+			<object name="ellipsoid">
+				<radius>1</radius>
+			</object>
+		</cobject>
+		<cobject>
+			<color>0xFF0000</color>
+			<positionXYZ>0 0 -2</positionXYZ>
+			<object name="torus">
+				<big_radius>10</big_radius>
+				<small_radius>5</small_radius>
 			</object>
 		</cobject>
 	</objlist>
