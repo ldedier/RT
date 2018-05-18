@@ -30,8 +30,8 @@ Kernel configured for up to 4 processors.
 Processor type: i486 (Intel 80486)
 Processors active: 0 1 2 3
 Primary memory available: 8.00 gigabytes
-Default processor set: 365 tasks, 1064 threads, 4 processors
-Load average: 64.51, Mach factor: 0.08
+Default processor set: 376 tasks, 1078 threads, 4 processors
+Load average: 42.39, Mach factor: 0.37
 /bin/machine           = unknown
 /usr/bin/oslevel       = unknown
 /bin/universe          = unknown
@@ -1049,7 +1049,7 @@ configure:16643: checking for _strrev
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__strrev", referenced from:
-      _main in conftest-2f7df9.o
+      _main in conftest-373afa.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -1161,7 +1161,7 @@ configure:16643: checking for _strupr
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__strupr", referenced from:
-      _main in conftest-b0b51e.o
+      _main in conftest-811f7a.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -1273,7 +1273,7 @@ configure:16643: checking for _strlwr
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__strlwr", referenced from:
-      _main in conftest-0c6c62.o
+      _main in conftest-2ee4e3.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -1412,7 +1412,7 @@ configure:16643: checking for itoa
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "_itoa", referenced from:
-      _main in conftest-eb5530.o
+      _main in conftest-dbfc73.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -1527,7 +1527,7 @@ configure:16643: checking for _ltoa
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__ltoa", referenced from:
-      _main in conftest-cda99b.o
+      _main in conftest-f102d7.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -1642,7 +1642,7 @@ configure:16643: checking for _uitoa
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__uitoa", referenced from:
-      _main in conftest-af664c.o
+      _main in conftest-651028.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -1757,7 +1757,7 @@ configure:16643: checking for _ultoa
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__ultoa", referenced from:
-      _main in conftest-fd5e69.o
+      _main in conftest-2a642d.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -1880,7 +1880,7 @@ configure:16643: checking for _i64toa
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__i64toa", referenced from:
-      _main in conftest-28bb28.o
+      _main in conftest-e4dd76.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -1997,7 +1997,7 @@ configure:16643: checking for _ui64toa
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__ui64toa", referenced from:
-      _main in conftest-ecc2d1.o
+      _main in conftest-025031.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -2148,7 +2148,7 @@ configure:16643: checking for _stricmp
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__stricmp", referenced from:
-      _main in conftest-c98ae4.o
+      _main in conftest-ebe719.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -2280,7 +2280,7 @@ configure:16643: checking for _strnicmp
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "__strnicmp", referenced from:
-      _main in conftest-8a9759.o
+      _main in conftest-bc8041.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -2431,7 +2431,7 @@ configure:16643: checking for fopen64
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "_fopen64", referenced from:
-      _main in conftest-fa70cd.o
+      _main in conftest-319da0.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -2562,7 +2562,7 @@ configure:16643: checking for fseeko64
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "_fseeko64", referenced from:
-      _main in conftest-b39373.o
+      _main in conftest-01a103.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -2714,7 +2714,7 @@ configure:16643: checking for getauxval
 configure:16643: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos   -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  >&5
 Undefined symbols for architecture x86_64:
   "_getauxval", referenced from:
-      _main in conftest-8bc437.o
+      _main in conftest-864678.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:16643: $? = 1
@@ -4298,7 +4298,7 @@ conftest.c:148:19: warning: implicit declaration of function 'sem_timedwait' is 
 1 warning generated.
 Undefined symbols for architecture x86_64:
   "_sem_timedwait", referenced from:
-      _main in conftest-fd2a9d.o
+      _main in conftest-7323c7.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:22867: $? = 1
@@ -4615,7 +4615,7 @@ configure:22934: checking for pthread_set_name_np
 configure:22954: gcc -o conftest -g -O2 -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos  -D_THREAD_SAFE  -Iinclude -I/Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_gh_good/SDL2-2.0.8/src/video/khronos    conftest.c  -lm -liconv  >&5
 Undefined symbols for architecture x86_64:
   "_pthread_set_name_np", referenced from:
-      _main in conftest-d27d5e.o
+      _main in conftest-491dc2.o
 ld: symbol(s) not found for architecture x86_64
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 configure:22954: $? = 1

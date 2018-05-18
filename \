@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/18 10:28:01 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/18 05:19:57 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static int	any_key_pressed(t_world *world)
 	int i;
 
 	i = -1;
-	printf("any_key_pressed called\n");fflush(stdout);
 	while (++i < nkeys)
 		if (world->keys[i])
 			return (1);
@@ -52,7 +51,6 @@ int		get_input(t_world *e)
 	}
 	if (any_key_pressed(e))
 	{
-		printf("world %p\n",e);fflush(stdout);
 		printf("key pressed. cancel render: %i\n",e->cancel_render);fflush(stdout);
 		//if (e->cancel_render == 0)
 		//{

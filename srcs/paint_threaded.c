@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 05:52:06 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/18 10:28:07 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ static int	working_count(t_world *world)
 	return (count);
 }
 
-void	join_threads(t_world *world)
+int			join_threads(t_world *world)
 {
 	int	i;
+	int	ret;
 
 	i = -1;
 	while (working_count(world) > 0)
@@ -80,11 +81,12 @@ void	join_threads(t_world *world)
 		if (get_input(world))
 			end(world);
 	}
-	if (world->cancel_render == 1)
+	if ((ret = (world->cancel_render == 1)) == 1)
 		printf("all threads cancelled\n");
-	printf("threads joined, %i\n", world->progress);
+	printf("threads joined, progress: %i, ret: %i\n", world->progress, ret);
 	world->progress = 0;
 	world->cancel_render = 0;
+	return (ret);
 }
 
 void		paint_threaded(t_world *world)
@@ -107,11 +109,14 @@ void		paint_threaded(t_world *world)
 			exit(0);
 		p_y += world->canvas->win_size.y / NTHREADS;
 	}
-	join_threads(world);
-	printf("antialiasing...\n");
-	blur(world->canvas);
-	printf("antialiasing finished\n");
-	fill_canvas(world);
+	if (!join_threads(world))
+	{
+		printf("antialiasing...\n");fflush(stdout);
+		sobel(world->canvas);
+		printf("antialiasing finished!!!!!\n");fflush(stdout);
+		fill_canvas(world);
+		printf("canvas filled\n");fflush(stdout);
+	}
 }
 
 void	paint_not_threaded(t_world *world)

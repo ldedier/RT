@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:50:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 05:52:12 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/18 02:23:36 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,38 @@ t_intcolor	add_scale_intcolors(t_intcolor icol1, t_intcolor icol2, double scale)
 	return (icol1);
 }
 
-t_intcolor	get_intcolor(int color)
+t_intcolor	get_intcolor(t_color color)
 {
 	t_intcolor	c;
 
-	c.r = color / 0x10000;
-	c.g = color / 0x100;
-	c.b = color % 100;
+	c.r = color.r;
+	c.g = color.g;
+	c.b = color.b;
 	return (c);
 }
 
 t_color		scale_convert_color(t_intcolor icol, double t)
 {
 	t_color	col;
+	int		r;
+	int		g;
+	int		b;
 	
 	icol.r = icol.r * t;
 	icol.g = icol.g * t;
 	icol.b = icol.b * t;
-	icol.r = icol.r > 255 ? 255 : icol.r;
-	icol.r = icol.r < 0 ? 0 : icol.r;
-	icol.g = icol.g > 255 ? 255 : icol.g;
-	icol.g = icol.g < 0 ? 0 : icol.g;
-	icol.b = icol.b > 255 ? 255 : icol.b;
-	icol.b = icol.b < 0 ? 0 : icol.b;
-	col.r = icol.r;
-	col.g = icol.g;
-	col.b = icol.b;
+	r = (int)icol.r;
+	g = (int)icol.g;
+	b = (int)icol.b;
+	r = r > 255 ? 255 : r;
+	r = r < 0 ? 0 : r;
+	g = g > 255 ? 255 : g;
+	g = g < 0 ? 0 : g;
+	b = b > 255 ? 255 : b;
+	b = b < 0 ? 0 : b;
+	col.r = r;
+	col.g = g;
+	col.b = b;
 	col.col = col.r * 0x10000 + col.g * 0x100 + col.b;
 	return (col);
 }

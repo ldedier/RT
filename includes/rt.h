@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 05:52:03 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/18 10:27:59 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 //TODO	perturbation (wave, random, spikes...)
 //TODO	negative object
 //TODO	antialiasing / other filters
+//TODO	fix sometimes cancel the render and go into antialiasing. cause is calling join_threads 2 times in a row and 2nd one returns 0 so assumes it rendered.
+//TODO	antialiasing multiple rays per pixel (then get the mean)
 //TODO	cartoon shading: if radic ~= 0, its a border.
 //		then just check illum < val for shadow
 //DONE	low resolution when moving camera
@@ -56,7 +58,7 @@
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
-# define SHADER 1
+# define SHADER 2
 
 # define AXIS_X (t_point3d){.x=1.0,.y=0.0,.z=0.0}
 # define AXIS_Y (t_point3d){.x=0.0,.y=1.0,.z=0.0}
@@ -73,7 +75,6 @@
 # define EPSILON 0.00001
 # define SPEED 0.1
 # define MAX_BOUNCE 20
-# define FILTER_SIZE 3
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
@@ -185,9 +186,9 @@ typedef struct			s_color
 
 typedef struct			s_intcolor
 {
-	int					r;
-	int					g;
-	int					b;
+	float				r;
+	float				g;
+	float				b;
 }						t_intcolor;
 
 /*
@@ -464,13 +465,16 @@ t_color					scale_color(t_color c, double t);
 t_intcolor				new_intcolor(void);
 t_intcolor				add_scale_intcolors(t_intcolor icol1, t_intcolor icol2,
 		double scale);
-t_intcolor				get_intcolor(int color);
+t_intcolor				get_intcolor(t_color color);
 t_color					scale_convert_color(t_intcolor icol, double t);
 
 /*
 **filters
 */
-void					blur(t_canvas *canvas);
+void					gauss_blur(t_canvas *canvas);
+void					sharpen(t_canvas *canvas);
+void					emboss(t_canvas *canvas);
+void					sobel(t_canvas *canvas);
 
 /*
 **render
@@ -489,7 +493,7 @@ t_color					illuminate_toon(t_world *world, t_hit *hit,
 */
 void					paint_threaded_fast(t_world *world);
 void					fill_canvas(t_world *world);
-void					join_threads(t_world *world);
+int						join_threads(t_world *world);
 void					paint_threaded(t_world *world);
 void					paint_not_threaded(t_world *world);
 void					update_progress_bar(t_world *world);
