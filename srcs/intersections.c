@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 01:01:52 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 01:57:34 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/21 01:59:30 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int					intersect_sphere(t_line line, t_object obj,
 	if (hit->t < 0)
 		return 0;
 	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-	hit->normal = normalize(hit->point);
+	hit->normal = normal_sphere(obj, hit->point);
+	hit->pert = pert_sphere(hit);
 	return (1);
 }
 
@@ -77,11 +78,13 @@ int					intersect_cone(t_line line, t_object obj,
 	if (hit->t < 0)
 		return 0;
 	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-	hit->normal.x = (hit->point.x > 0 ? -1 : 1) *
-		sqrt(hit->point.z * hit->point.z + hit->point.y * hit->point.y) *
-			tan(obj.object_union.cone.angle);
-	hit->normal.y = hit->point.y;
-	hit->normal.z = hit->point.z;
+//	hit->normal.x = (hit->point.x > 0 ? -1 : 1) *
+//		sqrt(hit->point.z * hit->point.z + hit->point.y * hit->point.y) *
+//			tan(obj.object_union.cone.angle);
+//	hit->normal.y = hit->point.y;
+//	hit->normal.z = hit->point.z;
+	hit->normal = normal_cone(obj, hit->point);
+	hit->pert = pert_cone(hit);
 	return (1);
 }
 
@@ -93,20 +96,9 @@ int					intersect_plane(t_line line, t_object obj,
 		return (0);
 	hit->t = -line.o.y / line.v.y;
 	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-	hit->normal = ft_new_vec3(0, (line.v.y > 0 ) ? 1 : -1, 0);
-
-	/*
-	double	den;
-	double	sol;
-
-	den = dotprod(line.v, obj.r);
-	if (den < EPSILON && den > -EPSILON)
-		return (0);
-	sol = dotprod(newvector(line.o, obj.o), obj.r) / den;
-	(*hitpoint).x = line.o.x + line.v.x * sol;
-	(*hitpoint).y = line.o.y + line.v.y * sol;
-	(*hitpoint).z = line.o.z + line.v.z * sol;
-	*/
+//	hit->normal = ft_new_vec3(0, (line.v.y > 0 ) ? 1 : -1, 0);
+	hit->normal = normal_plane(obj, hit->point, line);
+	hit->pert = pert_plane(hit);
 	return (1);
 }
 
@@ -130,6 +122,8 @@ int					intersect_cylinder(t_line line, t_object obj,
 	if (hit->t < 0)
 		return 0;
 	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-	hit->normal = normalize(ft_new_vec3(0, hit->point.y, hit->point.z));
+//	hit->normal = normalize(ft_new_vec3(0, hit->point.y, hit->point.z));
+	hit->normal = normal_cylinder(obj, hit->point);
+	hit->pert = pert_cylinder(hit);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 02:52:09 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/21 08:13:19 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ void				ft_transform_hit_back(t_hit *hit)
 
 	tmp = *hit;
 	hit->point = ft_point3d_mat4_mult(tmp.point, tmp.obj.transform_pos);
-	hit->normal = normalize(ft_point3d_mat4_mult(tmp.normal, tmp.obj.transform_dir));
+	hit->normal = normalize(
+			ft_point3d_mat4_mult(tmp.normal, tmp.obj.transform_dir));
+	hit->pert = normalize(
+			ft_point3d_mat4_mult(tmp.pert, tmp.obj.transform_dir));
 }
 
 t_hit				*trace(t_line line, t_cobjlist *cobjlist)
@@ -69,6 +72,7 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 	if (dotprod(newvector(line.o, hit->point), line.v) > 0 && hit->t > 0)
 	{
 		hit->bounce = reflection(hit->normal, line.v);
+		hit->pertbounce = reflection(hit->pert, line.v);
 		return (retfree(1, &hit));
 	}
 	return (retfree(0, &hit));

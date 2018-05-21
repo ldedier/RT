@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 02:34:57 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/21 03:40:16 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static t_illum	getillum(t_world *world, t_hit *hit, t_line **srays)
 			if (light.type != 'd')
 				light.intensity = 1.0 * (1.0 - world->fog.in) /
 					sqrt(magnitude(newvector(hit->point, light.o)));
-			newillu = dotprod(hit->normal, srays[i]->v) *
+			newillu = dotprod(hit->pert, srays[i]->v) *
 				light.intensity / world->nlights;
 			newillu = newillu > 0 ? newillu : newillu * -1;
 			newillu = newillu > 1.0 ? 1.0 : newillu;
@@ -78,7 +78,7 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_line **srays, t_color lc)
 			light = world->lights[i];
 			light.intensity = magnitude(newvector(hit->point, light.o)) *
 				(1.0 - world->fog.in);
-			newsh = dotprod(hit->bounce, srays[i]->v);
+			newsh = dotprod(hit->pertbounce, srays[i]->v);
 			newsh = newsh > 0 ? pow(newsh, PHONG * light.intensity) : 0;
 			shine.color = add_colors(
 					shine.color, scale_color(light.c, newsh));

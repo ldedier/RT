@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/17 05:36:34 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/05/21 02:01:17 by lcavalle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,6 +64,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 parse_stack.c\
 				 populate_world.c\
 				 renderer.c\
+				 viewplane.c\
 				 rotations.c\
 				 rt.c\
 				 shadows.c\
@@ -88,7 +89,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 errors.c \
 				 lights_toon.c \
 				 filter.c\
-				 intcolors.c
+				 intcolors.c\
+				 perturbations.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 

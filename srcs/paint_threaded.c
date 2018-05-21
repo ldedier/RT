@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/18 10:28:07 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/20 08:53:36 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void		paint_threaded(t_world *world)
 	if (!join_threads(world))
 	{
 		printf("antialiasing...\n");fflush(stdout);
-		sobel(world->canvas);
+		//sharpen(world->canvas);
 		printf("antialiasing finished!!!!!\n");fflush(stdout);
 		fill_canvas(world);
 		printf("canvas filled\n");fflush(stdout);

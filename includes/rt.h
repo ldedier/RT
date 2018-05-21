@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/18 10:27:59 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/21 08:13:13 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,16 @@
 //DONE	nimin valors atribut (si reflection es 0 no cal calcular...)
 //TODO	perturbation (wave, random, spikes...)
 //TODO	negative object
-//TODO	antialiasing / other filters
-//TODO	fix sometimes cancel the render and go into antialiasing. cause is calling join_threads 2 times in a row and 2nd one returns 0 so assumes it rendered.
+//done	antialiasing / other filters
+//DONE	fix sometimes cancel the render and go into antialiasing. cause is calling join_threads 2 times in a row and 2nd one returns 0 so assumes it rendered.
 //TODO	antialiasing multiple rays per pixel (then get the mean)
-//TODO	cartoon shading: if radic ~= 0, its a border.
-//		then just check illum < val for shadow
+//TODO	cartoon shading.
 //DONE	low resolution when moving camera
 //DONE	paint_threaded only when a key is pressed, and not always
 //DONE	paint threaded on enter press.
 //DONE	fix enter detection (only push start threading)
 //TODO	fps counter
-//TODO	progress bar
+//DONE	progress bar
 //TODO	better distribution of pixels in threads, to avoid very expensive zones
 //DONE	mr bean
 //TODO	(?)start rendering detailed scene when not moving, cancel if move again
@@ -46,7 +45,7 @@
 # include <unistd.h>
 # include <pthread.h>
 
-# define NTHREADS 8
+# define NTHREADS 4
 # define STACK 0
 # define POP 1
 
@@ -58,7 +57,7 @@
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
-# define SHADER 2
+# define SHADER 1
 
 # define AXIS_X (t_point3d){.x=1.0,.y=0.0,.z=0.0}
 # define AXIS_Y (t_point3d){.x=0.0,.y=1.0,.z=0.0}
@@ -196,6 +195,22 @@ typedef struct			s_intcolor
 ** only need the object to calculate the intersection with the ray
 */
 
+typedef enum			e_perturbations
+{
+	mattress,
+	sonar,
+	waves,
+	ripple,
+	pyramides,
+	noise
+}						t_perturbations;
+
+typedef struct			s_perturbation
+{
+	t_perturbations		type;
+	t_point3d			v;
+}						t_perturbation;
+
 typedef union			s_object_union
 {
 	t_sphere			sphere;
@@ -217,6 +232,7 @@ typedef struct			s_object
 	t_point3d			s;
 	t_point3d			r;
 	t_color				c;
+	t_perturbation		ptbn;
 	double				shine;
 	double				reflect;
 	double				refract;
@@ -228,7 +244,9 @@ struct			s_hit
 	t_object			obj;
 	t_point3d			point;
 	t_point3d			normal;
+	t_point3d			pert;
 	t_point3d			bounce;
+	t_point3d			pertbounce;
 	double				t;
 };
 
@@ -332,6 +350,17 @@ typedef struct			s_shadowsfree
 	int					nlights;
 }						t_shadowsfree;
 
+typedef struct			s_convolution
+{
+	t_canvas			*canvas;
+	int					*img;
+	int					*aux;
+	double				*filter;
+	t_pixel				pix;
+	int					filter_size;
+	int					den;
+}						t_convolution;
+
 typedef enum			e_parse_enum
 {
 	e_parse_camera,
@@ -342,7 +371,6 @@ typedef enum			e_parse_enum
 	e_parse_fog,
 	e_parse_scene
 }						t_parse_enum;
-
 
 typedef struct			s_parser
 {
@@ -480,6 +508,7 @@ void					sobel(t_canvas *canvas);
 **render
 */
 t_color					render_pixel(t_world *world, t_pixel pix, int fast);
+t_point3d				screen2world(t_pixel pix, t_world *world);
 void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
 t_hit					*trace(t_line line, t_cobjlist *cobjlist);
 void					castshadows(t_world *w, t_hit *h, t_line **rays);
@@ -514,8 +543,17 @@ int						intersect_cylinder(t_line line, t_object obj,
 */
 t_point3d				normal_sphere(t_object sphere, t_point3d hitpoint);
 t_point3d				normal_cone(t_object sphere, t_point3d hitpoint);
-t_point3d				normal_plane(t_object sphere, t_point3d hitpoint);
+t_point3d				normal_plane(t_object sphere, t_point3d hitpoint,
+		t_line line);
 t_point3d				normal_cylinder(t_object sphere, t_point3d hitpoint);
+
+/*
+**perturbations
+*/
+t_point3d				pert_sphere(t_hit *hit);
+t_point3d				pert_cone(t_hit *hit);
+t_point3d				pert_plane(t_hit *hit);
+t_point3d				pert_cylinder(t_hit *hit);
 
 /*
 **translations
