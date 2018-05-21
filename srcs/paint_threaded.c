@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/11 01:20:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/18 21:45:50 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	join_threads(t_world *world)
 			end(world);
 	}
 //	printf("out of da while");
-	if (world->cancel_render == 1) printf("all threads cancelled\n");
+	//if (world->cancel_render == 1) printf("all threads cancelled\n");
 	world->progress = 0;
 	world->cancel_render = 0;
 }

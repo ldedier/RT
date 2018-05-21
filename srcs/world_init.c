@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/11 17:36:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/21 21:25:11 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void			set_defaults(t_world *world)
 		world->thr_state[i] = 0;
 	world->can_export = 1;
 	ft_init_keys(world);
+	world->bmp_parser = ft_parse_bmp("earth2.bmp");
 }
 
 t_canvas		*new_canvas(void)

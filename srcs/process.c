@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:28:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/16 21:04:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/21 21:13:26 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void    ft_process(t_world *e)
 		e->cam->o = translate_vec(e->cam->o, e->cam->up, -e->cam->speed);
 	if (e->keys[key_space])
 		e->cam->o = translate_vec(e->cam->o, e->cam->up, e->cam->speed);
-
 	if (e->keys[key_o])
 	{
 		e->selected_cobject->s.x += e->cam->speed;
@@ -77,6 +76,6 @@ void    ft_process(t_world *e)
 		e->selected_cobject->r.z += M_PI / 16;
 	if (e->keys[key_v])
 		e->selected_cobject->r.z -= M_PI / 16;
-	print_camera(e->cam);	
+	//print_camera(e->cam);	
 	ft_compute_matrices_clist(e->cobjlist);
 }

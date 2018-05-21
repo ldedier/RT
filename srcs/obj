@@ -1,0 +1,44 @@
+intersections.c:	hit->t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
+intersections.c:	if (hit->t < 0)
+intersections.c:	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
+intersections.c:	hit->normal = normalize(hit->point);
+intersections.c:	hit->t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
+intersections.c:	if (hit->t < 0)
+intersections.c:	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
+intersections.c:	hit->normal.x = (hit->point.x > 0 ? -1 : 1) *
+intersections.c:		sqrt(hit->point.z * hit->point.z + hit->point.y * hit->point.y) *
+intersections.c:	hit->normal.y = hit->point.y;
+intersections.c:	hit->normal.z = hit->point.z;
+intersections.c:	hit->t = -line.o.y / line.v.y;
+intersections.c:	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
+intersections.c:	hit->normal = ft_new_vec3(0, (line.v.y > 0 ) ? 1 : -1, 0);
+intersections.c:	hit->t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
+intersections.c:	if (hit->t < 0)
+intersections.c:	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
+intersections.c:	hit->normal = normalize(ft_new_vec3(0, hit->point.y, hit->point.z));
+lights.c:					sqrt(magnitude(newvector(hit->point, light.o)));
+lights.c:			newillu = dotprod(hit->normal, srays[i]->v) *
+lights.c:			light.intensity = magnitude(newvector(hit->point, light.o)) *
+lights.c:			newsh = dotprod(hit->bounce, srays[i]->v);
+lights.c:	//			getwhiteratio(illu.color, 0.3, 1), illu.color, hit->obj.c));
+lights_toon.c:					sqrt(magnitude(newvector(hit->point, light.o))) * 3;
+lights_toon.c:			newillu = dotprod(hit->normal, srays[i]->v) *
+lights_toon.c:			light.intensity = magnitude(newvector(hit->point, light.o)) *
+lights_toon.c:			newsh = dotprod(hit->bounce, srays[i]->v);
+lights_toon.c:				getwhiteratio(illu.color, 0.3, 1), illu.color, hit->obj.c));
+renderer.c:		fog = magnitude(newvector(hit->point, world->cam->o)) * world->fog.in;
+renderer.c:		if (!fast && bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON)
+renderer.c:			reflect_c = ray_color(newray(translate_vec(hit->point,
+renderer.c:							hit->bounce, EPSILON), hit->bounce),
+renderer.c:			return (freeret(interpole_color(hit->obj.reflect,
+shadows.c:			srays[i]->v = normalize(newvector(hit->point, world->lights[i].o));
+shadows.c:		srays[i]->o = translate_vec(hit->point, hit->normal,
+shadows.c:				EPSILON * proj(hit->normal, hit->bounce));
+shadows.c:				magnitude(newvector(srays[i]->o, shit->point)) <
+shadows.c:				magnitude(newvector(hit->point, world->lights[i].o))) ||
+tracer.c:	hit->point = ft_point3d_mat4_mult(tmp.point, tmp.obj.transform_pos);
+tracer.c:	hit->normal = normalize(ft_point3d_mat4_mult(tmp.normal, tmp.obj.transform_dir));
+tracer.c:	hit->t = -1;
+tracer.c:					(newhit.t > 0 && (newhit.t < hit->t || hit->t == -1)))
+tracer.c:	if (dotprod(newvector(line.o, hit->point), line.v) > 0 && hit->t > 0)
+tracer.c:		hit->bounce = reflection(hit->normal, tmp.v);

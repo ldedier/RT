@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/16 22:43:54 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/05/18 23:46:32 by aherriau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_get_name.c\
 				 ft_export.c\
 				 errors.c \
-				 lights_toon.c
+				 lights_toon.c\
+				 ft_parse_bmp.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 
@@ -104,6 +105,7 @@ CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror $(INC)
 
 LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
 		 -L $(LIBSDL2DIR)/$(LIBSDL2_LIBDIR) -lsdl2\
+		 -fsanitize=address
 
 opti:
 	@make -j all

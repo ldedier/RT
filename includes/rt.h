@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 00:44:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/21 22:08:40 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <pthread.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/mman.h>
 
 # define NTHREADS 8
 # define STACK 0
@@ -56,7 +59,7 @@
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
-# define SHADER 2
+# define SHADER 1
 
 # define AXIS_X (t_point3d){.x=1.0,.y=0.0,.z=0.0}
 # define AXIS_Y (t_point3d){.x=0.0,.y=1.0,.z=0.0}
@@ -219,6 +222,8 @@ struct			s_hit
 	t_object			obj;
 	t_point3d			point;
 	t_point3d			normal;
+	t_point3d			old_point;
+	t_point3d			old_normal;
 	t_point3d			bounce;
 	double				t;
 };
@@ -292,6 +297,21 @@ typedef struct			s_illum
 	t_color				color;
 }						t_illum;
 
+typedef struct			s_mmap
+{
+	unsigned char		*ptr;
+	size_t				size;
+}						t_mmap;
+
+typedef struct			s_bmp_parser
+{
+	unsigned char		*pixels;
+	int					width;
+	int					height;
+	int					bitmap_index;
+	short				bpp;
+}						t_bmp_parser;
+
 typedef struct			s_world
 {
 	t_light				lights[MAX_LIGHTS];
@@ -308,6 +328,7 @@ typedef struct			s_world
 	int					progress;
 	int					cancel_render;
 	int					can_export;
+	t_bmp_parser		bmp_parser;
 }						t_world;
 
 typedef struct			s_thr_par
@@ -531,6 +552,13 @@ int					ft_export_rt(t_world *world, char *extension);
 */
 
 void				ft_error(char *str);
+
+/*
+** bmp
+*/
+t_bmp_parser		ft_parse_bmp(char *filename);
+t_mmap				ft_map_file(char *filename);
+int					ft_get_pixel(int x, int y, unsigned char *img, int dim_X, int bpp);
 
 //DEBUG OJU CUIDOA BORRAR OSTIEeeeeS
 void print_cobject(t_cobject cobj);

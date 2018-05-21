@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/11 01:20:28 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/18 21:45:09 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		get_input(t_world *e)
 			e->keys[mouse_move] = 0;
 			ft_process(e);
 			e->cancel_render = 1;
-			printf("INPUT PRESSED, CANCELING RENDERING\n");
+			//printf("INPUT PRESSED, CANCELING RENDERING\n");
 			join_threads(e);
 			if (e->keys[key_enter] == 1)
 			{

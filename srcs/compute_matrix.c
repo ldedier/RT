@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 04:57:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/15 23:39:19 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/21 22:05:51 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_compute_matrices(t_cobject *cobject)
 	t_objlist *ptr;
 
 	ptr = cobject->objlist;
-	print_cobject(*cobject);
+	//print_cobject(*cobject);
 	while (ptr)
 	{
 
@@ -111,7 +111,7 @@ void	ft_compute_matrices(t_cobject *cobject)
 		t_mat4 transform_dir = ft_mat4_mult(rotate_cobj, ft_mat4_mult(rotate, scale2));
 //		t_mat4 transform_dir =  ft_mat4_mult(rotate, scale2);
 		
-		t_mat4 transform = ft_mat4_mult(translate, ft_mat4_mult(local_translate_inv, ft_mat4_mult( rotate_cobj, ft_mat4_mult(local_translate,ft_mat4_mult(rotate, scale)))));
+		t_mat4 transform = ft_mat4_mult(translate, ft_mat4_mult(local_translate_inv, ft_mat4_mult(rotate_cobj, ft_mat4_mult(local_translate,ft_mat4_mult(rotate, scale)))));
 
 	// OUAAAAAI	
 	
@@ -127,9 +127,9 @@ void	ft_compute_matrices(t_cobject *cobject)
 		// ft_printf("TRANSORM DIR \n");
 		// ft_print_mat4(transform_dir);
 
-		ft_printf("TRANSFORM * INVERSE\n");
+		//ft_printf("TRANSFORM * INVERSE\n");
 //		ft_print_mat4(ft_mat4_mult(transform_dir_inv, transform_dir));
-		ft_print_mat4(ft_mat4_mult(transform, invtransform));
+		//ft_print_mat4(ft_mat4_mult(transform, invtransform));
 		object->transform_pos = transform;
 		object->transform_dir = transform_dir;
 
