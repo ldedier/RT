@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/23 01:28:07 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/23 09:33:30 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	ft_parse_color(t_parser *parser, t_world *world, char *line)
 
 void	ft_parse_pert(t_parser *parser, t_world *world, char *line)
 {
-	t_perturbation	*pert;
+	t_perturbations	*pert;
 
 	if (parser->parse_enum == e_parse_object)
 		pert = &(world->cobjlist->cobject->objlist->object->pert);
@@ -124,7 +124,7 @@ void	ft_parse_pert(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	read_pert_type(parser, pert, line);
+	read_pert_type(parser, pert);
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
 	ft_process_tag_stack(parser);
 }

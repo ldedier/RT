@@ -1,0 +1,32 @@
+<scene>
+	<camera>
+		<positionXYZ>0 0 0</positionXYZ>
+		<rotationXYZ>0 0 0</rotationXYZ>
+	</camera>
+	<objlist>
+		<cobject type="obj">
+			<src>resources/objs/teapot.obj</src>
+		</cobject>
+		<cobject>
+			<object name="plane">
+				<color>0xff00ff</color>
+				<positionXYZ>0 2 0</positionXYZ>
+				<rotationXYZ>0 0 0</rotationXYZ>
+				<perturbation name = "waves"></perturbation>
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+		<light type="directional">
+			<color>0xFFFFFF</color>
+			<positionXYZ>0 5 0</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<angle>1.2</angle>
+			<intensity>0.9</intensity>
+		</light>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.17</intensity>
+		<color>0xFFFFFF</color>
+	</ambientlight>
+</scene>

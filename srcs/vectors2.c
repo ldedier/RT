@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/14 17:01:19 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/07 19:10:15 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/23 03:52:39 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_point3d	reflection(t_point3d n, t_point3d v)
 	double		aux;
 
 	aux = 2 * dotprod(v, n);
-	r = addvec(v, scale(n, aux * -1));
+	r = normalize(addvec(v, scale(n, aux * -1)));
 	return (r);
 }
 

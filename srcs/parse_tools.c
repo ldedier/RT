@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/22 04:39:57 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/23 06:27:21 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_cobject		*ft_new_cobject(void)
 	cobject->r = ft_new_vec3(0, 0, 0);
 	cobject->s = ft_new_vec3(1, 1, 1);
 	cobject->c = get_color(0xFFFFFF);
-	cobject->pert.type = e_none;
+	cobject->pert = e_none;
 	cobject->transp = 0;
 	cobject->refract = 0;
 	cobject->reflect = 0.6;
@@ -43,8 +43,7 @@ t_object		*ft_new_object(t_cobject cobject)
 	object->s = ft_new_vec3(1, 1, 1);
 	object->c = get_color(cobject.c.col);
 	object->transp = cobject.transp;
-	object->pert.type = cobject.pert.type;
-	object->pert.v = cobject.pert.v;
+	object->pert = cobject.pert;
 	object->refract = cobject.refract;
 	object->reflect = cobject.reflect;
 	object->shine = cobject.shine;

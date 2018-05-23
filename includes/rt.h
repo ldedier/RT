@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/23 01:46:53 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/23 09:33:38 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # include <unistd.h>
 # include <pthread.h>
 
-# define NTHREADS 8
+# define NTHREADS 4
 # define STACK 0
 # define POP 1
 
@@ -70,7 +70,7 @@
 # define MAX_LIGHTS 10
 # define AMBIENT_LIGHT 0.17
 # define AMBIENT_LIGHT_COL get_color(0xFFFFFF)
-# define EPSILON 0.00001
+# define EPSILON 0.01
 # define SPEED 0.1
 # define MAX_BOUNCE 20
 
@@ -198,18 +198,11 @@ typedef struct			s_intcolor
 typedef enum			e_perturbations
 {
 	e_none,
-	e_mattress,
-	e_sonar,
 	e_ripple,
+	e_waves,
 	e_noise,
 	e_chess
 }						t_perturbations;
-
-typedef struct			s_perturbation
-{
-	t_perturbations		type;
-	t_point3d			v;
-}						t_perturbation;
 
 typedef union			s_object_union
 {
@@ -232,7 +225,7 @@ typedef struct			s_object
 	t_point3d			s;
 	t_point3d			r;
 	t_color				c;
-	t_perturbation		pert;
+	t_perturbations		pert;
 	double				shine;
 	double				reflect;
 	double				refract;
@@ -293,7 +286,7 @@ typedef struct			s_cobject
 	double				reflect;
 	double				refract;
 	double				transp;
-	t_perturbation		pert;
+	t_perturbations		pert;
 	t_objlist			*objlist;
 }						t_cobject;
 
@@ -461,8 +454,7 @@ void					ft_parse_radius(t_parser *p, t_world *w, char *l);
 void					ft_parse_angle(t_parser *p, t_world *w, char *l);
 void					ft_parse_intensity(t_parser *p, t_world *w, char *l);
 void					ft_parse_pert(t_parser *p, t_world *w, char *l);
-void					read_pert_type(t_parser *par, t_perturbation *pert,
-		char *line);
+void					read_pert_type(t_parser *par, t_perturbations *pert);
 void					ft_parse_resolution(t_parser *p, t_world *w, char *l);
 void					ft_parse_fast_resolution(t_parser *p, t_world *w,
 		char *l);
@@ -575,10 +567,7 @@ t_point3d				normal_cylinder(t_object sphere, t_point3d hitpoint);
 /*
 **perturbations
 */
-t_point3d				pert_sphere(t_hit *hit);
-t_point3d				pert_cone(t_hit *hit);
-t_point3d				pert_plane(t_hit *hit);
-t_point3d				pert_cylinder(t_hit *hit);
+t_point3d				pert_normal(t_hit *hit);
 
 /*
 **translations

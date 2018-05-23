@@ -20,7 +20,7 @@
 				<color>0xff00ff</color>
 				<positionXYZ>0 5 0</positionXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
-				<perturbation name = "ripple">1 0</perturbation>
+				<perturbation name = "ripple"></perturbation>
 			</object>
 		</cobject>
 		<cobject>
@@ -39,7 +39,7 @@
 				<positionXYZ>0 0 0</positionXYZ>
 				<scaleXYZ>1 1 1</scaleXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
-				<shine>0.5</shine>
+				<shine>30</shine>
 				<refraction>125</refraction>
 				<transparency>12</transparency>
 				<color> 0x00FF00 </color>
@@ -100,6 +100,4 @@
 		<intensity>0.37</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
-	<filter type ="sharpen"></filter>
-	<filter type ="blur"></filter>
 </scene>

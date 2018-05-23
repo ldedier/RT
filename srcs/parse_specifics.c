@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/23 01:08:38 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/23 09:33:28 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,31 +25,20 @@ void	ft_give_default_characteristics(t_object *object)
 void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 {
 	if (!ft_strcmp(parser->attribute, "sphere"))
-	{
 		object->intersect_func = intersect_sphere;
-		object->pert_func = pert_sphere;
-	}
 	else if (!ft_strcmp(parser->attribute, "cone"))
-	{
 		object->intersect_func = intersect_cone;
-		object->pert_func = pert_cone;
-	}
 	else if (!ft_strcmp(parser->attribute, "cylinder"))
-	{
 		object->intersect_func = intersect_cylinder;
-		object->pert_func = pert_cylinder;
-	}
 	else if (!ft_strcmp(parser->attribute, "plane"))
-	{
 		object->intersect_func = intersect_plane;
-		object->pert_func = pert_plane;
-	}
 	else
 	{
 		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines,
 				parser->attribute);
 		exit(1);
 	}
+	object->pert_func = pert_normal;
 }
 
 void	ft_parse_angle(t_parser *parser, t_world *world, char *line)
