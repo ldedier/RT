@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/21 02:01:17 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/05/23 01:39:16 by lcavalle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,10 +56,12 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 parse_main.c\
 				 parse_obj.c\
 				 parse_orsc.c\
+				 parse_perts.c\
 				 parse_others.c\
 				 parse_specifics.c\
 				 parse_start.c\
 				 parse_tools.c\
+				 parse_read_tools.c\
 				 parse_process.c\
 				 parse_stack.c\
 				 populate_world.c\
@@ -88,7 +90,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_export.c\
 				 errors.c \
 				 lights_toon.c \
-				 filter.c\
+				 convolute.c\
+				 filters.c\
 				 intcolors.c\
 				 perturbations.c
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/11 17:36:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/22 09:44:28 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,20 @@ void	ft_init_keys(t_world *e)
 		e->keys[i] = 0;
 }
 
-void			set_defaults(t_world *world)
+static void		set_defaults_2(t_world *world)
 {
 	int	i;
 
+	i = -1;
+	while (++i < NTHREADS)
+		world->thr_state[i] = 0;
+	i = -1;
+	while (++i < e_nfilters)
+		world->filters[i] = 0;
+}
+
+void			set_defaults(t_world *world)
+{
 	world->cam->o = CAMERA_POS;
 	world->cam->look = normalize(CAMERA_LOOK);
 	world->cam->up = normalize(CAMERA_UP);
@@ -32,6 +42,7 @@ void			set_defaults(t_world *world)
 	world->cam->fd = CAMERA_FD;
 	world->cam->pd = ZOOM / HRES;
 	world->cam->rotation = POINT_ZERO;
+	world->shader = 1;
 	world->nlights = 0;
 	world->cobjlist = NULL;
 	world->ambient.in = AMBIENT_LIGHT;
@@ -43,10 +54,8 @@ void			set_defaults(t_world *world)
 	world->cancel_render = 0;
 	world->canvas->npixels = world->canvas->win_size.x *
 		world->canvas->win_size.y;
-	i = -1;
-	while (++i < NTHREADS)
-		world->thr_state[i] = 0;
 	world->can_export = 1;
+	set_defaults_2(world);
 	ft_init_keys(world);
 }
 
@@ -58,20 +67,18 @@ t_canvas		*new_canvas(void)
 		return (NULL);
 	canvas->win_size.x = HRES;
 	canvas->win_size.y = VRES;
+	canvas->fast_win_size.x = FAST_HRES;
+	canvas->fast_win_size.x = FAST_VRES;
 	canvas->halved_win_size.x = HRES / 2;
 	canvas->halved_win_size.y = VRES / 2;
 	canvas->ratio = HRES / VRES;
-	if (!(ft_init_all(canvas)))
-		return (NULL);
-	return (canvas);
-}
-
-static void	set_pb_rect(t_canvas *canvas)
-{
 	canvas->pb_rect.x = 0;
 	canvas->pb_rect.y = canvas->win_size.y;
 	canvas->pb_rect.w = 0;
 	canvas->pb_rect.h = PROGRESS_BAR_HEIGHT;
+	if (!(ft_init_all(canvas)))
+		return (NULL);
+	return (canvas);
 }
 
 int			ft_init_all(t_canvas *canvas)
@@ -96,6 +103,5 @@ int			ft_init_all(t_canvas *canvas)
 	if (!(canvas->surface = SDL_CreateRGBSurface(0,
 			canvas->screen.w, canvas->screen.h, 32, 0, 0, 0, 0)))
 		return (0);
-	set_pb_rect(canvas);
 	return (1);
 }

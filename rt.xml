@@ -20,6 +20,7 @@
 				<color>0xff00ff</color>
 				<positionXYZ>0 5 0</positionXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
+				<perturbation name = "ripple">1 0</perturbation>
 			</object>
 		</cobject>
 		<cobject>
@@ -99,4 +100,6 @@
 		<intensity>0.37</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
+	<filter type ="sharpen"></filter>
+	<filter type ="blur"></filter>
 </scene>

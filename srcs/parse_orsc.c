@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/16 16:38:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/23 01:28:07 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,25 @@ void	ft_parse_color(t_parser *parser, t_world *world, char *line)
 	}
 	read_hex(&line, &(col));
 	*color = get_color(col);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_parse_pert(t_parser *parser, t_world *world, char *line)
+{
+	t_perturbation	*pert;
+
+	if (parser->parse_enum == e_parse_object)
+		pert = &(world->cobjlist->cobject->objlist->object->pert);
+	else if (parser->parse_enum == e_parse_cobject)
+		pert = &(world->cobjlist->cobject->pert);
+	else
+	{
+		ft_dprintf(2, "line %d: current object can not have perturbation\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	read_pert_type(parser, pert, line);
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
 	ft_process_tag_stack(parser);
 }

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/21 08:13:13 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/23 01:46:53 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # include <unistd.h>
 # include <pthread.h>
 
-# define NTHREADS 4
+# define NTHREADS 8
 # define STACK 0
 # define POP 1
 
@@ -70,7 +70,6 @@
 # define MAX_LIGHTS 10
 # define AMBIENT_LIGHT 0.17
 # define AMBIENT_LIGHT_COL get_color(0xFFFFFF)
-# define PHONG 30.0
 # define EPSILON 0.00001
 # define SPEED 0.1
 # define MAX_BOUNCE 20
@@ -129,6 +128,7 @@ typedef struct			s_canvas
 	SDL_Rect			pb_rect;
 	SDL_Rect			screen;
 	t_pixel				win_size;
+	t_pixel				fast_win_size;
 	t_pixel				halved_win_size;
 	int					npixels;
 	double				ratio;
@@ -197,12 +197,12 @@ typedef struct			s_intcolor
 
 typedef enum			e_perturbations
 {
-	mattress,
-	sonar,
-	waves,
-	ripple,
-	pyramides,
-	noise
+	e_none,
+	e_mattress,
+	e_sonar,
+	e_ripple,
+	e_noise,
+	e_chess
 }						t_perturbations;
 
 typedef struct			s_perturbation
@@ -227,12 +227,12 @@ typedef struct			s_object
 	t_mat4				transform_pos_inv;
 	t_object_union		object_union;
 	int					(*intersect_func)(t_line, struct s_object, t_hit*);
-//	t_point3d			(*normal_func)(struct s_object, t_point3d);
+	t_point3d			(*pert_func)(t_hit*);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
 	t_color				c;
-	t_perturbation		ptbn;
+	t_perturbation		pert;
 	double				shine;
 	double				reflect;
 	double				refract;
@@ -293,6 +293,7 @@ typedef struct			s_cobject
 	double				reflect;
 	double				refract;
 	double				transp;
+	t_perturbation		pert;
 	t_objlist			*objlist;
 }						t_cobject;
 
@@ -319,6 +320,15 @@ typedef struct			s_illum
 	t_color				color;
 }						t_illum;
 
+typedef enum			e_filters
+{
+	e_gauss_blur,
+	e_sharpen,
+	e_sobel,
+	e_emboss,
+	e_nfilters
+}						t_filters;
+
 typedef struct			s_world
 {
 	t_light				lights[MAX_LIGHTS];
@@ -327,6 +337,7 @@ typedef struct			s_world
 	int					keys[nkeys];
 	pthread_t			threads[NTHREADS];
 	int					thr_state[NTHREADS];
+	int					filters[e_nfilters];
 	t_cobjlist			*cobjlist;
 	t_cobject			*selected_cobject;
 	t_illum				ambient;
@@ -335,6 +346,7 @@ typedef struct			s_world
 	int					progress;
 	int					cancel_render;
 	int					can_export;
+	int					shader;
 }						t_world;
 
 typedef struct			s_thr_par
@@ -421,6 +433,7 @@ int						parse_plane(char *line, t_object *rplane);
 int						parse_cone(char *line, t_object *rcone);
 int						parse_cylinder(char *line, t_object *rcylinder);
 int						parse_light(char *line, t_light *rlight);
+int						read_int(char **line, int *to);
 int						read_hex(char **line, int *to);
 int						read_double(char **line, double *to);
 int						parse_ambient(char *line, t_illum *rillum);
@@ -447,6 +460,14 @@ void					ft_parse_reflection(t_parser *p, t_world *w, char *l);
 void					ft_parse_radius(t_parser *p, t_world *w, char *l);
 void					ft_parse_angle(t_parser *p, t_world *w, char *l);
 void					ft_parse_intensity(t_parser *p, t_world *w, char *l);
+void					ft_parse_pert(t_parser *p, t_world *w, char *l);
+void					read_pert_type(t_parser *par, t_perturbation *pert,
+		char *line);
+void					ft_parse_resolution(t_parser *p, t_world *w, char *l);
+void					ft_parse_fast_resolution(t_parser *p, t_world *w,
+		char *l);
+void					ft_parse_filter(t_parser *p, t_world *w, char *l);
+void					ft_parse_shader(t_parser *p, t_world *w, char *l);
 void					ft_process_parsing_object_start(t_parser *p,
 						t_world *w);
 void					ft_process_parsing_cobject_start(t_parser *p,
@@ -465,6 +486,7 @@ void					ft_process_parsing_ambient_start(t_parser *p,
 void					ft_process_parsing_object_attributes(t_parser *p,
 						t_object *object);
 void					ft_give_default_characteristics(t_object *object);
+
 /*
 **vectors
 */
@@ -499,6 +521,9 @@ t_color					scale_convert_color(t_intcolor icol, double t);
 /*
 **filters
 */
+void					apply_convolution(t_world *world);
+void					convolute(t_canvas *canvas, double *filter,
+		int filter_size, int den);
 void					gauss_blur(t_canvas *canvas);
 void					sharpen(t_canvas *canvas);
 void					emboss(t_canvas *canvas);

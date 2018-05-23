@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   filter.c                                           :+:      :+:    :+:   */
+/*   convolute.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:02:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/20 03:07:50 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/22 09:44:32 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	apply_filter(t_convolution conv)
 		scale_convert_color(auxcol, (double)1 / conv.den).col;
 }
 
-static void	convolute(t_canvas *canvas, double *filter, int filter_size,
+void	convolute(t_canvas *canvas, double *filter, int filter_size,
 		int den)
 {
 	t_convolution	conv;
@@ -62,74 +62,16 @@ static void	convolute(t_canvas *canvas, double *filter, int filter_size,
 	free(conv.aux);
 }
 
-void		gauss_blur(t_canvas *canvas)
+void	apply_convolution(t_world *world)
 {
-	double	*filter;
-
-	filter = ft_memalloc(sizeof(double) * 9);
-	filter[0] = 1;
-	filter[1] = 2;
-	filter[2] = 1;
-	filter[3] = 2;
-	filter[4] = 4;
-	filter[5] = 2;
-	filter[6] = 1;
-	filter[7] = 2;
-	filter[8] = 1;
-	convolute(canvas, filter, 3, 16);
-	free(filter);
-}
-
-void		sharpen(t_canvas *canvas)
-{
-	double	*filter;
-
-	filter = ft_memalloc(sizeof(double) * 9);
-	filter[0] = 0;
-	filter[1] = -1;
-	filter[2] = 0;
-	filter[3] = -1;
-	filter[4] = 5;
-	filter[5] = -1;
-	filter[6] = 0;
-	filter[7] = -1;
-	filter[8] = 0;
-	convolute(canvas, filter, 3, 1);
-	free(filter);
-}
-
-void		emboss(t_canvas *canvas)
-{
-	double	*filter;
-
-	filter = ft_memalloc(sizeof(double) * 9);
-	filter[0] = -2;
-	filter[1] = -1;
-	filter[2] = 0;
-	filter[3] = -1;
-	filter[4] = 1;
-	filter[5] = 1;
-	filter[6] = 0;
-	filter[7] = 1;
-	filter[8] = 2;
-	convolute(canvas, filter, 3, 1);
-	free(filter);
-}
-
-void		sobel(t_canvas *canvas)
-{
-	double	*filter;
-
-	filter = ft_memalloc(sizeof(double) * 9);
-	filter[0] = 0;
-	filter[1] = 4;
-	filter[2] = 0;
-	filter[3] = 4;
-	filter[4] = -16;
-	filter[5] = 4;
-	filter[6] = 0;
-	filter[7] = 4;
-	filter[8] = 0;
-	convolute(canvas, filter, 3, 1);
-	free(filter);
+	printf("applying filters...\n");
+	if (world->filters[e_emboss])
+		emboss(world->canvas);
+	if (world->filters[e_sharpen])
+		sharpen(world->canvas);
+	if (world->filters[e_sobel])
+		sobel(world->canvas);
+	if (world->filters[e_gauss_blur])
+		gauss_blur(world->canvas);
+	printf("filters applied\n");
 }

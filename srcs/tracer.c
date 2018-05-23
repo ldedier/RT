@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/21 08:13:19 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/23 01:14:05 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 		while(cobj.objlist)
 		{
 			obj = *(cobj.objlist->object);
-			if ((obj.intersect_func(ft_transform_line(obj, line), obj, &newhit)) &&
-					(newhit.t > 0 && (newhit.t < hit->t || hit->t == -1)))
+			if ((obj.intersect_func(ft_transform_line(obj, line), obj, &newhit))
+					&& (newhit.t > 0 && (newhit.t < hit->t || hit->t == -1)))
 			{
 					newhit.obj = obj;
 					ft_transform_hit_back(&newhit);
@@ -72,6 +72,7 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 	if (dotprod(newvector(line.o, hit->point), line.v) > 0 && hit->t > 0)
 	{
 		hit->bounce = reflection(hit->normal, line.v);
+		hit->pert = hit->obj.pert_func(hit);
 		hit->pertbounce = reflection(hit->pert, line.v);
 		return (retfree(1, &hit));
 	}

@@ -6,13 +6,33 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/16 16:36:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/22 04:34:22 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	ft_process_parsing_stack_2(t_parser *parser, t_world *world, char *line)
+static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
+		char *line)
+{
+	if (!ft_strcmp(parser->tag, "resolution"))
+		ft_parse_resolution(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "perturbation"))
+		ft_parse_pert(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "fast_resolution"))
+		ft_parse_fast_resolution(parser, world, line);
+	else if (strcmp(parser->tag, "scene") &&
+			strcmp(parser->tag, "objlist") &&
+			strcmp(parser->tag, "lightlist")) 
+	{
+		ft_dprintf(2, "line %d: unknown tag <%s>\n", parser->nb_lines,
+				parser->tag);
+		exit(1);
+	}
+}
+
+void		ft_process_parsing_stack_2(t_parser *parser, t_world *world,
+		char *line)
 {
 	if (!ft_strcmp(parser->tag, "src"))
 		ft_parse_src(parser, world, line);
@@ -28,17 +48,16 @@ void	ft_process_parsing_stack_2(t_parser *parser, t_world *world, char *line)
 		ft_parse_shine(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "intensity"))
 		ft_parse_intensity(parser, world, line);
-	else if (strcmp(parser->tag, "scene") &&
-			strcmp(parser->tag, "objlist") &&
-			strcmp(parser->tag, "lightlist"))
-	{
-		ft_dprintf(2, "line %d: unknown tag <%s>\n", parser->nb_lines,
-				parser->tag);
-		exit(1);
-	}
+	else if (!ft_strcmp(parser->tag, "shader"))
+		ft_parse_shader(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "filter"))
+		ft_parse_filter(parser, world, line);
+	else
+		ft_process_parsing_stack_3(parser, world, line);
 }
 
-void	ft_process_parsing_stack(t_parser *parser, t_world *world, char *line)
+void		ft_process_parsing_stack(t_parser *parser, t_world *world,
+		char *line)
 {
 	if (!ft_strcmp(parser->tag, "positionXYZ"))
 		ft_process_parsing_pos(parser, world, line);
@@ -66,7 +85,7 @@ void	ft_process_parsing_stack(t_parser *parser, t_world *world, char *line)
 		ft_process_parsing_stack_2(parser, world, line);
 }
 
-void	ft_process_parsing(t_parser *parser, t_world *world, char *line)
+void		ft_process_parsing(t_parser *parser, t_world *world, char *line)
 {
 	ft_process_tag_stack(parser);
 	if (parser->op == STACK)
@@ -87,7 +106,7 @@ void	ft_process_parsing(t_parser *parser, t_world *world, char *line)
 	}
 }
 
-int		parse_line_new(char *line, t_world *world, t_parser *parser)
+int			parse_line_new(char *line, t_world *world, t_parser *parser)
 {
 	parser->nb_lines++;
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));

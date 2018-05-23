@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/20 08:53:36 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/22 08:52:20 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,21 @@ int			join_threads(t_world *world)
 {
 	int	i;
 	int	ret;
+	int	cancel;
 
 	i = -1;
+	cancel = 0;
 	while (working_count(world) > 0)
 	{
 		update_progress_bar(world);
+		if (world->cancel_render == 1)
+		{
+			i = -1;
+			world->cancel_render = 0;
+			cancel = 1;
+		}
 		if (world->thr_state[++i] == 2 || 
-				(world->thr_state[i] == 1 && world->cancel_render == 1))
+				(world->thr_state[i] == 1 && cancel == 1))
 		{
 			printf("joining thread %i of %i\n",i , NTHREADS);
 			if (pthread_join(world->threads[i], NULL))
@@ -76,16 +84,17 @@ int			join_threads(t_world *world)
 			}
 			world->thr_state[i] = 0;
 		}
-		if (i  == NTHREADS)
+		if (i == NTHREADS)
 			i = -1;
 		if (get_input(world))
 			end(world);
 	}
-	if ((ret = (world->cancel_render == 1)) == 1)
+	if ((ret = (cancel == 1)) == 1)
 		printf("all threads cancelled\n");
 	printf("threads joined, progress: %i, ret: %i\n", world->progress, ret);
 	world->progress = 0;
 	world->cancel_render = 0;
+	printf("oju que ara el join retorna %i\n",ret);fflush(stdout);
 	return (ret);
 }
 
@@ -94,7 +103,7 @@ void		paint_threaded(t_world *world)
 	t_thr_par	*tpar;
 	int			p_y;
 	int			i;
-
+	
 	i = -1;
 	p_y = 0;
 	while (++i < NTHREADS)
@@ -109,11 +118,10 @@ void		paint_threaded(t_world *world)
 			exit(0);
 		p_y += world->canvas->win_size.y / NTHREADS;
 	}
+	printf("oju ara crido join threads desde paint_threaded\n");fflush(stdout);
 	if (!join_threads(world))
 	{
-		printf("antialiasing...\n");fflush(stdout);
-		//sharpen(world->canvas);
-		printf("antialiasing finished!!!!!\n");fflush(stdout);
+		apply_convolution(world);
 		fill_canvas(world);
 		printf("canvas filled\n");fflush(stdout);
 	}

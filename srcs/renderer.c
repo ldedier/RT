@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/20 04:29:08 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/22 06:44:22 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		fog = fog > 1.0 ? 1.0 : fog;
 		castshadows(world, hit, srays);
 		aux = (t_shadowsfree){.srays = srays, .nlights = world->nlights};
-		if (SHADER == 1)
+		if (world->shader == 1)
 			illuminated_c = illuminate(world, hit, srays, fast);
-		else if (SHADER == 2)
+		else
 			illuminated_c = illuminate_toon(world, hit, srays, fast);
 		fogged_c = interpole_color(fog, illuminated_c, world->fog.color);
 		if (!fast && bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON)
 		{
 			reflect_c = ray_color(newray(translate_vec(hit->point,
-							hit->bounce, EPSILON), hit->bounce),
+							hit->pertbounce, EPSILON), hit->pertbounce),
 					world, bounce + 1, 0);
 			return (freeret(interpole_color(hit->obj.reflect,
 							fogged_c, reflect_c), &hit, &aux));

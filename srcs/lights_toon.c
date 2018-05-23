@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 00:02:39 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/22 04:24:43 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_line **srays, t_color lc)
 	int		i;
 	t_illum	shine;
 	double	newsh;
-	t_light	light;
+	t_light	lig;
 
 	shine.color = lc;
 	shine.in = 0;
@@ -74,14 +74,14 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_line **srays, t_color lc)
 	while (++i < world->nlights)
 		if (srays[i] && world->lights[i].type != 'd')
 		{
-			light = world->lights[i];
-			light.intensity = magnitude(newvector(hit->point, light.o)) *
+			lig = world->lights[i];
+			lig.intensity = magnitude(newvector(hit->point, lig.o)) *
 				(1.0 - world->fog.in);
 			newsh = dotprod(hit->bounce, srays[i]->v);
-			newsh = newsh > 0 ? pow(newsh, PHONG * light.intensity) : 0;
+			newsh = newsh > 0 ? pow(newsh, hit->obj.shine * lig.intensity) : 0;
 			newsh = newsh < 0.6 ? 0.2 : 0.85;
 			shine.color = add_colors(
-					shine.color, scale_color(light.c, newsh));
+					shine.color, scale_color(lig.c, newsh));
 			shine.in = shine.in + newsh > 1.0 ? 1.0 : shine.in + newsh;
 		}
 	return (shine);

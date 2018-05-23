@@ -5,25 +5,74 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/19 22:01:34 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/04/22 15:30:26 by lcavalle         ###   ########.fr       */
+/*   Created: 2018/05/22 03:14:18 by lcavalle          #+#    #+#             */
+/*   Updated: 2018/05/22 09:44:22 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-int	parse_ambient(char *line, t_illum *rillum)
+void	ft_parse_resolution(t_parser *parser, t_world *world, char *line)
 {
-	int	color;
-
-	if (!(read_double(&line, &(rillum->in))) ||
-			!(read_hex(&line, &color)))
-		return (0);
-	rillum->color = get_color(color);
-	return (1);
+	if (parser->parse_enum != e_parse_scene)
+	{
+		ft_dprintf(2, "line %d: current object can not have resolution\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	read_int(&line, &(world->canvas->win_size.x));
+	read_int(&line, &(world->canvas->win_size.y));
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
 }
 
-int	parse_fog(char *line, t_illum *rillum)
+void	ft_parse_fast_resolution(t_parser *parser, t_world *world, char *line)
 {
-	return (parse_ambient(line, rillum));
+	if (parser->parse_enum != e_parse_scene)
+	{
+		ft_dprintf(2, "line %d: current object can not have fast_resolution\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	read_int(&line, &(world->canvas->fast_win_size.x));
+	read_int(&line, &(world->canvas->fast_win_size.y));
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_parse_filter(t_parser *parser, t_world *world, char *line)
+{
+	if (parser->parse_enum != e_parse_scene)
+	{
+		ft_dprintf(2, "line %d: current object can not have filter\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	printf("attribute: %s| %i\n",parser->attribute, e_sharpen);fflush(stdout);
+	if (!ft_strcmp(parser->attribute, "blur"))
+		world->filters[e_gauss_blur] = 1;
+	else if (!ft_strcmp(parser->attribute, "sharpen"))
+		world->filters[e_sharpen] = 1;
+	else if (!ft_strcmp(parser->attribute, "sobel"))
+		world->filters[e_sobel] = 1;
+	else if (!ft_strcmp(parser->attribute, "emboss"))
+		world->filters[e_emboss] = 1;
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_parse_shader(t_parser *parser, t_world *world, char *line)
+{
+	if (parser->parse_enum != e_parse_scene)
+	{
+		ft_dprintf(2, "line %d: current object can not have shader\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	if (!ft_strcmp(parser->attribute, "normal"))
+		world->shader = 1;
+	else if (!ft_strcmp(parser->attribute, "cartoon"))
+		world->shader = 2;
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
 }

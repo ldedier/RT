@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/20 00:24:45 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/22 09:44:26 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static int	any_key_pressed(t_world *world)
 	int i;
 
 	i = -1;
-	printf("any_key_pressed called\n");fflush(stdout);
 	while (++i < nkeys)
 		if (world->keys[i])
 			return (1);
@@ -28,10 +27,8 @@ int		get_input(t_world *e)
 {
 	SDL_Event event;
 
-	printf("loop called\n");fflush(stdout);
 	while (SDL_PollEvent(&event))
 	{
-		printf("reading key\n");fflush(stdout);
 		if (event.type == SDL_KEYDOWN)
 			ft_keys_event(e, event, 1);
 		if (event.type == SDL_KEYUP)
@@ -47,13 +44,9 @@ int		get_input(t_world *e)
 			join_threads(e);
 			return (1);
 		}
-		else
-		printf("no input\n");fflush(stdout);
 	}
 	if (any_key_pressed(e))
 	{
-		printf("world %p\n",e);fflush(stdout);
-		printf("key pressed. cancel render: %i\n",e->cancel_render);fflush(stdout);
 		//if (e->cancel_render == 0)
 		//{
 		e->keys[mouse_move] = 0;
@@ -62,9 +55,7 @@ int		get_input(t_world *e)
 		{
 			e->keys[key_enter] = 0;
 			e->cancel_render = 0;
-			printf("render image\n");fflush(stdout);
 			paint_threaded(e);
-			printf("finished image render\n");fflush(stdout);
 			//paint_not_threaded(e);
 		}
 		else
@@ -78,7 +69,6 @@ int		get_input(t_world *e)
 		//}
 		//SDL_Delay(12);
 	}
-	printf("loop finish\n");fflush(stdout);
 	return (0);
 }
 

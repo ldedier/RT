@@ -6,29 +6,11 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/17 05:52:08 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/22 04:39:57 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
-int				read_hex(char **line, int *to)
-{
-	int scss;
-
-	scss = 1;
-	*to = ft_patoi_hex(line, &scss);
-	return (scss);
-}
-
-int				read_double(char **line, double *to)
-{
-	int scss;
-
-	scss = 1;
-	*to = ft_patof(line, &scss);
-	return (scss);
-}
 
 t_cobject		*ft_new_cobject(void)
 {
@@ -41,10 +23,11 @@ t_cobject		*ft_new_cobject(void)
 	cobject->r = ft_new_vec3(0, 0, 0);
 	cobject->s = ft_new_vec3(1, 1, 1);
 	cobject->c = get_color(0xFFFFFF);
+	cobject->pert.type = e_none;
 	cobject->transp = 0;
 	cobject->refract = 0;
 	cobject->reflect = 0.6;
-	cobject->shine = 0;
+	cobject->shine = 30;
 	cobject->objlist = NULL;
 	return (cobject);
 }
@@ -60,6 +43,8 @@ t_object		*ft_new_object(t_cobject cobject)
 	object->s = ft_new_vec3(1, 1, 1);
 	object->c = get_color(cobject.c.col);
 	object->transp = cobject.transp;
+	object->pert.type = cobject.pert.type;
+	object->pert.v = cobject.pert.v;
 	object->refract = cobject.refract;
 	object->reflect = cobject.reflect;
 	object->shine = cobject.shine;
