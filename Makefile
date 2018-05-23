@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/23 01:39:16 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/05/23 02:44:51 by lcavalle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,6 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 normals.c\
 				 obj_list.c\
 				 paint_threaded.c\
-				 parse_objects.c\
 				 parse_settings.c\
 				 parse_main.c\
 				 parse_obj.c\

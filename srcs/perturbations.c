@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:44:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/23 01:49:08 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/23 02:43:51 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 t_point3d	pert_sphere(t_hit *hit)
 {
-	(void)hit;
 	return (hit->normal);
 }
 
@@ -39,6 +38,5 @@ t_point3d	pert_plane(t_hit *hit)
 
 t_point3d	pert_cylinder(t_hit *hit)
 {
-	(void)hit;
 	return (hit->normal);
 }
