@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/17 19:18:48 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/22 01:43:53 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,31 @@ void	ft_parse_small_radius(t_parser *parser, t_world *world, char *line)
 		exit(1);
 	}
 	read_double(&line, small_rad);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_parse_goursat_ab(t_parser *parser, t_world *world, char *line)
+{
+	double *a;
+	double *b;
+
+	if (parser->parse_enum == e_parse_object &&
+			!ft_strcmp("goursat", parser->attribute))
+	{
+		a = &(world->cobjlist->cobject->objlist->object\
+				->object_union.goursat.a);
+		b = &(world->cobjlist->cobject->objlist->object\
+				->object_union.goursat.b);
+	}
+	else
+	{
+		ft_dprintf(2, "line %d: current object can not have goursatAB tag\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	read_double(&line, a);
+	read_double(&line, b);
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
 	ft_process_tag_stack(parser);
 }

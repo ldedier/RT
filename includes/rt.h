@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/18 03:12:55 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/23 05:15:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <pthread.h>
+# include <complex.h>
 
-# define NTHREADS 8
+# define NTHREADS 1
 # define STACK 0
 # define POP 1
 
@@ -71,9 +72,10 @@
 # define AMBIENT_LIGHT 0.17
 # define AMBIENT_LIGHT_COL get_color(0xFFFFFF)
 # define PHONG 30.0
-# define EPSILON 0.00001
+# define EPSILON 0.00000001
+# define EPSILON2 0.000000001
 # define SPEED 0.1
-# define MAX_BOUNCE 20
+# define MAX_BOUNCE 0
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
@@ -135,12 +137,20 @@ typedef struct			s_canvas
 
 }						t_canvas;
 
+typedef struct			s_affine
+{
+	double				a;
+	double				b;
+	double				debug;
+}						t_affine;
+
 typedef struct			s_quadratic
 {
 	double				a;
 	double				b;
 	double				c;
 	double				radic;
+	double				debug;
 }						t_quadratic;
 
 typedef struct			s_quadsol
@@ -149,25 +159,55 @@ typedef struct			s_quadsol
 	double				t2;
 }						t_quadsol;
 
+typedef struct			s_auxquart_init
+{
+	double				vx2;
+	double				vx3;
+	double				vx4;
+	double				ox2;
+	double				ox3;
+	double				ox4;
+	double				vy2;
+	double				vy3;
+	double				vy4;
+	double				oy2;
+	double				oy3;
+	double				oy4;
+	double				vz2;
+	double				vz3;
+	double				vz4;
+	double				oz2;
+	double				oz3;
+	double				oz4;
+}						t_auxquart_init;
+
+typedef struct			s_auxcubic
+{
+	long double complex		s;
+	long double complex		d;
+	long double complex		e;
+	long double complex		sqrt;
+	long double complex		f;
+	long double complex		g;
+
+}						t_auxcubic;
+
+
 typedef struct			s_auxquartic
 {
-	double				b2;
-	double				b3;
-	double				b4;
-	double				alpha;
-	double				alpha2;
-	double				beta;
-	double				gamma;
-	double				rad;
-	double				p;
-	double				q;
-	double				r;
-	double				u;
-	double				y;
-	double				w;
-	double				t;
-	double				r1;
-	double				r2;
+	long double complex		alpha;
+	long double complex		beta;
+	long double complex		gamma;
+	long double complex		rad;
+	long double complex		p;
+	long double complex		q;
+	long double complex		r;
+	long double complex		u;
+	long double complex		y;
+	long double complex		w;
+	long double complex		t;
+	long double complex		r1;
+	long double complex		r2;
 }						t_auxquartic;
 
 typedef struct			s_quartic
@@ -177,19 +217,25 @@ typedef struct			s_quartic
 	double				c;
 	double				d;
 	double				e;
-	double				b2;
-	double				b3;
-	double				b4;
-	double				radic;
+	double				debug;
 }						t_quartic;
+
+typedef struct			s_cubic
+{
+	double				a;
+	double				b;
+	double				c;
+	double				d;
+	double				debug;
+}						t_cubic;
 
 
 typedef struct			s_quartsol
 {
-	double				t1;
-	double				t2;
-	double				t3;
-	double				t4;
+	double complex		t1;
+	double complex		t2;
+	double complex		t3;
+	double complex		t4;
 }						t_quartsol;
 
 /*
@@ -204,6 +250,8 @@ typedef struct			s_line
 {
 	t_point3d			o;
 	t_point3d			v;
+	int x;
+	int y;
 }						t_line;
 
 typedef struct			s_camera
@@ -239,6 +287,7 @@ typedef union			s_object_union
 	t_cylinder			cylinder;
 	t_ellipsoid			ellipsoid;
 	t_torus				torus;
+	t_goursat			goursat;
 }						t_object_union;
 
 typedef struct			s_object
@@ -470,6 +519,7 @@ void					ft_parse_angle(t_parser *p, t_world *w, char *l);
 void					ft_parse_intensity(t_parser *p, t_world *w, char *l);
 void					ft_parse_ellipsoid_abc(t_parser *p, t_world *w,
 	   					char *l);
+void					ft_parse_goursat_ab(t_parser *p, t_world *w, char *l);
 void					ft_parse_big_radius(t_parser *p, t_world *w, char *l);
 void					ft_parse_small_radius(t_parser *p, t_world *w, char *l);
 void					ft_process_parsing_object_start(t_parser *p,
@@ -550,6 +600,14 @@ int						intersect_cylinder(t_line line, t_object obj,
 int						intersect_ellipsoid(t_line line, t_object obj,
 		t_hit *hit);
 int						intersect_torus(t_line line, t_object obj,
+		t_hit *hit);
+int						intersect_goursat(t_line line, t_object obj,
+		t_hit *hit);
+int						intersect_lemniscate(t_line line, t_object obj,
+		t_hit *hit);
+int						intersect_piriform(t_line line, t_object obj,
+		t_hit *hit);
+int						intersect_roman(t_line line, t_object obj,
 		t_hit *hit);
 /*
 **normals

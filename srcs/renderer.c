@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 16:39:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/23 03:16:14 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,14 @@ t_color				render_pixel(t_world *world, t_pixel pix, int fast)
 {
 	t_point3d	point;
 	t_color		ret;
+	t_line line;
 
 	point = screen2world(pix, world);
-	ret = ray_color(newray(point, newvector(world->cam->o, point)),
-			world, 0, fast);
+	line = newray(point, newvector(world->cam->o, point));
+	line.x = pix.x;
+	line.y = pix.y;
+	ret = ray_color(line, world, 0, fast);
+	if (pix.x == 0 && pix.y == VRES / 2)
+		return get_color(0x00ff00);
 	return (ret);
 }

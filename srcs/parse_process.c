@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/17 19:26:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/22 01:45:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	ft_process_parsing_stack_3(t_parser *parser, t_world *world, char *line)
 		ft_parse_big_radius(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "small_radius"))
 		ft_parse_small_radius(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "goursatAB"))
+		ft_parse_goursat_ab(parser, world, line);
 	else if (strcmp(parser->tag, "scene") &&
 			strcmp(parser->tag, "objlist") &&
 			strcmp(parser->tag, "lightlist"))

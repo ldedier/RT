@@ -39,8 +39,8 @@
 				<scaleXYZ>1 1 1</scaleXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
 				<shine>0.5</shine>
-				<refraction>125</refraction>
-				<transparency>12</transparency>
+				<refraction>1</refraction>
+				<transparency>0</transparency>
 				<color> 0x00FF00 </color>
 			</object>
 		</cobject>

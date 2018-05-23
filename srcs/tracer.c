@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 18:26:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/23 02:32:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_line				ft_transform_line(t_object object, t_line t)
 
 	line.o = ft_point3d_mat4_mult(t.o, object.transform_pos_inv);
 	line.v = normalize(ft_point3d_mat4_mult(t.v, object.transform_dir_inv));
+	line.x = t.x;
+	line.y = t.y;
 	return line;
 }
 

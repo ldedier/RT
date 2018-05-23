@@ -1,6 +1,6 @@
 <scene>
 	<camera>
-		<positionXYZ>0 0 -15</positionXYZ>
+		<positionXYZ>0 0 -20</positionXYZ>
 		<rotationXYZ>0 0 0</rotationXYZ>
 	</camera>
 	<objlist>
@@ -60,11 +60,9 @@
 			</object>
 		</cobject>
 		<cobject>
-			<color>0xFF0000</color>
-			<positionXYZ>0 0 -2</positionXYZ>
-			<object name="torus">
-				<big_radius>10</big_radius>
-				<small_radius>5</small_radius>
+			<color>0xFFFF00</color>
+			<positionXYZ>0 0 -10</positionXYZ>
+			<object name="piriform">
 			</object>
 		</cobject>
 	</objlist>

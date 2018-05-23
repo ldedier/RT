@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/17 17:53:24 by ldedier          ###   ########.fr        #
+#    Updated: 2018/05/22 01:37:11 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,6 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 normals.c\
 				 obj_list.c\
 				 paint_threaded.c\
-				 parse_objects.c\
 				 parse_settings.c\
 				 parse_main.c\
 				 parse_obj.c\
@@ -102,7 +101,7 @@ INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 	  -I $(LIBMATDIR)/$(LIBMAT_INCLUDEDIR)\
 	  -I $(LIBSDL2DIR)/$(LIBSDL2_INCLUDEDIR)\
 
-CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror $(INC)
+CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror  $(INC)
 
 LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
 		 -L $(LIBSDL2DIR)/$(LIBSDL2_LIBDIR) -lsdl2\

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 21:04:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/17 19:08:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/22 01:42:41 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 # define FT_OBJECTS_H
 
 #include "libmat.h"
+
+typedef struct		s_goursat
+{
+	double			a;
+	double			b;
+}					t_goursat;
 
 typedef struct		s_torus
 {

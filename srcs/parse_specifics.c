@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/17 19:10:10 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/22 02:47:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ void	ft_give_default_characteristics(t_object *object)
 		object->object_union.torus.big_rad = 2;
 		object->object_union.torus.small_rad = 1;
 	}
+	else if (object->intersect_func == intersect_goursat)
+	{
+		object->object_union.goursat.a = 5;
+		object->object_union.goursat.b = 11.8;
+	}
 }
 
 void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
@@ -46,6 +51,14 @@ void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 		object->intersect_func = intersect_ellipsoid;
 	else if (!ft_strcmp(parser->attribute, "torus"))
 		object->intersect_func = intersect_torus;
+	else if (!ft_strcmp(parser->attribute, "goursat"))
+		object->intersect_func = intersect_goursat;
+	else if (!ft_strcmp(parser->attribute, "lemniscate"))
+		object->intersect_func = intersect_lemniscate;
+	else if (!ft_strcmp(parser->attribute, "roman"))
+		object->intersect_func = intersect_roman;
+	else if (!ft_strcmp(parser->attribute, "piriform"))
+		object->intersect_func = intersect_piriform;
 	else
 	{
 		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines,

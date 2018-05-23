@@ -14,14 +14,6 @@
 			</object>
 		</cobject>
 		<cobject>
-			<object name="cylinder">
-				<color>0xFF00FF</color>
-				<reflection>0</reflection>
-				<positionXYZ>-2 4 10</positionXYZ>
-				<rotationXYZ>0 0 -0.7</rotationXYZ>
-			</object>
-		</cobject>
-		<cobject>
 			<object name="plane">
 				<color>0x222222</color>
 				<reflection>0</reflection>
@@ -48,6 +40,14 @@
 			<reflection>0</reflection>
 			<color> 0xFF0000 </color>
 			<object name="sphere">
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>-2 4 10</positionXYZ>
+			<rotationXYZ>0 0 -0.7</rotationXYZ>
+			<object name="cylinder">
+				<color>0xFF00FF</color>
+				<reflection>0</reflection>
 			</object>
 		</cobject>
 	</objlist>
