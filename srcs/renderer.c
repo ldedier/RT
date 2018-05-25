@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/23 03:16:14 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/24 01:13:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ t_color				render_pixel(t_world *world, t_pixel pix, int fast)
 	line.x = pix.x;
 	line.y = pix.y;
 	ret = ray_color(line, world, 0, fast);
-	if (pix.x == 0 && pix.y == VRES / 2)
+	if (line.x == 0 && line.y == VRES/2)
 		return get_color(0x00ff00);
 	return (ret);
 }

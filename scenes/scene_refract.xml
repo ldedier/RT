@@ -60,13 +60,18 @@
 			</object>
 		</cobject>
 		<cobject>
-			<color>0xFFFF00</color>
+			<color>0x0000FF</color>
 			<positionXYZ>0 0 -10</positionXYZ>
-			<object name="piriform">
+			<rotationXYZ>0 0 -10</rotationXYZ>
+			<object name="ellipsoid">
+				<radius>1</radius>
 			</object>
 		</cobject>
 	</objlist>
 	<lightlist>
+		<light type="point">
+			<positionXYZ>5 -10 -15</positionXYZ>
+		</light>
 	</lightlist>
 	<ambientlight>
 		<intensity>0.485</intensity>

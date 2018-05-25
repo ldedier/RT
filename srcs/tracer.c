@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/23 02:32:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/24 03:02:08 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_line				ft_transform_line(t_object object, t_line t)
 {
 	t_line line;
 
+	line.oldo = t.o;
+	line.oldv = t.v;
 	line.o = ft_point3d_mat4_mult(t.o, object.transform_pos_inv);
 	line.v = normalize(ft_point3d_mat4_mult(t.v, object.transform_dir_inv));
 	line.x = t.x;
@@ -64,11 +66,8 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 					(newhit.t > 0 && (newhit.t < hit->t || hit->t == -1)))
 			{
 					newhit.obj = obj;
-				//	if(newhit.point.y >= 0 - EPSILON)
-				//	{
 					ft_transform_hit_back(&newhit);
 					*hit = newhit;
-				//	}
 			}
 			cobj.objlist = cobj.objlist->next;
 		}

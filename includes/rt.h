@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/23 05:15:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/25 21:07:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@
 # define AMBIENT_LIGHT_COL get_color(0xFFFFFF)
 # define PHONG 30.0
 # define EPSILON 0.00000001
-# define EPSILON2 0.000000001
+# define EPSILON2 0.000000001 //plus petit = plus de quartic plutot que de cubic
+# define EPSILON3 0.000001 //plus petit = moins de solution
+# define EPSILON4 0.00000001 // on considere ca comme zero complexe (surtout used dans quartic)
 # define SPEED 0.1
 # define MAX_BOUNCE 0
 
@@ -134,13 +136,12 @@ typedef struct			s_canvas
 	t_pixel				halved_win_size;
 	int					npixels;
 	double				ratio;
-
 }						t_canvas;
 
 typedef struct			s_affine
 {
-	double				a;
-	double				b;
+	long double			a;
+	long double			b;
 	double				debug;
 }						t_affine;
 
@@ -161,24 +162,24 @@ typedef struct			s_quadsol
 
 typedef struct			s_auxquart_init
 {
-	double				vx2;
-	double				vx3;
-	double				vx4;
-	double				ox2;
-	double				ox3;
-	double				ox4;
-	double				vy2;
-	double				vy3;
-	double				vy4;
-	double				oy2;
-	double				oy3;
-	double				oy4;
-	double				vz2;
-	double				vz3;
-	double				vz4;
-	double				oz2;
-	double				oz3;
-	double				oz4;
+	long double				vx2;
+	long double				vx3;
+	long double				vx4;
+	long double				ox2;
+	long double				ox3;
+	long double				ox4;
+	long double				vy2;
+	long double				vy3;
+	long double				vy4;
+	long double				oy2;
+	long double				oy3;
+	long double				oy4;
+	long double				vz2;
+	long double				vz3;
+	long double				vz4;
+	long double				oz2;
+	long double				oz3;
+	long double				oz4;
 }						t_auxquart_init;
 
 typedef struct			s_auxcubic
@@ -187,8 +188,20 @@ typedef struct			s_auxcubic
 	long double complex		d;
 	long double complex		e;
 	long double complex		sqrt;
-	long double complex		f;
-	long double complex		g;
+	long double	complex			f;
+	long double	complex		g;
+	long double	complex		h;
+	long double	complex		i;
+	long double	complex		j;
+	long double		complex		k;
+	long double	complex	l;
+	long double	complex		m;
+	long double	complex		n;
+	long double complex		p;
+	long double complex		r;
+//	long double  			s;
+	long double complex			t;
+	long double complex		u;
 
 }						t_auxcubic;
 
@@ -212,20 +225,20 @@ typedef struct			s_auxquartic
 
 typedef struct			s_quartic
 {
-	double				a;
-	double				b;
-	double				c;
-	double				d;
-	double				e;
+	long double				a;
+	long double				b;
+	long double				c;
+	long double				d;
+	long double				e;
 	double				debug;
 }						t_quartic;
 
 typedef struct			s_cubic
 {
-	double				a;
-	double				b;
-	double				c;
-	double				d;
+	long double				a;
+	long double				b;
+	long double				c;
+	long double				d;
 	double				debug;
 }						t_cubic;
 
@@ -252,6 +265,8 @@ typedef struct			s_line
 	t_point3d			v;
 	int x;
 	int y;
+	t_point3d oldo;
+	t_point3d oldv;
 }						t_line;
 
 typedef struct			s_camera
