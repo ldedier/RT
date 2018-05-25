@@ -28,6 +28,7 @@
 //TODO	better distribution of pixels in threads, to avoid very expensive zones
 //DONE	mr bean
 //TODO	(?)start rendering detailed scene when not moving, cancel if move again
+//TODO separate normals and intersections calculating
 
 #ifndef RT_H
 # define RT_H
@@ -44,6 +45,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <pthread.h>
+# include <complex.h>
 
 # define NTHREADS 4
 # define STACK 0
@@ -70,9 +72,13 @@
 # define MAX_LIGHTS 10
 # define AMBIENT_LIGHT 0.17
 # define AMBIENT_LIGHT_COL get_color(0xFFFFFF)
-# define EPSILON 0.01
+# define PHONG 30.0
+# define EPSILON 0.00000001
+# define EPSILON2 0.000000001 //plus petit = plus de quartic plutot que de cubic
+# define EPSILON3 0.000001 //plus petit = moins de solution
+# define EPSILON4 0.00000001 // on considere ca comme zero complexe (surtout used dans quartic)
 # define SPEED 0.1
-# define MAX_BOUNCE 20
+# define MAX_BOUNCE 10
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
@@ -132,8 +138,14 @@ typedef struct			s_canvas
 	t_pixel				halved_win_size;
 	int					npixels;
 	double				ratio;
-
 }						t_canvas;
+
+typedef struct			s_affine
+{
+	long double			a;
+	long double			b;
+	double				debug;
+}						t_affine;
 
 typedef struct			s_quadratic
 {
@@ -141,6 +153,7 @@ typedef struct			s_quadratic
 	double				b;
 	double				c;
 	double				radic;
+	double				debug;
 }						t_quadratic;
 
 typedef struct			s_quadsol
@@ -148,6 +161,97 @@ typedef struct			s_quadsol
 	double				t1;
 	double				t2;
 }						t_quadsol;
+
+typedef struct			s_auxquart_init
+{
+	long double				vx2;
+	long double				vx3;
+	long double				vx4;
+	long double				ox2;
+	long double				ox3;
+	long double				ox4;
+	long double				vy2;
+	long double				vy3;
+	long double				vy4;
+	long double				oy2;
+	long double				oy3;
+	long double				oy4;
+	long double				vz2;
+	long double				vz3;
+	long double				vz4;
+	long double				oz2;
+	long double				oz3;
+	long double				oz4;
+}						t_auxquart_init;
+
+typedef struct			s_auxcubic
+{
+	long double complex		s;
+	long double complex		d;
+	long double complex		e;
+	long double complex		sqrt;
+	long double	complex			f;
+	long double	complex		g;
+	long double	complex		h;
+	long double	complex		i;
+	long double	complex		j;
+	long double		complex		k;
+	long double	complex	l;
+	long double	complex		m;
+	long double	complex		n;
+	long double complex		p;
+	long double complex		r;
+//	long double  			s;
+	long double complex			t;
+	long double complex		u;
+
+}						t_auxcubic;
+
+
+typedef struct			s_auxquartic
+{
+	long double complex		alpha;
+	long double complex		beta;
+	long double complex		gamma;
+	long double complex		rad;
+	long double complex		p;
+	long double complex		q;
+	long double complex		r;
+	long double complex		u;
+	long double complex		y;
+	long double complex		w;
+	long double complex		t;
+	long double complex		r1;
+	long double complex		r2;
+}						t_auxquartic;
+
+typedef struct			s_quartic
+{
+	long double				a;
+	long double				b;
+	long double				c;
+	long double				d;
+	long double				e;
+	double				debug;
+}						t_quartic;
+
+typedef struct			s_cubic
+{
+	long double				a;
+	long double				b;
+	long double				c;
+	long double				d;
+	double				debug;
+}						t_cubic;
+
+
+typedef struct			s_quartsol
+{
+	double complex		t1;
+	double complex		t2;
+	double complex		t3;
+	double complex		t4;
+}						t_quartsol;
 
 /*
 ** o = origin
@@ -161,6 +265,10 @@ typedef struct			s_line
 {
 	t_point3d			o;
 	t_point3d			v;
+	int x;
+	int y;
+	t_point3d oldo;
+	t_point3d oldv;
 }						t_line;
 
 typedef struct			s_camera
@@ -211,6 +319,9 @@ typedef union			s_object_union
 	t_cone				cone;
 	t_plane				plane;
 	t_cylinder			cylinder;
+	t_ellipsoid			ellipsoid;
+	t_torus				torus;
+	t_goursat			goursat;
 }						t_object_union;
 
 typedef struct			s_object
@@ -296,6 +407,18 @@ typedef struct			s_cobjlist
 	t_cobject			*cobject;
 	struct s_cobjlist	*next;
 }						t_cobjlist;
+
+typedef struct			s_auxtorus
+{
+	double				g;
+	double				h;
+	double				i;
+	double				j;
+	double				k;
+	double				l;
+}						t_auxtorus;
+
+
 
 typedef struct			s_light
 {
@@ -460,15 +583,20 @@ void					ft_parse_fast_resolution(t_parser *p, t_world *w,
 		char *l);
 void					ft_parse_filter(t_parser *p, t_world *w, char *l);
 void					ft_parse_shader(t_parser *p, t_world *w, char *l);
+void					ft_parse_ellipsoid_abc(t_parser *p, t_world *w,
+	   					char *l);
+void					ft_parse_goursat_ab(t_parser *p, t_world *w, char *l);
+void					ft_parse_big_radius(t_parser *p, t_world *w, char *l);
+void					ft_parse_small_radius(t_parser *p, t_world *w, char *l);
 void					ft_process_parsing_object_start(t_parser *p,
 						t_world *w);
 void					ft_process_parsing_cobject_start(t_parser *p,
 						t_world *w);
-void					ft_process_parsing_scale(t_parser *p, t_world *w, 
+void					ft_process_parsing_scale(t_parser *p, t_world *w,
 						char *l);
-void					ft_process_parsing_scale(t_parser *p, t_world *w, 
+void					ft_process_parsing_scale(t_parser *p, t_world *w,
 						char *l);
-void					ft_process_parsing_stack(t_parser *p, t_world *w, 
+void					ft_process_parsing_stack(t_parser *p, t_world *w,
 						char *l);
 void					ft_process_parsing_light_start(t_parser *p, t_world *w);
 void					ft_process_parsing_ambient_start(t_parser *p,
@@ -492,9 +620,11 @@ t_point3d				addvecs(t_point3d v1, t_point3d v2);
 double					proj(t_point3d v1, t_point3d v2);
 t_point3d				create_vec(double x, double y, double z);
 t_point3d				reflection(t_point3d n, t_point3d v);
+t_point3d				refraction(t_point3d normal, t_point3d incident,
+						double n1, double n2);
 
 /*
-**colors 
+**colors
 */
 t_color					interpole_color(double t, t_color c1, t_color c2);
 t_color					get_color(int color);
@@ -554,6 +684,18 @@ int						intersect_cone(t_line line, t_object obj,
 int						intersect_plane(t_line line, t_object obj,
 		t_hit *hit);
 int						intersect_cylinder(t_line line, t_object obj,
+		t_hit *hit);
+int						intersect_ellipsoid(t_line line, t_object obj,
+		t_hit *hit);
+int						intersect_torus(t_line line, t_object obj,
+		t_hit *hit);
+int						intersect_goursat(t_line line, t_object obj,
+		t_hit *hit);
+int						intersect_lemniscate(t_line line, t_object obj,
+		t_hit *hit);
+int						intersect_piriform(t_line line, t_object obj,
+		t_hit *hit);
+int						intersect_roman(t_line line, t_object obj,
 		t_hit *hit);
 /*
 **normals

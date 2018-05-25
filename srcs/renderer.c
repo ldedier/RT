@@ -49,6 +49,7 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 	t_line			*srays[MAX_LIGHTS];
 	t_shadowsfree	aux;
 	t_color			reflect_c;
+	t_color			refract_c;
 	t_color			fogged_c;
 	t_color			illuminated_c;
 	double			fog;
@@ -64,15 +65,32 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		else
 			illuminated_c = illuminate_toon(world, hit, srays, fast);
 		fogged_c = interpole_color(fog, illuminated_c, world->fog.color);
-		if (!fast && bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON)
+		if (bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON)
 		{
 			reflect_c = ray_color(newray(translate_vec(hit->point,
 							hit->pertbounce, EPSILON), hit->pertbounce),
 					world, bounce + 1, 0);
-			return (freeret(interpole_color(hit->obj.reflect,
-							fogged_c, reflect_c), &hit, &aux));
 		}
-		return (freeret(fogged_c, &hit, &aux));
+		else
+		{
+			reflect_c = get_color(0x000000);
+			hit->obj.reflect = 0;
+		}
+		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON)
+		{
+			refract_c = ray_color(newray(translate_vec(hit->point,
+							ray.v, EPSILON), refraction(hit->normal, ray.v, 1,
+							   hit->obj.refract)),
+					world, bounce + 1, 0);
+		}
+		else
+		{
+			hit->obj.transp = 0;
+			refract_c = get_color(0x000000);
+		}
+			return (freeret(interpole_color(hit->obj.transp, interpole_color(hit->obj.reflect,
+						fogged_c, reflect_c), refract_c), &hit, &aux));
+		//return (freeret(fogged_c, &hit, &aux));
 	}
 	return (freeret(world->fog.color, &hit, NULL));
 }
@@ -81,9 +99,14 @@ t_color				render_pixel(t_world *world, t_pixel pix, int fast)
 {
 	t_point3d	point;
 	t_color		ret;
+	t_line line;
 
 	point = screen2world(pix, world);
-	ret = ray_color(newray(point, newvector(world->cam->o, point)),
-			world, 0, fast);
+	line = newray(point, newvector(world->cam->o, point));
+	line.x = pix.x;
+	line.y = pix.y;
+	ret = ray_color(line, world, 0, fast);
+	if (line.x == 0 && line.y == VRES/2)
+		return get_color(0x00ff00);
 	return (ret);
 }

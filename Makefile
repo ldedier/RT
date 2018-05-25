@@ -58,6 +58,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 parse_perts.c\
 				 parse_others.c\
 				 parse_specifics.c\
+				 parse_specifics2.c\
 				 parse_start.c\
 				 parse_tools.c\
 				 parse_read_tools.c\
@@ -87,12 +88,13 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_new_image.c\
 				 ft_get_name.c\
 				 ft_export.c\
-				 errors.c \
 				 lights_toon.c \
 				 convolute.c\
 				 filters.c\
 				 intcolors.c\
-				 perturbations.c
+				 perturbations.c\
+				 errors.c\
+				 refraction.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 
@@ -106,7 +108,7 @@ INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 	  -I $(LIBMATDIR)/$(LIBMAT_INCLUDEDIR)\
 	  -I $(LIBSDL2DIR)/$(LIBSDL2_INCLUDEDIR)\
 
-CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror $(INC)
+CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror  $(INC)
 
 LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
 		 -L $(LIBSDL2DIR)/$(LIBSDL2_LIBDIR) -lsdl2\
@@ -127,7 +129,7 @@ $(LIBSDL2):
 
 $(BINDIR)/$(NAME): $(OBJECTS) $(LIBSDL2)
 	@make -C $(LIBFTDIR)
-	@make -C $(LIBMATDIR) 
+	@make -C $(LIBMATDIR)
 	$(CC) -o $@ $^ $(LFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 	@install_name_tool -change /usr/local/lib/libSDL2-2.0.0.dylib \

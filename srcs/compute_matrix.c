@@ -51,12 +51,12 @@ void	ft_compute_matrices(t_cobject *cobject)
 
 	//	t_mat4 pivot = ft_mat4_translate_vec(cobject->o);
 	//	t_mat4 pivot = ft_mat4_translate_vec(cobject->o);
-		
+
 		object = ptr->object;
 		t_mat4 rotate = ft_mat4_mult(ft_mat4_rotate_x(object->r.x), ft_mat4_mult(ft_mat4_rotate_y(object->r.y), ft_mat4_rotate_z(object->r.z)));
 		// ft_printf("rotate\n");
 		// ft_print_mat4(rotate);
-		
+
 		t_mat4 translate = ft_mat4_translate_vec(ft_point3d_add(cobject->o,  ft_point3d_mult(cobject->s, object->o)));
 		// ft_printf("translate\n");
 		// ft_print_mat4(translate);
@@ -103,23 +103,23 @@ void	ft_compute_matrices(t_cobject *cobject)
 
 		t_mat4 local_translate = ft_mat4_translate_vec(ft_point3d_mult(cobject->s, object->o));
 		t_mat4 local_translate_inv = ft_mat4_inv_translate(local_translate);
-		
+
 		t_mat4 invpivot = ft_mat4_mult(local_translate, ft_mat4_mult(rotate_inv_cobj, local_translate_inv));
 	//	t_mat4 invpivot = ft_mat4_mult(local_translate, rotate_inv_cobj);
-		
-		(void)invpivot;	
+
+		(void)invpivot;
 		t_mat4 transform_dir = ft_mat4_mult(rotate_cobj, ft_mat4_mult(rotate, scale2));
 //		t_mat4 transform_dir =  ft_mat4_mult(rotate, scale2);
-		
+
 		t_mat4 transform = ft_mat4_mult(translate, ft_mat4_mult(local_translate_inv, ft_mat4_mult( rotate_cobj, ft_mat4_mult(local_translate,ft_mat4_mult(rotate, scale)))));
 
-	// OUAAAAAI	
-	
+	// OUAAAAAI
+
 		t_mat4 transform_dir_inv = ft_mat4_mult(ft_mat4_mult(scale2, rotate2), rotate_inv_cobj);
 		t_mat4 invtransform = ft_mat4_mult(scale2, ft_mat4_mult(rotate2,ft_mat4_mult(local_translate_inv,  ft_mat4_mult(rotate_inv_cobj,ft_mat4_mult(local_translate, translate2)))));
-	
+
 	//END OUAI
-	
+
 //		invtransform = ft_mat4_mult(invtransform, invpivot);
 		// ft_printf("INVERSE DIR \n");
 		// ft_print_mat4(transform_dir_inv);

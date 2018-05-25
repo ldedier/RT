@@ -20,6 +20,21 @@ void	ft_give_default_characteristics(t_object *object)
 		object->object_union.cylinder.radius = 1;
 	else if (object->intersect_func == intersect_cone)
 		object->object_union.cone.angle = M_PI / 4;
+	else if (object->intersect_func == intersect_ellipsoid)
+	{
+		object->object_union.ellipsoid.abc = ft_new_vec3(1, 1.2, 0.7);
+		object->object_union.ellipsoid.radius = 1;
+	}
+	else if (object->intersect_func == intersect_torus)
+	{
+		object->object_union.torus.big_rad = 2;
+		object->object_union.torus.small_rad = 1;
+	}
+	else if (object->intersect_func == intersect_goursat)
+	{
+		object->object_union.goursat.a = 5;
+		object->object_union.goursat.b = 11.8;
+	}
 }
 
 void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
@@ -32,6 +47,18 @@ void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 		object->intersect_func = intersect_cylinder;
 	else if (!ft_strcmp(parser->attribute, "plane"))
 		object->intersect_func = intersect_plane;
+	else if (!ft_strcmp(parser->attribute, "ellipsoid"))
+		object->intersect_func = intersect_ellipsoid;
+	else if (!ft_strcmp(parser->attribute, "torus"))
+		object->intersect_func = intersect_torus;
+	else if (!ft_strcmp(parser->attribute, "goursat"))
+		object->intersect_func = intersect_goursat;
+	else if (!ft_strcmp(parser->attribute, "lemniscate"))
+		object->intersect_func = intersect_lemniscate;
+	else if (!ft_strcmp(parser->attribute, "roman"))
+		object->intersect_func = intersect_roman;
+	else if (!ft_strcmp(parser->attribute, "piriform"))
+		object->intersect_func = intersect_piriform;
 	else
 	{
 		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines,
@@ -73,6 +100,10 @@ void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
 			!ft_strcmp("cylinder", parser->attribute))
 		radius = &(world->cobjlist->cobject->objlist->object\
 				->object_union.cylinder.radius);
+	else if (parser->parse_enum == e_parse_object &&
+			!ft_strcmp("ellipsoid", parser->attribute))
+		radius = &(world->cobjlist->cobject->objlist->object\
+				->object_union.ellipsoid.radius);
 	else
 	{
 		ft_dprintf(2, "line %d: current object does not have radius tag",

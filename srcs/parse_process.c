@@ -21,9 +21,17 @@ static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 		ft_parse_pert(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "fast_resolution"))
 		ft_parse_fast_resolution(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "ellipsoidABC"))
+		ft_parse_ellipsoid_abc(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "big_radius"))
+		ft_parse_big_radius(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "small_radius"))
+		ft_parse_small_radius(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "goursatAB"))
+			ft_parse_goursat_ab(parser, world, line);
 	else if (strcmp(parser->tag, "scene") &&
 			strcmp(parser->tag, "objlist") &&
-			strcmp(parser->tag, "lightlist")) 
+			strcmp(parser->tag, "lightlist"))
 	{
 		ft_dprintf(2, "line %d: unknown tag <%s>\n", parser->nb_lines,
 				parser->tag);

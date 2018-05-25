@@ -48,11 +48,10 @@
 				<positionXYZ>0 0 0</positionXYZ>
 				<scaleXYZ>1 1 1</scaleXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
-				<shine>30</shine>
-				<reflection>0.3</reflection>
-				<refraction>125</refraction>
-				<transparency>12</transparency>
-				<color> 0x222230 </color>
+				<shine>0.5</shine>
+				<refraction>1</refraction>
+				<transparency>0</transparency>
+				<color> 0x00FF00 </color>
 			</object>
 		</cobject>
 		<cobject>

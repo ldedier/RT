@@ -26,8 +26,12 @@ t_line				ft_transform_line(t_object object, t_line t)
 {
 	t_line line;
 
+	line.oldo = t.o;
+	line.oldv = t.v;
 	line.o = ft_point3d_mat4_mult(t.o, object.transform_pos_inv);
 	line.v = normalize(ft_point3d_mat4_mult(t.v, object.transform_dir_inv));
+	line.x = t.x;
+	line.y = t.y;
 	return line;
 }
 
@@ -49,13 +53,13 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 	t_hit		*hit;
 	t_cobject	cobj;
 	t_object	obj;
-   
+
 	hit = ft_memalloc(sizeof(t_hit));
 	hit->t = -1;
 	while (cobjlist)
 	{
 		cobj = *(cobjlist->cobject);
-		while(cobj.objlist)
+		while (cobj.objlist)
 		{
 			obj = *(cobj.objlist->object);
 			if ((obj.intersect_func(ft_transform_line(obj, line), obj, &newhit))
