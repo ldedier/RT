@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/21 23:49:43 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/05/25 19:27:57 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,12 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_line **srays, t_color lc)
 	return (shine);
 }
 
-int				ft_get_pixel(int x, int y, unsigned char *img, int dim_X, int bpp)
+
+
+
+
+
+int		ft_get_pixel(int x, int y, unsigned char *img, int dim_X, int bpp)
 {
 	int		nb;
 	char	color[4];
@@ -105,54 +110,56 @@ t_color			illuminate(t_world *world, t_hit *hit, t_line **srays, int fast)
 	t_illum	illu;
 	t_illum	shine;
 	t_color	lightcol;
+	t_color	color;
 
 	illu = getillum(world, hit, srays);
 	//lightcol = interpole_color(illu.in, BLACK_COLOR, interpole_color(
 	//			getwhiteratio(illu.color, 0.3, 1), illu.color, hit->obj.c));
 
-	/*
-	//sphere UV mapping
-	t_point3d p = normalize(hit->old_normal);
-	float u = 0.5 + ((atan2(p.z, p.x)) / (2 * M_PI));
-	float v = 0.5 - (asin(p.y) / M_PI);
-	u = (int)(u * world->bmp_parser.width);
-	v = (int)(v * world->bmp_parser.height);
-	int col = ft_get_pixel(u, v, world->bmp_parser.pixels, world->bmp_parser.width, world->bmp_parser.bpp);
-	t_color color = get_color(col);
-	*/
-
-	t_point3d p = normalize(hit->old_point);
-	float u = ft_clamp(0, p.x, 1);
-	float v = ft_clamp(0, p.y, 1);
-	u = (int)(u * world->bmp_parser.width);
-	v = (int)(v * world->bmp_parser.height);
-	int col = ft_get_pixel(u, v, world->bmp_parser.pixels, world->bmp_parser.width, world->bmp_parser.bpp);
-	t_color color = get_color(col);
-
-
-	/*
-	t_point3d v_n = ft_new_vec3(0.0f, 1.0f, 0.0f);
-	t_point3d v_e = ft_new_vec3(1.0f, 0.0f, 0.0f);
-	t_point3d v_p = normalize(hit->normal);
-	printf("(%f, %f, %f)\n", v_p.x, v_p.y, v_p.z);
-	float phi = acos(-ft_dot_product(v_n, v_p));
-	float v = phi / M_PI;
-	float theta = (acos(ft_dot_product(v_p, v_e) / sin(phi))) / (2 * M_PI);
-	float u;
-	if (ft_dot_product(ft_point3d_cross_product(v_n, v_e), v_p) > 0)
-		u = theta;
+	if (0)
+	{
+		//sphere UV mapping
+		t_point3d p = normalize(hit->old_normal);
+		float u = 0.5 + ((atan2(p.z, p.x)) / (2 * M_PI));
+		float v = 0.5 - (asin(p.y) / M_PI);
+		u = (int)(u * world->bmp_parser.width);
+		v = (int)(v * world->bmp_parser.height);
+		int col = ft_get_pixel(u, v, world->bmp_parser.pixels, world->bmp_parser.width, world->bmp_parser.bpp);
+		color = get_color(col);
+	}
+	else if (0)
+	{
+		t_point3d p = hit->old_point;
+		float u = 0.5 + (atan2(p.y, p.x)) / (2 * M_PI);
+		float v = fabs(p.z) / M_PI;
+		//printf("%f %f\n", u, v);
+		u = (int)(u * world->bmp_parser.width);
+		v = (int)(v * world->bmp_parser.height);
+		int col = ft_get_pixel(u, v, world->bmp_parser.pixels, world->bmp_parser.width, world->bmp_parser.bpp);
+		color = get_color(col);
+	}
+	else if (1)
+	{
+		//plane UV mapping
+		t_point3d m_UAxis;
+		m_UAxis.x = hit->old_normal.y;
+		m_UAxis.y = hit->old_normal.z;
+		m_UAxis.z = -hit->old_normal.x;
+		t_point3d m_VAxis = crossprod(m_UAxis, hit->old_normal);
+		float u = (int)(ft_dot_product(hit->old_point, m_UAxis) * world->bmp_parser.width + 1000) % (world->bmp_parser.width);
+		float v = (int)(ft_dot_product(hit->old_point, m_VAxis) * world->bmp_parser.height + 1000) % (world->bmp_parser.height);
+		if (u < 0)
+			u *= -1;
+		if (v < 0)
+			v *= -1;
+		int col = ft_get_pixel(u, v, world->bmp_parser.pixels, world->bmp_parser.width, world->bmp_parser.bpp);
+		color = get_color(col);
+	}
 	else
-		u = 1 - theta;
-	u = (int)(u * world->bmp_parser.width);
-	v = (int)(v * world->bmp_parser.height);
-	//printf("%f %f\n", u, v);
-	int col = ft_get_pixel(u, v, world->bmp_parser.pixels, world->bmp_parser.width, world->bmp_parser.bpp);
-	//printf("%d\n", col);
-	t_color color = get_color(col);
-	//printf("%f %f\n", u, v);
-	*/
+	{
+		color = hit->obj.c;
+	}
 
-	//t_color color = get_color(0x00ff00);
 	lightcol = interpole_color(illu.in, BLACK_COLOR, interpole_color(
 				getwhiteratio(illu.color, 0.3, 1), illu.color, color));
 	if (fast)

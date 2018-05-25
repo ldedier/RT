@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/19 00:19:24 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/05/24 03:52:21 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,37 @@ static t_color		freeret(t_color c, t_hit **hit, t_shadowsfree *aux)
 	return (c);
 }
 
+static float		distance(t_point3d a, t_point3d b)
+{
+	return (sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z)));
+}
+
+static t_color		ebloui(t_world *world, t_line ray)
+{
+	int		i;
+	float	coeff;
+	float	sum;
+
+	sum = 0.0f;
+	i = 0;
+	while (i < world->nlights)
+	{
+		coeff = -ft_dot_product(ray.v, world->lights[i].v);
+		coeff /= distance(ray.o, world->lights[i].o);
+		//printf("%f\n", distance(ray.o, world->lights[i].o));
+		//printf("%f\n", distance(world->cam->o, world->lights[i].o));
+		if (coeff > 0)
+		{
+			if (coeff < 0)
+				coeff /= distance(world->cam->o, world->lights[i].o);
+			sum += coeff;
+		}
+		i++;
+	}
+	sum = ft_fclamp(0, sum, 1);
+	return (interpole_color(sum, world->fog.color, get_color(0xffffff)));
+}
+
 static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 {
 	t_hit			*hit;
@@ -92,7 +123,10 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		}
 		return (freeret(fogged_c, &hit, &aux));
 	}
-	return (freeret(world->fog.color, &hit, NULL));
+	illuminated_c = ebloui(world, ray);
+	return (freeret(illuminated_c, &hit, NULL));
+
+	//return (freeret(world->fog.color, &hit, NULL));
 }
 
 t_color				render_pixel(t_world *world, t_pixel pix, int fast)
