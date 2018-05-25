@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/23 09:29:43 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/24 04:47:48 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_illum	getillum(t_world *world, t_hit *hit, t_line **srays)
 					sqrt(magnitude(newvector(hit->point, light.o)));
 			newillu = dotprod(hit->pert, srays[i]->v) *
 				light.intensity / world->nlights;
-			newillu = newillu > 0 ? newillu : newillu * -1;
+			newillu = newillu > 0 ? newillu : 0;
 			newillu = newillu > 1.0 ? 1.0 : newillu;
 			illu.in += newillu;
 			illu.color = add_colors(
@@ -92,10 +92,12 @@ t_color			illuminate(t_world *world, t_hit *hit, t_line **srays, int fast)
 	t_illum	illu;
 	t_illum	shine;
 	t_color	lightcol;
+	t_color	plaincol;
 
+	plaincol = pert_color(hit);
 	illu = getillum(world, hit, srays);
 	lightcol = interpole_color(illu.in, BLACK_COLOR, interpole_color(
-				getwhiteratio(illu.color, 0.3, 1), illu.color, hit->obj.c));
+				getwhiteratio(illu.color, 0.3, 1), illu.color, plaincol));
 	if (fast)
 		return (lightcol);
 	shine = getshine(world, hit, srays, lightcol);

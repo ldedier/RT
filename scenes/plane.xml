@@ -6,9 +6,10 @@
 	<objlist>
 		<cobject>
 			<object name="plane">
-				<color>0xffffff</color>
+				<color>0x00ff00</color>
 				<reflection>0</reflection>
 				<positionXYZ>0 2 0</positionXYZ>
+				<perturbation name="spiral"></perturbation>
 			</object>
 		</cobject>
 	</objlist>

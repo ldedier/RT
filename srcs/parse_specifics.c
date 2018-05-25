@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/23 09:33:28 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/24 02:13:13 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 				parser->attribute);
 		exit(1);
 	}
-	object->pert_func = pert_normal;
 }
 
 void	ft_parse_angle(t_parser *parser, t_world *world, char *line)

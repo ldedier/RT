@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/23 09:33:38 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/24 07:15:33 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,8 @@ typedef enum			e_perturbations
 	e_ripple,
 	e_waves,
 	e_noise,
-	e_chess
+	e_chess,
+	e_spiral
 }						t_perturbations;
 
 typedef union			s_object_union
@@ -220,7 +221,6 @@ typedef struct			s_object
 	t_mat4				transform_pos_inv;
 	t_object_union		object_union;
 	int					(*intersect_func)(t_line, struct s_object, t_hit*);
-	t_point3d			(*pert_func)(t_hit*);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
@@ -568,6 +568,7 @@ t_point3d				normal_cylinder(t_object sphere, t_point3d hitpoint);
 **perturbations
 */
 t_point3d				pert_normal(t_hit *hit);
+t_color					pert_color(t_hit *hit);
 
 /*
 **translations

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/23 03:52:15 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/24 03:14:37 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 		}
 		cobjlist = cobjlist->next;
 	}
-	if (dotprod(newvector(line.o, hit->point), line.v) > 0 && hit->t > 0)
+	if (hit->t > 0)
 	{
 		hit->bounce = reflection(hit->normal, line.v);
-		hit->pert = hit->obj.pert_func(hit);
+		hit->pert = pert_normal(hit);
 		hit->pertbounce = reflection(hit->pert, line.v);
 		return (retfree(1, &hit));
 	}

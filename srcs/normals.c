@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:44:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/21 02:37:48 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/24 05:59:12 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_point3d	normal_plane(t_object plane, t_point3d hitpoint, t_line line)
 
 	(void)plane;
 	(void)hitpoint;
-	normal = ft_new_vec3(0, (line.v.y > 0) ? 1 : -1, 0);
+	normal = ft_new_vec3(0, (line.v.y < 0) ? 1 : -1, 0);
 	return (normal);
 }
 
