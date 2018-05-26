@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/23 06:27:21 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/26 00:42:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_cobject		*ft_new_cobject(void)
 	cobject->pert = e_none;
 	cobject->transp = 0;
 	cobject->refract = 0;
-	cobject->reflect = 0.6;
+	cobject->reflect = 0;
 	cobject->shine = 30;
 	cobject->objlist = NULL;
 	return (cobject);

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/24 07:15:33 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/26 07:10:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # define NTHREADS 4
 # define STACK 0
 # define POP 1
+# define MAX_DEGREE 4
 
 # define FAST_HRES 160
 # define FAST_VRES 120
@@ -73,12 +74,12 @@
 # define AMBIENT_LIGHT 0.17
 # define AMBIENT_LIGHT_COL get_color(0xFFFFFF)
 # define PHONG 30.0
-# define EPSILON 0.00000001
+# define EPSILON 0.01
 # define EPSILON2 0.000000001 //plus petit = plus de quartic plutot que de cubic
 # define EPSILON3 0.000001 //plus petit = moins de solution
 # define EPSILON4 0.00000001 // on considere ca comme zero complexe (surtout used dans quartic)
 # define SPEED 0.1
-# define MAX_BOUNCE 10
+# define MAX_BOUNCE 20
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
@@ -244,15 +245,6 @@ typedef struct			s_cubic
 	double				debug;
 }						t_cubic;
 
-
-typedef struct			s_quartsol
-{
-	double complex		t1;
-	double complex		t2;
-	double complex		t3;
-	double complex		t4;
-}						t_quartsol;
-
 /*
 ** o = origin
 ** v = vector
@@ -267,6 +259,7 @@ typedef struct			s_line
 	t_point3d			v;
 	int x;
 	int y;
+	double n;
 	t_point3d oldo;
 	t_point3d oldv;
 }						t_line;
@@ -331,7 +324,8 @@ typedef struct			s_object
 	t_mat4				transform_dir_inv;
 	t_mat4				transform_pos_inv;
 	t_object_union		object_union;
-	int					(*intersect_func)(t_line, struct s_object, t_hit*);
+	int					(*intersect_func)(t_line, struct s_object, double sols[MAX_DEGREE]);
+	t_point3d			(*normal_func)(struct s_object, t_point3d, t_line line);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
@@ -351,6 +345,7 @@ struct			s_hit
 	t_point3d			pert;
 	t_point3d			bounce;
 	t_point3d			pertbounce;
+	int					enter;
 	double				t;
 };
 
@@ -620,8 +615,7 @@ t_point3d				addvecs(t_point3d v1, t_point3d v2);
 double					proj(t_point3d v1, t_point3d v2);
 t_point3d				create_vec(double x, double y, double z);
 t_point3d				reflection(t_point3d n, t_point3d v);
-t_point3d				refraction(t_point3d normal, t_point3d incident,
-						double n1, double n2);
+t_point3d				refraction(t_hit *hit, t_line *line);
 
 /*
 **colors
@@ -678,34 +672,49 @@ void					update_progress_bar(t_world *world);
 ** intersections
 */
 int						intersect_sphere(t_line line, t_object obj,
-		t_hit *hit);
+		double sols[MAX_DEGREE]);
 int						intersect_cone(t_line line, t_object obj,
-		t_hit *hit);
+		double sols[MAX_DEGREE]);
 int						intersect_plane(t_line line, t_object obj,
-		t_hit *hit);
+		double sols[MAX_DEGREE]);
 int						intersect_cylinder(t_line line, t_object obj,
-		t_hit *hit);
+		double sols[MAX_DEGREE]);
 int						intersect_ellipsoid(t_line line, t_object obj,
-		t_hit *hit);
+		double sols[MAX_DEGREE]);
 int						intersect_torus(t_line line, t_object obj,
-		t_hit *hit);
+		double sols[MAX_DEGREE]);
 int						intersect_goursat(t_line line, t_object obj,
-		t_hit *hit);
+		double sols[MAX_DEGREE]);
 int						intersect_lemniscate(t_line line, t_object obj,
-		t_hit *hit);
+		double sols[MAX_DEGREE]);
 int						intersect_piriform(t_line line, t_object obj,
-		t_hit *hit);
+		double sols[MAX_DEGREE]);
 int						intersect_roman(t_line line, t_object obj,
-		t_hit *hit);
+		double sols[MAX_DEGREE]);
 /*
 **normals
 */
-t_point3d				normal_sphere(t_object sphere, t_point3d hitpoint);
-t_point3d				normal_cone(t_object sphere, t_point3d hitpoint);
-t_point3d				normal_plane(t_object sphere, t_point3d hitpoint,
-		t_line line);
-t_point3d				normal_cylinder(t_object sphere, t_point3d hitpoint);
+t_point3d				normal_sphere(t_object sphere, t_point3d t, t_line l);
+t_point3d				normal_cone(t_object sphere, t_point3d t, t_line l);
+t_point3d				normal_plane(t_object sphere, t_point3d t, t_line l);
+t_point3d				normal_cylinder(t_object sphere, t_point3d t, t_line l);
+t_point3d				normal_ellipsoid(t_object sphere, t_point3d t, t_line l);
+t_point3d				normal_goursat(t_object sphere, t_point3d t, t_line l);
+t_point3d				normal_roman(t_object sphere, t_point3d t, t_line l);
+t_point3d				normal_piriform(t_object sphere, t_point3d t, t_line l);
+t_point3d				normal_lemniscate(t_object sphere, t_point3d t, t_line l);
+t_point3d				normal_torus(t_object sphere, t_point3d t, t_line l);
 
+
+/*
+**quartics
+*/
+t_quartic				get_quartic_piriform(t_line line);
+t_quartic				get_quartic_roman(t_line line);
+t_quartic				get_quartic_lemniscate(t_line line);
+t_quartic				get_quartic_goursat(t_line line, t_object obj);
+t_quartic				get_quartic_torus(t_line line, t_object obj);
+void					ft_init_aux(t_auxquart_init *g, t_line line);
 /*
 **perturbations
 */

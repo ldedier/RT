@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/23 02:44:51 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/05/26 07:08:08 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 intersections.c\
 				 lights.c\
 				 normals.c\
+				 normals2.c\
 				 obj_list.c\
 				 paint_threaded.c\
 				 parse_settings.c\
@@ -94,7 +95,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 intcolors.c\
 				 perturbations.c\
 				 errors.c\
-				 refraction.c
+				 refraction.c\
+				 quartics_intersect.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 

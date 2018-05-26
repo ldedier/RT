@@ -6,13 +6,13 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/23 03:49:01 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/26 01:33:47 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static t_line		newray(t_point3d p, t_point3d vec)
+static t_line		newray(t_point3d p, t_point3d vec, double n)
 {
 	t_line	line;
 
@@ -20,7 +20,8 @@ static t_line		newray(t_point3d p, t_point3d vec)
 	if (PERSPECTIVE == 1)
 		line.v = (t_point3d){.x = 0, .y = 0, .z = 1};
 	else if (PERSPECTIVE == 2)
-		line.v = normalize(vec);;
+		line.v = normalize(vec);
+	line.n = n;
 	return (line);
 }
 
@@ -68,7 +69,7 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		if (bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON)
 		{
 			reflect_c = ray_color(newray(translate_vec(hit->point,
-							hit->pertbounce, EPSILON), hit->pertbounce),
+							hit->pertbounce, EPSILON), hit->pertbounce, ray.n),
 					world, bounce + 1, 0);
 		}
 		else
@@ -79,8 +80,7 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON)
 		{
 			refract_c = ray_color(newray(translate_vec(hit->point,
-							ray.v, EPSILON), refraction(hit->normal, ray.v, 1,
-							   hit->obj.refract)),
+							ray.v, EPSILON), refraction(hit, &ray), ray.n),
 					world, bounce + 1, 0);
 		}
 		else
@@ -102,7 +102,7 @@ t_color				render_pixel(t_world *world, t_pixel pix, int fast)
 	t_line line;
 
 	point = screen2world(pix, world);
-	line = newray(point, newvector(world->cam->o, point));
+	line = newray(point, newvector(world->cam->o, point), 1);
 	line.x = pix.x;
 	line.y = pix.y;
 	ret = ray_color(line, world, 0, fast);

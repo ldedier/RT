@@ -1,7 +1,7 @@
 <scene>
 	<camera>
-		<positionXYZ>0 0 -20</positionXYZ>
-		<rotationXYZ>0 0 0</rotationXYZ>
+		<positionXYZ>0 0 14</positionXYZ>
+		<rotationXYZ>3.1415 0 0</rotationXYZ>
 	</camera>
 	<objlist>
 		<cobject>
@@ -44,27 +44,20 @@
 		</cobject>
 		<cobject>
 			<positionXYZ>0 0 8</positionXYZ>
-			<transparency>0.5</transparency>
-			<shine>10</shine>
-			<refraction>1.2</refraction>
+			<transparency>0.7</transparency>
+			<refraction>1.3</refraction>
 			<object name="sphere">
 				<radius>2</radius>
-				<color>0x00FF00</color>
-			</object>
-		</cobject>
-		<cobject>
-			<color>0xFF0000</color>
-			<positionXYZ>0 0 2</positionXYZ>
-			<object name="ellipsoid">
-				<radius>1</radius>
+				<color>0x0000FF</color>
 			</object>
 		</cobject>
 		<cobject>
 			<color>0x0000FF</color>
 			<positionXYZ>0 0 -10</positionXYZ>
 			<rotationXYZ>0 0 -10</rotationXYZ>
-			<object name="ellipsoid">
-				<radius>1</radius>
+			<transparency>0.8</transparency>
+			<refraction>1.5</refraction>
+			<object name="goursat">
 			</object>
 		</cobject>
 	</objlist>

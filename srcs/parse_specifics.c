@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/24 02:13:13 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/26 06:39:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,55 @@ void	ft_give_default_characteristics(t_object *object)
 void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 {
 	if (!ft_strcmp(parser->attribute, "sphere"))
+	{
 		object->intersect_func = intersect_sphere;
+		object->normal_func = normal_sphere;
+	}
 	else if (!ft_strcmp(parser->attribute, "cone"))
+	{
 		object->intersect_func = intersect_cone;
+		object->normal_func = normal_cone;
+	}
 	else if (!ft_strcmp(parser->attribute, "cylinder"))
+	{
 		object->intersect_func = intersect_cylinder;
+		object->normal_func = normal_cylinder;
+	}
 	else if (!ft_strcmp(parser->attribute, "plane"))
+	{
 		object->intersect_func = intersect_plane;
+		object->normal_func = normal_plane;
+	}
 	else if (!ft_strcmp(parser->attribute, "ellipsoid"))
+	{
 		object->intersect_func = intersect_ellipsoid;
+		object->normal_func = normal_ellipsoid;
+	}
 	else if (!ft_strcmp(parser->attribute, "torus"))
+	{
 		object->intersect_func = intersect_torus;
+		object->normal_func = normal_torus;
+	}
 	else if (!ft_strcmp(parser->attribute, "goursat"))
+	{
 		object->intersect_func = intersect_goursat;
+		object->normal_func = normal_goursat;
+	}
 	else if (!ft_strcmp(parser->attribute, "lemniscate"))
+	{
 		object->intersect_func = intersect_lemniscate;
+		object->normal_func = normal_lemniscate;
+	}
 	else if (!ft_strcmp(parser->attribute, "roman"))
+	{
 		object->intersect_func = intersect_roman;
+		object->normal_func = normal_roman;
+	}
 	else if (!ft_strcmp(parser->attribute, "piriform"))
+	{
 		object->intersect_func = intersect_piriform;
+		object->normal_func = normal_piriform;
+	}
 	else
 	{
 		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines,
