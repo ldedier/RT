@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 21:04:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/22 01:42:41 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/27 04:50:28 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 # define FT_OBJECTS_H
 
 #include "libmat.h"
+
+typedef struct		s_triangle
+{
+	t_point3d		v1;
+	t_point3d		v2;
+	t_point3d		v3;
+}					t_triangle;
 
 typedef struct		s_goursat
 {

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 22:42:29 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/15 16:23:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/27 07:39:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@ void	add_obj(t_objlist **lst, t_object *object)
 		exit(errno);
 	}
 	new->object = object;
+	new->next = *lst;
+	*lst = new;
+}
+
+void	add_obj_cpy(t_objlist **lst, t_object *object)
+{
+	t_objlist *new;
+	t_object *new_obj;
+	if (!(new = malloc(sizeof(t_objlist))))
+	{
+		perror("cant malloc new node");
+		exit(errno);
+	}
+	new_obj = malloc(sizeof(t_object));
+	new->object = ft_memcpy(new_obj, object, sizeof(t_object));
 	new->next = *lst;
 	*lst = new;
 }

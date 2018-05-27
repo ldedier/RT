@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/26 07:08:08 by ldedier          ###   ########.fr        #
+#    Updated: 2018/05/27 07:10:36 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,16 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 perturbations.c\
 				 errors.c\
 				 refraction.c\
-				 quartics_intersect.c
+				 quartics_intersect.c\
+				 cuts.c\
+				 inequality.c\
+				 parse_cut.c\
+				 triangle.c\
+				 parse_triangle.c\
+				 ft_process_parse_obj.c\
+				 ft_parse_obj_faces.c\
+				 ft_parse_obj_vertices.c\
+				 map_file.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 
@@ -114,6 +123,7 @@ CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror  $(INC)
 
 LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
 		 -L $(LIBSDL2DIR)/$(LIBSDL2_LIBDIR) -lsdl2\
+		 -fsanitize=address
 
 opti:
 	@make -j all

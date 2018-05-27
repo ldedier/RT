@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/26 06:39:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/27 05:20:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ void	ft_give_default_characteristics(t_object *object)
 	{
 		object->object_union.goursat.a = 5;
 		object->object_union.goursat.b = 11.8;
+	}
+	else if (object->intersect_func == intersect_triangle)
+	{
+		object->object_union.triangle.v1 = ft_new_vec3(-1, 0, 0);
+		object->object_union.triangle.v2 = ft_new_vec3(0, -1, 0);
+		object->object_union.triangle.v3 = ft_new_vec3(1, 0, 0);
 	}
 }
 
@@ -89,6 +95,12 @@ void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 		object->intersect_func = intersect_piriform;
 		object->normal_func = normal_piriform;
 	}
+	else if (!ft_strcmp(parser->attribute, "triangle"))
+	{
+		object->intersect_func = intersect_triangle;
+		object->normal_func = normal_piriform;
+	}
+
 	else
 	{
 		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines,

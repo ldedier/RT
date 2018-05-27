@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:28:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/17 16:40:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/27 07:29:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,5 @@ void    ft_process(t_world *e)
 		e->selected_cobject->r.z += M_PI / 16;
 	if (e->keys[key_v])
 		e->selected_cobject->r.z -= M_PI / 16;
-	ft_compute_matrices_clist(e->cobjlist);
+//	ft_compute_matrices_clist(e->cobjlist);
 }

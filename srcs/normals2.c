@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 06:44:30 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/26 06:54:12 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/27 01:14:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_point3d	normal_lemniscate(t_object obj, t_point3d point, t_line line)
 	(void)obj;
 	(void)line;
 	normal = normalize(ft_new_vec3(
-				4 * point.x * point.x * point.x - 2 * point.x * point.x,
+				4 * point.x * point.x * point.x - 2 * point.x,
 				2 * point.y,
 				2 * point.z));
 
