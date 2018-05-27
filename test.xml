@@ -4,9 +4,6 @@
 		<rotationXYZ>0 0 0</rotationXYZ>
 	</camera>
 	<objlist>
-		<cobject type="obj">
-			<src>resources/objs/teapot.obj</src>
-		</cobject>
 		<cobject>
 			<object name="cylinder">
 				<color>0xff00ff</color>

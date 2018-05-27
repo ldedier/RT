@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/27 22:26:14 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/27 23:28:40 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # include <sys/mman.h>
 # include <sys/stat.h>
 
-# define NTHREADS 1
+# define NTHREADS 4
 # define STACK 0
 # define POP 1
 # define MAX_DEGREE 4
