@@ -29,6 +29,21 @@ static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 		ft_parse_small_radius(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "goursatAB"))
 			ft_parse_goursat_ab(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "cut"))
+		ft_process_parsing_cut_start(parser, world);
+	else if (!ft_strcmp(parser->tag, "cutXYZ"))
+		ft_process_parsing_cut_xyz(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "inequality"))
+		ft_process_parsing_cut_inequality(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "value"))
+		ft_process_parsing_cut_value(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "vertexA"))
+		ft_process_parsing_vertex_a(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "vertexB"))
+		ft_process_parsing_vertex_b(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "vertexC"))
+		ft_process_parsing_vertex_c(parser, world, line);
+
 	else if (strcmp(parser->tag, "scene") &&
 			strcmp(parser->tag, "objlist") &&
 			strcmp(parser->tag, "lightlist"))
@@ -102,7 +117,9 @@ void		ft_process_parsing(t_parser *parser, t_world *world, char *line)
 		ft_process_parsing_stack(parser, world, line);
 	else if (parser->op == POP)
 	{
-		if (!ft_strcmp(parser->tag, "object"))
+		if (!ft_strcmp(parser->tag, "cut"))
+			parser->parse_enum = e_parse_object;
+		else if (!ft_strcmp(parser->tag, "object"))
 			parser->parse_enum = e_parse_cobject;
 		else
 			parser->parse_enum = e_parse_scene;

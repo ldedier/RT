@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/27 21:01:25 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/27 22:36:34 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,38 +35,48 @@ void	ft_give_default_characteristics(t_object *object)
 		object->object_union.goursat.a = 5;
 		object->object_union.goursat.b = 11.8;
 	}
+	else if (object->intersect_func == intersect_triangle)
+	{
+		object->object_union.triangle.v1 = ft_new_vec3(-1, 0, 0);
+		object->object_union.triangle.v2 = ft_new_vec3(0, -1, 0);
+		object->object_union.triangle.v3 = ft_new_vec3(1, 0, 0);
+	}
 }
 
 static void	set_funcs(t_object *obj,
-		int (*intersect_func)(t_line, t_object, t_hit*),
-		int (*inside_func)(t_hit h, t_object))
+		int (*intersect_func)(t_line, t_object, double[MAX_DEGREE]),
+		int (*inside_func)(t_hit, t_object),
+		t_point3d (*normal_func)(t_object, t_point3d, t_line))
 {
 	obj->intersect_func = intersect_func;
 	obj->inside_func = inside_func;
+	obj->normal_func = normal_func;
 }
 
 void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 {
 	if (!ft_strcmp(parser->attribute, "sphere"))
-		set_funcs(object, intersect_sphere, inside_sphere);
+		set_funcs(object, intersect_sphere, inside_sphere, normal_sphere);
 	else if (!ft_strcmp(parser->attribute, "cone"))
-		set_funcs(object, intersect_cone, inside_cone);
+		set_funcs(object, intersect_cone, inside_cone, normal_cone);
 	else if (!ft_strcmp(parser->attribute, "cylinder"))
-		set_funcs(object, intersect_cylinder, inside_cylinder);
+		set_funcs(object, intersect_cylinder, inside_cylinder, normal_cylinder);
 	else if (!ft_strcmp(parser->attribute, "plane"))
-		set_funcs(object, intersect_plane, inside_plane);
+		set_funcs(object, intersect_plane, inside_plane, normal_plane);
 	else if (!ft_strcmp(parser->attribute, "ellipsoid"))
-		object->intersect_func = intersect_ellipsoid;
+			set_funcs(object, intersect_ellipsoid, inside_plane, normal_ellipsoid);
 	else if (!ft_strcmp(parser->attribute, "torus"))
-		object->intersect_func = intersect_torus;
+			set_funcs(object, intersect_torus, inside_plane, normal_torus);
 	else if (!ft_strcmp(parser->attribute, "goursat"))
-		object->intersect_func = intersect_goursat;
+			set_funcs(object, intersect_goursat, inside_plane, normal_goursat);
 	else if (!ft_strcmp(parser->attribute, "lemniscate"))
-		object->intersect_func = intersect_lemniscate;
+			set_funcs(object, intersect_lemniscate, inside_plane, normal_lemniscate);
 	else if (!ft_strcmp(parser->attribute, "roman"))
-		object->intersect_func = intersect_roman;
+			set_funcs(object, intersect_roman, inside_plane, normal_roman);
 	else if (!ft_strcmp(parser->attribute, "piriform"))
-		object->intersect_func = intersect_piriform;
+			set_funcs(object, intersect_piriform, inside_plane, normal_piriform);
+	else if (!ft_strcmp(parser->attribute, "triangle"))
+			set_funcs(object, intersect_triangle, inside_plane, normal_triangle);
 	else
 	{
 		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines,

@@ -6,22 +6,29 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 01:01:52 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/25 21:10:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/26 07:07:19 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
+double	ft_min_pos(double t1, double t2)
+{
+	if ((t1 < t2 || t2 < 0) && t1 > 0)
+		return (t1);
+	if ((t2 < t1 || t1 < 0) && t2 > 0)
+		return (t2);
+	else
+		return (-1);
+}
+
 /*
 ** quadratic equation. simpliefied a, b and c. also simplified formula
 ** (wikipedia line-sphere intersection)
 */
-
-int					intersect_sphere(t_line line, t_object obj,
-		t_hit *hit)
+int					intersect_sphere(t_line line, t_object obj, double sols[MAX_DEGREE])
 {
 	t_quadratic	equa;
-	t_quadsol	sols;
 	double		radic;
 
 	equa = (t_quadratic){.a = dotprod(line.v, line.v), .b = 2 *
@@ -31,14 +38,9 @@ int					intersect_sphere(t_line line, t_object obj,
 	radic = (equa.b * equa.b) - (4 * equa.a * equa.c);
 	if (radic < 0.0)
 		return (0);
-	sols.t1 = (-equa.b + sqrt(radic)) / (2.0 * equa.a);
-	sols.t2 = (-equa.b - sqrt(radic)) / (2.0 * equa.a);
-	hit->t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
-	if (hit->t < 0)
-		return 0;
-	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-	hit->normal = normal_sphere(obj, hit->point);
-	return (1);
+	sols[0] = (-equa.b + sqrt(radic)) / (2.0 * equa.a);
+	sols[1] = (-equa.b - sqrt(radic)) / (2.0 * equa.a);
+	return (2);
 }
 
 static t_quadratic get_quadratic_ellipsoid(t_line line, t_object obj)
@@ -61,58 +63,27 @@ static t_quadratic get_quadratic_ellipsoid(t_line line, t_object obj)
 	return res;
 }
 
-t_point3d		normal_ellipsoid(t_point3d point, t_object obj)
-{
-	t_point3d normal;
-	t_point3d	abc;
-
-	abc = obj.object_union.ellipsoid.abc;
-	normal = ft_new_vec3(point.x / (abc.x * abc.x), point.y / (abc.y * abc.y),
-			point.z / (abc.z * abc.z));
-	return (normal);
-}
-
-
-int					intersect_ellipsoid(t_line line, t_object obj,
-		t_hit *hit)
+int					intersect_ellipsoid(t_line line, t_object obj, double sols[MAX_DEGREE])
 {
 	t_quadratic	equa;
-	t_quadsol	sols;
 	double		radic;
 
 	equa = get_quadratic_ellipsoid(line, obj);
 	radic = (equa.b * equa.b) - (4 * equa.a * equa.c);
 	if (radic < 0.0)
 		return (0);
-	sols.t1 = (-equa.b + sqrt(radic)) / (2.0 * equa.a);
-	sols.t2 = (-equa.b - sqrt(radic)) / (2.0 * equa.a);
-	hit->t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
-	if (hit->t < 0)
-		return 0;
-	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-	hit->normal = normalize(normal_ellipsoid(hit->point, obj));
-	return (1);
+	sols[0] = (-equa.b + sqrt(radic)) / (2.0 * equa.a);
+	sols[1] = (-equa.b - sqrt(radic)) / (2.0 * equa.a);
+	return (2);
 }
 
-t_point3d		normal_torus(t_point3d point, t_object obj)
+void	noquartics(double complex qsols[MAX_DEGREE])
 {
-	t_point3d normal;
-	double a;
+	int i;
 
-	a = 1.0 - (obj.object_union.torus.big_rad / sqrt(point.x * point.x + point.y * point.y));
-	normal = normalize(ft_new_vec3(a * point.x, a * point.y, point.z));
-	return (normal);
-}
-
-t_quartsol			noquartics()
-{
-	t_quartsol sol;
-
-	sol.t1 = -1;
-	sol.t2 = -1;
-	sol.t3 = -1;
-	sol.t4 = -1;
-	return sol;
+	i = 0;
+	while (i < MAX_DEGREE)
+		qsols[i++] = -1;
 }
 
 t_cubic				ft_quartic_as_cubic(t_quartic quartic)
@@ -132,16 +103,17 @@ void	ft_print_complex(double complex z)
 	printf("%f %c %fi\n", creal(z), cimag(z) >= 0 ? '+' : '-', fabs(cimag(z)));
 }
 
-void	ft_print_quartsol(t_quartsol sol)
+void	ft_print_quartsol(double complex qsols[4])
 {
-	printf("\nt1: ");
-	ft_print_complex(sol.t1);
-	printf("t2: ");
-	ft_print_complex(sol.t2);
-	printf("t3: ");
-	ft_print_complex(sol.t3);
-	printf("t4: ");
-	ft_print_complex(sol.t4);
+	int i;
+
+	i = 0;
+	while (i < 4)
+	{
+		printf("t%d: ", i);
+		ft_print_complex(qsols[i]);
+		i++;
+	}
 	printf("\n");
 }
 
@@ -188,21 +160,21 @@ t_affine		ft_quadratic_as_affine(t_quadratic quadratic)
 	return (res);
 }
 
-int			resolve_affine(t_affine equa, t_quartsol *sols)
+int			resolve_affine(t_affine equa, double complex qsols[MAX_DEGREE])
 {
-	*sols = noquartics();
+	noquartics(qsols);
 
 	if (equa.a == 0)
 		return (0);
-	sols->t1 = -equa.b / equa.a;
+	qsols[0] = -equa.b / equa.a;
 	return (1);
 }
 
-int			resolve_quadratic(t_quadratic equa, t_quartsol *sol)
+int			resolve_quadratic(t_quadratic equa, double complex qsols[MAX_DEGREE])
 {
 	if (equa.a == 0)
-		return resolve_affine(ft_quadratic_as_affine(equa), sol);
-	*sol = noquartics();
+		return resolve_affine(ft_quadratic_as_affine(equa), qsols);
+	noquartics(qsols);
 	equa.radic = equa.b * equa.b - 4 * equa.a * equa.c;
 	if (equa.radic < 0)
 		return (0);
@@ -210,13 +182,13 @@ int			resolve_quadratic(t_quadratic equa, t_quartsol *sol)
 	{
 		if (equa.radic == 0)
 		{
-			sol->t1 = - equa.b / (2 * equa.a);
-			return (2);
+			qsols[0] = - equa.b / (2 * equa.a);
+			return (1);
 		}
 		else
 		{
-			sol->t1 = (-equa.b - sqrt(equa.radic)) / (2 * equa.a);
-			sol->t2 = (-equa.b + sqrt(equa.radic)) / (2 * equa.a);
+			qsols[0] = (-equa.b - sqrt(equa.radic)) / (2 * equa.a);
+			qsols[1] = (-equa.b + sqrt(equa.radic)) / (2 * equa.a);
 			return (2);
 		}
 	}
@@ -228,14 +200,13 @@ int					ft_is_zero(long double complex z)
 }
 
 
-int		resolve_cubic(t_cubic equa, t_quartsol *sol)
+int		resolve_cubic(t_cubic equa, double complex qsols[MAX_DEGREE])
 {
 	t_auxcubic	x;
 	if (fabsl(equa.a) <  0.001)
-		return resolve_quadratic(ft_cubic_as_quadratic(equa), sol);
-	*sol = noquartics();
+		return resolve_quadratic(ft_cubic_as_quadratic(equa), qsols);
+	noquartics(qsols);
 
-//	ft_print_cubic(equa);
 	equa.b /= equa.a;
 	equa.c /= equa.a;
 	equa.d /= equa.a;
@@ -248,35 +219,11 @@ int		resolve_cubic(t_cubic equa, t_quartsol *sol)
 	if (ft_is_zero(x.f))
 		x.f = x.sqrt - x.e;
 	x.g = ft_cbrt(x.f, 0);
-//	printf("cbrt 0	puiss 3: ");
-//	ft_print_complex(cpow(x.g, 3));
-	sol->t1 = x.g - (x.d / x.g) - x.s;
+	qsols[0] = x.g - (x.d / x.g) - x.s;
 	x.g = ft_cbrt(x.f, 1);
-//	printf("cbrt 1	puiss 3: ");
-//	ft_print_complex(cpow(x.g, 3));
-	sol->t2 = x.g - (x.d / x.g) - x.s;
+	qsols[1] = x.g - (x.d / x.g) - x.s;
 	x.g = ft_cbrt(x.f, 2);
-//	printf("cbrt 2	puiss 3: ");
-//	ft_print_complex(cpow(x.g, 3));
-	sol->t3 = x.g - (x.d / x.g) - x.s;
-	//	if (sol.t1 != sol.t1)
-//	{
-//		printf("nan cubic\n");
-		printf("f: ");
-		ft_print_complex(x.f);
-		printf("sqrt: ");
-		ft_print_complex(x.sqrt);
-		printf("s: ");
-		ft_print_complex(x.s);
-		printf("d: ");
-		ft_print_complex(x.d);
-		printf("e: ");
-		ft_print_complex(x.e);
-		printf("g: ");
-		ft_print_complex(x.g);
-//		ft_print_quartsol(sol);
-//		exit(1);
-//	}
+	qsols[2] = x.g - (x.d / x.g) - x.s;
 	return (3);
 }
 
@@ -334,9 +281,8 @@ int			resolve_cubic(t_cubic equa, t_quartsol *sol)
 	}
 }
 */
-int				resolve_quartic(t_quartic equa, t_quartsol *sols) //DOWNLOAD
+int				resolve_quartic(t_quartic equa, double complex qsols[MAX_DEGREE]) //DOWNLOAD
 {
-	t_quartsol sol;
 	t_auxquartic x;
 
 //	x.b2 = equa.b * equa.b;
@@ -344,7 +290,7 @@ int				resolve_quartic(t_quartic equa, t_quartsol *sols) //DOWNLOAD
 //	x.b4 = equa.b * equa.b * equa.b * equa.b;
 
 	if (fabsl(equa.a) < EPSILON2 )
-		return resolve_cubic(ft_quartic_as_cubic(equa), sols);
+		return resolve_cubic(ft_quartic_as_cubic(equa), qsols);
 
 	equa.b /= equa.a;
 	equa.c /= equa.a;
@@ -361,10 +307,10 @@ int				resolve_quartic(t_quartic equa, t_quartsol *sols) //DOWNLOAD
 		x.rad = csqrt((x.alpha * x.alpha) - 4 * x.gamma);
 		x.r1 = csqrt((-x.alpha + x.rad) / 2.0);
 		x.r2 = csqrt((-x.alpha - x.rad) / 2.0);
-		sol.t1 = x.t + x.r1;
-		sol.t2 = x.t - x.r1;
-		sol.t3 = x.t + x.r2;
-		sol.t4 = x.t - x.r2;
+		qsols[0] = x.t + x.r1;
+		qsols[1] = x.t - x.r1;
+		qsols[2] = x.t + x.r2;
+		qsols[3] = x.t - x.r2;
 	}
 	x.p = - ((x.alpha * x.alpha) / 12.0 ) - x.gamma;
 	x.q = - ((x.alpha * x.alpha * x.alpha) / 108.0) +
@@ -382,11 +328,12 @@ int				resolve_quartic(t_quartic equa, t_quartsol *sols) //DOWNLOAD
 	x.w = csqrtl(x.alpha + 2 * x.y);
 	x.r1 = csqrtl(-((3.0 * x.alpha) + (2.0 * x.y) + ((2.0 * x.beta) / x.w)));
 	x.r2 = csqrtl(-((3.0 * x.alpha) + (2.0 * x.y) - ((2.0 * x.beta) / x.w)));
-	sols->t1 = x.t + ((x.w - x.r1) / 2.0);
-	sols->t2 = x.t + ((x.w + x.r1) / 2.0);
-	sols->t3 = x.t + ((-x.w - x.r2) / 2.0);
-	sols->t4 = x.t + ((-x.w + x.r2) / 2.0);
-	if (equa.debug)
+	qsols[0] = x.t + ((x.w - x.r1) / 2.0);
+	qsols[1] = x.t + ((x.w + x.r1) / 2.0);
+	qsols[2] = x.t + ((-x.w - x.r2) / 2.0);
+	qsols[3] = x.t + ((-x.w + x.r2) / 2.0);
+
+/*	if (equa.debug)
 	{
 		printf("alpha: ");
 		ft_print_complex(x.alpha);
@@ -405,9 +352,10 @@ int				resolve_quartic(t_quartic equa, t_quartsol *sols) //DOWNLOAD
 		printf("w: ");
 		ft_print_complex(x.w);
 	}
+	*/
 	return (4);
 }
-
+/*
 double				get_closer_intersection_quartic(t_quartsol sol)
 {
 	double res;
@@ -423,7 +371,9 @@ double				get_closer_intersection_quartic(t_quartsol sol)
 		res = creall(sol.t4);
 	return (res);
 }
+*/
 
+/*
 double				nb_quartic_sols(t_quartsol sol)
 {
 	double res;
@@ -439,29 +389,7 @@ double				nb_quartic_sols(t_quartsol sol)
 		res++;
 	return (res);
 }
-
-t_quartic			get_quartic_torus(t_line line, t_object obj)
-{
-	t_auxtorus x;
-	t_quartic res;
-	double a;
-	double b;
-
-	a = obj.object_union.torus.big_rad;
-	b = obj.object_union.torus.small_rad;
-	x.g = 4 * a * a * (line.v.x * line.v.x + line.v.y * line.v.y);
-	x.h = 8 * a * a * (line.o.x * line.v.x + line.o.y * line.v.y);
-	x.i = 4 * a * a * (line.o.x * line.o.x + line.o.y * line.o.y);
-	x.j = ft_dot_product(line.v, line.v);
-	x.k = 2 * ft_dot_product(line.o, line.v);
-	x.l = ft_dot_product(line.o, line.o) + (a * a) - (b * b);
-	res.a = x.j * x.j;
-	res.b = 2 * x.j * x.k;
-	res.c = (2 * x.j * x.l) + (x.k * x.k) - x.g;
-	res.d = (2 * x.k * x.l) - x.h;
-	res.e = (x.l * x.l) - x.i;
-	return (res);
-}
+*/
 
 void			ft_init_aux(t_auxquart_init *g, t_line line)
 {
@@ -485,39 +413,38 @@ void			ft_init_aux(t_auxquart_init *g, t_line line)
 	g->vz4 = g->vz2 * g->vz2;
 }
 
-t_quartic			get_quartic_goursat(t_line line, t_object obj)
+int					ft_transfer_real_roots(double complex qsols[MAX_DEGREE], int nbqsols, 
+			double sols[MAX_DEGREE])
 {
-	t_auxquart_init g;
-	t_quartic res;
-	double a;
-	double b;
+	int i;
+	int res;
 
-	a = obj.object_union.goursat.a;
-	b = obj.object_union.goursat.b;
-	ft_init_aux(&g, line);
-	res.a = g.vx4 + g.vy4 + g.vz4;
-	res.b = 4 * (line.o.x * g.vx3 + line.o.y * g.vy3 + line.o.z * g.vz3);
-	res.c = (6 *(g.ox2 * g.vx2 + g.oy2 * g.vy2 + g.oz2 * g.vz2)) - a *
-		(g.vx2 + g.vy2 + g.vz2);
-	res.d = (4 * (g.ox3 * line.v.x + g.oy3 * line.v.y + g.oz3 * line.v.z))
-		- 2 * a * (ft_dot_product(line.o, line.v));
-	res.e = g.ox4 + g.oy4 + g.oz4 - (a * (g.ox2 + g.oy2 + g.oz2)) + b;
+	i = 0;
+	res = 0;
+	while (i < nbqsols)
+	{
+		if (fabsl(cimagl(qsols[i])) < EPSILON3)
+			sols[res++] = creal(qsols[i]);
+		i++;
+	}
 	return (res);
 }
 
 int					intersect_torus(t_line line, t_object obj,
-		t_hit *hit)
+		double sols[MAX_DEGREE])
 {
 	t_quartic equa;
-	t_quartsol sols;
+	double complex qsols[4];
+	int	nbqsols;
 
 	equa = get_quartic_torus(line, obj);
+	/*
 	equa.debug = 0;
 	if (line.x == 0 && line.y == VRES / 2)
 	{
 		equa.debug = 1;
-		resolve_quartic(equa, &sols);
-	hit->t = get_closer_intersection_quartic(sols);
+		resolve_quartic(equa, &qsols);
+//	hit->t = get_closer_intersection_quartic(sols);
 		if (hit->t > 0)
 		{
 			ft_printf(RED"on intersect\n");
@@ -534,84 +461,25 @@ int					intersect_torus(t_line line, t_object obj,
 	}
 	else
 	{
-		resolve_quartic(equa, &sols);
-	hit->t = get_closer_intersection_quartic(sols);
-	}
-	/*
-	if (line.oldv.x == 0 && line.oldv.y == 0)
-	{
-		if (hit->t > 0)
-		{
-			printf("on a trouve une sol");
-			ft_print_quartic(equa);
-			ft_print_quartsol(sols);
-		}
-		else
-		{
-			printf(RED"on a pas trouve de sol");
-			ft_print_quartic(equa);
-			ft_print_quartsol(sols);
-			printf(EOC);
-		}
+		resolve_quartic(equa, &qsols);
 	}
 	*/
-	if (hit->t < 0)
-		return 0;
-	else
-	{
-		hit->point = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-		hit->normal = normal_torus(hit->point, obj);
-		return (1);
-	}
+	nbqsols = resolve_quartic(equa, qsols);
+	return (ft_transfer_real_roots(qsols, nbqsols, sols));
 }
-
-t_point3d		normal_goursat(t_point3d point, t_object obj)
-{
-	t_point3d normal;
-	double a;
-
-	a = obj.object_union.goursat.a;
-	normal = normalize(ft_new_vec3(4 * (point.x * point.x * point.x) - (2 * a * point.x),
-		   		4 * (point.y * point.y * point.y) - (2 * a * point.y),
-					4 * (point.z * point.z * point.z) - (2 * a * point.z)));
-
-	return (normal);
-}
-
 
 int					intersect_goursat(t_line line, t_object obj,
-		t_hit *hit)
+		double sols[MAX_DEGREE])
 {
 	t_quartic equa;
-	t_quartsol sols;
+	double complex qsols[MAX_DEGREE];
+	int nbqsols;
 
 	equa = get_quartic_goursat(line, obj);
-	resolve_quartic(equa, &sols);
-	hit->t = get_closer_intersection_quartic(sols);
-	if (hit->t < 0)
-		return 0;
-	else
-	{
-		hit->point = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-		hit->normal = normal_goursat(hit->point, obj);
-		return (1);
-	}
+	nbqsols = resolve_quartic(equa, qsols);
+	return (ft_transfer_real_roots(qsols, nbqsols, sols));
 }
 
-t_quartic			get_quartic_lemniscate(t_line line, t_object obj)
-{
-	t_quartic res;
-	t_auxquart_init g;
-
-	(void)obj;
-	ft_init_aux(&g, line);
-	res.a = g.vx4;
-	res.b = 4 * line.o.x * g.vx3;
-	res.c = (6 * (g.ox2 * g.vx2)) + g.vy2 + g.vz2 - g.vx2;
-	res.d = (4 * (g.ox3 * line.v.x)) + 2 * (line.o.y * line.v.y + line.o.z * line.v.z - line.o.x * line.v.x);
-	res.e = g.ox4 + g.oy2 + g.oz2 - g.ox2;
-	return (res);
-}
 /*
 void				test()
 {
@@ -705,28 +573,17 @@ void			ultimate_test_cubic()
 	exit(1);
 }
 */
-t_point3d	normal_lemniscate(t_point3d point)
-{
-	t_point3d normal;
-
-	normal = normalize(ft_new_vec3(
-		4 * point.x * point.x * point.x - 2 * point.x * point.x,
-			2 * point.y,
-				2 * point.z));
-
-	return (normal);
-}
 
 int					intersect_lemniscate(t_line line, t_object obj,
-		t_hit *hit)
+		double sols[MAX_DEGREE])
 {
 	t_quartic equa;
-	t_quartsol sols;
+	int nbqsols;
+	double complex qsols[4];
 
-//	ultimate_test_cubic();
-	equa = get_quartic_lemniscate(line, obj);
-	resolve_quartic(equa, &sols);
-	hit->t = get_closer_intersection_quartic(sols);
+	(void)obj;
+	equa = get_quartic_lemniscate(line);
+	/*
 	if (line.x == 0 && line.y == VRES / 2)
 	{
 		if (hit->t > 0)
@@ -743,143 +600,37 @@ int					intersect_lemniscate(t_line line, t_object obj,
 			ft_print_quartsol(sols);
 		}
 	}
-	if (hit->t < 0)
-		return 0;
-	else
-	{
-		hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-	//	hit->normal  = ft_new_vec3(0,1,0);
-		hit->normal  = normal_lemniscate(hit->point);
-		return (1);
-	}
-}
-
-t_quartic			get_quartic_roman(t_line line)
-{
-	t_quartic res;
-	t_auxquart_init g;
-
-	ft_init_aux(&g, line);
-	res.a = g.vx2 * g.vy2 + g.vy2 * g.vz2 + g.vx2 * g.vz2;
-	res.b = 2 * (line.o.x * line.v.x * g.vy2 + line.o.y * line.v.y * g.vx2 +
-			line.o.y * line.v.y * g.vz2 + line.o.z * line.v.z * g.vy2
-				+ line.o.x * line.v.x * g.vz2 + line.o.z * line.v.z * g.vx2)
-					+ line.v.x * line.v.y * line.v.z;
-	res.c = g.ox2 * g.vy2 + g.oy2 * g.vx2 + g.oy2 * g.vz2 + g.oz2 * g.vy2
-			+ g.ox2 * g.vz2 + g.oz2 * g.vx2
-			+ 4 * (line.o.x * line.v.x * line.o.y * line.v.y +
-					line.o.y * line.v.y * line.o.z * line.v.z +
-					line.o.x * line.v.x * line.o.z * line.v.z)
-			+ (line.o.x * line.v.y * line.v.z + line.o.y * line.v.x * line.v.z
-			+ line.o.z * line.v.x * line.v.y);
-	res.d = (line.v.x * line.o.y * line.o.z + line.v.y * line.o.x * line.o.z +
-				line.v.z * line.o.x * line.o.y)
-		+ 2 * (g.ox2 * line.o.y * line.v.y + g.oy2 * line.o.x * line.v.x +
-				g.oy2 * line.o.z * line.v.z + g.oz2 * line.o.y * line.v.y +
-				 g.ox2 * line.o.z * line.v.z + g.oz2 * line.o.x * line.v.x);
-	res.e = line.o.x * line.o.y * line.o.z + g.ox2 * g.oy2 + g.oy2 * g.oz2 +
-		g.ox2 * g.oz2;
-	return (res);
-}
-
-t_point3d	normal_roman(t_point3d point)
-{
-	t_point3d normal;
-
-	normal = normalize(ft_new_vec3(
-		2 * point.x * point.y * point.y +
-	   	2 * point.x * point.z * point.z +
-	   	point.y * point.z,
-
-		2 * point.y * point.x * point.x +
-		2 * point.y * point.z * point.z +
-		point.x * point.z,
-
-		2 * point.z * point.y * point.y +
-		2 * point.z * point.x * point.x +
-		point.x * point.y));
-
-	return (normal);
-}
-
-void				transform_sol(t_quartsol *sols)
-{
-	sols->t1 = I * cimagl(sols->t1) + sin(creall(sols->t1));
-	sols->t2 = I * cimagl(sols->t2) + sin(creall(sols->t2));
-	sols->t3 = I * cimagl(sols->t3) + sin(creall(sols->t3));
-	sols->t4 = I * cimagl(sols->t4) + sin(creall(sols->t4));
+	*/
+	nbqsols = resolve_quartic(equa, qsols);
+	return (ft_transfer_real_roots(qsols, nbqsols, sols));
 }
 
 int					intersect_roman(t_line line, t_object obj,
-		t_hit *hit)
+		double sols[MAX_DEGREE])
 {
 	t_quartic equa;
-	t_quartsol sols;
+	double complex qsols[4];
+	int nbqsols;	
+	
 	(void)obj;
 	equa = get_quartic_roman(line);
-	equa.debug = 0;
-	resolve_quartic(equa, &sols);
-	hit->t = get_closer_intersection_quartic(sols);
-	if (hit->t < 0)
-		return 0;
-	else
-	{
-		hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-		hit->normal = normal_roman(hit->point);
-		//	hit->normal = ft_new_vec3( 0, 0 ,1);
-
-		if (line.x == 0 && line.y == VRES / 2)
-		{
-			printf("point:\n");
-			ft_print_point3d(hit->point);
-			printf("normal:\n");
-			ft_print_point3d(hit->normal);
-		}
-		return (1);
-	}
-}
-
-t_quartic			get_quartic_piriform(t_line line, t_object obj)
-{
-	t_quartic res;
-	t_auxquart_init g;
-
-	(void)obj;
-	ft_init_aux(&g, line);
-	res.a = g.vy4;
-	res.b = (4 * line.o.y * g.vy3) - g.vy3;
-	res.c = (6 * (g.oy2 * g.vy2)) - (3 * line.o.y * g.vy2) + g.vz2 + g.vx2;
-	res.d = (4 * (g.oy3 * line.v.y)) - (3 * g.oy2 * line.v.y) + 2 * (line.o.z * line.v.z + line.o.x * line.v.x);
-	res.e = g.oy4 - g.oy3 + g.oz2 + g.ox2;
-	return (res);
-}
-
-t_point3d		normal_piriform(t_point3d point, t_object obj)
-{
-	t_point3d normal;
-	(void)obj;
-	normal = normalize(ft_new_vec3(2 * point.x,
-		   		4 * (point.y * point.y * point.y) - (3 * point.y * point.y),
-					 (2 * point.z)));
-
-	return (normal);
+	nbqsols = resolve_quartic(equa, qsols);
+	return (ft_transfer_real_roots(qsols, nbqsols, sols));
 }
 
 int					intersect_piriform(t_line line, t_object obj,
-		t_hit *hit)
+		double sols[MAX_DEGREE])
 {
 	t_quartic equa;
-	t_quartsol sols;
+	double complex qsols[4];
+	int nbqsols;
 
-	int gotin = 0;
-	int nb_potential_sols;
-	int quartic_degree;
-	equa = get_quartic_piriform(line, obj);
-	equa.debug = 0;
-		quartic_degree = resolve_quartic(equa, &sols);
-	nb_potential_sols = nb_quartic_sols(sols);
-	hit->t = get_closer_intersection_quartic(sols);
-
+	(void)obj;
+	equa = get_quartic_piriform(line);
+	nbqsols = resolve_quartic(equa, qsols);
+	//	nb_potential_sols = nb_quartic_sols(sols);
+	//	hit->t = get_closer_intersection_quartic(sols);
+	/*
 	if (line.x == 0 && line.y == VRES / 2)
 	{
 		if (hit->t > 0)
@@ -909,22 +660,8 @@ int					intersect_piriform(t_line line, t_object obj,
 			ft_print_quartsol(sols);
 		}
 	}
-	if (hit->t < 0)
-		return 0;
-	else
-	{
-		hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-		hit->normal = normal_piriform(hit->point, obj);
-	//	hit->normal = ft_new_vec3(0, 0, 1);
-		if (gotin)
-		{
-			printf("point:\n");
-			ft_print_point3d(hit->point);
-			printf("normal:\n");
-			ft_print_point3d(hit->normal);
-		}
-		return (1);
-	}
+	*/
+	return (ft_transfer_real_roots(qsols, nbqsols, sols));
 }
 
 static t_auxcone	getauxcone(t_line line, t_object obj)
@@ -940,11 +677,10 @@ static t_auxcone	getauxcone(t_line line, t_object obj)
 }
 
 int					intersect_cone(t_line line, t_object obj,
-		t_hit *hit)
+		double sols[MAX_DEGREE])
 {
 	t_auxcone	aux;
 	t_quadratic	equa;
-	t_quadsol	sols;
 	double		radic;
 
 	aux = getauxcone(line, obj);
@@ -957,39 +693,25 @@ int					intersect_cone(t_line line, t_object obj,
 	radic = (equa.b * equa.b) - (4 * equa.a * equa.c);
 	if (radic < 0.0)
 		return (0);
-	sols.t1 = (-equa.b + sqrt(radic)) / (2.0 * equa.a);
-	sols.t2 = (-equa.b - sqrt(radic)) / (2.0 * equa.a);
-	hit->t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
-	if (hit->t < 0)
-		return 0;
-	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-//	hit->normal.x = (hit->point.x > 0 ? -1 : 1) *
-//		sqrt(hit->point.z * hit->point.z + hit->point.y * hit->point.y) *
-//			tan(obj.object_union.cone.angle);
-//	hit->normal.y = hit->point.y;
-//	hit->normal.z = hit->point.z;
-	hit->normal = normal_cone(obj, hit->point);
-	return (1);
+	sols[0] = (-equa.b + sqrt(radic)) / (2.0 * equa.a);
+	sols[1] = (-equa.b - sqrt(radic)) / (2.0 * equa.a);
+	return (2);
 }
 
 int					intersect_plane(t_line line, t_object obj,
-		t_hit *hit)
+		double sols[MAX_DEGREE])
 {
 	(void)obj;
 	if (line.v.y < EPSILON && line.v.y > -EPSILON)
 		return (0);
-	hit->t = -line.o.y / line.v.y;
-	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-//	hit->normal = ft_new_vec3(0, (line.v.y > 0 ) ? 1 : -1, 0);
-	hit->normal = normal_plane(obj, hit->point, line);
+	sols[0] = -line.o.y / line.v.y;
 	return (1);
 }
 
 int					intersect_cylinder(t_line line, t_object obj,
-		t_hit *hit)
+			double sols[MAX_DEGREE])
 {
 	t_quadratic	equa;
-	t_quadsol	sols;
 	double		radic;
 
 	equa = (t_quadratic){.a = (line.v.z * line.v.z) + (line.v.y * line.v.y),
@@ -999,13 +721,7 @@ int					intersect_cylinder(t_line line, t_object obj,
 	radic = (equa.b * equa.b) - (4 * equa.a * equa.c);
 	if (radic < 0.0)
 		return (0);
-	sols.t1 = (-equa.b + sqrt(radic)) / (2.0 * equa.a);
-	sols.t2 = (-equa.b - sqrt(radic)) / (2.0 * equa.a);
-	hit->t = (sols.t1 < sols.t2 && sols.t1 > 0.0) ? sols.t1 : sols.t2;
-	if (hit->t < 0)
-		return 0;
-	hit->point  = ft_point3d_add(ft_point3d_scalar(line.v, hit->t), line.o);
-//	hit->normal = normalize(ft_new_vec3(0, hit->point.y, hit->point.z));
-	hit->normal = normal_cylinder(obj, hit->point);
-	return (1);
+	sols[0] = (-equa.b + sqrt(radic)) / (2.0 * equa.a);
+	sols[1] = (-equa.b - sqrt(radic)) / (2.0 * equa.a);
+	return (2);
 }

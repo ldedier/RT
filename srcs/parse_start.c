@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/16 17:04:20 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/26 20:31:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,28 @@ void	ft_process_parsing_light_start(t_parser *parser, t_world *world)
 				parser->attribute);
 		exit(1);
 	}
+}
+
+void	ft_process_parsing_cut_start(t_parser *parser, t_world *world)
+{
+	t_cut *cut;
+
+	if (parser->parse_enum != e_parse_object)
+	{
+		printf("%d\n", parser->parse_enum);
+		ft_dprintf(2, "line %d: can only declare cut inside objects\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	parser->parse_enum = e_parse_cut;
+	if (!(cut = ft_new_cut()))
+		ft_error("could not malloc object");
+	if (parser->attribute == NULL)
+	{
+		ft_dprintf(2, "line %d: cut must have a specified type\n");
+		exit(1);
+	}
+	ft_process_parsing_cut_attributes(parser, cut);
+	ft_lstadd(&(world->cobjlist->cobject->objlist->object->cuts),
+		ft_lstnew(cut, sizeof(t_cut)));
 }

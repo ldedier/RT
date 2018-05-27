@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/26 07:45:57 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/27 07:00:45 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,23 @@ t_cobject		*ft_new_cobject(void)
 	return (cobject);
 }
 
+t_object		*ft_new_triangle(t_cobject cobject)
+{
+	t_object *object;
+
+	if (!(object = ft_memalloc(sizeof(t_object))))
+		return (NULL);
+	object->c = get_color(cobject.c.col);
+	object->transp = cobject.transp;
+	object->pert = cobject.pert;
+	object->refract = cobject.refract;
+	object->reflect = cobject.reflect;
+	object->shine = cobject.shine;
+	object->cuts = NULL;
+	object->intersect_func = intersect_triangle;
+	return (object);
+}
+
 t_object		*ft_new_object(t_cobject cobject)
 {
 	t_object *object;
@@ -48,8 +65,24 @@ t_object		*ft_new_object(t_cobject cobject)
 	object->refract = cobject.refract;
 	object->reflect = cobject.reflect;
 	object->shine = cobject.shine;
-	object->negative = 0;
+//	object->cuts = ft_lstdup(NULL);
+	object->cuts = NULL;
+		object->negative = 0;
 	return (object);
+}
+
+t_cut		*ft_new_cut(void)
+{
+	t_cut *cut;
+
+	if (!(cut = ft_memalloc(sizeof(t_cut))))
+		return (NULL);
+	cut->value = 0;
+	cut->cut_xyz = ft_new_vec3(1, 0, 0);
+	cut->relative = 1;
+	cut->circular = 0;
+	cut->inequality = less_than;
+	return (cut);
 }
 
 void			ft_init_light(t_light *light)

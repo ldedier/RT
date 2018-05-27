@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/26 12:19:19 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/05/27 07:10:36 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 intersections.c\
 				 lights.c\
 				 normals.c\
+				 normals2.c\
 				 obj_list.c\
 				 paint_threaded.c\
 				 parse_settings.c\
@@ -95,6 +96,16 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 perturbations.c\
 				 errors.c\
 				 refraction.c\
+				 quartics_intersect.c\
+				 cuts.c\
+				 inequality.c\
+				 parse_cut.c\
+				 triangle.c\
+				 parse_triangle.c\
+				 ft_process_parse_obj.c\
+				 ft_parse_obj_faces.c\
+				 ft_parse_obj_vertices.c\
+				 map_file.c\
 				 tracer2.c\
 				 insides.c
 
@@ -114,6 +125,7 @@ CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror  $(INC)
 
 LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
 		 -L $(LIBSDL2DIR)/$(LIBSDL2_LIBDIR) -lsdl2\
+		 -fsanitize=address
 
 opti:
 	@make -j all

@@ -1,7 +1,7 @@
 <scene>
 	<camera>
-		<positionXYZ>0 0 -20</positionXYZ>
-		<rotationXYZ>0 0 0</rotationXYZ>
+		<positionXYZ>0 0 14</positionXYZ>
+		<rotationXYZ>3.1415 0 0</rotationXYZ>
 	</camera>
 	<objlist>
 		<cobject>
@@ -24,6 +24,11 @@
 			<object name="sphere">
 				<positionXYZ>0 2 0</positionXYZ>
 				<color>0xFFA0BF</color>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>0</value>
+				</cut>
 			</object>
 			<object name="sphere">
 				<positionXYZ>0 -2 0</positionXYZ>
@@ -32,6 +37,16 @@
 			<object name="sphere">
 				<positionXYZ>2 2 0</positionXYZ>
 				<color>0xFF0077</color>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>0.2</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>less than</inequality>
+					<value>-0.2</value>
+				</cut>
 			</object>
 			<object name="sphere">
 				<positionXYZ>2 -2 0</positionXYZ>
@@ -44,27 +59,63 @@
 		</cobject>
 		<cobject>
 			<positionXYZ>0 0 8</positionXYZ>
-			<transparency>0.5</transparency>
-			<shine>10</shine>
-			<refraction>1.2</refraction>
+			<transparency>0.7</transparency>
+			<refraction>1.3</refraction>
 			<object name="sphere">
 				<radius>2</radius>
-				<color>0x00FF00</color>
-			</object>
-		</cobject>
-		<cobject>
-			<color>0xFF0000</color>
-			<positionXYZ>0 0 2</positionXYZ>
-			<object name="ellipsoid">
-				<radius>1</radius>
+				<color>0x0000FF</color>
 			</object>
 		</cobject>
 		<cobject>
 			<color>0x0000FF</color>
 			<positionXYZ>0 0 -10</positionXYZ>
-			<rotationXYZ>0 0 -10</rotationXYZ>
-			<object name="ellipsoid">
-				<radius>1</radius>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<reflection>0.6</reflection>
+			<object name="goursat">
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>0 0 30</positionXYZ>
+			<rotationXYZ>1.57 0 0</rotationXYZ>
+			<object name="plane">
+				<color>0xff0000</color>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>less than</inequality>
+					<value>-2</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>2</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>0 0 1</cutXYZ>
+					<inequality>more than</inequality>
+					<value>2</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>0 0 1</cutXYZ>
+					<inequality>less than</inequality>
+					<value>-2</value>
+				</cut>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>10 0 30</positionXYZ>
+			<rotationXYZ>1.57 0 0</rotationXYZ>
+			<color>0x0000ff</color>
+			<object name="plane">
+				<cut type="circular">
+					<cutXYZ>1 0 1</cutXYZ>
+					<inequality>more than</inequality>
+					<value>2</value>
+				</cut>
+			</object>
+			<object name="torus">
+			<rotationXYZ>-1.57 0 0</rotationXYZ>
+				<big_radius>1.5</big_radius>
+				<small_radius>0.2</small_radius>
 			</object>
 		</cobject>
 	</objlist>

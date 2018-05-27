@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 17:10:29 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/18 23:10:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/27 00:03:09 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,19 @@ void		ft_process_tag_stack(t_parser *parser)
 	}
 	else if (parser->op == STACK)
 		ft_process_tag_stack_stack(parser);
+}
+
+char	*ft_get_between_tag(char **line)
+{
+	int i;
+	
+	char *str;
+	str = *line;
+
+	i = 0;
+	while (str[i] && str[i] != '<')
+		i++;
+	str = ft_strndup(*line, i);
+	(*line) += i;
+	return (str);
 }

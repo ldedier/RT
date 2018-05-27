@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 00:16:34 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/14 17:53:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/27 06:43:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ typedef struct		s_point3d
 	double			z;
 }					t_point3d;
 
+typedef struct		s_ivec3
+{
+	int				x;
+	int				y;
+	int				z;
+}					t_ivec3;
 
 typedef struct		s_vec4
 {
