@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 22:25:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/17 05:52:10 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/27 21:02:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press)
 
 void	ft_mouse_motion(t_world *e, SDL_Event event)
 {
-	e->cam->rotation.x = e->cam->rotation.x - (event.motion.xrel) * M_PI / 4096.0;
-	e->cam->rotation.y = ft_fclamp(-M_PI / 2, e->cam->rotation.y - (event.motion.yrel) * M_PI / 4096.0, M_PI / 2);
+	e->cam->rotation.x = e->cam->rotation.x - (event.motion.xrel) * M_PI / 1024.0;
+	e->cam->rotation.y = ft_fclamp(-M_PI / 2, e->cam->rotation.y - (event.motion.yrel) * M_PI / 1024.0, M_PI / 2);
 	apply_rotation(e->cam);
 	e->keys[mouse_move] = 1;
 }

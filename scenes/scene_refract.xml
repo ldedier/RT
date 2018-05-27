@@ -24,6 +24,11 @@
 			<object name="sphere">
 				<positionXYZ>0 2 0</positionXYZ>
 				<color>0xFFA0BF</color>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>0</value>
+				</cut>
 			</object>
 			<object name="sphere">
 				<positionXYZ>0 -2 0</positionXYZ>

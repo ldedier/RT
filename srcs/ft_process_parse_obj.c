@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 17:10:27 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/27 08:08:21 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/27 19:58:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,6 @@ int		ft_fill_draw_array(t_obj_parser *parser)
 //	printf("%d\n", parser->nb_faces);
 	while (nb_faces < parser->nb_faces)
 	{
-		printf("%d\n", nb_faces);
 		parser->draw_array[9 * nb_faces] = parser->vertices[parser->faces[nb_faces].x].x;
 		parser->draw_array[9 * nb_faces + 1] = parser->vertices[parser->faces[nb_faces].x].y;
 		parser->draw_array[9 * nb_faces + 2] = parser->vertices[parser->faces[nb_faces].x].z;
@@ -222,7 +221,7 @@ t_obj_parser		ft_parse_obj(char *filename)
 //  ft_print_vertices(parser);
 //	ft_print_faces(parser);
 
-	ft_fill_draw_array(&parser);
+//	ft_fill_draw_array(&parser);
 	//ft_print_draw_array(parser);
 	return (parser);
 }

@@ -6,36 +6,47 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:07 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/27 07:41:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/27 21:23:29 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+
+void	ft_print_triangle(t_object object)
+{
+	ft_print_point3d(object.object_union.triangle.v1);
+	ft_print_point3d(object.object_union.triangle.v2);
+	ft_print_point3d(object.object_union.triangle.v3);
+}
 
 void	ft_add_triangles(char *source, t_world *world)
 {
 	t_cobject *cobject;
 	t_obj_parser parser;
 	t_object *triangle;
-	int i;
+	int nb_faces;
 
 	cobject = world->cobjlist->cobject;
 	parser = ft_parse_obj(source);
 	triangle = ft_new_triangle(*cobject);
-	i = 0;
-	while (i < parser.nb_faces)
+	nb_faces = 0;
+	while (nb_faces < parser.nb_faces)
 	{
-		triangle->object_union.triangle.v1.x = parser.draw_array[9 *i];
-		triangle->object_union.triangle.v1.y = -parser.draw_array[9 *i + 1];
-		triangle->object_union.triangle.v1.z = parser.draw_array[9 *i + 2];
-		triangle->object_union.triangle.v2.x = parser.draw_array[9 * i + 3];
-		triangle->object_union.triangle.v2.y = -parser.draw_array[9 * i + 4];
-		triangle->object_union.triangle.v2.z = parser.draw_array[9 * i + 5];
-		triangle->object_union.triangle.v3.x = parser.draw_array[9 * i + 6];
-		triangle->object_union.triangle.v3.y = -parser.draw_array[9 * i + 7];
-		triangle->object_union.triangle.v3.z = parser.draw_array[9 * i + 8];
-		add_obj_cpy(&(cobject->objlist), triangle);
-		i++;
+		triangle->object_union.triangle.v1.x = parser.vertices[parser.faces[nb_faces].x].x;
+		triangle->object_union.triangle.v1.y = -parser.vertices[parser.faces[nb_faces].x].y;
+		triangle->object_union.triangle.v1.z = parser.vertices[parser.faces[nb_faces].x].z;
+
+		triangle->object_union.triangle.v2.x = parser.vertices[parser.faces[nb_faces].y].x;
+		triangle->object_union.triangle.v2.y = -parser.vertices[parser.faces[nb_faces].y].y;
+		triangle->object_union.triangle.v2.z = parser.vertices[parser.faces[nb_faces].y].z;
+
+		triangle->object_union.triangle.v3.x = parser.vertices[parser.faces[nb_faces].z].x;
+		triangle->object_union.triangle.v3.y = -parser.vertices[parser.faces[nb_faces].z].y;
+		triangle->object_union.triangle.v3.z = parser.vertices[parser.faces[nb_faces].z].z;
+		ft_print_triangle(*triangle);
+		add_obj_cpy(&cobject->objlist, triangle);
+		nb_faces++;
 	}
 }
 

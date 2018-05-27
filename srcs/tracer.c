@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/27 06:17:29 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/27 20:55:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_line				ft_transform_line(t_object object, t_line t)
 
 	line.oldo = t.o;
 	line.oldv = t.v;
+
 	line.o = ft_point3d_mat4_mult(t.o, object.transform_pos_inv);
 	line.v = normalize(ft_point3d_mat4_mult(t.v, object.transform_dir_inv));
 	line.x = t.x;
@@ -158,8 +159,8 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 									get_smallest_legal_pos_val(newhit, sols, hit->t, transformed)) > 0) &&
 							(newhit.t < hit->t || hit->t == -1))
 					{
-						newhit.point = ft_point3d_add(transformed.o,ft_point3d_scalar(transformed.v, newhit.t));
-						newhit.normal = obj.normal_func(obj, newhit.point, transformed);
+						newhit.point = ft_point3d_add(transformed.o,ft_point3d_scalar(transformed.v, newhit.t));	
+						newhit.normal = obj.normal_func(obj, newhit.point, transformed);	
 						ft_transform_hit_back(&newhit);
 						*hit = newhit;
 						if (ft_dot_product(hit->normal, line.v) > 0)

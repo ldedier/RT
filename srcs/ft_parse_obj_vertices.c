@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 18:47:24 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/27 06:50:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/27 19:53:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,6 @@ void	ft_obj_add_coord(int *i, char *s , double *coord)
 		ft_pow_coord(s, i, coord);
 	if (s[start] == '-')
 		*coord *= -1;
-	if(*coord > 5)
-	{
-		//printf("%f\n", *coord);
-	//	printf("%s\n", &(s[*i - 10]));
-	//	exit(0);
-	}
 }
 
 void	ft_obj_vertex(int *i, char *s, t_obj_parser *parser)
