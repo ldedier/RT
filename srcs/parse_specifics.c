@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/24 02:13:13 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/27 21:01:25 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,24 @@ void	ft_give_default_characteristics(t_object *object)
 	}
 }
 
+static void	set_funcs(t_object *obj,
+		int (*intersect_func)(t_line, t_object, t_hit*),
+		int (*inside_func)(t_hit h, t_object))
+{
+	obj->intersect_func = intersect_func;
+	obj->inside_func = inside_func;
+}
+
 void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 {
 	if (!ft_strcmp(parser->attribute, "sphere"))
-		object->intersect_func = intersect_sphere;
+		set_funcs(object, intersect_sphere, inside_sphere);
 	else if (!ft_strcmp(parser->attribute, "cone"))
-		object->intersect_func = intersect_cone;
+		set_funcs(object, intersect_cone, inside_cone);
 	else if (!ft_strcmp(parser->attribute, "cylinder"))
-		object->intersect_func = intersect_cylinder;
+		set_funcs(object, intersect_cylinder, inside_cylinder);
 	else if (!ft_strcmp(parser->attribute, "plane"))
-		object->intersect_func = intersect_plane;
+		set_funcs(object, intersect_plane, inside_plane);
 	else if (!ft_strcmp(parser->attribute, "ellipsoid"))
 		object->intersect_func = intersect_ellipsoid;
 	else if (!ft_strcmp(parser->attribute, "torus"))

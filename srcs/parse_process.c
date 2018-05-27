@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/22 04:34:22 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/26 07:39:11 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void		ft_process_parsing_stack_2(t_parser *parser, t_world *world,
 		ft_parse_shader(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "filter"))
 		ft_parse_filter(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "negative"))
+		ft_parse_negative(parser, world, line);
 	else
 		ft_process_parsing_stack_3(parser, world, line);
 }

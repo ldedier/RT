@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:02:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/22 07:14:15 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/27 18:45:37 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,52 @@ void		sobel(t_canvas *canvas)
 	filter[8] = 0;
 	convolute(canvas, filter, 3, 1);
 	free(filter);
+}
+
+void		grey(t_canvas *canvas)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < canvas->win_size.x)
+	{
+		j = -1;
+		while (++j < canvas->win_size.y)
+			((int *)canvas->surface->pixels)[i + j * canvas->win_size.x] =
+				scale_convert_color(greyscale(get_intcolor(get_color(
+									((int *)canvas->surface->pixels)[i +
+									j * canvas->win_size.x]))), 1).col;
+	}
+}
+
+void		draw_borders(t_canvas *canvas)
+{
+	int		*tmp;
+	t_color	col;
+	int		i;
+	int		j;
+	
+	tmp = ft_memalloc(sizeof(int) * canvas->win_size.x * canvas->win_size.y);
+	tmp = ft_memcpy(tmp, (int *)canvas->surface->pixels,
+			sizeof(int) * canvas->win_size.x * canvas->win_size.y);
+//	grey(canvas);
+	sobel(canvas);
+	i = -1;
+	while (++i < canvas->win_size.x)
+	{
+		j = -1;
+		while (++j < canvas->win_size.y)
+		{
+			col = get_color(((int *)canvas->surface->pixels)[i +
+					j * canvas->win_size.x]);
+			if (col.r > 180 || col.g > 180 || col.b > 180)
+				((int *)canvas->surface->pixels)[i + j * canvas->win_size.x] =
+					0x0;
+			else
+				((int *)canvas->surface->pixels)[i + j * canvas->win_size.x] =
+					tmp[i + j * canvas->win_size.x];
+		}
+	}
+	free(tmp);
 }

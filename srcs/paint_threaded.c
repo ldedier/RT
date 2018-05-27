@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/22 08:52:20 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/27 18:45:40 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ void		paint_threaded(t_world *world)
 	if (!join_threads(world))
 	{
 		apply_convolution(world);
+		if (world->shader == 2)
+			draw_borders(world->canvas);
 		fill_canvas(world);
 		printf("canvas filled\n");fflush(stdout);
 	}

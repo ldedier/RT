@@ -6,11 +6,22 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:50:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/18 02:23:36 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/27 18:45:49 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+t_intcolor	greyscale(t_intcolor c)
+{
+	double	grey;
+
+	grey = (c.r + c.g + c.b) / 3;
+	c.r = grey;
+	c.g = grey;
+	c.b = grey;
+	return (c);
+}
 
 t_intcolor	new_intcolor(void)
 {

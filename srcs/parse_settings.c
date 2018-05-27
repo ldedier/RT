@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 03:14:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/22 09:44:22 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/27 18:45:46 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	ft_parse_filter(t_parser *parser, t_world *world, char *line)
 		world->filters[e_sobel] = 1;
 	else if (!ft_strcmp(parser->attribute, "emboss"))
 		world->filters[e_emboss] = 1;
+	else if (!ft_strcmp(parser->attribute, "grey"))
+		world->filters[e_grey] = 1;
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
 	ft_process_tag_stack(parser);
 }

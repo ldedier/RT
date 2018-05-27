@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:44:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/24 08:12:40 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/26 12:37:23 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ t_color	pert_color(t_hit *hit)
 	t_color	ret;
 	t_color	inv;
 
-	ret = hit->obj.c;
+	ret = hit->col;
 	inv = scale_convert_color(add_scale_intcolors(get_intcolor(WHITE_COLOR),
-				get_intcolor(hit->obj.c), -1), 1);
+				get_intcolor(hit->col), -1), 1);
 	if (hit->obj.pert == e_chess && 
 			(((sin(hit->point.x) > 0 ? 1 : -1) *
 			  (sin(hit->point.z) > 0 ? 1 : -1)) > 0))

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:02:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/22 09:44:32 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/27 18:45:35 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	convolute(t_canvas *canvas, double *filter, int filter_size,
 void	apply_convolution(t_world *world)
 {
 	printf("applying filters...\n");
+	if (world->filters[e_grey])
+		grey(world->canvas);
 	if (world->filters[e_emboss])
 		emboss(world->canvas);
 	if (world->filters[e_sharpen])

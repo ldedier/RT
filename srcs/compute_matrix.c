@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 04:57:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/22 04:47:01 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/26 06:13:17 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	ft_compute_matrices(t_cobject *cobject)
 		t_mat4 transform_dir = ft_mat4_mult(rotate_cobj, ft_mat4_mult(rotate, scale2));
 //		t_mat4 transform_dir =  ft_mat4_mult(rotate, scale2);
 
-		t_mat4 transform = ft_mat4_mult(translate, ft_mat4_mult(local_translate_inv, ft_mat4_mult( rotate_cobj, ft_mat4_mult(local_translate,ft_mat4_mult(rotate, scale)))));
+		t_mat4 transform = ft_mat4_mult(translate, ft_mat4_mult(local_translate_inv, ft_mat4_mult(rotate_cobj, ft_mat4_mult(local_translate,ft_mat4_mult(rotate, scale)))));
 
 	// OUAAAAAI
 

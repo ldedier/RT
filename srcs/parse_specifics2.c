@@ -6,11 +6,33 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/22 01:43:53 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/26 11:48:40 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+void	ft_parse_negative(t_parser *parser, t_world *world, char *line)
+{
+	int		*neg;
+	char	*name;
+
+	name = parser->attribute;
+	neg = NULL;
+	if (parser->parse_enum == e_parse_object)
+		neg = &(world->cobjlist->cobject->objlist->object->negative);
+	else if (parser->parse_enum == e_parse_cobject)
+		neg = &(world->cobjlist->cobject->negative);
+	if (!neg || (ft_strcmp(name, "sphere") && ft_strcmp(name, "plane"))) //etc...
+	{
+		ft_dprintf(2, "line %d: current object can not be negative\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	read_int(&line, neg);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
 
 void	ft_parse_ellipsoid_abc(t_parser *parser, t_world *world, char *line)
 {

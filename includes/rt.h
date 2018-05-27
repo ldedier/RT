@@ -6,19 +6,21 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/24 07:15:33 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/27 21:01:12 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //DONE	reflexion
 //DONE	directional light
 //DONE	nimin valors atribut (si reflection es 0 no cal calcular...)
-//TODO	perturbation (wave, random, spikes...)
+//DONE	perturbation (wave, random, spikes...)
 //TODO	negative object
 //done	antialiasing / other filters
 //DONE	fix sometimes cancel the render and go into antialiasing. cause is calling join_threads 2 times in a row and 2nd one returns 0 so assumes it rendered.
+//TODO	controls chachis -> select object
 //TODO	antialiasing multiple rays per pixel (then get the mean)
-//TODO	cartoon shading.
+//DONE	cartoon shading.
+//TODO	gooch shading -> borders bons pel cartoon?
 //DONE	low resolution when moving camera
 //DONE	paint_threaded only when a key is pressed, and not always
 //DONE	paint threaded on enter press.
@@ -28,7 +30,7 @@
 //TODO	better distribution of pixels in threads, to avoid very expensive zones
 //DONE	mr bean
 //TODO	(?)start rendering detailed scene when not moving, cancel if move again
-//TODO separate normals and intersections calculating
+//DONE separate normals and intersections calculating
 
 #ifndef RT_H
 # define RT_H
@@ -47,7 +49,7 @@
 # include <pthread.h>
 # include <complex.h>
 
-# define NTHREADS 4
+# define NTHREADS 1
 # define STACK 0
 # define POP 1
 
@@ -59,7 +61,6 @@
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
-# define SHADER 1
 
 # define AXIS_X (t_point3d){.x=1.0,.y=0.0,.z=0.0}
 # define AXIS_Y (t_point3d){.x=0.0,.y=1.0,.z=0.0}
@@ -332,6 +333,7 @@ typedef struct			s_object
 	t_mat4				transform_pos_inv;
 	t_object_union		object_union;
 	int					(*intersect_func)(t_line, struct s_object, t_hit*);
+	int					(*inside_func)(t_hit h, struct s_object);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
@@ -341,6 +343,7 @@ typedef struct			s_object
 	double				reflect;
 	double				refract;
 	double				transp;
+	int					negative;
 }						t_object;
 
 struct			s_hit
@@ -351,6 +354,7 @@ struct			s_hit
 	t_point3d			pert;
 	t_point3d			bounce;
 	t_point3d			pertbounce;
+	t_color				col;
 	double				t;
 };
 
@@ -399,6 +403,7 @@ typedef struct			s_cobject
 	double				transp;
 	t_perturbations		pert;
 	t_objlist			*objlist;
+	int					negative;
 }						t_cobject;
 
 typedef struct			s_cobjlist
@@ -442,6 +447,7 @@ typedef enum			e_filters
 	e_sharpen,
 	e_sobel,
 	e_emboss,
+	e_grey,
 	e_nfilters
 }						t_filters;
 
@@ -576,6 +582,7 @@ void					ft_parse_reflection(t_parser *p, t_world *w, char *l);
 void					ft_parse_radius(t_parser *p, t_world *w, char *l);
 void					ft_parse_angle(t_parser *p, t_world *w, char *l);
 void					ft_parse_intensity(t_parser *p, t_world *w, char *l);
+void					ft_parse_negative(t_parser *par, t_world *w, char *l);
 void					ft_parse_pert(t_parser *p, t_world *w, char *l);
 void					read_pert_type(t_parser *par, t_perturbations *pert);
 void					ft_parse_resolution(t_parser *p, t_world *w, char *l);
@@ -638,6 +645,7 @@ t_intcolor				new_intcolor(void);
 t_intcolor				add_scale_intcolors(t_intcolor icol1, t_intcolor icol2,
 		double scale);
 t_intcolor				get_intcolor(t_color color);
+t_intcolor				greyscale(t_intcolor ic);
 t_color					scale_convert_color(t_intcolor icol, double t);
 
 /*
@@ -650,6 +658,8 @@ void					gauss_blur(t_canvas *canvas);
 void					sharpen(t_canvas *canvas);
 void					emboss(t_canvas *canvas);
 void					sobel(t_canvas *canvas);
+void					grey(t_canvas *canvas);
+void					draw_borders(t_canvas *canvas);
 
 /*
 **render
@@ -697,6 +707,16 @@ int						intersect_piriform(t_line line, t_object obj,
 		t_hit *hit);
 int						intersect_roman(t_line line, t_object obj,
 		t_hit *hit);
+
+void					intersect_positive(t_cobjlist *cobjlist, t_object obj,
+		t_line line, t_hit *hit);
+void					intersect_negative(t_cobjlist *cobjlist, t_object obj,
+		t_line line, t_hit *hit);
+int						inside_sphere(t_hit h, t_object obj);
+int						inside_cone(t_hit h, t_object obj);
+int						inside_cylinder(t_hit h, t_object obj);
+int						inside_plane(t_hit h, t_object obj);
+
 /*
 **normals
 */
@@ -738,8 +758,10 @@ void					apply_rotation(t_camera *cam);
 ** matrices
 */
 
-void	ft_compute_matrix(t_object *object);
-void	ft_compute_matrices_clist(t_cobjlist *cobjects);
+void					ft_compute_matrix(t_object *object);
+void					ft_compute_matrices_clist(t_cobjlist *cobjects);
+t_line					ft_transform_line(t_object object, t_line t);
+void					ft_transform_hit_back(t_hit *hit);
 
 /*
 ** export

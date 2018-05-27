@@ -49,9 +49,6 @@
 				<scaleXYZ>1 1 1</scaleXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
 				<shine>30</shine>
-				<reflection>0.3</reflection>
-				<refraction>125</refraction>
-				<transparency>12</transparency>
 				<color> 0x222230 </color>
 			</object>
 		</cobject>
@@ -112,4 +109,5 @@
 		<intensity>0.37</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
+	<shader type="cartoon"></shader>
 </scene>

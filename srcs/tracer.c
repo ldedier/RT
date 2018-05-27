@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/24 03:14:37 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/27 21:01:21 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,29 +49,27 @@ void				ft_transform_hit_back(t_hit *hit)
 
 t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 {
-	t_hit		newhit;
 	t_hit		*hit;
-	t_cobject	cobj;
+	t_cobjlist	*cobjiter;
+	t_objlist	*objiter;
 	t_object	obj;
 
 	hit = ft_memalloc(sizeof(t_hit));
 	hit->t = -1;
-	while (cobjlist)
+	cobjiter = cobjlist;
+	while (cobjiter)
 	{
-		cobj = *(cobjlist->cobject);
-		while (cobj.objlist)
+		objiter = cobjiter->cobject->objlist;
+		while (objiter)
 		{
-			obj = *(cobj.objlist->object);
-			if ((obj.intersect_func(ft_transform_line(obj, line), obj, &newhit))
-					&& (newhit.t > 0 && (newhit.t < hit->t || hit->t == -1)))
-			{
-					newhit.obj = obj;
-					ft_transform_hit_back(&newhit);
-					*hit = newhit;
-			}
-			cobj.objlist = cobj.objlist->next;
+			obj = *(objiter->object);
+			if (!obj.negative)
+				intersect_positive(cobjlist, obj, line, hit);
+			else
+				intersect_negative(cobjlist, obj, line, hit);
+			objiter = objiter->next;
 		}
-		cobjlist = cobjlist->next;
+		cobjiter = cobjiter->next;
 	}
 	if (hit->t > 0)
 	{

@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/23 02:44:51 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/05/26 12:19:19 by lcavalle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,9 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 intcolors.c\
 				 perturbations.c\
 				 errors.c\
-				 refraction.c
+				 refraction.c\
+				 tracer2.c\
+				 insides.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 
