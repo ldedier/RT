@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 05:21:00 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/27 05:25:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/28 00:28:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	ft_process_parsing_vertex_c(t_parser *parser, t_world *world, char *line)
 	read_double(&line, &(c->x));
 	read_double(&line, &(c->y));
 	read_double(&line, &(c->z));
+	
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
 	ft_process_tag_stack(parser);
 }

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/27 22:36:34 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/28 04:24:37 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	ft_give_default_characteristics(t_object *object)
 		object->object_union.triangle.v2 = ft_new_vec3(0, -1, 0);
 		object->object_union.triangle.v3 = ft_new_vec3(1, 0, 0);
 	}
+	else if (object->intersect_func == intersect_hyperboloid)
+		object->object_union.hyperboloid.radius = 1;
 }
 
 static void	set_funcs(t_object *obj,
@@ -77,6 +79,10 @@ void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 			set_funcs(object, intersect_piriform, inside_plane, normal_piriform);
 	else if (!ft_strcmp(parser->attribute, "triangle"))
 			set_funcs(object, intersect_triangle, inside_plane, normal_triangle);
+	else if (!ft_strcmp(parser->attribute, "paraboloid"))
+			set_funcs(object, intersect_paraboloid, inside_plane, normal_paraboloid);
+	else if (!ft_strcmp(parser->attribute, "hyperboloid"))
+			set_funcs(object, intersect_hyperboloid, inside_plane, normal_hyperboloid);
 	else
 	{
 		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines,
@@ -122,6 +128,11 @@ void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
 			!ft_strcmp("ellipsoid", parser->attribute))
 		radius = &(world->cobjlist->cobject->objlist->object\
 				->object_union.ellipsoid.radius);
+	else if (parser->parse_enum == e_parse_object &&
+			!ft_strcmp("hyperboloid", parser->attribute))
+		radius = &(world->cobjlist->cobject->objlist->object\
+				->object_union.hyperboloid.radius);
+
 	else
 	{
 		ft_dprintf(2, "line %d: current object does not have radius tag",

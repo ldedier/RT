@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 21:04:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/27 04:50:28 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/28 04:27:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 # define FT_OBJECTS_H
 
 #include "libmat.h"
+
+typedef struct		s_box
+{
+	double			width;
+	double			height;
+}					t_box;
 
 typedef struct		s_triangle
 {
@@ -39,6 +45,15 @@ typedef struct		s_ellipsoid
 	double			radius;
 	t_point3d		abc;
 }					t_ellipsoid;
+
+typedef struct		s_paraboloid
+{
+}					t_paraboloid;
+
+typedef struct		s_hyperboloid
+{
+	double			radius;
+}					t_hyperboloid;
 
 typedef struct		s_sphere
 {

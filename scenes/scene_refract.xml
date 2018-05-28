@@ -118,6 +118,17 @@
 				<small_radius>0.2</small_radius>
 			</object>
 		</cobject>
+		<cobject>
+			<positionXYZ>0 0 40</positionXYZ>
+			<rotationXYZ>1.57 0 0</rotationXYZ>
+			<object name="hyperboloid">
+				<radius>1</radius>
+			</object>
+		</cobject>
+		<cobject>
+			<object name="triangle">
+			</object>
+		</cobject>
 	</objlist>
 	<lightlist>
 		<light type="point">

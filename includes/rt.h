@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/27 23:28:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/28 04:25:30 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,7 +328,10 @@ typedef union			s_object_union
 	t_ellipsoid			ellipsoid;
 	t_torus				torus;
 	t_goursat			goursat;
+	t_hyperboloid		hyperboloid;
+	t_paraboloid		paraboloid;
 	t_triangle			triangle;
+	t_box				box;
 }						t_object_union;
 
 typedef struct			s_object
@@ -749,6 +752,10 @@ int						intersect_roman(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
 int						intersect_triangle(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
+int						intersect_hyperboloid(t_line line, t_object obj,
+		double sols[MAX_DEGREE]);
+int						intersect_paraboloid(t_line line, t_object obj,
+		double sols[MAX_DEGREE]);
 void					intersect_positive(t_cobjlist *cobjlist, t_object obj,
 		t_line line, t_hit *hit);
 void					intersect_negative(t_cobjlist *cobjlist, t_object obj,
@@ -770,6 +777,8 @@ t_point3d				normal_roman(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_piriform(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_lemniscate(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_torus(t_object sphere, t_point3d t, t_line l);
+t_point3d				normal_paraboloid(t_object sphere, t_point3d t, t_line l);
+t_point3d				normal_hyperboloid(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_triangle(t_object object, t_point3d p, t_line l);
 
 
