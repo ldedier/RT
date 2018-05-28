@@ -175,6 +175,7 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 						newhit.point = ft_point3d_add(line.o,ft_point3d_scalar(line.v, newhit.t));
 						newhit.normal = normal_triangle(obj, hit->point, line);
 						*hit = newhit;
+						hit->col = newhit.obj.c;
 						if (ft_dot_product(hit->normal, line.v) > 0)
 						{
 							hit->enter = 0;

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/27 17:58:11 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/28 05:58:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,15 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		else
 			illuminated_c = illuminate_toon(world, hit, srays, fast);
 		fogged_c = interpole_color(fog, illuminated_c, world->fog.color);
-		if (!fast && bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON)
+		if (bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON)
 			reflect_c = ray_color(newray(translate_vec(hit->point,
 							hit->pertbounce, EPSILON), hit->pertbounce, ray.n),
 					world, bounce + 1, 0);
 		else
 			reflect_c = get_color(0x000000);
-		if (!fast && bounce < MAX_BOUNCE && hit->obj.transp > EPSILON)
-			refract_c = ray_color(newray(translate_vec(hit->point,
-
-							//ray.v, EPSILON), refraction(hit->pert, ray.v, 1,
-								//hit->obj.refract)),
-
-							ray.v, EPSILON), refraction(hit, &ray), ray.n),
+		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON)
+			refract_c = ray_color(newray(translate_vec(hit->point, 
+					ray.v, EPSILON), refraction(hit, &ray), ray.n),
 					world, bounce + 1, 0);
 		else
 			refract_c = get_color(0x000000);
@@ -88,6 +84,9 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 	}
 	return (freeret(world->fog.color, &hit, NULL));
 }
+
+//ray.v, EPSILON), refraction(hit->pert, ray.v, 1,
+//hit->obj.refract)),
 
 t_color				render_pixel(t_world *world, t_pixel pix, int fast)
 {

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:07 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/27 21:23:29 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/28 05:53:40 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ void	ft_add_triangles(char *source, t_world *world)
 
 	cobject = world->cobjlist->cobject;
 	parser = ft_parse_obj(source);
-	triangle = ft_new_triangle(*cobject);
+	triangle = ft_new_object(*cobject);
+	triangle->intersect_func = intersect_triangle;
+	triangle->normal_func = normal_triangle;
+	triangle->inside_func = inside_plane;
+
 	nb_faces = 0;
 	while (nb_faces < parser.nb_faces)
 	{
@@ -44,7 +48,6 @@ void	ft_add_triangles(char *source, t_world *world)
 		triangle->object_union.triangle.v3.x = parser.vertices[parser.faces[nb_faces].z].x;
 		triangle->object_union.triangle.v3.y = -parser.vertices[parser.faces[nb_faces].z].y;
 		triangle->object_union.triangle.v3.z = parser.vertices[parser.faces[nb_faces].z].z;
-		ft_print_triangle(*triangle);
 		add_obj_cpy(&cobject->objlist, triangle);
 		nb_faces++;
 	}
