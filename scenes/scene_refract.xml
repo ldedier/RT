@@ -121,8 +121,7 @@
 		<cobject>
 			<positionXYZ>0 0 40</positionXYZ>
 			<rotationXYZ>1.57 0 0</rotationXYZ>
-			<object name="hyperboloid">
-				<radius>1</radius>
+			<object name="paraboloid">
 			</object>
 		</cobject>
 		<cobject>

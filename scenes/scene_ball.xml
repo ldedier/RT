@@ -11,6 +11,20 @@
 			<object name="sphere">
 			</object>
 		</cobject>
+		<cobject>
+			<positionXYZ>0 0 -5</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<color> 0xFF0000 </color>
+			<object name="sphere">
+			</object>
+		</cobject>
+	<cobject>
+			<positionXYZ>0 0 -5</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<color> 0xFF0000 </color>
+			<object name="plane">
+			</object>
+		</cobject>
 	</objlist>
 	<lightlist>
 		<light type="point">
