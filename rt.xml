@@ -4,9 +4,6 @@
 		<rotationXYZ>0 0 0</rotationXYZ>
 	</camera>
 	<objlist>
-		<cobject type="obj">
-			<src>resources/objs/teapot.obj</src>
-		</cobject>
 		<cobject>
 			<object name="cone">
 				<angle>0.12</angle>
@@ -114,5 +111,5 @@
 		<intensity>0.37</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
-	<filter name="sobel"></filter>
+	<filter name="grey"></filter>
 </scene>

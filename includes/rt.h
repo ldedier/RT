@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/27 22:26:14 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/28 21:06:04 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # include <sys/mman.h>
 # include <sys/stat.h>
 
-# define NTHREADS 1
+# define NTHREADS 4
 # define STACK 0
 # define POP 1
 # define MAX_DEGREE 4
@@ -749,14 +749,6 @@ int						intersect_roman(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
 int						intersect_triangle(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
-void					intersect_positive(t_cobjlist *cobjlist, t_object obj,
-		t_line line, t_hit *hit);
-void					intersect_negative(t_cobjlist *cobjlist, t_object obj,
-		t_line line, t_hit *hit);
-int						inside_sphere(t_hit h, t_object obj);
-int						inside_cone(t_hit h, t_object obj);
-int						inside_cylinder(t_hit h, t_object obj);
-int						inside_plane(t_hit h, t_object obj);
 /*
  **normals
  */
@@ -788,7 +780,21 @@ void					ft_init_aux(t_auxquart_init *g, t_line line);
  */
 int						ft_evaluate_cut(t_cut cut, t_point3d pos);
 double					get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
-		double min, t_line transformed);
+		double min, t_line transformed, t_cobjlist *cobjlist, int neg, t_color *othercol);
+
+/*
+**negatives
+*/
+int						is_inside_other(t_hit h, t_cobjlist *cobjlist, int neg,
+		t_color *c);
+void					intersect_positive(t_cobjlist *cobjlist, t_object obj,
+		t_line line, t_hit *hit);
+void					intersect_negative(t_cobjlist *cobjlist, t_object obj,
+		t_line line, t_hit *hit);
+int						inside_sphere(t_hit h, t_object obj);
+int						inside_cone(t_hit h, t_object obj);
+int						inside_cylinder(t_hit h, t_object obj);
+int						inside_plane(t_hit h, t_object obj);
 
 /*
  **inequalities

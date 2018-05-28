@@ -5,11 +5,11 @@
 	</camera>
 	<objlist>
 		<cobject>
-			<positionXYZ>0 1 0</positionXYZ>
-			<rotationXYZ>0 0 0</rotationXYZ>
-			<color>0x00FF00</color>
-			<reflection>0</reflection>
-			<object name="plane">
+			<object name = "sphere">
+				<negative>1</negative>
+				<positionXYZ>-0.5 0.2 0</positionXYZ>
+				<radius>0.3</radius>
+				<color>0x00ff00</color>
 			</object>
 		</cobject>
 		<cobject>
@@ -18,11 +18,13 @@
 				<radius>1</radius>
 				<color>0xffffff</color>
 			</object>
-			<object name = "sphere">
-				<negative>1</negative>
-				<positionXYZ>-0.5 0.2 0</positionXYZ>
-				<radius>0.3</radius>
-				<color>0xff</color>
+		</cobject>
+		<cobject>
+			<positionXYZ>0 1 0</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<color>0x00FF00</color>
+			<reflection>0</reflection>
+			<object name="plane">
 			</object>
 		</cobject>
 	</objlist>
@@ -37,4 +39,8 @@
 		<intensity>0.4</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
+	<fog>
+		<intensity>0</intensity>
+		<color>0xFFFFFF</color>
+	</fog>
 </scene>

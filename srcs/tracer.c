@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/27 22:36:16 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/28 21:06:11 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int					izokay_t(t_hit newhit, double sol, t_line line)
 }
 
 double				get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
-		double min, t_line transformed)
+		double min, t_line transformed, t_cobjlist *cobjlist, int neg, t_color *othercol)
 {
 	double res;
 	int i;
@@ -105,9 +105,15 @@ double				get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
 	i = 0;
 	while (i < sols.nbsols)
 	{
-		if (sols.roots[i] > 0 && (sols.roots[i] < res || res == -1) &&
-				izokay(newhit, sols.roots[i], transformed))
-			res = sols.roots[i];
+		if (sols.roots[i] > 0 && (sols.roots[i] < res || res == -1))
+		{
+			newhit.point = ft_point3d_add(transformed.o, ft_point3d_scalar(
+						transformed.v, sols.roots[i]));
+			if (izokay(newhit, sols.roots[i], transformed) &&
+					((neg ? !is_inside_other(newhit, cobjlist, neg, othercol) :
+					  is_inside_other(newhit, cobjlist, neg, othercol))))
+				res = sols.roots[i];
+		}
 		i++;
 	}
 	return (res);
