@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 04:37:03 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 16:39:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/29 22:06:16 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int				main(int argc, char **args)
 	print_camera(world->cam);
 	ft_compute_matrices_clist(world->cobjlist);
 	apply_rotation(world->cam);
-	ft_loop(world);
+	ft_loop(world, args[1]);
 //	paint_threaded(world);
 	return (0);
 }

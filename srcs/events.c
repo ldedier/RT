@@ -6,13 +6,13 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 22:25:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/27 21:02:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/29 22:09:51 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	ft_keys_event(t_world *e, SDL_Event event, int press)
+void	ft_keys_event(t_world *e, SDL_Event event, int press, char *filename)
 {
 	if (event.key.keysym.sym == SDLK_UP)
 		e->keys[up] = press;
@@ -78,6 +78,19 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press)
 			if (e->can_export)
 			{
 				ft_export_rt(e, ".ppm");
+				e->can_export = 0;
+			}
+		}
+		else
+			e->can_export = 1;
+	}
+	else if (event.key.keysym.sym == SDLK_y)
+	{
+		if (press == 1)
+		{
+			if (e->can_export)
+			{
+				ft_export_scene(e, filename);
 				e->can_export = 0;
 			}
 		}

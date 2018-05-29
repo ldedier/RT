@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/28 04:24:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/29 20:50:23 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,47 @@ void	ft_give_default_characteristics(t_object *object)
 	}
 	else if (object->intersect_func == intersect_hyperboloid)
 		object->object_union.hyperboloid.radius = 1;
+}
+
+static void	set_func(t_object *obj, void (*print_caracteristics)(t_object, int))
+{
+	obj->print_caracteristics = print_caracteristics;
+}
+
+static void	ft_process_parsing_object_attributes_2(t_parser *parser, t_object *object)
+{
+	if (!ft_strcmp(parser->attribute, "sphere"))
+		set_func(object, ft_print_sphere_caracteristics);
+	else if (!ft_strcmp(parser->attribute, "cone"))
+		set_func(object, ft_print_cone_caracteristics);
+	else if (!ft_strcmp(parser->attribute, "cylinder"))
+		set_func(object, ft_print_cylinder_caracteristics);
+	else if (!ft_strcmp(parser->attribute, "plane"))
+		set_func(object, ft_print_plane_caracteristics);
+	else if (!ft_strcmp(parser->attribute, "ellipsoid"))
+		set_func(object, ft_print_ellipsoid_caracteristics);
+	else if (!ft_strcmp(parser->attribute, "torus"))
+		set_func(object, ft_print_torus_caracteristics);
+	else if (!ft_strcmp(parser->attribute, "goursat"))
+		set_func(object, ft_print_goursat_caracteristics);
+	else if (!ft_strcmp(parser->attribute, "lemniscate"))
+		set_func(object, ft_print_lemniscate_caracteristics);
+	else if (!ft_strcmp(parser->attribute, "roman"))
+		set_func(object, ft_print_roman_caracteristics);
+	else if (!ft_strcmp(parser->attribute, "piriform"))
+		set_func(object, ft_print_piriform_caracteristics);
+	else if (!ft_strcmp(parser->attribute, "triangle"))
+		set_func(object, ft_print_triangle_caracteristics);
+	else if (!ft_strcmp(parser->attribute, "paraboloid"))
+		set_func(object, ft_print_paraboloid_caracteristics);
+	else if (!ft_strcmp(parser->attribute, "hyperboloid"))
+		set_func(object, ft_print_hyperboloid_caracteristics);
+	else
+	{
+		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines,
+				parser->attribute);
+		exit(1);
+	}
 }
 
 static void	set_funcs(t_object *obj,
@@ -89,6 +130,7 @@ void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 				parser->attribute);
 		exit(1);
 	}
+	ft_process_parsing_object_attributes_2(parser, object);
 }
 
 void	ft_parse_angle(t_parser *parser, t_world *world, char *line)

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/24 04:47:48 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/29 17:49:18 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,94 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_line **srays, t_color lc)
 	return (shine);
 }
 
+
+int		ft_get_pixel(int x, int y, unsigned char *img, int dim_X, int bpp)
+{
+	int		nb;
+	char	color[4];
+
+	nb = (x * (bpp / 8)) + (y * (bpp / 8) * dim_X);
+	color[0] = img[nb];
+	color[1] = img[nb + 1];
+	color[2] = img[nb + 2];
+	color[3] = 0;
+	return (*(int *)color);
+}
+
 t_color			illuminate(t_world *world, t_hit *hit, t_line **srays, int fast)
 {
 	t_illum	illu;
 	t_illum	shine;
 	t_color	lightcol;
-	t_color	plaincol;
+	t_color	color;
 
-	plaincol = pert_color(hit);
 	illu = getillum(world, hit, srays);
+	//lightcol = interpole_color(illu.in, BLACK_COLOR, interpole_color(
+	//			getwhiteratio(illu.color, 0.3, 1), illu.color, hit->obj.c));
+
+	if (0)
+	{
+		//sphere UV mapping
+		t_point3d p = normalize(hit->old_normal);
+		float u = 0.5 + ((atan2(p.z, p.x)) / (2 * M_PI));
+		float v = 0.5 - (asin(p.y) / M_PI);
+		u = (int)(u * world->bmp_parser.width);
+		v = (int)(v * world->bmp_parser.height);
+		int col = ft_get_pixel(u, v, world->bmp_parser.pixels, world->bmp_parser.width, world->bmp_parser.bpp);
+		color = get_color(col);
+	}
+	else if (0)
+	{
+		//torus UV mapping
+		t_point3d p = normalize(hit->old_normal);
+		float R = hit->obj.object_union.torus.big_rad;
+		float u = (1.0 - (atan2(p.z, p.x) + M_PI) / (2 * M_PI));
+		float len = sqrt(p.x * p.x + p.z * p.z);
+		float x = len - R;
+		float v = (atan2(p.y, x) + M_PI) / (2 * M_PI);
+		//float u = 0.5 + ((atan2(p.z, p.x)) / (2 * M_PI));
+		//float v = 0.5 + ((atan2(p.y, sqrt(p.x * p.x + p.z * p.z) - R)) / (2 * M_PI));
+		//printf("%f %f\n", u, v);
+		u = (int)(u * world->bmp_parser.width);
+		v = (int)(v * world->bmp_parser.height);
+		int col = ft_get_pixel(u, v, world->bmp_parser.pixels, world->bmp_parser.width, world->bmp_parser.bpp);
+		color = get_color(col);
+	}
+	else if (0)
+	{
+		t_point3d p = hit->old_point;
+		float u = 0.5 + (atan2(p.y, p.x)) / (2 * M_PI);
+		float v = fabs(p.z) / M_PI;
+		//printf("%f %f\n", u, v);
+		u = (int)(u * world->bmp_parser.width);
+		v = (int)(v * world->bmp_parser.height);
+		int col = ft_get_pixel(u, v, world->bmp_parser.pixels, world->bmp_parser.width, world->bmp_parser.bpp);
+		color = get_color(col);
+	}
+	else if (0)
+	{
+		//plane UV mapping
+		t_point3d m_UAxis;
+		m_UAxis.x = hit->old_normal.y;
+		m_UAxis.y = hit->old_normal.z;
+		m_UAxis.z = -hit->old_normal.x;
+		t_point3d m_VAxis = crossprod(m_UAxis, hit->old_normal);
+		float u = (int)(ft_dot_product(hit->old_point, m_UAxis) * world->bmp_parser.width + 1000) % (world->bmp_parser.width);
+		float v = (int)(ft_dot_product(hit->old_point, m_VAxis) * world->bmp_parser.height + 1000) % (world->bmp_parser.height);
+		if (u < 0)
+			u *= -1;
+		if (v < 0)
+			v *= -1;
+		int col = ft_get_pixel(u, v, world->bmp_parser.pixels, world->bmp_parser.width, world->bmp_parser.bpp);
+		color = get_color(col);
+	}
+	else
+	{
+		color = hit->obj.c;
+	}
+
 	lightcol = interpole_color(illu.in, BLACK_COLOR, interpole_color(
-				getwhiteratio(illu.color, 0.3, 1), illu.color, plaincol));
+				getwhiteratio(illu.color, 0.3, 1), illu.color, color));
 	if (fast)
 		return (lightcol);
 	shine = getshine(world, hit, srays, lightcol);

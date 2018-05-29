@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/22 09:44:28 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/29 21:53:59 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ void			set_defaults(t_world *world)
 	world->canvas->npixels = world->canvas->win_size.x *
 		world->canvas->win_size.y;
 	world->can_export = 1;
+	world->nb_export = 0;
 	set_defaults_2(world);
 	ft_init_keys(world);
+	world->bmp_parser = ft_parse_bmp("texture.bmp");
 }
 
 t_canvas		*new_canvas(void)

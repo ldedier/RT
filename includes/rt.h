@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/28 21:06:04 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/29 22:08:03 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # include <complex.h>
 # include <sys/mman.h>
 # include <sys/stat.h>
+#include <sys/types.h>
 
 # define NTHREADS 4
 # define STACK 0
@@ -344,6 +345,7 @@ typedef struct			s_object
 	int					(*intersect_func)(t_line, struct s_object, double sols[MAX_DEGREE]);
 	int					(*inside_func)(t_hit h, struct s_object);
 	t_point3d			(*normal_func)(struct s_object, t_point3d, t_line line);
+	void				(*print_caracteristics)(struct s_object obj, int fd);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
@@ -362,6 +364,8 @@ struct			s_hit
 	t_object			obj;
 	t_point3d			point;
 	t_point3d			normal;
+	t_point3d			old_point;
+	t_point3d			old_normal;
 	t_point3d			pert;
 	t_point3d			bounce;
 	t_point3d			pertbounce;
@@ -451,6 +455,15 @@ typedef struct			s_illum
 	t_color				color;
 }						t_illum;
 
+typedef struct			s_bmp_parser
+{
+	unsigned char		*pixels;
+	int					width;
+	int					height;
+	int					bitmap_index;
+	short				bpp;
+}						t_bmp_parser;
+
 typedef enum			e_filters
 {
 	e_gauss_blur,
@@ -478,7 +491,10 @@ typedef struct			s_world
 	int					progress;
 	int					cancel_render;
 	int					can_export;
+	int					nb_export;
 	int					shader;
+	t_bmp_parser		bmp_parser;
+
 }						t_world;
 
 typedef struct			s_thr_par
@@ -543,12 +559,12 @@ typedef struct  s_mmap
 /*
  ** input
  */
-void					ft_loop(t_world *world);
+void					ft_loop(t_world *world, char *filename);
 int						draw_frame(void *param);
 int						key_press(int keycode, void *param);
 int						end(t_world *world);
-int						get_input(t_world *e);
-void					ft_keys_event(t_world *world, SDL_Event event, int down);
+int						get_input(t_world *e, char *filename);
+void					ft_keys_event(t_world *world, SDL_Event event, int down, char *filename);
 void					ft_process(t_world *world);
 void					ft_mouse_motion(t_world *world, SDL_Event event);
 
@@ -859,8 +875,33 @@ void					ft_transform_hit_back(t_hit *hit);
 int					ft_export_rt(t_world *world, char *extension);
 
 /*
- ** error
- */
+** bmp reader
+*/
+t_bmp_parser		ft_parse_bmp(char *filename);
+t_mmap				ft_map_file(char *filename);
+int					ft_get_pixel(int x, int y, unsigned char *img, int dim_X, int bpp);
+
+/*
+** scene exporter
+*/
+int					ft_export_scene(t_world *world, char *filename);
+void				ft_print_sphere_caracteristics(t_object object, int fd);
+void				ft_print_plane_caracteristics(t_object object, int fd);
+void				ft_print_cone_caracteristics(t_object object, int fd);
+void				ft_print_cylinder_caracteristics(t_object object, int fd);
+void				ft_print_ellipsoid_caracteristics(t_object object, int fd);
+void				ft_print_torus_caracteristics(t_object object, int fd);
+void				ft_print_goursat_caracteristics(t_object object, int fd);
+void				ft_print_lemniscate_caracteristics(t_object object, int fd);
+void				ft_print_roman_caracteristics(t_object object, int fd);
+void				ft_print_piriform_caracteristics(t_object object, int fd);
+void				ft_print_hyperboloid_caracteristics(t_object object, int fd);
+void				ft_print_paraboloid_caracteristics(t_object object, int fd);
+void				ft_print_triangle_caracteristics(t_object object, int fd);
+
+/*
+** error
+*/
 
 t_mmap			ft_map_file(char *filename);
 
