@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/28 21:06:04 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/29 03:03:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,6 +370,12 @@ struct			s_hit
 	double				t;
 };
 
+typedef struct			s_auxmobius
+{
+
+}						t_mobius;
+
+
 typedef struct			s_auxcone
 {
 	double				dv;
@@ -388,14 +394,6 @@ typedef struct			s_auxcone
 	   double				cov;
 	   */
 }						t_auxcone;
-
-typedef struct			s_auxcyl
-{
-	t_point3d			colo;
-	t_point3d			ddv;
-	t_point3d			scolol;
-	t_point3d			scolol2;
-}						t_auxcyl;
 
 typedef struct			s_objlist
 {
@@ -756,6 +754,8 @@ int						intersect_hyperboloid(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
 int						intersect_paraboloid(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
+int						intersect_mobius(t_line line, t_object obj,
+		double sols[MAX_DEGREE]);
 
 /*
  **normals
@@ -773,6 +773,7 @@ t_point3d				normal_torus(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_paraboloid(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_hyperboloid(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_triangle(t_object object, t_point3d p, t_line l);
+t_point3d				normal_mobius(t_object object, t_point3d p, t_line l);
 
 
 /*
@@ -783,6 +784,7 @@ t_quartic				get_quartic_roman(t_line line);
 t_quartic				get_quartic_lemniscate(t_line line);
 t_quartic				get_quartic_goursat(t_line line, t_object obj);
 t_quartic				get_quartic_torus(t_line line, t_object obj);
+t_quartic				get_quartic_mobius(t_line line, t_object obj);
 void					ft_init_aux(t_auxquart_init *g, t_line line);
 
 /*

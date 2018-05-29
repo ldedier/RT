@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/28 04:21:03 by ldedier          ###   ########.fr        #
+#    Updated: 2018/05/29 01:22:42 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,6 +98,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 errors.c\
 				 refraction.c\
 				 quartics_intersect.c\
+				 quartics_intersect2.c\
 				 cuts.c\
 				 inequality.c\
 				 parse_cut.c\

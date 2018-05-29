@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 01:01:52 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/28 04:50:52 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/29 01:22:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -609,6 +609,19 @@ void			ultimate_test_cubic()
 	exit(1);
 }
 */
+
+int					intersect_mobius(t_line line, t_object obj,
+		double sols[MAX_DEGREE])
+{
+	t_quartic equa;
+	int nbqsols;
+	double complex qsols[4];
+
+	(void)obj;
+	equa = get_quartic_mobius(line, obj);
+	nbqsols = resolve_quartic(equa, qsols);
+	return (ft_transfer_real_roots(qsols, nbqsols, sols));
+}
 
 int					intersect_lemniscate(t_line line, t_object obj,
 		double sols[MAX_DEGREE])

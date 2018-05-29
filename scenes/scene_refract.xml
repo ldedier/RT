@@ -124,10 +124,6 @@
 			<object name="paraboloid">
 			</object>
 		</cobject>
-		<cobject>
-			<object name="triangle">
-			</object>
-		</cobject>
 	</objlist>
 	<lightlist>
 		<light type="point">

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 07:00:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/26 07:05:34 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/29 01:20:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ t_quartic			get_quartic_goursat(t_line line, t_object obj)
 	res.e = g.ox4 + g.oy4 + g.oz4 - (a * (g.ox2 + g.oy2 + g.oz2)) + b;
 	return (res);
 }
+
 t_quartic			get_quartic_torus(t_line line, t_object obj)
 {
 	t_auxtorus x;

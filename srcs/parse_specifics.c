@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/28 04:24:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/29 02:54:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 			set_funcs(object, intersect_paraboloid, inside_plane, normal_paraboloid);
 	else if (!ft_strcmp(parser->attribute, "hyperboloid"))
 			set_funcs(object, intersect_hyperboloid, inside_plane, normal_hyperboloid);
+	else if (!ft_strcmp(parser->attribute, "mobius"))
+			set_funcs(object, intersect_mobius, inside_plane, normal_mobius);
 	else
 	{
 		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines,
