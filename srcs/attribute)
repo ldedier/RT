@@ -1,2 +1,0 @@
-parse_main.c:		free(parser->attribute);
-parse_main.c:		free(parser->tag);

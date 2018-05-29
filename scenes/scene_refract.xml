@@ -10,6 +10,7 @@
 				<color>0xFF0000</color>
 			</object>
 			<object name="sphere">
+				<transparency>0.8</transparency>
 				<positionXYZ>0 0 0</positionXYZ>
 				<color>0xFFFF00</color>
 			</object>
@@ -23,7 +24,6 @@
 			</object>
 			<object name="sphere">
 				<positionXYZ>0 2 0</positionXYZ>
-				<transparency>0.8</transparency>
 				<color>0xFFA0BF</color>
 				<cut type="relative">
 					<cutXYZ>1 0 0</cutXYZ>

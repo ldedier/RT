@@ -5,6 +5,7 @@
 	</camera>
 	<objlist>
 		<cobject>
+			<transparency>0.5</transparency>
 			<positionXYZ>0 0 5</positionXYZ>
 			<rotationXYZ>0 0 0</rotationXYZ>
 			<color> 0xFF0000 </color>
@@ -12,17 +13,10 @@
 			</object>
 		</cobject>
 		<cobject>
-			<positionXYZ>0 0 -5</positionXYZ>
+			<positionXYZ>0 0 10</positionXYZ>
 			<rotationXYZ>0 0 0</rotationXYZ>
-			<color> 0xFF0000 </color>
+			<color> 0x0000FF </color>
 			<object name="sphere">
-			</object>
-		</cobject>
-	<cobject>
-			<positionXYZ>0 0 -5</positionXYZ>
-			<rotationXYZ>0 0 0</rotationXYZ>
-			<color> 0xFF0000 </color>
-			<object name="plane">
 			</object>
 		</cobject>
 	</objlist>
