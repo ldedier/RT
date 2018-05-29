@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/28 21:06:04 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/29 16:31:35 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -780,16 +780,16 @@ void					ft_init_aux(t_auxquart_init *g, t_line line);
  */
 int						ft_evaluate_cut(t_cut cut, t_point3d pos);
 double					get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
-		double min, t_line transformed, t_cobjlist *cobjlist, int neg, t_color *othercol);
+		double min, t_line transformed, t_objlist *objlist, int neg, t_color *othercol);
 
 /*
 **negatives
 */
-int						is_inside_other(t_hit h, t_cobjlist *cobjlist, int neg,
+int						is_inside_other(t_hit h, t_objlist *objlist, int neg,
 		t_color *c);
-void					intersect_positive(t_cobjlist *cobjlist, t_object obj,
+void					intersect_positive(t_objlist *objlist, t_object obj,
 		t_line line, t_hit *hit);
-void					intersect_negative(t_cobjlist *cobjlist, t_object obj,
+void					intersect_negative(t_objlist *objlist, t_object obj,
 		t_line line, t_hit *hit);
 int						inside_sphere(t_hit h, t_object obj);
 int						inside_cone(t_hit h, t_object obj);

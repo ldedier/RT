@@ -6,25 +6,25 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 09:48:49 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/28 21:06:09 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/29 16:31:39 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-int		is_inside_other(t_hit h, t_cobjlist *cobjlist, int neg,
+int		is_inside_other(t_hit h, t_objlist *objlist, int neg,
 		t_color *c)
 {
-	t_cobjlist	*cobjiter;
+//	t_cobjlist	*cobjiter;
 	t_objlist	*objiter;
 	t_object	obj;
 	int			negated;
 
 	negated = 0;
-	cobjiter = cobjlist;
-	while (cobjiter && !negated)
-	{
-		objiter = cobjiter->cobject->objlist;
+//	cobjiter = cobjlist;
+//	while (cobjiter && !negated)
+//	{
+		objiter = /*cobjiter->cobject->*/objlist;
 		while (objiter && !negated)
 		{
 			obj = *(objiter->object);
@@ -35,12 +35,12 @@ int		is_inside_other(t_hit h, t_cobjlist *cobjlist, int neg,
 			}
 			objiter = objiter->next;
 		}
-		cobjiter = cobjiter->next;
-	}
+//		cobjiter = cobjiter->next;
+//	}
 	return (negated);
 }
 
-void	intersect_positive(t_cobjlist *cobjlist, t_object obj, t_line line,
+void	intersect_positive(t_objlist *objlist, t_object obj, t_line line,
 		t_hit *hit)
 {
 	t_hit		newhit;
@@ -54,7 +54,7 @@ void	intersect_positive(t_cobjlist *cobjlist, t_object obj, t_line line,
 	{
 		newhit.obj = obj;
 		if (((newhit.t = get_smallest_legal_pos_val(newhit, sols, hit->t,
-							transformed, cobjlist, 1, &othercol)) > 0) && (newhit.t < hit->t || hit->t == -1))
+							transformed, objlist, 1, &othercol)) > 0) && (newhit.t < hit->t || hit->t == -1))
 		{
 			newhit.point = ft_point3d_add(transformed.o,
 					ft_point3d_scalar(transformed.v, newhit.t));
@@ -73,7 +73,7 @@ void	intersect_positive(t_cobjlist *cobjlist, t_object obj, t_line line,
 	}
 }
 
-void	intersect_negative(t_cobjlist *cobjlist, t_object obj, t_line line,
+void	intersect_negative(t_objlist *objlist, t_object obj, t_line line,
 		t_hit *hit)
 {
 	t_hit		newhit;
@@ -88,7 +88,7 @@ void	intersect_negative(t_cobjlist *cobjlist, t_object obj, t_line line,
 	{
 		newhit.obj = obj;
 		if (((newhit.t = get_smallest_legal_pos_val(newhit, sols, hit->t,
-							transformed, cobjlist, 0, &othercol)) > 0) && (newhit.t < hit->t || hit->t == -1))
+							transformed, objlist, 0, &othercol)) > 0) && (newhit.t < hit->t || hit->t == -1))
 		{
 			newhit.point = ft_point3d_add(transformed.o,ft_point3d_scalar(transformed.v, newhit.t));
 				newhit.col = othercol;

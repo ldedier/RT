@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/28 21:06:11 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/29 16:31:41 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int					izokay_t(t_hit newhit, double sol, t_line line)
 }
 
 double				get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
-		double min, t_line transformed, t_cobjlist *cobjlist, int neg, t_color *othercol)
+		double min, t_line transformed, t_objlist *objlist, int neg, t_color *othercol)
 {
 	double res;
 	int i;
@@ -110,8 +110,8 @@ double				get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
 			newhit.point = ft_point3d_add(transformed.o, ft_point3d_scalar(
 						transformed.v, sols.roots[i]));
 			if (izokay(newhit, sols.roots[i], transformed) &&
-					((neg ? !is_inside_other(newhit, cobjlist, neg, othercol) :
-					  is_inside_other(newhit, cobjlist, neg, othercol))))
+					((neg ? !is_inside_other(newhit, objlist, neg, othercol) :
+					  is_inside_other(newhit, objlist, neg, othercol))))
 				res = sols.roots[i];
 		}
 		i++;
@@ -142,6 +142,7 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 	t_hit		*hit;
 	t_cobjlist	*cobjiter;
 	t_objlist	*objiter;
+	t_objlist	*objlist;
 	t_object	obj;
 	t_sols		sols;
 	t_hit		newhit;
@@ -152,15 +153,16 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 	while (cobjiter)
 	{
 		objiter = cobjiter->cobject->objlist;
+		objlist = objiter;
 		while (objiter)
 		{
 			obj = *(objiter->object);
 			if (obj.intersect_func != intersect_triangle)
 			{
 				if (!obj.negative)
-					intersect_positive(cobjlist, obj, line, hit);
+					intersect_positive(objlist, obj, line, hit);
 				else
-					intersect_negative(cobjlist, obj, line, hit);
+					intersect_negative(objlist, obj, line, hit);
 			}
 			else
 			{
