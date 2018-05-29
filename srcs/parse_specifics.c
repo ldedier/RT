@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/29 02:54:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/29 17:02:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_give_default_characteristics(t_object *object)
 		object->object_union.hyperboloid.radius = 1;
 }
 
-static void	set_funcs(t_object *obj,
+void	set_funcs(t_object *obj,
 		int (*intersect_func)(t_line, t_object, double[MAX_DEGREE]),
 		int (*inside_func)(t_hit, t_object),
 		t_point3d (*normal_func)(t_object, t_point3d, t_line))
@@ -134,7 +134,10 @@ void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
 			!ft_strcmp("hyperboloid", parser->attribute))
 		radius = &(world->cobjlist->cobject->objlist->object\
 				->object_union.hyperboloid.radius);
-
+	else if (parser->parse_enum == e_parse_cobject &&
+			!ft_strcmp("sphere_torus", parser->attribute))
+		radius = &(world->cobjlist->cobject->cobject_union\
+				.sphere_torus.radius);
 	else
 	{
 		ft_dprintf(2, "line %d: current object does not have radius tag",

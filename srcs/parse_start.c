@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/26 20:31:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/29 17:56:40 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ void	ft_process_parsing_object_start(t_parser *parser, t_world *world)
 {
 	t_object *object;
 
-	if (parser->parse_enum != e_parse_cobject)
+	if (parser->parse_enum != e_parse_cobject 
+			|| !world->cobjlist->cobject->regular)
+
 	{
-		printf("%d\n", parser->parse_enum);
-		ft_dprintf(2, "line %d: can only declare object inside cobject\n",
+		ft_dprintf
+			(2, "line %d: can only declare objects inside regular cobjects\n",
 				parser->nb_lines);
 		exit(1);
 	}
@@ -43,6 +45,20 @@ void	ft_process_parsing_cobject_start(t_parser *parser, t_world *world)
 	if (!(cobject = ft_new_cobject()))
 		ft_error("could not malloc cobject");
 	world->selected_cobject = cobject;
+	if (parser->attribute != NULL)
+	{
+		if (!ft_strcmp(parser->attribute, "adn") ||
+			!ft_strcmp(parser->attribute, "sphere_torus") ||
+			!ft_strcmp(parser->attribute, "obj"))
+			cobject->regular = 0;
+		else
+		{
+			ft_dprintf(2,
+			"line %d: cobjects can not have a %s attribute\n",
+				parser->nb_lines, parser->attribute);
+			exit(1);
+		}
+	}
 	add_cobj(&(world->cobjlist), cobject);
 	parser->parse_enum = e_parse_cobject;
 }
@@ -82,7 +98,6 @@ void	ft_process_parsing_cut_start(t_parser *parser, t_world *world)
 
 	if (parser->parse_enum != e_parse_object)
 	{
-		printf("%d\n", parser->parse_enum);
 		ft_dprintf(2, "line %d: can only declare cut inside objects\n",
 				parser->nb_lines);
 		exit(1);

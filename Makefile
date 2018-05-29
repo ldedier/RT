@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/29 01:22:42 by ldedier          ###   ########.fr        #
+#    Updated: 2018/05/29 16:24:50 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 parse_others.c\
 				 parse_specifics.c\
 				 parse_specifics2.c\
+				 parse_specifics_cobject.c\
 				 parse_start.c\
 				 parse_tools.c\
 				 parse_read_tools.c\
@@ -109,7 +110,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_parse_obj_vertices.c\
 				 map_file.c\
 				 tracer2.c\
-				 insides.c
+				 insides.c\
+				 automatic.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 

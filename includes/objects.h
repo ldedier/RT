@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 21:04:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/28 04:27:00 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/29 17:03:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,17 @@ typedef struct		s_cylinder
 {
 	double			radius;
 }					t_cylinder;
+
+typedef struct		s_sphere_torus
+{
+	int				nb_spheres;
+	double			radius;
+	double			spheres_radius;
+}					t_sphere_torus;
+
+typedef struct		s_adn
+{
+	int				length;
+}					t_adn;
+
 #endif

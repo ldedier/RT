@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/29 03:03:54 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/29 17:33:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -370,12 +370,6 @@ struct			s_hit
 	double				t;
 };
 
-typedef struct			s_auxmobius
-{
-
-}						t_mobius;
-
-
 typedef struct			s_auxcone
 {
 	double				dv;
@@ -401,6 +395,12 @@ typedef struct			s_objlist
 	struct s_objlist	*next;
 }						t_objlist;
 
+typedef union			u_cobject_union
+{
+	t_sphere_torus		sphere_torus;
+	t_adn				adn;
+}						t_cobject_union;
+
 typedef struct			s_cobject
 {
 	t_point3d			o;
@@ -413,7 +413,9 @@ typedef struct			s_cobject
 	double				transp;
 	t_perturbations		pert;
 	t_objlist			*objlist;
+	t_cobject_union		cobject_union;
 	int					negative;
+	int					regular;
 }						t_cobject;
 
 typedef struct			s_cobjlist
@@ -625,8 +627,6 @@ void					ft_process_parsing_cobject_start(t_parser *p,
 		t_world *w);
 void					ft_process_parsing_scale(t_parser *p, t_world *w,
 		char *l);
-void					ft_process_parsing_scale(t_parser *p, t_world *w,
-		char *l);
 void					ft_process_parsing_stack(t_parser *p, t_world *w,
 		char *l);
 char					*ft_get_between_tag(char **line);
@@ -645,17 +645,18 @@ void					ft_process_parsing_cut_xyz(t_parser *p, t_world *w,
 		char *l);
 void					ft_process_parsing_cut_inequality(t_parser *p,t_world *w,
 		char *l);
-
 void					ft_process_parsing_cut_value(t_parser *p,t_world *w,
 		char *l);
-
-
 void					ft_process_parsing_vertex_a(t_parser *p,t_world *w,
 		char *l);
 void					ft_process_parsing_vertex_b(t_parser *p,t_world *w,
 		char *l);
 void					ft_process_parsing_vertex_c(t_parser *p,t_world *w,
 		char *l);
+void					ft_parse_nb_spheres(t_parser *p, t_world *w, char *l);
+void					ft_parse_spheres_radius(t_parser *p, t_world *w, char *l);
+void					ft_parse_length(t_parser *p, t_world *w, char *l);
+
 /*
  **vectors
  */
@@ -795,8 +796,8 @@ double					get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
 		double min, t_line transformed, t_cobjlist *cobjlist, int neg, t_color *othercol);
 
 /*
-**negatives
-*/
+ **negatives
+ */
 int						is_inside_other(t_hit h, t_cobjlist *cobjlist, int neg,
 		t_color *c);
 void					intersect_positive(t_cobjlist *cobjlist, t_object obj,
@@ -807,6 +808,16 @@ int						inside_sphere(t_hit h, t_object obj);
 int						inside_cone(t_hit h, t_object obj);
 int						inside_cylinder(t_hit h, t_object obj);
 int						inside_plane(t_hit h, t_object obj);
+
+
+/*
+ **tools
+ */
+void    set_funcs(t_object *obj,
+		int (*intersect_func)(t_line, t_object, double[MAX_DEGREE]),
+		int (*inside_func)(t_hit, t_object),
+		t_point3d (*normal_func)(t_object, t_point3d, t_line));
+
 
 /*
  **inequalities
@@ -822,6 +833,13 @@ int						equal(double a, double b);
  */
 t_point3d				pert_normal(t_hit *hit);
 t_color					pert_color(t_hit *hit);
+
+
+/*
+ ** automatics
+ */
+
+void					ft_process_automatic(t_parser *parser, t_world *world);
 
 /*
  **translations

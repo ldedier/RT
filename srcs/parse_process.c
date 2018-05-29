@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/26 07:39:11 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/29 17:08:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,12 @@ static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 		ft_process_parsing_vertex_b(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "vertexC"))
 		ft_process_parsing_vertex_c(parser, world, line);
-
+	else if (!ft_strcmp(parser->tag, "nb_spheres"))
+		ft_parse_nb_spheres(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "spheres_radius"))
+		ft_parse_spheres_radius(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "length"))
+		ft_parse_length(parser, world, line);
 	else if (strcmp(parser->tag, "scene") &&
 			strcmp(parser->tag, "objlist") &&
 			strcmp(parser->tag, "lightlist"))
@@ -122,7 +127,12 @@ void		ft_process_parsing(t_parser *parser, t_world *world, char *line)
 		else if (!ft_strcmp(parser->tag, "object"))
 			parser->parse_enum = e_parse_cobject;
 		else
+		{
+			if (parser->parse_enum == e_parse_cobject && 
+					parser->attribute != NULL)
+				ft_process_automatic(parser, world);
 			parser->parse_enum = e_parse_scene;
+		}
 		if (parser->attribute != NULL)
 			ft_strdel(&(parser->attribute));
 	}

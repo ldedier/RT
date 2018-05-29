@@ -10,16 +10,6 @@
 			<reflection>0</reflection>
 			<color>0x0000FF</color>
 			<object name="mobius">
-				<cut type="circular">
-					<cutXYZ>1 1 1</cutXYZ>
-					<inequality>more than</inequality>
-					<value>0.65</value>
-				</cut>
-				<cut type="circular">
-					<cutXYZ>1 1 1</cutXYZ>
-					<inequality>less than</inequality>
-					<value>0.4</value>
-				</cut>
 			</object>
 		</cobject>
 	</objlist>
