@@ -1,0 +1,764 @@
+In file included from srcs/camera_rotations.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/colors.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/camera_rotations.o] Error 1
+make[1]: *** Waiting for unfinished jobs....
+2 errors generated.
+make[1]: *** [objs/colors.o] Error 1
+In file included from srcs/input.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/input.o] Error 1
+In file included from srcs/parse_main.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/parse_main.o] Error 1
+In file included from srcs/parse_stack.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/parse_stack.o] Error 1
+In file included from srcs/parse_perts.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/intersections.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+In file included from srcs/obj_list.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/obj_list.o] Error 1
+In file included from srcs/normals.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/parse_start.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/normals2.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/paint_threaded.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/parse_specifics.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/parse_specifics2.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/lights.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/parse_perts.o] Error 1
+In file included from srcs/parse_orsc.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/parse_others.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/rt.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/intersections.o] Error 1
+2 errors generated.
+2 errors generated.
+make[1]: *** [objs/normals.o] Error 1
+make[1]: *** [objs/parse_start.o] Error 1
+2 errors generated.
+In file included from srcs/parse_settings.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+make[1]: *** [objs/normals2.o] Error 1
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+In file included from srcs/populate_world.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+2 errors generated.
+make[1]: *** [objs/paint_threaded.o] Error 1
+2 errors generated.
+2 errors generated.
+make[1]: *** [objs/parse_specifics.o] Error 1
+make[1]: *** [objs/parse_specifics2.o] Error 1
+In file included from srcs/viewplane.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/lights.o] Error 1
+In file included from srcs/renderer.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error2 errors generated.
+2 errors generated.
+: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+make[1]: *** [objs/viewplane.o] Error 1
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+make[1]: *** [objs/parse_others.o] Error 1
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/renderer.o] Error 1
+2 errors generated.
+make[1]: *** [objs/parse_orsc.o] Error 1
+In file included from srcs/parse_process.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/rt.o] Error 1
+make[1]: *** [objs/parse_settings.o] Error 1
+In file included from srcs/parse_tools.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/vectors.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+make[1]: *** [objs/parse_tools.o] Error 1
+2 errors generated.
+In file included from srcs/tracer.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+make[1]: *** [objs/populate_world.o] Error 1
+In file included from srcs/rotations.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/vectors2.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+In file included from srcs/translations.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+make[1]: *** [objs/rotations.o] Error 1
+2 errors generated.
+make[1]: *** [objs/translations.o] Error 1
+In file included from srcs/events.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+2 errors generated.
+make[1]: *** [objs/parse_process.o] Error 1
+In file included from srcs/paint_fast.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/process.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/world_maker.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+2 errors generated.
+make[1]: *** [objs/vectors.o] Error 1
+make[1]: *** [objs/process.o] Error 1
+2 errors generated.
+make[1]: *** [objs/tracer.o] Error 1
+In file included from srcs/compute_matrix.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/ft_export.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/loop.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+In file included from srcs/world_init.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+make[1]: *** [objs/events.o] Error 1
+2 errors generated.
+In file included from srcs/ft_new_image.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+make[1]: *** [objs/loop.o] Error 1
+In file included from srcs/paint_canvas.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/paint_fast.o] Error 1
+2 errors generated.
+make[1]: *** [objs/paint_canvas.o] Error 1
+2 errors generated.
+2 errors generated.
+make[1]: *** [objs/vectors2.o] Error 1
+make[1]: *** [objs/world_maker.o] Error 1
+In file included from srcs/lights_toon.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/ft_export_bmp.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/ft_export_ppm.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+In file included from srcs/parse_cut.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2:includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/compute_matrix.o] Error 1
+2 errors generated.
+2 errors generated.
+make[1]: *** [objs/ft_export.o] Error 1
+make[1]: *** [objs/world_init.o] Error 1
+In file included from srcs/ft_get_name.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/ft_new_image.o] Error 1
+In file included from srcs/filters.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/lights_toon.o] Error 1
+In file included from srcs/perturbations.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/ft_export_bmp.o] Error 1
+In file included from srcs/intcolors.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/cuts.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+ error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/intcolors.o] Error 1
+2 errors generated.
+2 errors generated.
+make[1]: *** [objs/ft_export_ppm.o] Error 1
+In file included from srcs/convolute.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+make[1]: *** [objs/parse_cut.o] Error 1
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/ft_get_name.o] Error 1
+In file included from srcs/refraction.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+2 errors generated.
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+make[1]: *** [objs/convolute.o] Error 1
+2 errors generated.
+2 errors generated.
+make[1]: *** [objs/filters.o] Error 1
+make[1]: *** [objs/refraction.o] Error 1
+In file included from srcs/ft_process_parse_obj.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/inequality.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+In file included from srcs/triangle.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+In file included from srcs/parse_triangle.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+make[1]: *** [objs/cuts.o] Error 1
+In file included from srcs/ft_parse_obj_faces.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+In file included from srcs/quartics_intersect.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+In file included from srcs/ft_parse_obj_vertices.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+2 errors generated.
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+make[1]: *** [objs/parse_triangle.o] Error 1
+2 errors generated.
+srcs/ft_parse_obj_vertices.c:106:2: error: use of undeclared identifier 't_vec3'
+        t_vec3 *vertex;
+        ^
+srcs/ft_parse_obj_vertices.c:106:10: error: use of undeclared identifier 'vertex'
+        t_vec3 *vertex;
+                ^
+make[1]: *** [objs/perturbations.o] Error 1
+srcs/ft_process_parse_obj.c:72:2: error: use of undeclared identifier 't_ivec3'
+        t_ivec3 *ivec;
+        ^
+srcs/ft_process_parse_obj.c:72:11: error: use of undeclared identifier 'ivec'
+        t_ivec3 *ivec;
+                 ^
+srcs/ft_process_parse_obj.c:75:3: error: use of undeclared identifier 'ivec'
+                ivec = (t_ivec3 *)(ptr->content);
+                ^
+srcs/ft_process_parse_obj.c:75:20: error: expected expression
+                ivec = (t_ivec3 *)(ptr->content);
+                                 ^
+srcs/ft_process_parse_obj.c:75:11: error: use of undeclared identifier 't_ivec3'
+                ivec = (t_ivec3 *)(ptr->content);
+                        ^
+srcs/ft_process_parse_obj.c:76:3: error: implicit declaration of function 'ft_print_ivec3' is invalid in C99 [-Werror,-Wimplicit-function-declaration]
+                ft_print_ivec3(*ivec);
+                ^
+2 errors generated.
+2 errors generated.
+srcs/ft_process_parse_obj.c:76:3: note: did you mean 'ft_print_line'?
+libft/includes/libft.h:123:9: note: 'ft_print_line' declared here
+void                            ft_print_line(char *str);
+                                ^
+srcs/ft_process_parse_obj.c:76:19: error: use of undeclared identifier 'ivec'
+                ft_print_ivec3(*ivec);
+                                ^
+make[1]: *** [objs/triangle.o] Error 1
+srcs/ft_process_parse_obj.c:87:2: error: use of undeclared identifier 't_vec3'
+        t_vec3 *vec;
+        ^
+srcs/ft_process_parse_obj.c:87:10: error: use of undeclared identifier 'vec'
+        t_vec3 *vec;
+                ^
+srcs/ft_process_parse_obj.cmake[1]: *** [objs/inequality.o] Error 1
+:90:3: error: use of undeclared identifier 'vec'
+                vec = (t_vec3 *)(ptr->content);
+                ^
+srcs/ft_process_parse_obj.c:90:18: error: expected expression
+                vec = (t_vec3 *)(ptr->content);
+                               ^
+srcs/ft_process_parse_obj.c:90:10: error: use of undeclared identifier 't_vec3'
+                vec = (t_vec3 *)(ptr->content);
+                       ^
+srcs/ft_process_parse_obj.c:91:3: error: implicit declaration of function 'ft_print_vec3' is invalid in C99 [-Werror,-Wimplicit-function-declaration]
+                ft_print_vec3(*vec);
+                ^
+srcs/ft_parse_obj_faces.c:51:9: error: expected ';' after expression
+        t_ivec3 face;
+               ^
+               ;
+srcs/ft_parse_obj_faces.c:51:2: error: use of undeclared identifier 't_ivec3'
+        t_ivec3 face;
+        ^
+srcs/ft_parse_obj_vertices.c:108:2: error: use of undeclared identifier 'vertex'
+        vertex = (t_vec3 *)(malloc(sizeof(t_vec3)));
+        ^
+srcs/ft_parse_obj_faces.c:51:10: error: use of undeclared identifier 'face'
+        t_ivec3 face;
+                ^
+srcs/ft_parse_obj_faces.c:54:27: error: use of undeclared identifier 'face'
+        ft_obj_add_index(i, s, &(face.x));
+                                 ^
+srcs/ft_parse_obj_vertices.c:108:20: error: expected expression
+        vertex = (t_vec3 *)(malloc(sizeof(t_vec3)));
+                          ^
+srcs/ft_parse_obj_vertices.c:108:12: error: use of undeclared identifier 't_vec3'
+        vertex = (t_vec3 *)(malloc(sizeof(t_vec3)));
+                  ^
+srcs/ft_parse_obj_faces.c:55:27: error: use of undeclared identifier 'face'
+        ft_obj_add_index(i, s, &(face.y));
+                                 ^
+srcs/ft_parse_obj_faces.c:56:27: error: use of undeclared identifier 'face'
+2 errors generated.
+make[1]: *** [objs/quartics_intersect.o] Error 1
+srcs/ft_parse_obj_vertices.c:108:36: error: use of undeclared identifier 't_vec3'
+        vertex = (t_vec3 *)(malloc(sizeof(t_vec3)));
+                                          ^
+srcs/ft_parse_obj_vertices.c:109:27: error: use of undeclared identifier 'vertex'
+        ft_obj_add_coord(i, s, &(vertex->x));
+                                 ^
+srcs/ft_parse_obj_vertices.c:110:27: error: use of undeclared identifier 'vertex'
+        ft_obj_add_coord(i, s, &(vertex->y));
+                                 ^
+srcs/ft_parse_obj_vertices.c:111:27: error: use of undeclared identifier 'vertex'
+        ft_obj_add_coord(i, s, &(vertex->z));
+                                 ^
+srcs/ft_parse_obj_vertices.c:114:71: error: use of undeclared identifier 't_vec3'
+        ft_lstpushback(&(parser->vertices_tmp), ft_lstnew_ptr(vertex, sizeof(t_vec3)));
+                                                                             ^
+srcs/ft_parse_obj_vertices.c:114:56: error: use of undeclared identifier 'vertex'
+        ft_lstpushback(&(parser->vertices_tmp), ft_lstnew_ptr(vertex, sizeof(t_vec3)));
+                                                              ^
+13 errors generated.
+        ft_obj_add_index(i, s, &(face.z));
+                                 ^
+srcs/ft_parse_obj_faces.c:58:63: error: use of undeclared identifier 't_ivec3'
+        ft_lstpushback(&(parser->faces_tmp), ft_lstnew(&face, sizeof(t_ivec3)));
+                                                                     ^
+srcs/ft_parse_obj_faces.c:58:50: error: use of undeclared identifier 'face'
+        ft_lstpushback(&(parser->faces_tmp), ft_lstnew(&face, sizeof(t_ivec3)));
+                                                        ^
+srcs/ft_parse_obj_faces.c:60:10: error: use of undeclared identifier 'face'
+        z_tmp = face.z;
+                ^
+make[1]: *** [objs/ft_parse_obj_vertices.o] Error 1
+srcs/ft_parse_obj_faces.c:61:41: error: use of undeclared identifier 'face'
+        while (ft_obj_add_index_fourth(i, s, &(face.z)))
+                                               ^
+srcs/ft_parse_obj_faces.c:63:3: error: use of undeclared identifier 'face'
+                face.y = z_tmp;
+                ^
+srcs/ft_parse_obj_faces.c:64:64: error: use of undeclared identifier 't_ivec3'
+                ft_lstpushback(&(parser->faces_tmp), ft_lstnew(&face, sizeof(t_ivec3)));
+                                                                             ^
+srcs/ft_parse_obj_faces.c:64:51: error: use of undeclared identifier 'face'
+                ft_lstpushback(&(parser->faces_tmp), ft_lstnew(&face, sizeof(t_ivec3)));
+                                                                ^
+srcs/ft_parse_obj_faces.c:66:11: error: use of undeclared identifier 'face'
+                z_tmp = face.z;
+                        ^
+16 errors generated.
+make[1]: *** [objs/ft_parse_obj_faces.o] Error 1
+srcs/ft_process_parse_obj.c:91:3: note: did you mean 'ft_print_ivec3'?
+srcs/ft_process_parse_obj.c:76:3: note: 'ft_print_ivec3' declared here
+                ft_print_ivec3(*ivec);
+                ^
+srcs/ft_process_parse_obj.c:91:18: error: use of undeclared identifier 'vec'
+                ft_print_vec3(*vec);
+                               ^
+srcs/ft_process_parse_obj.c:102:30: error: expected expression
+        parser->vertices = (t_vec3 *)(malloc(sizeof(t_vec3) * parser->nb_vertices + 1));
+                                    ^
+srcs/ft_process_parse_obj.c:102:22: error: use of undeclared identifier 't_vec3'
+        parser->vertices = (t_vec3 *)(malloc(sizeof(t_vec3) * parser->nb_vertices + 1));
+                            ^
+srcs/ft_process_parse_obj.c:102:46: error: use of undeclared identifier 't_vec3'
+        parser->vertices = (t_vec3 *)(malloc(sizeof(t_vec3) * parser->nb_vertices + 1));
+                                                    ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+In file included from srcs/debug.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+make[1]: *** [objs/ft_process_parse_obj.o] Error 1
+In file included from srcs/parse_read_tools.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/debug.o] Error 1
+2 errors generated.
+In file included from srcs/parse_obj.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+make[1]: *** [objs/parse_read_tools.o] Error 1
+srcs/parse_obj.c:15:29: error: unused parameter 'source' [-Werror,-Wunused-parameter]
+void    ft_add_triangles(char *source, t_world *world)
+                               ^
+srcs/parse_obj.c:15:46: error: unused parameter 'world' [-Werror,-Wunused-parameter]
+void    ft_add_triangles(char *source, t_world *world)
+                                                ^
+4 errors generated.
+make[1]: *** [objs/parse_obj.o] Error 1
+In file included from srcs/shadows.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/shadows.o] Error 1
+In file included from srcs/errors.c:13:
+In file included from includes/rt.h:44:
+includes/obj.h:42:2: error: unknown type name 't_vec3'
+        t_vec3                  *vertices;
+        ^
+includes/obj.h:43:2: error: unknown type name 't_ivec3'
+        t_ivec3                 *faces;
+        ^
+2 errors generated.
+make[1]: *** [objs/errors.o] Error 1
+make: *** [opti] Error 2

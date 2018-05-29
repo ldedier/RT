@@ -1,0 +1,39 @@
+<scene>
+	<camera>
+		<positionXYZ>0 0 0</positionXYZ>
+		<rotationXYZ>0 0 0</rotationXYZ>
+	</camera>
+	<objlist>
+		<cobject>
+			<positionXYZ>0 0 5</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<color> 0xFF0000 </color>
+			<object name="sphere">
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>0 0 -5</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<color> 0xFF0000 </color>
+			<object name="sphere">
+			</object>
+		</cobject>
+	<cobject>
+			<positionXYZ>0 0 -5</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<color> 0xFF0000 </color>
+			<object name="plane">
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+		<light type="point">
+			<color>0xFFFFFF</color>
+			<positionXYZ>0 0 0</positionXYZ>
+			<intensity>1</intensity>
+		</light>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.3</intensity>
+	</ambientlight>
+</scene>
