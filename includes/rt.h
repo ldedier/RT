@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/29 16:31:35 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/29 18:52:53 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,7 +328,10 @@ typedef union			s_object_union
 	t_ellipsoid			ellipsoid;
 	t_torus				torus;
 	t_goursat			goursat;
+	t_hyperboloid		hyperboloid;
+	t_paraboloid		paraboloid;
 	t_triangle			triangle;
+	t_box				box;
 }						t_object_union;
 
 typedef struct			s_object
@@ -363,7 +366,7 @@ struct			s_hit
 	t_point3d			bounce;
 	t_point3d			pertbounce;
 	int					enter;
-	t_color				col;
+//	t_color				col;
 	double				t;
 };
 
@@ -749,6 +752,11 @@ int						intersect_roman(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
 int						intersect_triangle(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
+int						intersect_hyperboloid(t_line line, t_object obj,
+		double sols[MAX_DEGREE]);
+int						intersect_paraboloid(t_line line, t_object obj,
+		double sols[MAX_DEGREE]);
+
 /*
  **normals
  */
@@ -762,6 +770,8 @@ t_point3d				normal_roman(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_piriform(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_lemniscate(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_torus(t_object sphere, t_point3d t, t_line l);
+t_point3d				normal_paraboloid(t_object sphere, t_point3d t, t_line l);
+t_point3d				normal_hyperboloid(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_triangle(t_object object, t_point3d p, t_line l);
 
 
@@ -780,13 +790,13 @@ void					ft_init_aux(t_auxquart_init *g, t_line line);
  */
 int						ft_evaluate_cut(t_cut cut, t_point3d pos);
 double					get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
-		double min, t_line transformed, t_objlist *objlist, int neg, t_color *othercol);
+		double min, t_line transformed, t_objlist *objlist, int neg, t_object *other);
 
 /*
 **negatives
 */
 int						is_inside_other(t_hit h, t_objlist *objlist, int neg,
-		t_color *c);
+		t_object *other);
 void					intersect_positive(t_objlist *objlist, t_object obj,
 		t_line line, t_hit *hit);
 void					intersect_negative(t_objlist *objlist, t_object obj,

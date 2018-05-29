@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 01:01:52 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/26 07:07:19 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/28 04:50:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,42 @@ int					intersect_sphere(t_line line, t_object obj, double sols[MAX_DEGREE])
 		dotprod(line.o, line.v),
 			.c = dotprod(line.o, line.o) - (obj.object_union.sphere.radius *
 					obj.object_union.sphere.radius)};
+	radic = (equa.b * equa.b) - (4 * equa.a * equa.c);
+	if (radic < 0.0)
+		return (0);
+	sols[0] = (-equa.b + sqrt(radic)) / (2.0 * equa.a);
+	sols[1] = (-equa.b - sqrt(radic)) / (2.0 * equa.a);
+	return (2);
+}
+
+int					intersect_paraboloid(t_line line, t_object obj, double sols[MAX_DEGREE])
+{
+	t_quadratic	equa;
+	double		radic;
+	(void)obj;
+	equa = (t_quadratic){.a = line.v.y * line.v.y + line.v.z * line.v.z,
+	   	.b = 2 * (line.o.y * line.v.y + line.v.z * line.o.z) - line.v.x,
+			.c = line.o.y * line.o.y + line.o.z * line.o.z - line.o.x};
+	radic = (equa.b * equa.b) - (4 * equa.a * equa.c);
+	if (radic < 0.0)
+		return (0);
+	sols[0] = (-equa.b + sqrt(radic)) / (2.0 * equa.a);
+	sols[1] = (-equa.b - sqrt(radic)) / (2.0 * equa.a);
+	return (2);
+}
+int					intersect_hyperboloid(t_line line, t_object obj, double sols[MAX_DEGREE])
+{
+	t_quadratic	equa;
+	double		radic;
+	double rad;
+
+	rad = obj.object_union.hyperboloid.radius;
+	(void)obj;
+	equa = (t_quadratic){.a = line.v.y * line.v.y + line.v.z * line.v.z -
+		line.v.x * line.v.x,
+	   	.b = 2 * (line.o.y * line.v.y + line.o.z * line.v.z - line.o.x * line.v.x),
+			.c = line.o.y * line.o.y + line.o.z * line.o.z - 
+				line.o.x * line.o.x - rad * rad};
 	radic = (equa.b * equa.b) - (4 * equa.a * equa.c);
 	if (radic < 0.0)
 		return (0);

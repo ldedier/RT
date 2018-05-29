@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/26 11:46:00 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/29 18:52:50 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_color			illuminate_toon(t_world *world, t_hit *hit, t_line **srays,
 
 	illu = getillum(world, hit, srays);
 	lightcol = interpole_color(illu.in, BLACK_COLOR, interpole_color(
-				getwhiteratio(illu.color, 0.3, 1), illu.color, hit->col));
+				getwhiteratio(illu.color, 0.3, 1), illu.color, hit->obj.c));
 	if (fast)
 		return (lightcol);
 	shine = getshine(world, hit, srays, lightcol);

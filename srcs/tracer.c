@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/29 16:31:41 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/29 18:52:49 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int					izokay_t(t_hit newhit, double sol, t_line line)
 }
 
 double				get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
-		double min, t_line transformed, t_objlist *objlist, int neg, t_color *othercol)
+		double min, t_line transformed, t_objlist *objlist, int neg, t_object *other)
 {
 	double res;
 	int i;
@@ -110,8 +110,8 @@ double				get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
 			newhit.point = ft_point3d_add(transformed.o, ft_point3d_scalar(
 						transformed.v, sols.roots[i]));
 			if (izokay(newhit, sols.roots[i], transformed) &&
-					((neg ? !is_inside_other(newhit, objlist, neg, othercol) :
-					  is_inside_other(newhit, objlist, neg, othercol))))
+					((neg ? !is_inside_other(newhit, objlist, neg, other) :
+					  is_inside_other(newhit, objlist, neg, other))))
 				res = sols.roots[i];
 		}
 		i++;
@@ -177,6 +177,7 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 						newhit.point = ft_point3d_add(line.o,ft_point3d_scalar(line.v, newhit.t));
 						newhit.normal = normal_triangle(obj, hit->point, line);
 						*hit = newhit;
+						//hit->col = newhit.obj.c;
 						if (ft_dot_product(hit->normal, line.v) > 0)
 						{
 							hit->enter = 0;
