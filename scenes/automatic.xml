@@ -1,18 +1,18 @@
 <scene>
 	<camera>
-		<positionXYZ>0 -4 -15</positionXYZ>
+		<positionXYZ>0 -70 -100</positionXYZ>
 		<rotationXYZ>0 0 0</rotationXYZ>
 	</camera>
 	<objlist>
-			<cobject type="adn">
+		<cobject type="sphere_torus">
 			<color>0xFF0000</color>
-			<length>2</length>
-		</cobject>
-	<cobject type="sphere_torus">
-			<color>0xFF0000</color>
-			<nb_spheres>10</nb_spheres>
+			<nb_spheres>0</nb_spheres>
 			<spheres_radius>2</spheres_radius>
 			<radius>20</radius>
+		</cobject>
+		<cobject type="adn">
+			<color>0xFF0000</color>
+			<length>70</length>
 		</cobject>
 	</objlist>
 	<lightlist>

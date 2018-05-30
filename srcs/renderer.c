@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/29 18:45:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/29 22:55:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,6 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 	}
 	return (freeret(world->fog.color, &hit, NULL));
 }
-
-//ray.v, EPSILON), refraction(hit->pert, ray.v, 1,
-//hit->obj.refract)),
 
 t_color				render_pixel(t_world *world, t_pixel pix, int fast)
 {
