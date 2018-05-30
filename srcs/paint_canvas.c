@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 11:58:36 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/18 09:29:06 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/30 02:58:57 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@ void	fill_canvas(t_world *world)
 	SDL_RenderCopy(world->canvas->renderer, world->canvas->texture, NULL,
 			&(world->canvas->screen));
 	SDL_DestroyTexture(world->canvas->texture);
+
+	SDL_FillRect(world->canvas->menu_surface, NULL, 0xF8F8FF);
+	if (!(world->canvas->menu_texture = SDL_CreateTextureFromSurface(world->
+					canvas->renderer, world->canvas->menu_surface)))
+		exit(1);
+	SDL_RenderCopy(world->canvas->renderer, world->canvas->menu_texture, NULL,
+			&(world->canvas->menu_rect));
+	SDL_DestroyTexture(world->canvas->menu_texture);
+	
 	SDL_RenderPresent(world->canvas->renderer);
 }
 

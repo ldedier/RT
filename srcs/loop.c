@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/29 22:08:58 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/05/30 02:51:03 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		get_input(t_world *e, char *filename)
 
 void	ft_loop(t_world *e, char *filename)
 {
-	SDL_SetRelativeMouseMode(SDL_TRUE);
+	//SDL_SetRelativeMouseMode(SDL_TRUE);
 	paint_threaded_fast(e);
 	while (!get_input(e, filename))
 		;

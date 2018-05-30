@@ -1,0 +1,81 @@
+colors.c:	pix = (int *)canvas->surface->pixels;
+colors.c:	pix[p.x + p.y * canvas->win_size.x] = c.col;
+convolute.c:					 conv.canvas->win_size.x)]);
+convolute.c:	conv.aux[conv.pix.x + conv.pix.y * conv.canvas->win_size.x] =
+convolute.c:	conv.img = (int *)canvas->surface->pixels;
+convolute.c:	conv.aux = ft_memalloc(sizeof(int) * canvas->win_size.x * canvas->win_size.y);
+convolute.c:	while (++conv.pix.x < canvas->win_size.x - filter_size / 2)
+convolute.c:		while (++conv.pix.y < canvas->win_size.y - filter_size / 2)
+convolute.c:			canvas->win_size.x * canvas->win_size.y);
+filters.c:	while (++i < canvas->win_size.x)
+filters.c:		while (++j < canvas->win_size.y)
+filters.c:			((int *)canvas->surface->pixels)[i + j * canvas->win_size.x] =
+filters.c:									((int *)canvas->surface->pixels)[i +
+filters.c:									j * canvas->win_size.x]))), 1).col;
+filters.c:	tmp = ft_memalloc(sizeof(int) * canvas->win_size.x * canvas->win_size.y);
+filters.c:	tmp = ft_memcpy(tmp, (int *)canvas->surface->pixels,
+filters.c:			sizeof(int) * canvas->win_size.x * canvas->win_size.y);
+filters.c:	while (++i < canvas->win_size.x)
+filters.c:		while (++j < canvas->win_size.y)
+filters.c:			col = get_color(((int *)canvas->surface->pixels)[i +
+filters.c:					j * canvas->win_size.x]);
+filters.c:				((int *)canvas->surface->pixels)[i + j * canvas->win_size.x] =
+filters.c:				((int *)canvas->surface->pixels)[i + j * canvas->win_size.x] =
+filters.c:					tmp[i + j * canvas->win_size.x];
+ft_export.c:	return ft_new_image(world->canvas->win_size.x,
+ft_export.c:			world->canvas->win_size.y, world->canvas->surface->pixels);
+input.c://	mlx_destroy_image(world->canvas->mlx, world->canvas->next_img);
+input.c://	mlx_destroy_window(world->canvas->mlx, world->canvas->win);
+input.c://	free(world->canvas->mlx);
+paint_canvas.c:	if (!(world->canvas->texture = SDL_CreateTextureFromSurface(world->
+paint_canvas.c:					canvas->renderer, world->canvas->surface)))
+paint_canvas.c:	SDL_RenderCopy(world->canvas->renderer, world->canvas->texture, NULL,
+paint_canvas.c:			&(world->canvas->screen));
+paint_canvas.c:	SDL_DestroyTexture(world->canvas->texture);
+paint_canvas.c:	SDL_RenderPresent(world->canvas->renderer);
+paint_canvas.c:	SDL_FillRect(world->canvas->surface, &(world->canvas->pb_rect), 0x0);
+paint_canvas.c:	world->canvas->pb_rect.w = (int)((float)world->progress /
+paint_canvas.c:			world->canvas->npixels * world->canvas->win_size.x);
+paint_canvas.c:	SDL_FillRect(world->canvas->surface, &(world->canvas->pb_rect), 0x33DD33);
+paint_fast.c:	psize.x = world->canvas->win_size.x / FAST_HRES;
+paint_fast.c:	psize.y = world->canvas->win_size.y / FAST_VRES;
+paint_threaded.c:	while (world->cancel_render == 0 && p.x < world->canvas->win_size.x)
+paint_threaded.c:				p.y < p_y + world->canvas->win_size.y / NTHREADS)
+paint_threaded.c:		p_y += world->canvas->win_size.y / NTHREADS;
+paint_threaded.c:	while (world->cancel_render == 0 && p.y < world->canvas->win_size.y)
+paint_threaded.c:		while (world->cancel_render == 0 &&  p.x < world->canvas->win_size.x)
+parse_settings.c:	read_int(&line, &(world->canvas->win_size.x));
+parse_settings.c:	read_int(&line, &(world->canvas->win_size.y));
+parse_settings.c:	read_int(&line, &(world->canvas->fast_win_size.x));
+parse_settings.c:	read_int(&line, &(world->canvas->fast_win_size.y));
+viewplane.c:	scale.x = -world->canvas->halved_win_size.x * cam->pd + cam->pd * pix.x + cam->pd / 2;;
+viewplane.c:	scale.y = world->canvas->halved_win_size.y * cam->pd - cam->pd * pix.y + cam->pd / 2;
+world_init.c:	world->canvas->npixels = world->canvas->win_size.x *
+world_init.c:		world->canvas->win_size.y;
+world_init.c:	canvas->win_size.x = HRES;
+world_init.c:	canvas->win_size.y = VRES;
+world_init.c:	canvas->fast_win_size.x = FAST_HRES;
+world_init.c:	canvas->fast_win_size.x = FAST_VRES;
+world_init.c:	canvas->halved_win_size.x = HRES / 2;
+world_init.c:	canvas->halved_win_size.y = VRES / 2;
+world_init.c:	canvas->ratio = HRES / VRES;
+world_init.c:	canvas->pb_rect.x = 0;
+world_init.c:	canvas->pb_rect.y = canvas->win_size.y;
+world_init.c:	canvas->pb_rect.w = 0;
+world_init.c:	canvas->pb_rect.h = PROGRESS_BAR_HEIGHT;
+world_init.c:	canvas->screen.x = 0;
+world_init.c:	canvas->screen.y = 0;
+world_init.c:	canvas->screen.w = canvas->win_size.x;
+world_init.c:	canvas->screen.h = canvas->win_size.y + PROGRESS_BAR_HEIGHT;
+world_init.c:	if (!(canvas->window = SDL_CreateWindow("rt",
+world_init.c:		canvas->screen.x, canvas->screen.y,
+world_init.c:		canvas->screen.w, canvas->screen.h, 0)))
+world_init.c:	if(!(canvas->renderer = SDL_CreateRenderer(canvas->window, -1, 0)))
+world_init.c:	if (SDL_RenderSetLogicalSize(canvas->renderer,
+world_init.c:				canvas->screen.w, canvas->screen.h) < 0)
+world_init.c:	if (SDL_SetRenderDrawColor(canvas->renderer, 0, 0, 0, 255) < 0)
+world_init.c:	if (!(canvas->surface = SDL_CreateRGBSurface(0,
+world_init.c:			canvas->screen.w, canvas->screen.h, 32, 0, 0, 0, 0)))
+world_maker.c://	mlx_destroy_image(canvas->mlx, canvas->next_img);
+world_maker.c://	mlx_destroy_window(canvas->mlx, canvas->win);
+world_maker.c://	free(canvas->mlx);

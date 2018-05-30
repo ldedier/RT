@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/29 21:53:59 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/05/30 02:59:08 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ t_canvas		*new_canvas(void)
 	canvas->pb_rect.y = canvas->win_size.y;
 	canvas->pb_rect.w = 0;
 	canvas->pb_rect.h = PROGRESS_BAR_HEIGHT;
+	canvas->menu_rect.x = canvas->win_size.x;
+	canvas->menu_rect.y = 0;
+	canvas->menu_rect.w = MENU_WIDTH;
+	canvas->menu_rect.h = canvas->win_size.y + PROGRESS_BAR_HEIGHT;
 	if (!(ft_init_all(canvas)))
 		return (NULL);
 	return (canvas);
@@ -93,17 +97,20 @@ int			ft_init_all(t_canvas *canvas)
 	canvas->screen.h = canvas->win_size.y + PROGRESS_BAR_HEIGHT;
 	if (!(canvas->window = SDL_CreateWindow("rt",
 		canvas->screen.x, canvas->screen.y,
-		canvas->screen.w, canvas->screen.h, 0)))
+		canvas->screen.w + MENU_WIDTH, canvas->screen.h, 0)))
 			return (0);
 	if(!(canvas->renderer = SDL_CreateRenderer(canvas->window, -1, 0)))
 		return (0);
 	if (SDL_RenderSetLogicalSize(canvas->renderer,
-				canvas->screen.w, canvas->screen.h) < 0)
+				canvas->screen.w + MENU_WIDTH, canvas->screen.h) < 0)
 		return (0);
 	if (SDL_SetRenderDrawColor(canvas->renderer, 0, 0, 0, 255) < 0)
 		return (0);
 	if (!(canvas->surface = SDL_CreateRGBSurface(0,
 			canvas->screen.w, canvas->screen.h, 32, 0, 0, 0, 0)))
+		return (0);
+	if (!(canvas->menu_surface = SDL_CreateRGBSurface(0,
+			canvas->menu_rect.w, canvas->menu_rect.h, 32, 0, 0, 0, 0)))
 		return (0);
 	return (1);
 }

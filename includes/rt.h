@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/29 22:08:03 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/05/30 02:59:13 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,12 @@
 # define POP 1
 # define MAX_DEGREE 4
 
-# define FAST_HRES 160
-# define FAST_VRES 120
-# define HRES 1600
-# define VRES 1200
-# define PROGRESS_BAR_HEIGHT 20
+# define FAST_HRES 130
+# define FAST_VRES 100
+# define HRES 1300
+# define VRES 1000
+# define MENU_WIDTH 500
+# define PROGRESS_BAR_HEIGHT 16
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
@@ -136,8 +137,11 @@ typedef struct			s_canvas
 	SDL_Renderer		*renderer;
 	SDL_Window			*window;
 	SDL_Texture			*texture;
+	SDL_Texture			*menu_texture;
 	SDL_Surface			*surface;
+	SDL_Surface			*menu_surface;
 	SDL_Rect			pb_rect;
+	SDL_Rect			menu_rect;
 	SDL_Rect			screen;
 	t_pixel				win_size;
 	t_pixel				fast_win_size;
