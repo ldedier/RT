@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/22 09:44:28 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/30 19:14:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void			set_defaults(t_world *world)
 	world->shader = 1;
 	world->nlights = 0;
 	world->cobjlist = NULL;
+	world->defcobjlist = NULL;
 	world->ambient.in = AMBIENT_LIGHT;
 	world->ambient.color = AMBIENT_LIGHT_COL;
 	world->fog.in = 0.0;

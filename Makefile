@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/29 16:24:50 by ldedier          ###   ########.fr        #
+#    Updated: 2018/05/30 18:46:50 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,7 +111,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 map_file.c\
 				 tracer2.c\
 				 insides.c\
-				 automatic.c
+				 automatic.c\
+				 defining.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 

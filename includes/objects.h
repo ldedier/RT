@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 21:04:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/29 21:20:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/30 18:22:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct		s_sphere_torus
 typedef struct		s_adn
 {
 	int				length;
-	int				radius;
+	double			radius;
 }					t_adn;
 
 #endif

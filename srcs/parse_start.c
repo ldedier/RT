@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/29 17:56:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/30 22:43:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	ft_process_parsing_object_start(t_parser *parser, t_world *world)
 
 	if (parser->parse_enum != e_parse_cobject 
 			|| !world->cobjlist->cobject->regular)
-
 	{
 		ft_dprintf
 			(2, "line %d: can only declare objects inside regular cobjects\n",
@@ -60,6 +59,62 @@ void	ft_process_parsing_cobject_start(t_parser *parser, t_world *world)
 		}
 	}
 	add_cobj(&(world->cobjlist), cobject);
+	parser->parse_enum = e_parse_cobject;
+}
+
+void	ft_process_parsing_define_start(t_parser *parser, t_world *world)
+{
+	t_cobject *cobject;
+
+	if (!(cobject = ft_new_cobject()))
+		ft_error("could not malloc cobject");
+	if (parser->attribute != NULL)
+	{
+		if (already_exists_defcobj(parser->attribute, world->defcobjlist))
+		{
+			ft_dprintf(2, "line %d: the define cobject \"%s\" already exist\n",
+			   	parser->nb_lines, parser->attribute);
+			exit(1);
+		}
+		else
+			cobject->name = ft_strdup(parser->attribute);
+	}
+	else
+	{
+		ft_dprintf(2,
+		"line %d: defining a cobject need a corresponding name\n",
+			parser->nb_lines);
+		exit(1);
+	}
+	cobject->defining = 1;
+	add_cobj(&(world->cobjlist), cobject);
+	parser->parse_enum = e_parse_cobject;
+}
+
+void	ft_process_parsing_def_cobject_start(t_parser *parser, t_world *world)
+{
+	if (parser->attribute != NULL)
+	{
+		if (!already_exists_defcobj(parser->attribute, world->defcobjlist))
+		{
+			ft_dprintf(2, "line %d: the define cobject \"%s\" does not exist\n",
+			   	parser->nb_lines, parser->attribute);
+			exit(1);
+		}
+		else
+		{
+			add_cobj_cpy(&(world->cobjlist), 
+				get_defcobject(parser->attribute, world->defcobjlist));
+			world->selected_cobject = world->cobjlist->cobject;
+		}
+	}
+	else
+	{
+		ft_dprintf(2,
+		"line %d: defined cobject need a corresponding name\n",
+			parser->nb_lines);
+		exit(1);
+	}
 	parser->parse_enum = e_parse_cobject;
 }
 

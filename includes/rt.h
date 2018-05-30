@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/29 17:33:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/30 21:01:09 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 //DONE	mr bean
 //TODO	(?)start rendering detailed scene when not moving, cancel if move again
 //DONE separate normals and intersections calculating
+
+//SEGFAULT IF MOVING SELECTED WITH NO ITEMS
 
 #ifndef RT_H
 # define RT_H
@@ -416,6 +418,8 @@ typedef struct			s_cobject
 	t_cobject_union		cobject_union;
 	int					negative;
 	int					regular;
+	char				*name;
+	int					defining;
 }						t_cobject;
 
 typedef struct			s_cobjlist
@@ -471,6 +475,7 @@ typedef struct			s_world
 	int					thr_state[NTHREADS];
 	int					filters[e_nfilters];
 	t_cobjlist			*cobjlist;
+	t_cobjlist			*defcobjlist;
 	t_cobject			*selected_cobject;
 	t_illum				ambient;
 	t_illum				fog;
@@ -566,6 +571,7 @@ t_object				create_sphere(t_point3d pos, double red, t_color color);
 void					add_obj(t_objlist **lst, t_object *object);
 void					add_obj_cpy(t_objlist **lst, t_object *object);
 void					add_cobj(t_cobjlist **lst, t_cobject *cobject);
+void					add_cobj_cpy(t_cobjlist **lst, t_cobject *cobject);
 void					del_clst(t_cobjlist **lst);
 void					del_lst(t_objlist **lst);
 t_object				*ft_new_object(t_cobject cobject);
@@ -624,6 +630,10 @@ void					ft_parse_small_radius(t_parser *p, t_world *w, char *l);
 void					ft_process_parsing_object_start(t_parser *p,
 		t_world *w);
 void					ft_process_parsing_cobject_start(t_parser *p,
+		t_world *w);
+void					ft_process_parsing_def_cobject_start(t_parser *p,
+		t_world *w);
+void					ft_process_parsing_define_start(t_parser *p,
 		t_world *w);
 void					ft_process_parsing_scale(t_parser *p, t_world *w,
 		char *l);
@@ -836,21 +846,30 @@ t_color					pert_color(t_hit *hit);
 
 
 /*
- ** automatics
- */
+** automatics
+*/
 
 void					ft_process_automatic(t_parser *parser, t_world *world);
 
 /*
- **translations
- */
+** defining
+*/
+
+void					ft_process_switch_list_cobject(t_cobjlist ** cobjlist, 
+		t_cobjlist ** defcobjlist);
+int						already_exists_defcobj(char *name, t_cobjlist *cobjlst);
+t_cobject				*get_defcobject(char *name, t_cobjlist *cobjlst);
+
+/*
+**translations
+*/
 t_point3d				translate_vec(t_point3d p, t_point3d v, double scale);
 void					translate(t_object *obj, t_point3d v);
 t_point3d				scale(t_point3d p, double scale);
 
 /*
- **rotations
- */
+**rotations
+*/
 t_point3d				rotate_axis(t_point3d v, t_point3d axis, double angle);
 t_point3d				rotate_vec(t_point3d v, t_point3d a);
 void					rotate(t_object *obj, t_point3d a);

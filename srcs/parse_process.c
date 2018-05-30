@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/29 17:08:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/30 22:23:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 	else if (!ft_strcmp(parser->tag, "small_radius"))
 		ft_parse_small_radius(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "goursatAB"))
-			ft_parse_goursat_ab(parser, world, line);
+		ft_parse_goursat_ab(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "cut"))
 		ft_process_parsing_cut_start(parser, world);
 	else if (!ft_strcmp(parser->tag, "cutXYZ"))
@@ -101,6 +101,10 @@ void		ft_process_parsing_stack(t_parser *parser, t_world *world,
 		ft_process_parsing_object_start(parser, world);
 	else if (!ft_strcmp(parser->tag, "cobject"))
 		ft_process_parsing_cobject_start(parser, world);
+	else if (!ft_strcmp(parser->tag, "define"))
+		ft_process_parsing_define_start(parser, world);
+	else if (!ft_strcmp(parser->tag, "def_cobject"))
+		ft_process_parsing_def_cobject_start(parser, world);
 	else if (!ft_strcmp(parser->tag, "ambientlight"))
 		parser->parse_enum = e_parse_ambient;
 	else if (!ft_strcmp(parser->tag, "fog"))
@@ -128,9 +132,16 @@ void		ft_process_parsing(t_parser *parser, t_world *world, char *line)
 			parser->parse_enum = e_parse_cobject;
 		else
 		{
-			if (parser->parse_enum == e_parse_cobject && 
-					parser->attribute != NULL)
-				ft_process_automatic(parser, world);
+			if (parser->parse_enum == e_parse_cobject)
+			{
+				if (parser->attribute != NULL && 
+						world->cobjlist->cobject->name == NULL)
+					ft_process_automatic(parser, world);
+				else if (world->cobjlist->cobject->name != NULL && 
+					world->cobjlist->cobject->defining)
+					ft_process_switch_list_cobject(&(world->cobjlist), 
+						&(world->defcobjlist));
+			}
 			parser->parse_enum = e_parse_scene;
 		}
 		if (parser->attribute != NULL)

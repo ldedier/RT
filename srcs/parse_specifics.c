@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/29 17:02:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/30 17:29:43 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,25 +66,25 @@ void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 	else if (!ft_strcmp(parser->attribute, "plane"))
 		set_funcs(object, intersect_plane, inside_plane, normal_plane);
 	else if (!ft_strcmp(parser->attribute, "ellipsoid"))
-			set_funcs(object, intersect_ellipsoid, inside_plane, normal_ellipsoid);
+		set_funcs(object, intersect_ellipsoid, inside_plane, normal_ellipsoid);
 	else if (!ft_strcmp(parser->attribute, "torus"))
-			set_funcs(object, intersect_torus, inside_plane, normal_torus);
+		set_funcs(object, intersect_torus, inside_plane, normal_torus);
 	else if (!ft_strcmp(parser->attribute, "goursat"))
-			set_funcs(object, intersect_goursat, inside_plane, normal_goursat);
+		set_funcs(object, intersect_goursat, inside_plane, normal_goursat);
 	else if (!ft_strcmp(parser->attribute, "lemniscate"))
-			set_funcs(object, intersect_lemniscate, inside_plane, normal_lemniscate);
+		set_funcs(object, intersect_lemniscate, inside_plane, normal_lemniscate);
 	else if (!ft_strcmp(parser->attribute, "roman"))
-			set_funcs(object, intersect_roman, inside_plane, normal_roman);
+		set_funcs(object, intersect_roman, inside_plane, normal_roman);
 	else if (!ft_strcmp(parser->attribute, "piriform"))
-			set_funcs(object, intersect_piriform, inside_plane, normal_piriform);
+		set_funcs(object, intersect_piriform, inside_plane, normal_piriform);
 	else if (!ft_strcmp(parser->attribute, "triangle"))
-			set_funcs(object, intersect_triangle, inside_plane, normal_triangle);
+		set_funcs(object, intersect_triangle, inside_plane, normal_triangle);
 	else if (!ft_strcmp(parser->attribute, "paraboloid"))
-			set_funcs(object, intersect_paraboloid, inside_plane, normal_paraboloid);
+		set_funcs(object, intersect_paraboloid, inside_plane, normal_paraboloid);
 	else if (!ft_strcmp(parser->attribute, "hyperboloid"))
-			set_funcs(object, intersect_hyperboloid, inside_plane, normal_hyperboloid);
+		set_funcs(object, intersect_hyperboloid, inside_plane, normal_hyperboloid);
 	else if (!ft_strcmp(parser->attribute, "mobius"))
-			set_funcs(object, intersect_mobius, inside_plane, normal_mobius);
+		set_funcs(object, intersect_mobius, inside_plane, normal_mobius);
 	else
 	{
 		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines,
@@ -138,6 +138,10 @@ void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
 			!ft_strcmp("sphere_torus", parser->attribute))
 		radius = &(world->cobjlist->cobject->cobject_union\
 				.sphere_torus.radius);
+	else if (parser->parse_enum == e_parse_cobject &&
+			!ft_strcmp("adn", parser->attribute))
+		radius = &(world->cobjlist->cobject->cobject_union\
+				.adn.radius);
 	else
 	{
 		ft_dprintf(2, "line %d: current object does not have radius tag",
