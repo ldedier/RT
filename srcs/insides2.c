@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 21:34:25 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/30 06:58:32 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/30 07:04:32 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	inside_hyperboloid(t_hit h, t_object obj)
 
 int	inside_goursat(t_hit h, t_object obj)
 {
-/*	double		quat_sum;
+/*	
+	double		quat_sum;
 	double		squares_sum;
 	double		solved;
 
@@ -62,7 +63,8 @@ int	inside_goursat(t_hit h, t_object obj)
 	solved = quat_sum + obj.object_union.goursat.a * squares_sum * squares_sum +
 			obj.object_union.goursat.b * squares_sum;
 	if (solved > 0 && solved < 500)
-		return (1);*/
+		return (1);
+*/
 	(void)h;
 	(void)obj;
 	return (0);
