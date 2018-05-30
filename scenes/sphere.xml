@@ -19,8 +19,9 @@
 				<negative>1</negative>
 				<radius>2.3</radius>
 			</object>
-			<object name = "hyperboloid">
+			<object name = "cone">
 				<color>0xff0000</color>
+				<angle>0.21</angle>
 				<perturbation name="ripple"></perturbation>
 			</object>
 		</cobject>

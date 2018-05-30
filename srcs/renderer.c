@@ -73,7 +73,7 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		else
 			reflect_c = get_color(0x000000);
 		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON)
-			refract_c = ray_color(newray(translate_vec(hit->point, 
+			refract_c = ray_color(newray(translate_vec(hit->point,
 					ray.v, EPSILON), refraction(hit, &ray), ray.n),
 					world, bounce + 1, 0);
 		else
