@@ -6,10 +6,11 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/29 17:33:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/30 06:37:06 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//DONE	fix <perturbation>asdf</perturbation> segfault
 //DONE	reflexion
 //DONE	directional light
 //DONE	nimin valors atribut (si reflection es 0 no cal calcular...)
@@ -366,7 +367,7 @@ struct			s_hit
 	t_point3d			bounce;
 	t_point3d			pertbounce;
 	int					enter;
-	t_color				col;
+//	t_color				col;
 	double				t;
 };
 
@@ -793,22 +794,26 @@ void					ft_init_aux(t_auxquart_init *g, t_line line);
  */
 int						ft_evaluate_cut(t_cut cut, t_point3d pos);
 double					get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
-		double min, t_line transformed, t_cobjlist *cobjlist, int neg, t_color *othercol);
+		double min, t_line transformed, t_objlist *objlist, int neg, t_object *other);
 
 /*
  **negatives
  */
-int						is_inside_other(t_hit h, t_cobjlist *cobjlist, int neg,
-		t_color *c);
-void					intersect_positive(t_cobjlist *cobjlist, t_object obj,
+int						is_inside_other(t_hit h, t_objlist *objlist, int neg,
+		t_object *other);
+void					intersect_positive(t_objlist *objlist, t_object obj,
 		t_line line, t_hit *hit);
-void					intersect_negative(t_cobjlist *cobjlist, t_object obj,
+void					intersect_negative(t_objlist *objlist, t_object obj,
 		t_line line, t_hit *hit);
 int						inside_sphere(t_hit h, t_object obj);
 int						inside_cone(t_hit h, t_object obj);
 int						inside_cylinder(t_hit h, t_object obj);
 int						inside_plane(t_hit h, t_object obj);
-
+int						inside_ellipsoid(t_hit h, t_object obj);
+int						inside_torus(t_hit h, t_object obj);
+int						inside_goursat(t_hit h, t_object obj);
+int						inside_paraboloid(t_hit h, t_object obj);
+int						inside_hyperboloid(t_hit h, t_object obj);
 
 /*
  **tools

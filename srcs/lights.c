@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/24 04:47:48 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/29 19:15:50 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,12 @@ t_color			illuminate(t_world *world, t_hit *hit, t_line **srays, int fast)
 	t_illum	shine;
 	t_color	lightcol;
 	t_color	plaincol;
+	t_color	transp_scaled;
 
 	plaincol = pert_color(hit);
 	illu = getillum(world, hit, srays);
-	lightcol = interpole_color(illu.in, BLACK_COLOR, interpole_color(
+	transp_scaled = interpole_color(sqrt(hit->obj.transp), BLACK_COLOR, hit->obj.c);
+	lightcol = interpole_color(illu.in, transp_scaled, interpole_color(
 				getwhiteratio(illu.color, 0.3, 1), illu.color, plaincol));
 	if (fast)
 		return (lightcol);
