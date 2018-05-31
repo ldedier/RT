@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:11:33 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 17:30:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 00:45:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_parse_length(t_parser *parser, t_world *world, char *line)
 	if (parser->parse_enum == e_parse_cobject && parser->attribute &&
 			!ft_strcmp("adn", parser->attribute))
 		length = &(world->cobjlist->cobject\
-				->cobject_union.sphere_torus.nb_spheres);
+				->cobject_union.adn.length);
 	else
 	{
 		ft_dprintf(2, "line %d: current object can not have length tag\n",
@@ -69,3 +69,71 @@ void	ft_parse_length(t_parser *parser, t_world *world, char *line)
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
 	ft_process_tag_stack(parser);
 }
+
+
+void	populate_style_through_string(t_parser *parser, char *str,
+		t_style *style)
+{
+	if (!ft_strcmp(str, "irregular"))
+		*style = e_irregular;
+	else if (!ft_strcmp(str, "plain"))
+		*style = e_plain;
+	else
+	{
+		ft_dprintf(2, "line %d: %s style does not exist\n",
+				parser->nb_lines);
+		exit(1);
+	}
+}
+
+void	ft_parse_style(t_parser *parser, t_world *world, char *line)
+{
+	char *str;
+	t_style *style;
+
+	if (parser->parse_enum == e_parse_cobject && parser->attribute &&
+			!ft_strcmp("adn", parser->attribute))
+		style = &(world->cobjlist->cobject\
+				->cobject_union.adn.style);
+	else
+	{
+		ft_dprintf(2, "line %d: current object can not have a style tag\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	str = ft_get_between_tag(&line);
+	populate_style_through_string(parser, str, style);
+	free(str);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+
+}
+
+void	ft_parse_color_n(t_parser *parser, t_world *world, char *line, int n)
+{
+	int *color;
+
+	if (parser->parse_enum == e_parse_cobject && parser->attribute &&
+			!ft_strcmp("adn", parser->attribute)&& n == 1)
+		color = &(world->cobjlist->cobject\
+				->cobject_union.adn.color1);
+	else if (parser->parse_enum == e_parse_cobject && parser->attribute &&
+			!ft_strcmp("adn", parser->attribute) && n == 2)
+		color = &(world->cobjlist->cobject\
+				->cobject_union.adn.color2);
+	else if (parser->parse_enum == e_parse_cobject && parser->attribute &&
+			!ft_strcmp("adn", parser->attribute) && n == 3)
+		color = &(world->cobjlist->cobject\
+				->cobject_union.adn.color3);
+	else
+	{
+		ft_dprintf(2, "line %d: current object can not have a style tag\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	read_hex(&line, color);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+
+}
+

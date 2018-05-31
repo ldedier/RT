@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 21:04:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 18:22:15 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 00:37:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,20 @@ typedef struct		s_sphere_torus
 	double			spheres_radius;
 }					t_sphere_torus;
 
+typedef enum		e_style
+{
+	e_plain,
+	e_irregular
+}					t_style;
+
 typedef struct		s_adn
 {
 	int				length;
 	double			radius;
+	int				color1;
+	int				color2;
+	int				color3;
+	t_style			style;
 }					t_adn;
 
 #endif

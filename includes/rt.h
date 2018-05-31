@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/30 21:01:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 00:47:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -650,6 +650,8 @@ void					ft_process_parsing_object_attributes(t_parser *p,
 void					ft_process_parsing_cut_attributes(t_parser *p,
 		t_cut *cut);
 void					ft_give_default_characteristics(t_object *object);
+void					ft_give_default_characteristics_cobject(char *attribute,
+	   					t_cobject *cobject);
 void					ft_process_parsing_cut_start(t_parser *p, t_world *w);
 void					ft_process_parsing_cut_xyz(t_parser *p, t_world *w,
 		char *l);
@@ -666,6 +668,9 @@ void					ft_process_parsing_vertex_c(t_parser *p,t_world *w,
 void					ft_parse_nb_spheres(t_parser *p, t_world *w, char *l);
 void					ft_parse_spheres_radius(t_parser *p, t_world *w, char *l);
 void					ft_parse_length(t_parser *p, t_world *w, char *l);
+void					ft_parse_color_n(t_parser *p, t_world *w, char *l,
+						int n);
+void					ft_parse_style(t_parser *p, t_world *w, char *l);
 
 /*
  **vectors

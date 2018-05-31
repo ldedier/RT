@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 22:23:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 00:48:47 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,14 @@ static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 		ft_parse_spheres_radius(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "length"))
 		ft_parse_length(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "color1"))
+		ft_parse_color_n(parser, world, line, 1);
+	else if (!ft_strcmp(parser->tag, "color2"))
+		ft_parse_color_n(parser, world, line, 2);
+	else if (!ft_strcmp(parser->tag, "color3"))
+		ft_parse_color_n(parser, world, line, 3);
+	else if (!ft_strcmp(parser->tag, "style"))
+		ft_parse_style(parser, world, line);
 	else if (strcmp(parser->tag, "scene") &&
 			strcmp(parser->tag, "objlist") &&
 			strcmp(parser->tag, "lightlist"))

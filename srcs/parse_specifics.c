@@ -6,11 +6,32 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 17:29:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 01:18:59 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+
+void	ft_give_default_characteristics_cobject(char *attribute,
+		t_cobject *cobject)
+{
+	if (!ft_strcmp(attribute, "sphere_torus"))
+	{
+		cobject->cobject_union.sphere_torus.nb_spheres = 16;
+		cobject->cobject_union.sphere_torus.spheres_radius = 1;
+		cobject->cobject_union.sphere_torus.radius = 5;
+	}
+	else if (!ft_strcmp(attribute, "adn"))
+	{
+		cobject->cobject_union.adn.length = 20;
+		cobject->cobject_union.adn.radius = 2;
+		cobject->cobject_union.adn.color1 = 0xFF0000;
+		cobject->cobject_union.adn.color2 = 0x0000FF;
+		cobject->cobject_union.adn.color3 = 0x00FFFF;
+		cobject->cobject_union.adn.style = e_plain;
+	}
+}
 
 void	ft_give_default_characteristics(t_object *object)
 {

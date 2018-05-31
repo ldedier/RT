@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/07 01:13:42 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/08 23:45:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 02:37:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct		s_pf
 	int				parse_precision;
 	int				parse_padding;
 	int				precised_precision;
-	int				ret;
+	char			*buffer;
 	int				fd;
 }					t_pf;
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:21:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 22:06:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 01:17:28 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,40 @@ void	ft_cut_cylinder_adn(t_object *object, double radius)
 	free(cut);
 }
 
+t_color		ft_sphere_color(t_cobject *adn, int i, int nb)
+{
+	if (adn->cobject_union.adn.style == e_plain)
+		return (nb == 1 ? get_color(adn->cobject_union.adn.color1) :
+				get_color(adn->cobject_union.adn.color2));
+	else
+		return
+			((nb + i) % 2 == 0 ? get_color(adn->cobject_union.adn.color1) :
+				get_color(adn->cobject_union.adn.color2));
+}
+
 void	ft_process_fill_adn(t_cobject *adn, t_object *cylinder,
 		t_object *sphere, int i)
 {
 	double padding;
 	double angle;
 
-	padding = adn->cobject_union.adn.radius / 2.0;
-	angle = i * M_PI / 12;
-	sphere->c = get_color(0xff0000);
+	padding = adn->cobject_union.adn.radius / 2.0 - 4 * cos(M_PI / 12.0);
+
+	angle = i * M_PI / 12.0;
+	sphere->c =ft_sphere_color(adn, i, 1);
 	sphere->o.x = -cos(angle) * adn->cobject_union.adn.radius;
 	sphere->o.z = -sin(angle) * adn->cobject_union.adn.radius;
 	sphere->o.y = -i * padding +
 		((adn->cobject_union.adn.length - 1) *
-		(adn->cobject_union.adn.radius / 4));
+		(padding / 2));
 	add_obj_cpy(&(adn->objlist), sphere);
-	sphere->c = get_color(0x0000ff);
+	sphere->c = ft_sphere_color(adn, i, 2);
 	sphere->o.x = cos(angle) * adn->cobject_union.adn.radius;
 	sphere->o.z = sin(angle) * adn->cobject_union.adn.radius;
 	add_obj_cpy(&(adn->objlist), sphere);
 	cylinder->o.y = -i * padding +
 		((adn->cobject_union.adn.length - 1) *
-		(adn->cobject_union.adn.radius / 4));
+		(padding / 2));
 	cylinder->r.y = -angle;
 	add_obj_cpy(&(adn->objlist), cylinder);
 }
@@ -102,7 +114,7 @@ void	ft_compute_automatic_adn(t_cobject *adn)
 	set_funcs(cylinder, intersect_cylinder, inside_sphere, normal_cylinder);
 	cylinder->object_union.cylinder.radius =
 		adn->cobject_union.adn.radius / 12.0;
-	cylinder->c = get_color(0x00FFFF);
+	cylinder->c = get_color(adn->cobject_union.adn.color3);
 	ft_cut_cylinder_adn(cylinder, adn->cobject_union.adn.radius);
 	while (i < adn->cobject_union.adn.length)
 	{

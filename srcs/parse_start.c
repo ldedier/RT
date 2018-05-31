@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 22:43:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/30 23:15:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ void	ft_process_parsing_cobject_start(t_parser *parser, t_world *world)
 		if (!ft_strcmp(parser->attribute, "adn") ||
 			!ft_strcmp(parser->attribute, "sphere_torus") ||
 			!ft_strcmp(parser->attribute, "obj"))
+		{
+			ft_give_default_characteristics_cobject(parser->attribute, cobject);
 			cobject->regular = 0;
+		}
 		else
 		{
 			ft_dprintf(2,
