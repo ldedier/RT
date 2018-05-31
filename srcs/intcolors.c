@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:50:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/27 18:45:49 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/31 08:06:34 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,16 @@ t_intcolor	add_scale_intcolors(t_intcolor icol1, t_intcolor icol2, double scale)
 	icol1.g += icol2.g * scale;
 	icol1.b += icol2.b * scale;
 	return (icol1);
+}
+
+t_intcolor	scale_intcolor(t_intcolor c, double s)
+{
+	t_intcolor ret;
+
+	ret.r = c.r * s;
+	ret.g = c.g * s;
+	ret.b = c.b * s;
+	return (ret);
 }
 
 t_intcolor	get_intcolor(t_color color)

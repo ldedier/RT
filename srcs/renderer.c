@@ -6,13 +6,13 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/29 19:00:46 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/31 09:41:46 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static t_line		newray(t_point3d p, t_point3d vec, double n)
+t_line		newray(t_point3d p, t_point3d vec)
 {
 	t_line	line;
 
@@ -21,7 +21,6 @@ static t_line		newray(t_point3d p, t_point3d vec, double n)
 		line.v = (t_point3d){.x = 0, .y = 0, .z = 1};
 	else if (PERSPECTIVE == 2)
 		line.v = normalize(vec);
-	line.n = n;
 	return (line);
 }
 
@@ -37,8 +36,8 @@ static t_color		freeret(t_color c, t_hit **hit, t_shadowsfree *aux)
 		if (aux)
 		{
 			while (++i < aux->nlights)
-				if (aux->srays[i])
-					free(aux->srays[i]);
+				if (aux->shadows[i])
+					free(aux->shadows[i]);
 		}
 	}
 	return (c);
@@ -47,7 +46,7 @@ static t_color		freeret(t_color c, t_hit **hit, t_shadowsfree *aux)
 static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 {
 	t_hit			*hit;
-	t_line			*srays[MAX_LIGHTS];
+	t_shadow		*shadows[MAX_LIGHTS];
 	t_shadowsfree	aux;
 	t_color			reflect_c;
 	t_color			refract_c;
@@ -59,22 +58,22 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 	{
 		fog = magnitude(newvector(hit->point, world->cam->o)) * world->fog.in;
 		fog = fog > 1.0 ? 1.0 : fog;
-		castshadows(world, hit, srays);
-		aux = (t_shadowsfree){.srays = srays, .nlights = world->nlights};
+		castshadows(world, hit, shadows);
+		aux = (t_shadowsfree){.shadows = shadows, .nlights = world->nlights};
 		if (world->shader == 1)
-			illuminated_c = illuminate(world, hit, srays, fast);
+			illuminated_c = illuminate(world, hit, shadows, fast);
 		else
-			illuminated_c = illuminate_toon(world, hit, srays, fast);
+			illuminated_c = illuminate_toon(world, hit, shadows, fast);
 		fogged_c = interpole_color(fog, illuminated_c, world->fog.color);
-		if (bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON)
+		if (bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON) // && !fast
 			reflect_c = ray_color(newray(translate_vec(hit->point,
-							hit->pertbounce, EPSILON), hit->pertbounce, ray.n),
+							hit->pertbounce, EPSILON), hit->pertbounce),
 					world, bounce + 1, 0);
 		else
 			reflect_c = get_color(0x000000);
-		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON)
+		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON ) //&& !fast
 			refract_c = ray_color(newray(translate_vec(hit->point,
-					ray.v, EPSILON), refraction(hit, &ray), ray.n),
+					ray.v, EPSILON), refraction(hit, &ray)),
 					world, bounce + 1, 0);
 		else
 			refract_c = get_color(0x000000);
@@ -85,9 +84,6 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 	return (freeret(world->fog.color, &hit, NULL));
 }
 
-//ray.v, EPSILON), refraction(hit->pert, ray.v, 1,
-//hit->obj.refract)),
-
 t_color				render_pixel(t_world *world, t_pixel pix, int fast)
 {
 	t_point3d	point;
@@ -95,7 +91,7 @@ t_color				render_pixel(t_world *world, t_pixel pix, int fast)
 	t_line line;
 
 	point = screen2world(pix, world);
-	line = newray(point, newvector(world->cam->o, point), 1);
+	line = newray(point, newvector(world->cam->o, point));
 	line.x = pix.x;
 	line.y = pix.y;
 	ret = ray_color(line, world, 0, fast);

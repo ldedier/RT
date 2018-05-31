@@ -17,10 +17,10 @@
 		</cobject>
 		<cobject>
 			<object name="plane">
-				<color>0x999999</color>
+				<color>0xBBBB66</color>
 				<positionXYZ>0 5 0</positionXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
-				<perturbation name = "noise"></perturbation>
+				<perturbation name = "chess"></perturbation>
 				<reflection>0.6</reflection>
 			</object>
 		</cobject>
@@ -111,5 +111,5 @@
 		<intensity>0.37</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
-	<filter name="grey"></filter>
+	<filter name="sobel"></filter>
 </scene>

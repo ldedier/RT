@@ -6,16 +6,23 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/30 06:58:28 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/31 16:24:09 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //DONE	fix <perturbation>asdf</perturbation> segfault
+//DONE	transparency shadows: canviar color i perdre llum PER CADA SRAY
+//		en teoria canviar shadows.c i lights.c nhi ha prou
+//TODO	arreglar ellipsoid (?)
+//TODO	arreglar que es fagin reflexes i phongs a dintre 
+//			(nomes si no es negatiu i la camera esta a fora)
+//TODO	arreglar scale
+//TODO	test all negatives
 //DONE	reflexion
 //DONE	directional light
 //DONE	nimin valors atribut (si reflection es 0 no cal calcular...)
 //DONE	perturbation (wave, random, spikes...)
-//TODO	negative object
+//DONE	negative object
 //done	antialiasing / other filters
 //DONE	fix sometimes cancel the render and go into antialiasing. cause is calling join_threads 2 times in a row and 2nd one returns 0 so assumes it rendered.
 //TODO	controls chachis -> select object
@@ -84,7 +91,7 @@
 # define EPSILON3 0.000001 //plus petit = moins de solution
 # define EPSILON4 0.00000001 // on considere ca comme zero complexe (surtout used dans quartic)
 # define SPEED 0.1
-# define MAX_BOUNCE 20
+# define MAX_BOUNCE 8
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
@@ -489,9 +496,16 @@ typedef struct			s_thr_par
 	int					id;
 }						t_thr_par;
 
+typedef struct			s_shadow
+{
+	t_line				sray;
+	t_illum				il;
+	t_intcolor			icol;
+}						t_shadow;
+
 typedef struct			s_shadowsfree
 {
-	t_line				**srays;
+	t_shadow			**shadows;
 	int					nlights;
 }						t_shadowsfree;
 
@@ -690,6 +704,7 @@ t_intcolor				add_scale_intcolors(t_intcolor icol1, t_intcolor icol2,
 t_intcolor				get_intcolor(t_color color);
 t_intcolor				greyscale(t_intcolor ic);
 t_color					scale_convert_color(t_intcolor icol, double t);
+t_intcolor				scale_intcolor(t_intcolor c, double scale);
 
 /*
  **filters
@@ -710,12 +725,13 @@ void					draw_borders(t_canvas *canvas);
 t_color					render_pixel(t_world *world, t_pixel pix, int fast);
 t_point3d				screen2world(t_pixel pix, t_world *world);
 void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
+t_line					newray(t_point3d p, t_point3d vec);
 t_hit					*trace(t_line line, t_cobjlist *cobjlist);
-void					castshadows(t_world *w, t_hit *h, t_line **rays);
+void					castshadows(t_world *w, t_hit *h, t_shadow **shadows);
 t_color					illuminate(t_world *world, t_hit *hit,
-		t_line **srays, int fast);
+		t_shadow **shadows, int fast);
 t_color					illuminate_toon(t_world *world, t_hit *hit,
-		t_line **srays, int fast);
+		t_shadow **shadows, int fast);
 
 /*
  **paint window

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 12:06:33 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/30 07:24:29 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/31 16:24:16 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	inside_ellipsoid(t_hit h, t_object obj)
 	abc = obj.object_union.ellipsoid.abc;
 	if (h.point.x * h.point.x / abc.x / abc.x +
 			h.point.y * h.point.y / abc.y / abc.y +
-			h.point.z * h.point.z / abc.z / abc.z < 1)
+			h.point.z * h.point.z / abc.z / abc.z < 0)
 		return (1);
 	return (0);
 }

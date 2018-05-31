@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 06:58:27 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/31 16:24:17 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,17 @@ void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 	else if (!ft_strcmp(parser->attribute, "lemniscate"))
 			set_funcs(object, intersect_lemniscate, inside_goursat, normal_lemniscate);
 	else if (!ft_strcmp(parser->attribute, "roman"))
-			set_funcs(object, intersect_roman, inside_plane, normal_roman);
+			set_funcs(object, intersect_roman, inside_goursat, normal_roman);
 	else if (!ft_strcmp(parser->attribute, "piriform"))
-			set_funcs(object, intersect_piriform, inside_plane, normal_piriform);
+			set_funcs(object, intersect_piriform, inside_goursat, normal_piriform);
 	else if (!ft_strcmp(parser->attribute, "triangle"))
-			set_funcs(object, intersect_triangle, inside_plane, normal_triangle);
+			set_funcs(object, intersect_triangle, inside_goursat, normal_triangle);
 	else if (!ft_strcmp(parser->attribute, "paraboloid"))
 			set_funcs(object, intersect_paraboloid, inside_paraboloid, normal_paraboloid);
 	else if (!ft_strcmp(parser->attribute, "hyperboloid"))
 			set_funcs(object, intersect_hyperboloid, inside_hyperboloid, normal_hyperboloid);
 	else if (!ft_strcmp(parser->attribute, "mobius"))
-			set_funcs(object, intersect_mobius, inside_plane, normal_mobius);
+			set_funcs(object, intersect_mobius, inside_goursat, normal_mobius);
 	else
 	{
 		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines,

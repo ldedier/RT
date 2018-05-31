@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 21:34:25 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/30 07:04:32 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/31 16:24:13 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	inside_torus(t_hit h, t_object obj)
 	h.point = ft_point3d_mat4_mult(h.point, h.obj.transform_pos);
 	h.point = ft_point3d_mat4_mult(h.point, obj.transform_pos_inv);
 	radic = h.point.x * h.point.x + h.point.y * h.point.y; 
-	square = sqrt(radic) - obj.object_union.torus.big_rad;
+	square = obj.object_union.torus.big_rad - sqrt(radic);
 	if (square * square + h.point.z * h.point.z <
 			obj.object_union.torus.small_rad * obj.object_union.torus.small_rad)
 		return (1);
@@ -40,8 +40,8 @@ int	inside_hyperboloid(t_hit h, t_object obj)
 {
 	h.point = ft_point3d_mat4_mult(h.point, h.obj.transform_pos);
 	h.point = ft_point3d_mat4_mult(h.point, obj.transform_pos_inv);
-	if (h.point.y * h.point.y + h.point.z * h.point.z <
-			h.point.x * h.point.x + 1)
+	if (h.point.y * h.point.y + h.point.z * h.point.z - h.point.x * h.point.x <
+			0)
 		return (1);
 	return (0);
 }

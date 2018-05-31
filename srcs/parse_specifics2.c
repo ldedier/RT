@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/26 11:48:40 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/31 09:36:50 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ void	ft_parse_negative(t_parser *parser, t_world *world, char *line)
 		neg = &(world->cobjlist->cobject->objlist->object->negative);
 	else if (parser->parse_enum == e_parse_cobject)
 		neg = &(world->cobjlist->cobject->negative);
-	if (!neg || (ft_strcmp(name, "sphere") && ft_strcmp(name, "plane"))) //etc...
+	if (!neg || (ft_strcmp(name, "sphere") && ft_strcmp(name, "plane") &&
+				ft_strcmp(name, "hyperboloid") && ft_strcmp(name, "cylinder") &&
+				ft_strcmp(name, "cone") && ft_strcmp(name, "ellipsoid") &&
+				ft_strcmp(name, "paraboloid") && ft_strcmp(name, "torus")))
 	{
 		ft_dprintf(2, "line %d: current object can not be negative\n",
 				parser->nb_lines);

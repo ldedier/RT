@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/29 18:52:49 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/31 02:53:12 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int					izokay(t_hit newhit, double sol, t_line transformed)
 	if (ft_lstlength(newhit.obj.cuts) == 0)
 		return (1);
 	ptr = newhit.obj.cuts;
-	relative_pos = ft_point3d_add(transformed.o,ft_point3d_scalar(transformed.v, sol));
+	relative_pos = ft_point3d_add(transformed.o,
+			ft_point3d_scalar(transformed.v, sol));
 	absolute_pos = ft_point3d_mat4_mult(relative_pos, newhit.obj.transform_pos);
 	while (ptr != NULL)
 	{
@@ -166,15 +167,15 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 			}
 			else
 			{
-				if ((sols.nbsols = obj.intersect_func(line,
-								obj, sols.roots)))
+				if ((sols.nbsols = obj.intersect_func(line, obj, sols.roots)))
 				{
 					newhit.obj = obj;
-					if (((newhit.t =
-									get_smallest_legal_pos_val_t(newhit, sols, hit->t, line)) > 0) &&
+					if (((newhit.t = get_smallest_legal_pos_val_t(newhit,
+										sols, hit->t, line)) > 0) &&
 							(newhit.t < hit->t || hit->t == -1))
 					{
-						newhit.point = ft_point3d_add(line.o,ft_point3d_scalar(line.v, newhit.t));
+						newhit.point = ft_point3d_add(line.o,
+								ft_point3d_scalar(line.v, newhit.t));
 						newhit.normal = normal_triangle(obj, hit->point, line);
 						*hit = newhit;
 						//hit->col = newhit.obj.c;
