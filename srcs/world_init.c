@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 02:59:08 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/05/31 04:56:31 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void			set_defaults(t_world *world)
 	world->nb_export = 0;
 	set_defaults_2(world);
 	ft_init_keys(world);
-	world->bmp_parser = ft_parse_bmp("texture.bmp");
+	world->bmp_parser = ft_parse_bmp("kirby.bmp");
 }
 
 t_canvas		*new_canvas(void)

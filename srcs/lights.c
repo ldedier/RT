@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/29 17:49:18 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/05/31 04:58:56 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ t_color			illuminate(t_world *world, t_hit *hit, t_line **srays, int fast)
 	//lightcol = interpole_color(illu.in, BLACK_COLOR, interpole_color(
 	//			getwhiteratio(illu.color, 0.3, 1), illu.color, hit->obj.c));
 
-	if (0)
+	if (hit->obj.intersect_func == intersect_sphere)
 	{
 		//sphere UV mapping
 		t_point3d p = normalize(hit->old_normal);
