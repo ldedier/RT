@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 04:37:03 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/31 02:52:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 18:44:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int				main(int argc, char **args)
 	int		err;
 
 	//char *s = ft_get_name(".bmp");
-
 	world = NULL;
 	if (argc != 2)
 		return (display_usage(0));

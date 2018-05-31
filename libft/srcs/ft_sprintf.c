@@ -6,13 +6,11 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 02:38:11 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 02:52:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 18:42:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-
 
 int		ft_svprintf(char *buffer, const char *format, va_list va)
 {
@@ -21,12 +19,13 @@ int		ft_svprintf(char *buffer, const char *format, va_list va)
 
 	pf.buffer = buffer;
 	ft_init_pf(&pf);
+	pf.sprintf = 1;
 	i = 0;
 	while (format[i] != '\0')
 	{
 		while (format[i] != '\0' && format[i] != '%')
 		{
-			ft_putchar_buff(format[i], pf.fd);
+			ft_putchar_buff(format[i], &pf);
 			i++;
 		}
 		if (format[i] == '%')
@@ -35,7 +34,8 @@ int		ft_svprintf(char *buffer, const char *format, va_list va)
 				return (-1);
 		}
 	}
-	ft_empty_buffer(pf.fd);
+	ft_empty_buffer(&pf);
+	pf.buffer[ft_add_return(0)] = '\0';
 	return (ft_reset_return());
 }
 

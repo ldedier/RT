@@ -12,13 +12,13 @@
 
 #include "ft_printf.h"
 
-void	ft_putnbr_unsigned(unsigned int nb, int fd)
+void	ft_putnbr_unsigned(unsigned int nb, t_pf *pf)
 {
 	if ((nb / 10) == 0)
-		ft_putchar_buff(nb % 10 + '0', fd);
+		ft_putchar_buff(nb % 10 + '0', pf);
 	else
 	{
-		ft_putnbr_unsigned(nb / 10, fd);
-		ft_putchar_buff(nb % 10 + '0', fd);
+		ft_putnbr_unsigned(nb / 10, pf);
+		ft_putchar_buff(nb % 10 + '0', pf);
 	}
 }

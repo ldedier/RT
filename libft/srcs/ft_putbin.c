@@ -12,15 +12,15 @@
 
 #include "ft_printf.h"
 
-void	ft_putbin(size_t nb, int fd)
+void	ft_putbin(size_t nb, t_pf *pf)
 {
 	if (nb / 2 == 0)
 	{
-		ft_putchar_buff(nb % 2 + '0', fd);
+		ft_putchar_buff(nb % 2 + '0', pf);
 	}
 	else
 	{
-		ft_putbin(nb / 2, fd);
-		ft_putchar_buff(nb % 2 + '0', fd);
+		ft_putbin(nb / 2, pf);
+		ft_putchar_buff(nb % 2 + '0', pf);
 	}
 }
