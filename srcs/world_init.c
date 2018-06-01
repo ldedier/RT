@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 04:56:31 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/05/31 23:00:33 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@ static void		set_defaults_2(t_world *world)
 	i = -1;
 	while (++i < e_nfilters)
 		world->filters[i] = 0;
+}
+
+TTF_Font		*ft_load_font(char *str, int quality)
+{
+	TTF_Font	*font;
+
+	font = TTF_OpenFont(str, quality);
+	if (font == NULL)
+		exit (1);
+	return (font);
 }
 
 void			set_defaults(t_world *world)
@@ -58,6 +68,9 @@ void			set_defaults(t_world *world)
 	world->nb_export = 0;
 	set_defaults_2(world);
 	ft_init_keys(world);
+	world->mouse_press = 0;
+	world->menu.type = 1;
+	world->menu.fonts[0] = ft_load_font("alice.ttf", 100);
 	world->bmp_parser = ft_parse_bmp("kirby.bmp");
 }
 
@@ -78,10 +91,6 @@ t_canvas		*new_canvas(void)
 	canvas->pb_rect.y = canvas->win_size.y;
 	canvas->pb_rect.w = 0;
 	canvas->pb_rect.h = PROGRESS_BAR_HEIGHT;
-	canvas->menu_rect.x = canvas->win_size.x;
-	canvas->menu_rect.y = 0;
-	canvas->menu_rect.w = MENU_WIDTH;
-	canvas->menu_rect.h = canvas->win_size.y + PROGRESS_BAR_HEIGHT;
 	if (!(ft_init_all(canvas)))
 		return (NULL);
 	return (canvas);
@@ -92,6 +101,8 @@ int			ft_init_all(t_canvas *canvas)
 	canvas->screen.x = 0;
 	canvas->screen.y = 0;
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+		return (0);
+	if (TTF_Init() < 0)
 		return (0);
 	canvas->screen.w = canvas->win_size.x;
 	canvas->screen.h = canvas->win_size.y + PROGRESS_BAR_HEIGHT;
@@ -108,9 +119,6 @@ int			ft_init_all(t_canvas *canvas)
 		return (0);
 	if (!(canvas->surface = SDL_CreateRGBSurface(0,
 			canvas->screen.w, canvas->screen.h, 32, 0, 0, 0, 0)))
-		return (0);
-	if (!(canvas->menu_surface = SDL_CreateRGBSurface(0,
-			canvas->menu_rect.w, canvas->menu_rect.h, 32, 0, 0, 0, 0)))
 		return (0);
 	return (1);
 }

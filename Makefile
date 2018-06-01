@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/29 20:51:07 by aherriau         ###   ########.fr        #
+#    Updated: 2018/05/31 23:03:47 by aherriau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 vectors2.c\
 				 world_maker.c\
 				 loop.c\
-				 events.c\
+				 key_events.c\
 				 process.c \
 				 world_init.c\
 				 compute_matrix.c \
@@ -110,7 +110,9 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 tracer2.c\
 				 insides.c\
 				 ft_parse_bmp.c\
-				 ft_export_scene.c
+				 ft_export_scene.c\
+				 mouse_events.c\
+				 menu.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 
@@ -147,7 +149,7 @@ $(LIBSDL2):
 $(BINDIR)/$(NAME): $(OBJECTS) $(LIBSDL2)
 	@make -C $(LIBFTDIR)
 	@make -C $(LIBMATDIR)
-	$(CC) -o $@ $^ $(LFLAGS)
+	$(CC) -o $@ $^ $(LFLAGS) -F ~/Library/Frameworks -framework SDL2_ttf
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 	@install_name_tool -change /usr/local/lib/libSDL2-2.0.0.dylib \
 		$(LIBSDL2) $(NAME)
@@ -155,7 +157,7 @@ $(BINDIR)/$(NAME): $(OBJECTS) $(LIBSDL2)
 	@echo $(OBJECTS) >> .gitignore
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
-	$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) -c $< -o $@ $(CFLAGS) -F ~/Library/Frameworks
 
 clean:
 	@make clean -C $(LIBFTDIR)

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 02:51:03 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/05/31 21:31:07 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int		get_input(t_world *e, char *filename)
 			ft_keys_event(e, event, 1, filename);
 		if (event.type == SDL_KEYUP)
 			ft_keys_event(e, event, 0, filename);
+		if (event.type == SDL_MOUSEBUTTONDOWN)
+			ft_mouse_button(e, event);
 		if (event.type == SDL_MOUSEMOTION)
 			ft_mouse_motion(e, event);
 		if (event.window.event == SDL_WINDOWEVENT_CLOSE ||
@@ -74,7 +76,8 @@ int		get_input(t_world *e, char *filename)
 
 void	ft_loop(t_world *e, char *filename)
 {
-	//SDL_SetRelativeMouseMode(SDL_TRUE);
+	SDL_WarpMouseInWindow(e->canvas->window, (HRES + MENU_WIDTH) / 2,
+			(VRES + PROGRESS_BAR_HEIGHT) / 2);
 	paint_threaded_fast(e);
 	while (!get_input(e, filename))
 		;

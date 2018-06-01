@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/30 02:59:13 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/01 05:57:10 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define RT_H
 
 # include <SDL.h>
+# include <SDL2_ttf/SDL_ttf.h>
 # include <string.h>
 # include <stdio.h>
 # include <errno.h>
@@ -67,6 +68,10 @@
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
+
+#define MENU_OBJECTS	1
+#define MENU_LIGHTS		2
+#define MENU_OTHERS		3
 
 # define AXIS_X (t_point3d){.x=1.0,.y=0.0,.z=0.0}
 # define AXIS_Y (t_point3d){.x=0.0,.y=1.0,.z=0.0}
@@ -137,11 +142,8 @@ typedef struct			s_canvas
 	SDL_Renderer		*renderer;
 	SDL_Window			*window;
 	SDL_Texture			*texture;
-	SDL_Texture			*menu_texture;
 	SDL_Surface			*surface;
-	SDL_Surface			*menu_surface;
 	SDL_Rect			pb_rect;
-	SDL_Rect			menu_rect;
 	SDL_Rect			screen;
 	t_pixel				win_size;
 	t_pixel				fast_win_size;
@@ -478,6 +480,16 @@ typedef enum			e_filters
 	e_nfilters
 }						t_filters;
 
+typedef struct			s_menu
+{
+	int					type;
+	SDL_Rect			rect;
+	SDL_Surface			*surface;
+	SDL_Texture			*texture;
+	SDL_Color			color;
+	TTF_Font			*fonts[3];
+}						t_menu;
+
 typedef struct			s_world
 {
 	t_light				lights[MAX_LIGHTS];
@@ -497,8 +509,9 @@ typedef struct			s_world
 	int					can_export;
 	int					nb_export;
 	int					shader;
+	int					mouse_press;
 	t_bmp_parser		bmp_parser;
-
+	t_menu				menu;
 }						t_world;
 
 typedef struct			s_thr_par
@@ -570,7 +583,6 @@ int						end(t_world *world);
 int						get_input(t_world *e, char *filename);
 void					ft_keys_event(t_world *world, SDL_Event event, int down, char *filename);
 void					ft_process(t_world *world);
-void					ft_mouse_motion(t_world *world, SDL_Event event);
 
 /*
  ** world
@@ -902,6 +914,17 @@ void				ft_print_piriform_caracteristics(t_object object, int fd);
 void				ft_print_hyperboloid_caracteristics(t_object object, int fd);
 void				ft_print_paraboloid_caracteristics(t_object object, int fd);
 void				ft_print_triangle_caracteristics(t_object object, int fd);
+
+/*
+** Mouse events
+*/
+void				ft_mouse_motion(t_world *world, SDL_Event event);
+void				ft_mouse_button(t_world *world, SDL_Event event);
+
+/*
+** Menu
+*/
+void				ft_display_menu(t_world *world);
 
 /*
 ** error
