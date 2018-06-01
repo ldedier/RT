@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/31 00:47:01 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/02 01:50:59 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
+# define ANIMATE_TIMING 30
 
 # define AXIS_X (t_point3d){.x=1.0,.y=0.0,.z=0.0}
 # define AXIS_Y (t_point3d){.x=0.0,.y=1.0,.z=0.0}
@@ -93,6 +94,7 @@
 # define BACKGROUND_COLOR get_color(0x222222)
 
 typedef struct	s_hit t_hit;
+typedef struct	s_cobject t_cobject;
 
 typedef enum	e_keys
 {
@@ -114,6 +116,7 @@ typedef enum	e_keys
 	key_d,
 	key_e,
 	key_q,
+	key_f,
 	key_z,
 	key_c,
 	key_x,
@@ -357,7 +360,39 @@ typedef struct			s_object
 	double				refract;
 	double				transp;
 	int					negative;
+	t_cobject			*cobject;
 }						t_object;
+
+typedef struct			s_objlist
+{
+	t_object			*object;
+	struct s_objlist	*next;
+}						t_objlist;
+
+typedef union			u_cobject_union
+{
+	t_sphere_torus		sphere_torus;
+	t_adn				adn;
+}						t_cobject_union;
+
+struct			s_cobject
+{
+	t_point3d			o;
+	t_point3d			s;
+	t_point3d			r;
+	t_color				c;
+	double				shine;
+	double				reflect;
+	double				refract;
+	double				transp;
+	t_perturbations		pert;
+	t_objlist			*objlist;
+	t_cobject_union		cobject_union;
+	int					negative;
+	int					regular;
+	char				*name;
+	int					defining;
+};
 
 struct			s_hit
 {
@@ -390,37 +425,6 @@ typedef struct			s_auxcone
 	   double				cov;
 	   */
 }						t_auxcone;
-
-typedef struct			s_objlist
-{
-	t_object			*object;
-	struct s_objlist	*next;
-}						t_objlist;
-
-typedef union			u_cobject_union
-{
-	t_sphere_torus		sphere_torus;
-	t_adn				adn;
-}						t_cobject_union;
-
-typedef struct			s_cobject
-{
-	t_point3d			o;
-	t_point3d			s;
-	t_point3d			r;
-	t_color				c;
-	double				shine;
-	double				reflect;
-	double				refract;
-	double				transp;
-	t_perturbations		pert;
-	t_objlist			*objlist;
-	t_cobject_union		cobject_union;
-	int					negative;
-	int					regular;
-	char				*name;
-	int					defining;
-}						t_cobject;
 
 typedef struct			s_cobjlist
 {
@@ -484,6 +488,9 @@ typedef struct			s_world
 	int					cancel_render;
 	int					can_export;
 	int					shader;
+	int					animate;
+	int					focus;
+	Uint32				ticks;
 }						t_world;
 
 typedef struct			s_thr_par
@@ -556,6 +563,7 @@ int						get_input(t_world *e);
 void					ft_keys_event(t_world *world, SDL_Event event, int down);
 void					ft_process(t_world *world);
 void					ft_mouse_motion(t_world *world, SDL_Event event);
+void					ft_mouse_down(t_world *world, SDL_Event event);
 
 /*
  ** world
@@ -686,18 +694,18 @@ double					proj(t_point3d v1, t_point3d v2);
 t_point3d				create_vec(double x, double y, double z);
 t_point3d				reflection(t_point3d n, t_point3d v);
 t_point3d				refraction(t_hit *hit, t_line *line);
-
+t_line					newray(t_point3d p, t_point3d vec, double n);
 /*
- **colors
- */
+**colors
+*/
 t_color					interpole_color(double t, t_color c1, t_color c2);
 t_color					get_color(int color);
 t_color					add_colors(t_color c1, t_color c2);
 t_color					scale_color(t_color c, double t);
 
 /*
- **int colors (for filter calculations)
- */
+**int colors (for filter calculations)
+*/
 t_intcolor				new_intcolor(void);
 t_intcolor				add_scale_intcolors(t_intcolor icol1, t_intcolor icol2,
 		double scale);
@@ -706,8 +714,8 @@ t_intcolor				greyscale(t_intcolor ic);
 t_color					scale_convert_color(t_intcolor icol, double t);
 
 /*
- **filters
- */
+**filters
+*/
 void					apply_convolution(t_world *world);
 void					convolute(t_canvas *canvas, double *filter,
 		int filter_size, int den);
@@ -719,8 +727,8 @@ void					grey(t_canvas *canvas);
 void					draw_borders(t_canvas *canvas);
 
 /*
- **render
- */
+**render
+*/
 t_color					render_pixel(t_world *world, t_pixel pix, int fast);
 t_point3d				screen2world(t_pixel pix, t_world *world);
 void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
@@ -732,8 +740,8 @@ t_color					illuminate_toon(t_world *world, t_hit *hit,
 		t_line **srays, int fast);
 
 /*
- **paint window
- */
+**paint window
+*/
 void					paint_threaded_fast(t_world *world);
 void					fill_canvas(t_world *world);
 int						join_threads(t_world *world);
@@ -742,8 +750,8 @@ void					paint_not_threaded(t_world *world);
 void					update_progress_bar(t_world *world);
 
 /*
- ** intersections
- */
+** intersections
+*/
 int						intersect_sphere(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
 int						intersect_cone(t_line line, t_object obj,
@@ -774,8 +782,8 @@ int						intersect_mobius(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
 
 /*
- **normals
- */
+**normals
+*/
 t_point3d				normal_sphere(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_cone(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_plane(t_object sphere, t_point3d t, t_line l);
@@ -793,8 +801,8 @@ t_point3d				normal_mobius(t_object object, t_point3d p, t_line l);
 
 
 /*
- **quartics
- */
+**quartics
+*/
 t_quartic				get_quartic_piriform(t_line line);
 t_quartic				get_quartic_roman(t_line line);
 t_quartic				get_quartic_lemniscate(t_line line);
@@ -826,8 +834,8 @@ int						inside_plane(t_hit h, t_object obj);
 
 
 /*
- **tools
- */
+**tools
+*/
 void    set_funcs(t_object *obj,
 		int (*intersect_func)(t_line, t_object, double[MAX_DEGREE]),
 		int (*inside_func)(t_hit, t_object),
@@ -835,8 +843,8 @@ void    set_funcs(t_object *obj,
 
 
 /*
- **inequalities
- */
+**inequalities
+*/
 int						less_than(double a, double b);
 int						bigger_than(double a, double b);
 int						less_than_or_equal(double a, double b);
@@ -844,8 +852,8 @@ int						bigger_than_or_equal(double a, double b);
 int						equal(double a, double b);
 
 /*
- **perturbations
- */
+**perturbations
+*/
 t_point3d				pert_normal(t_hit *hit);
 t_color					pert_color(t_hit *hit);
 
@@ -880,16 +888,23 @@ t_point3d				rotate_vec(t_point3d v, t_point3d a);
 void					rotate(t_object *obj, t_point3d a);
 
 /*
- **camera rotations
- */
+** camera rotations
+*/
 void					rotate_hor(t_camera *cam, double angle);
 void					rotate_ver(t_camera *cam, double angle);
 void					camera_reset(t_camera *cam);
 void					apply_rotation(t_camera *cam);
 
 /*
- ** matrices
- */
+** automatic render
+*/
+
+void					ft_look_at(t_camera *cam, t_point3d tolook);
+void					ft_pivot_camera(t_camera *cam, t_point3d tolook);
+
+/*
+** matrices
+*/
 
 void					ft_compute_matrix(t_object *object);
 void					ft_compute_matrices_clist(t_cobjlist *cobjects);
@@ -897,14 +912,14 @@ t_line					ft_transform_line(t_object object, t_line t);
 void					ft_transform_hit_back(t_hit *hit);
 
 /*
- ** export
- */
+** export
+*/
 
 int					ft_export_rt(t_world *world, char *extension);
 
 /*
- ** error
- */
+** error
+*/
 
 t_mmap			ft_map_file(char *filename);
 

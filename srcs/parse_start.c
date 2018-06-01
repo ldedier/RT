@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 23:15:24 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/01 02:36:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_process_parsing_object_start(t_parser *parser, t_world *world)
 	}
 	ft_process_parsing_object_attributes(parser, object);
 	ft_give_default_characteristics(object);
+	object->cobject = world->cobjlist->cobject;
 	add_obj(&(world->cobjlist->cobject->objlist), object);
 }
 

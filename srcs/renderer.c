@@ -6,13 +6,13 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/29 22:55:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 23:00:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static t_line		newray(t_point3d p, t_point3d vec, double n)
+t_line		newray(t_point3d p, t_point3d vec, double n)
 {
 	t_line	line;
 

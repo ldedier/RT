@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/28 21:06:11 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/01 02:33:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,8 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 				{
 					newhit.obj = obj;
 					if (((newhit.t =
-									get_smallest_legal_pos_val_t(newhit, sols, hit->t, line)) > 0) &&
-							(newhit.t < hit->t || hit->t == -1))
+			get_smallest_legal_pos_val_t(newhit, sols, hit->t, line)) > 0) &&
+			(newhit.t < hit->t || hit->t == -1))
 					{
 						newhit.point = ft_point3d_add(line.o,ft_point3d_scalar(line.v, newhit.t));
 						newhit.normal = normal_triangle(obj, hit->point, line);

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 19:14:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 22:42:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ void			set_defaults(t_world *world)
 	world->canvas->npixels = world->canvas->win_size.x *
 		world->canvas->win_size.y;
 	world->can_export = 1;
+	world->animate = 0;
+	world->focus = 0;
+	world->ticks = SDL_GetTicks();
 	set_defaults_2(world);
 	ft_init_keys(world);
 }
