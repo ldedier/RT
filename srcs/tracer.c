@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/28 21:06:11 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/03 00:12:46 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,13 @@ t_line				ft_transform_line(t_object object, t_line t)
 	return line;
 }
 
-void				ft_transform_hit_back(t_hit *hit)
+void				ft_transform_hit_back(t_hit *hit, t_line original)
 {
 	t_hit tmp;
 
 	tmp = *hit;
 	hit->point = ft_point3d_mat4_mult(tmp.point, tmp.obj.transform_pos);
+	hit->t = magnitude(newvector(original.o, hit->point));
 	hit->normal = normalize(
 			ft_point3d_mat4_mult(tmp.normal, tmp.obj.transform_dir));
 	hit->pert = normalize(
@@ -59,7 +60,8 @@ int					izokay(t_hit newhit, double sol, t_line transformed)
 	if (ft_lstlength(newhit.obj.cuts) == 0)
 		return (1);
 	ptr = newhit.obj.cuts;
-	relative_pos = ft_point3d_add(transformed.o,ft_point3d_scalar(transformed.v, sol));
+	relative_pos = ft_point3d_add(transformed.o,
+			ft_point3d_scalar(transformed.v, sol));
 	absolute_pos = ft_point3d_mat4_mult(relative_pos, newhit.obj.transform_pos);
 	while (ptr != NULL)
 	{
@@ -96,7 +98,7 @@ int					izokay_t(t_hit newhit, double sol, t_line line)
 }
 
 double				get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
-		double min, t_line transformed, t_cobjlist *cobjlist, int neg, t_color *othercol)
+		double min, t_line transformed, t_objlist *objlist, int neg, t_object *other)
 {
 	double res;
 	int i;
@@ -110,8 +112,8 @@ double				get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
 			newhit.point = ft_point3d_add(transformed.o, ft_point3d_scalar(
 						transformed.v, sols.roots[i]));
 			if (izokay(newhit, sols.roots[i], transformed) &&
-					((neg ? !is_inside_other(newhit, cobjlist, neg, othercol) :
-					  is_inside_other(newhit, cobjlist, neg, othercol))))
+					((neg ? !is_inside_other(newhit, objlist, neg, other) :
+					  is_inside_other(newhit, objlist, neg, other))))
 				res = sols.roots[i];
 		}
 		i++;
@@ -142,6 +144,7 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 	t_hit		*hit;
 	t_cobjlist	*cobjiter;
 	t_objlist	*objiter;
+	t_objlist	*objlist;
 	t_object	obj;
 	t_sols		sols;
 	t_hit		newhit;
@@ -152,30 +155,31 @@ t_hit				*trace(t_line line, t_cobjlist *cobjlist)
 	while (cobjiter)
 	{
 		objiter = cobjiter->cobject->objlist;
+		objlist = objiter;
 		while (objiter)
 		{
 			obj = *(objiter->object);
 			if (obj.intersect_func != intersect_triangle)
 			{
 				if (!obj.negative)
-					intersect_positive(cobjlist, obj, line, hit);
+					intersect_positive(objlist, obj, line, hit);
 				else
-					intersect_negative(cobjlist, obj, line, hit);
+					intersect_negative(objlist, obj, line, hit);
 			}
 			else
 			{
-				if ((sols.nbsols = obj.intersect_func(line,
-								obj, sols.roots)))
+				if ((sols.nbsols = obj.intersect_func(line, obj, sols.roots)))
 				{
 					newhit.obj = obj;
-					if (((newhit.t =
-									get_smallest_legal_pos_val_t(newhit, sols, hit->t, line)) > 0) &&
+					if (((newhit.t = get_smallest_legal_pos_val_t(newhit,
+										sols, hit->t, line)) > 0) &&
 							(newhit.t < hit->t || hit->t == -1))
 					{
-						newhit.point = ft_point3d_add(line.o,ft_point3d_scalar(line.v, newhit.t));
+						newhit.point = ft_point3d_add(line.o,
+								ft_point3d_scalar(line.v, newhit.t));
 						newhit.normal = normal_triangle(obj, hit->point, line);
 						*hit = newhit;
-						hit->col = newhit.obj.c;
+						//hit->col = newhit.obj.c;
 						if (ft_dot_product(hit->normal, line.v) > 0)
 						{
 							hit->enter = 0;

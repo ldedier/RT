@@ -5,42 +5,47 @@
 	</camera>
 	<objlist>
 		<cobject>
-			<object name = "sphere">
-				<negative>1</negative>
-				<positionXYZ>-0.5 0.2 0</positionXYZ>
-				<radius>0.3</radius>
-				<color>0x00ff00</color>
-			</object>
-		</cobject>
-		<cobject>
-			<object name = "sphere">
-				<positionXYZ>0 1 0</positionXYZ>
-				<radius>1</radius>
-				<color>0xffffff</color>
-			</object>
-		</cobject>
-		<cobject>
 			<positionXYZ>0 1 0</positionXYZ>
 			<rotationXYZ>0 0 0</rotationXYZ>
-			<color>0x00FF00</color>
+			<color>0xffFFff</color>
 			<reflection>0</reflection>
 			<object name="plane">
+				<color>0xBBBB66</color>
+				<perturbation>waves</perturbation>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>-2 -1.5 0</positionXYZ>
+			<object name = "sphere">
+				<color>0x0000FF</color>
+				<transparency>0.8</transparency>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>0 -1.5 0</positionXYZ>
+			<object name = "sphere">
+				<color>0xffffff</color>
+			<refraction>1.008</refraction>
+				<transparency>0.8</transparency>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>2 -1.5 0</positionXYZ>
+			<object name = "sphere">
+				<color>0xFF0000</color>
+				<transparency>0.8</transparency>
 			</object>
 		</cobject>
 	</objlist>
 	<lightlist>
 		<light type="point">
-			<color>0xFFFFFF</color>
-			<positionXYZ>0 -2 0</positionXYZ>
+			<color>0xffffff</color>
+			<positionXYZ>0 -4 0</positionXYZ>
 			<intensity>1</intensity>
 		</light>
 	</lightlist>
 	<ambientlight>
-		<intensity>0.4</intensity>
+		<intensity>0.15</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
-	<fog>
-		<intensity>0</intensity>
-		<color>0xFFFFFF</color>
-	</fog>
 </scene>

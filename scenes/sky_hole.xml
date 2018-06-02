@@ -45,9 +45,12 @@
 		</cobject>
 		<cobject>
 			<positionXYZ>-5 4 8</positionXYZ>
-			<reflection>0</reflection>
-			<color> 0xFF0000 </color>
 			<object name="sphere">
+			<color> 0xFF0000 </color>
+			</object>
+			<object name="sphere">
+			<positionXYZ>-0.3 0 0</positionXYZ>
+			<color> 0x00ff00 </color>
 			</object>
 		</cobject>
 	</objlist>

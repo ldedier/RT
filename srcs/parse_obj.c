@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:07 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/29 17:18:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/29 20:07:35 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	ft_add_triangles(char *source, t_world *world)
 	triangle = ft_new_object(*cobject);
 	triangle->intersect_func = intersect_triangle;
 	triangle->normal_func = normal_triangle;
-	triangle->inside_func = inside_plane;
 	
 	nb_faces = 0;
 	while (nb_faces < parser.nb_faces)

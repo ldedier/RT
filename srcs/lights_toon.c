@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/26 11:46:00 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/31 02:03:16 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static double	getwhiteratio(t_color c, double bot, double top)
 		return (bot);
 }
 
-static t_illum	getillum(t_world *world, t_hit *hit, t_line **srays)
+static t_illum	getillum(t_world *world, t_hit *hit, t_shadow **shadows)
 {
 	int		i;
 	t_illum	illu;
@@ -43,13 +43,13 @@ static t_illum	getillum(t_world *world, t_hit *hit, t_line **srays)
 	illu.in = world->ambient.in;
 	illu.color = interpole_color(illu.in, BLACK_COLOR, world->ambient.color);
 	while (++i < world->nlights)
-		if (srays[i])
+		if (shadows[i])
 		{
 			light = world->lights[i];
 			if (light.type != 'd')
 				light.intensity = 1.0 * (1.0 - world->fog.in) /
 					sqrt(magnitude(newvector(hit->point, light.o))) * 3;
-			newillu = dotprod(hit->normal, normalize(srays[i]->v))
+			newillu = dotprod(hit->normal, normalize(shadows[i]->sray.v))
 				* light.intensity;
 			if (newillu < 0)
 				newillu = 0;
@@ -69,7 +69,7 @@ static t_illum	getillum(t_world *world, t_hit *hit, t_line **srays)
 	return (illu);
 }
 
-static t_illum	getshine(t_world *world, t_hit *hit, t_line **srays, t_color lc)
+static t_illum	getshine(t_world *world, t_hit *hit, t_shadow **shadows, t_color lc)
 {
 	int		i;
 	t_illum	shine;
@@ -80,12 +80,12 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_line **srays, t_color lc)
 	shine.in = 0;
 	i = -1;
 	while (++i < world->nlights)
-		if (srays[i] && world->lights[i].type != 'd')
+		if (shadows[i] && world->lights[i].type != 'd')
 		{
 			lig = world->lights[i];
 			lig.intensity = magnitude(newvector(hit->point, lig.o)) *
 				(1.0 - world->fog.in);
-			newsh = dotprod(hit->bounce, srays[i]->v);
+			newsh = dotprod(hit->bounce, shadows[i]->sray.v);
 			newsh = newsh > 0 ? pow(newsh, hit->obj.shine * lig.intensity) : 0;
 			newsh = newsh < 0.6 ? 0.2 : 0.85;
 			shine.color = add_colors(
@@ -95,18 +95,18 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_line **srays, t_color lc)
 	return (shine);
 }
 
-t_color			illuminate_toon(t_world *world, t_hit *hit, t_line **srays,
+t_color			illuminate_toon(t_world *world, t_hit *hit, t_shadow **shadows,
 		int fast)
 {
 	t_illum	illu;
 	t_illum	shine;
 	t_color	lightcol;
 
-	illu = getillum(world, hit, srays);
+	illu = getillum(world, hit, shadows);
 	lightcol = interpole_color(illu.in, BLACK_COLOR, interpole_color(
-				getwhiteratio(illu.color, 0.3, 1), illu.color, hit->col));
+				getwhiteratio(illu.color, 0.3, 1), illu.color, hit->obj.c));
 	if (fast)
 		return (lightcol);
-	shine = getshine(world, hit, srays, lightcol);
+	shine = getshine(world, hit, shadows, lightcol);
 	return (interpole_color(shine.in, lightcol, shine.color));
 }

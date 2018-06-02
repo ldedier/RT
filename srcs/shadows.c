@@ -6,13 +6,56 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 23:03:33 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/23 03:49:09 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/05/31 10:27:07 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	castshadows(t_world *world, t_hit *hit, t_line **srays)
+static t_color	clampwhite(t_color c)
+{
+	unsigned char min;
+
+	min = c.r;
+	min = c.g < min ? c.g : min;
+	min = c.b < min ? c.b : min;
+	c.r -= min;
+	c.g -= min;
+	c.b -= min;
+	return (c);
+}
+
+static void	get_shadow_illum(t_shadow *shadow, t_world *world, t_light light,
+		int bounce)
+{
+	t_hit	*hit;
+	t_line	sray;
+	
+	if ((hit = trace(shadow->sray, world->cobjlist)))
+	{
+		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON &&
+				dotprod(shadow->sray.v,
+					newvector(hit->point, light.o)) > 0)
+		{
+			shadow->il.in += (1 - hit->obj.transp) * (1 - shadow->il.in);
+			sray = shadow->sray;
+			shadow->sray = newray(translate_vec(hit->point, shadow->sray.v,
+						EPSILON), shadow->sray.v);
+			get_shadow_illum(shadow, world, light, bounce + 1);
+			shadow->sray = sray;
+			shadow->icol = add_scale_intcolors(shadow->icol,
+					get_intcolor(hit->obj.c), 1 - hit->obj.transp);
+		}
+		if (bounce == 0)
+		{
+			shadow->il.in = shadow->il.in > 1 ? 1 : shadow->il.in;
+			shadow->il.in = shadow->il.in < 0 ? 0 : shadow->il.in;
+			shadow->il.color = clampwhite(scale_convert_color(shadow->icol, 1));
+		}
+	}
+}
+
+void	castshadows(t_world *world, t_hit *hit, t_shadow **shadows)
 {
 	t_hit	*shit;
 	int		i;
@@ -20,24 +63,30 @@ void	castshadows(t_world *world, t_hit *hit, t_line **srays)
 	i = 0;
 	while (i < world->nlights)
 	{
-		srays[i] = ft_memalloc(sizeof(t_line));
+		shadows[i] = ft_memalloc(sizeof(t_shadow));
 		if (world->lights[i].type != 'd')
-			srays[i]->v = normalize(newvector(hit->point, world->lights[i].o));
+			shadows[i]->sray.v = normalize(newvector(hit->point,
+						world->lights[i].o));
 		else
-			srays[i]->v = normalize(scale(world->lights[i].o, -1.0));
-		srays[i]->o = translate_vec(hit->point, hit->normal,
+			shadows[i]->sray.v = normalize(scale(world->lights[i].o, -1.0));
+		shadows[i]->sray.o = translate_vec(hit->point, hit->normal,
 				EPSILON * proj(hit->normal, hit->bounce));
-		if (((shit = trace(*(srays[i]), world->cobjlist)) &&
-				((world->lights[i].type != 'd' &&
-				magnitude(newvector(srays[i]->o, shit->point)) <
-				magnitude(newvector(hit->point, world->lights[i].o))) ||
-				world->lights[i].type == 'd')) ||
+		if (((shit = trace(shadows[i]->sray, world->cobjlist)) &&
+					((world->lights[i].type != 'd' &&
+					  magnitude(newvector(shadows[i]->sray.o, shit->point)) <
+					  magnitude(newvector(hit->point, world->lights[i].o))) ||
+					 world->lights[i].type == 'd')) ||
 				(world->lights[i].type == 's' &&
-				acos(dotprod(normalize(scale(srays[i]->v, -1)),
-						world->lights[i].v)) > world->lights[i].angle))
+				 acos(dotprod(normalize(scale(shadows[i]->sray.v, -1)),
+						 world->lights[i].v)) > world->lights[i].angle))
 		{
-			free(srays[i]);
-			srays[i] = NULL;
+			if (shit->obj.transp < EPSILON)
+			{
+				free(shadows[i]);
+				shadows[i] = NULL;
+			}
+			else
+				get_shadow_illum(shadows[i], world, world->lights[i], 0);
 		}
 		free(shit);
 		i++;

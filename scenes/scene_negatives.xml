@@ -1,0 +1,90 @@
+<scene>
+	<camera>
+		<positionXYZ>0 -1.5 -5</positionXYZ>
+		<rotationXYZ>0 0 0</rotationXYZ>
+	</camera>
+	<objlist>
+		<cobject>
+			<positionXYZ>0 1 0</positionXYZ>
+			<object name="plane">
+				<color>0x555555</color>
+				<perturbation name="chess"></perturbation>
+			</object>
+			<object name="sphere">
+				<negative>1</negative>
+				<radius>0.4</radius>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>-1 0 0</positionXYZ>
+			<object name="sphere">
+				<refraction>1.01</refraction>
+				<color>0xff0000</color>
+				<transparency>0.7</transparency>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>-0.3 -0.7 -0.2</positionXYZ>
+				<negative>1</negative>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>-3 0 0</positionXYZ>
+			<rotationXYZ>0 0 1.57</rotationXYZ>
+			<object name="cone">
+				<color>0x00ff00</color>
+				<transparency>0.7</transparency>
+				<refraction>1.01</refraction>
+				<angle>0.18</angle>
+			</object>
+			<object name="cylinder">
+			<positionXYZ>0 -0.13 0</positionXYZ>
+				<rotationXYZ>0.10 0 0.1</rotationXYZ>
+				<radius>0.15</radius>
+				<negative>1</negative>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>1 0 0</positionXYZ>
+			<object name="torus">
+				<color>0x0000ff</color>
+				<refraction>1.01</refraction>
+				<transparency>0.7</transparency>
+				<big_radius>0.75</big_radius>
+				<small_radius>0.25</small_radius>
+			</object>
+			<object name="sphere">
+				<positionXYZ>-0.7 -0.7 0</positionXYZ>
+				<rotationXYZ>0.10 0 0.1</rotationXYZ>
+				<radius>0.5</radius>
+				<negative>1</negative>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>4 -2 0</positionXYZ>
+			<rotationXYZ>0 0 1.57</rotationXYZ>
+			<object name="paraboloid">
+				<transparency>0.7</transparency>
+				<refraction>1.01</refraction>
+				<color>0xffff00</color>
+			</object>
+			<object name="hyperboloid">
+				<radius>0.3</radius>
+				<positionXYZ>2.1 0 0</positionXYZ>
+				<rotationXYZ>0 0 1.57</rotationXYZ>
+				<radius>0.3</radius>
+				<negative>1</negative>
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+		<light type="point">
+			<color>0xFFFFFF</color>
+			<positionXYZ>0 -4 0</positionXYZ>
+			<intensity>1</intensity>
+		</light>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.2</intensity>
+		<color>0xFFFFFF</color>
+	</ambientlight>
+</scene>
