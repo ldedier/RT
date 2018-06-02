@@ -81,9 +81,20 @@ typedef struct		s_sphere_torus
 	double			spheres_radius;
 }					t_sphere_torus;
 
+typedef enum		e_style
+{
+	e_plain,
+	e_irregular
+}					t_style;
+
 typedef struct		s_adn
 {
 	int				length;
+	double			radius;
+	int				color1;
+	int				color2;
+	int				color3;
+	t_style			style;
 }					t_adn;
 
 #endif

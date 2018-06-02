@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 22:32:22 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/08 23:20:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 04:08:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int		ft_pf_s(t_pf *pf, va_list va, char c)
 	if (pf->var.str == NULL)
 		pf->var.str = "(null)";
 	no_padding_bytes = ft_pf_len_s(*pf);
-	ft_add_padding_pre(*pf, no_padding_bytes);
-	ft_putnstr(pf->var.str, no_padding_bytes, pf->fd);
-	ft_add_padding_post(*pf, no_padding_bytes);
+	ft_add_padding_pre(pf, no_padding_bytes);
+	ft_putnstr(pf->var.str, no_padding_bytes, pf);
+	ft_add_padding_post(pf, no_padding_bytes);
 	return (1);
 }
 
@@ -38,18 +38,18 @@ int		ft_pf_s_maj(t_pf *pf, va_list va, char c)
 	{
 		pf->var.str = "(null)";
 		no_padding_bytes = ft_pf_len_s(*pf);
-		ft_add_padding_pre(*pf, no_padding_bytes);
-		ft_putnstr(pf->var.str, no_padding_bytes, pf->fd);
-		ft_add_padding_post(*pf, no_padding_bytes);
+		ft_add_padding_pre(pf, no_padding_bytes);
+		ft_putnstr(pf->var.str, no_padding_bytes, pf);
+		ft_add_padding_post(pf, no_padding_bytes);
 	}
 	else
 	{
 		if (ft_has_forbidden_values(*pf))
 			return (-1);
 		no_padding_bytes = ft_pf_len_s_maj(*pf);
-		ft_add_padding_pre(*pf, no_padding_bytes);
-		ft_putwnstr(pf->var.wstr, no_padding_bytes, pf->fd);
-		ft_add_padding_post(*pf, no_padding_bytes);
+		ft_add_padding_pre(pf, no_padding_bytes);
+		ft_putwnstr(pf->var.wstr, no_padding_bytes, pf);
+		ft_add_padding_post(pf, no_padding_bytes);
 	}
 	return (1);
 }

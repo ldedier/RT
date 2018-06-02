@@ -1,7 +1,7 @@
 # Makefile to build and install the SDL library
 
 top_builddir = .
-srcdir  = /Users/lcavalle/projects/rt_new/SDL2-2.0.8
+srcdir  = /Users/ldedier/Projects/RT1/SDL2-2.0.8
 objects = build
 gen = gen
 prefix = /usr/local
@@ -19,9 +19,9 @@ distfile = $(distdir).tar.gz
 
 SHELL	= /bin/sh
 CC      = gcc
-INCLUDE = -Iinclude -I/Users/lcavalle/projects/rt_new/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/khronos
+INCLUDE = -Iinclude -I/Users/ldedier/Projects/RT1/SDL2-2.0.8/include -idirafter /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/khronos
 CFLAGS  = -g -O3 -DUSING_GENERATED_CONFIG_H
-EXTRA_CFLAGS = -Iinclude -I/Users/lcavalle/projects/rt_new/SDL2-2.0.8/include -idirafter /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/khronos  -mmmx -m3dnow -msse -msse2 -msse3 -Wall -DTARGET_API_MAC_CARBON -DTARGET_API_MAC_OSX -fvisibility=hidden -Wdeclaration-after-statement -Werror=declaration-after-statement -D_THREAD_SAFE
+EXTRA_CFLAGS = -Iinclude -I/Users/ldedier/Projects/RT1/SDL2-2.0.8/include -idirafter /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/khronos  -mmmx -m3dnow -msse -msse2 -msse3 -Wall -DTARGET_API_MAC_CARBON -DTARGET_API_MAC_OSX -fvisibility=hidden -Wdeclaration-after-statement -Werror=declaration-after-statement -D_THREAD_SAFE
 LDFLAGS = 
 EXTRA_LDFLAGS =  -lm -liconv  -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
@@ -242,441 +242,441 @@ rpm: $(distfile)
 -include $(OBJECTS:.lo=.d)
 
 # Special dependency for SDL.c, since it depends on SDL_revision.h
-/Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/SDL.c: update-revision
+/Users/ldedier/Projects/RT1/SDL2-2.0.8/src/SDL.c: update-revision
 
-$(objects)/SDL.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/SDL.c
+$(objects)/SDL.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/SDL.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_assert.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/SDL_assert.c
+$(objects)/SDL_assert.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/SDL_assert.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_dataqueue.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/SDL_dataqueue.c
+$(objects)/SDL_dataqueue.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/SDL_dataqueue.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_error.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/SDL_error.c
+$(objects)/SDL_error.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/SDL_error.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_hints.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/SDL_hints.c
+$(objects)/SDL_hints.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/SDL_hints.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_log.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/SDL_log.c
+$(objects)/SDL_log.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/SDL_log.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_atomic.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/atomic/SDL_atomic.c
+$(objects)/SDL_atomic.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/atomic/SDL_atomic.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_spinlock.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/atomic/SDL_spinlock.c
+$(objects)/SDL_spinlock.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/atomic/SDL_spinlock.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_audio.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/audio/SDL_audio.c
+$(objects)/SDL_audio.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/audio/SDL_audio.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_audiocvt.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/audio/SDL_audiocvt.c
+$(objects)/SDL_audiocvt.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/audio/SDL_audiocvt.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_audiodev.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/audio/SDL_audiodev.c
+$(objects)/SDL_audiodev.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/audio/SDL_audiodev.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_audiotypecvt.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/audio/SDL_audiotypecvt.c
+$(objects)/SDL_audiotypecvt.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/audio/SDL_audiotypecvt.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_mixer.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/audio/SDL_mixer.c
+$(objects)/SDL_mixer.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/audio/SDL_mixer.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_wave.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/audio/SDL_wave.c
+$(objects)/SDL_wave.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/audio/SDL_wave.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cpuinfo.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/cpuinfo/SDL_cpuinfo.c
+$(objects)/SDL_cpuinfo.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/cpuinfo/SDL_cpuinfo.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_dynapi.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/dynapi/SDL_dynapi.c
+$(objects)/SDL_dynapi.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/dynapi/SDL_dynapi.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_clipboardevents.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/events/SDL_clipboardevents.c
+$(objects)/SDL_clipboardevents.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/events/SDL_clipboardevents.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_dropevents.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/events/SDL_dropevents.c
+$(objects)/SDL_dropevents.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/events/SDL_dropevents.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_events.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/events/SDL_events.c
+$(objects)/SDL_events.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/events/SDL_events.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_gesture.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/events/SDL_gesture.c
+$(objects)/SDL_gesture.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/events/SDL_gesture.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_keyboard.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/events/SDL_keyboard.c
+$(objects)/SDL_keyboard.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/events/SDL_keyboard.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_mouse.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/events/SDL_mouse.c
+$(objects)/SDL_mouse.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/events/SDL_mouse.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_quit.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/events/SDL_quit.c
+$(objects)/SDL_quit.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/events/SDL_quit.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_touch.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/events/SDL_touch.c
+$(objects)/SDL_touch.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/events/SDL_touch.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_windowevents.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/events/SDL_windowevents.c
+$(objects)/SDL_windowevents.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/events/SDL_windowevents.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_rwops.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/file/SDL_rwops.c
+$(objects)/SDL_rwops.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/file/SDL_rwops.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_haptic.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/haptic/SDL_haptic.c
+$(objects)/SDL_haptic.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/haptic/SDL_haptic.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_gamecontroller.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/joystick/SDL_gamecontroller.c
+$(objects)/SDL_gamecontroller.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/joystick/SDL_gamecontroller.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_joystick.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/joystick/SDL_joystick.c
+$(objects)/SDL_joystick.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/joystick/SDL_joystick.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/e_atan2.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/e_atan2.c
+$(objects)/e_atan2.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/e_atan2.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/e_fmod.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/e_fmod.c
+$(objects)/e_fmod.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/e_fmod.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/e_log.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/e_log.c
+$(objects)/e_log.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/e_log.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/e_log10.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/e_log10.c
+$(objects)/e_log10.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/e_log10.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/e_pow.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/e_pow.c
+$(objects)/e_pow.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/e_pow.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/e_rem_pio2.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/e_rem_pio2.c
+$(objects)/e_rem_pio2.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/e_rem_pio2.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/e_sqrt.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/e_sqrt.c
+$(objects)/e_sqrt.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/e_sqrt.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/k_cos.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/k_cos.c
+$(objects)/k_cos.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/k_cos.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/k_rem_pio2.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/k_rem_pio2.c
+$(objects)/k_rem_pio2.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/k_rem_pio2.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/k_sin.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/k_sin.c
+$(objects)/k_sin.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/k_sin.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/k_tan.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/k_tan.c
+$(objects)/k_tan.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/k_tan.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/s_atan.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/s_atan.c
+$(objects)/s_atan.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/s_atan.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/s_copysign.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/s_copysign.c
+$(objects)/s_copysign.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/s_copysign.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/s_cos.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/s_cos.c
+$(objects)/s_cos.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/s_cos.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/s_fabs.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/s_fabs.c
+$(objects)/s_fabs.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/s_fabs.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/s_floor.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/s_floor.c
+$(objects)/s_floor.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/s_floor.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/s_scalbn.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/s_scalbn.c
+$(objects)/s_scalbn.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/s_scalbn.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/s_sin.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/s_sin.c
+$(objects)/s_sin.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/s_sin.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/s_tan.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/libm/s_tan.c
+$(objects)/s_tan.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/libm/s_tan.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_power.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/power/SDL_power.c
+$(objects)/SDL_power.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/power/SDL_power.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_d3dmath.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/SDL_d3dmath.c
+$(objects)/SDL_d3dmath.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/SDL_d3dmath.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_render.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/SDL_render.c
+$(objects)/SDL_render.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/SDL_render.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_yuv_sw.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/SDL_yuv_sw.c
+$(objects)/SDL_yuv_sw.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/SDL_yuv_sw.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_render_d3d.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/direct3d/SDL_render_d3d.c
+$(objects)/SDL_render_d3d.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/direct3d/SDL_render_d3d.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_shaders_d3d.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/direct3d/SDL_shaders_d3d.c
+$(objects)/SDL_shaders_d3d.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/direct3d/SDL_shaders_d3d.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_render_d3d11.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/direct3d11/SDL_render_d3d11.c
+$(objects)/SDL_render_d3d11.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/direct3d11/SDL_render_d3d11.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_shaders_d3d11.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/direct3d11/SDL_shaders_d3d11.c
+$(objects)/SDL_shaders_d3d11.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/direct3d11/SDL_shaders_d3d11.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_render_gl.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/opengl/SDL_render_gl.c
+$(objects)/SDL_render_gl.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/opengl/SDL_render_gl.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_shaders_gl.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/opengl/SDL_shaders_gl.c
+$(objects)/SDL_shaders_gl.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/opengl/SDL_shaders_gl.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_render_gles.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/opengles/SDL_render_gles.c
+$(objects)/SDL_render_gles.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/opengles/SDL_render_gles.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_render_gles2.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/opengles2/SDL_render_gles2.c
+$(objects)/SDL_render_gles2.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/opengles2/SDL_render_gles2.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_shaders_gles2.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/opengles2/SDL_shaders_gles2.c
+$(objects)/SDL_shaders_gles2.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/opengles2/SDL_shaders_gles2.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_render_psp.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/psp/SDL_render_psp.c
+$(objects)/SDL_render_psp.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/psp/SDL_render_psp.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_blendfillrect.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/software/SDL_blendfillrect.c
+$(objects)/SDL_blendfillrect.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/software/SDL_blendfillrect.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_blendline.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/software/SDL_blendline.c
+$(objects)/SDL_blendline.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/software/SDL_blendline.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_blendpoint.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/software/SDL_blendpoint.c
+$(objects)/SDL_blendpoint.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/software/SDL_blendpoint.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_drawline.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/software/SDL_drawline.c
+$(objects)/SDL_drawline.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/software/SDL_drawline.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_drawpoint.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/software/SDL_drawpoint.c
+$(objects)/SDL_drawpoint.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/software/SDL_drawpoint.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_render_sw.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/software/SDL_render_sw.c
+$(objects)/SDL_render_sw.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/software/SDL_render_sw.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_rotate.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/software/SDL_rotate.c
+$(objects)/SDL_rotate.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/software/SDL_rotate.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_getenv.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/stdlib/SDL_getenv.c
+$(objects)/SDL_getenv.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/stdlib/SDL_getenv.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_iconv.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/stdlib/SDL_iconv.c
+$(objects)/SDL_iconv.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/stdlib/SDL_iconv.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_malloc.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/stdlib/SDL_malloc.c
+$(objects)/SDL_malloc.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/stdlib/SDL_malloc.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_qsort.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/stdlib/SDL_qsort.c
+$(objects)/SDL_qsort.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/stdlib/SDL_qsort.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_stdlib.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/stdlib/SDL_stdlib.c
+$(objects)/SDL_stdlib.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/stdlib/SDL_stdlib.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_string.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/stdlib/SDL_string.c
+$(objects)/SDL_string.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/stdlib/SDL_string.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_thread.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/thread/SDL_thread.c
+$(objects)/SDL_thread.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/thread/SDL_thread.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_timer.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/timer/SDL_timer.c
+$(objects)/SDL_timer.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/timer/SDL_timer.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_RLEaccel.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_RLEaccel.c
+$(objects)/SDL_RLEaccel.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_RLEaccel.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_blit.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_blit.c
+$(objects)/SDL_blit.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_blit.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_blit_0.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_blit_0.c
+$(objects)/SDL_blit_0.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_blit_0.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_blit_1.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_blit_1.c
+$(objects)/SDL_blit_1.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_blit_1.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_blit_A.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_blit_A.c
+$(objects)/SDL_blit_A.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_blit_A.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_blit_N.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_blit_N.c
+$(objects)/SDL_blit_N.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_blit_N.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_blit_auto.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_blit_auto.c
+$(objects)/SDL_blit_auto.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_blit_auto.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_blit_copy.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_blit_copy.c
+$(objects)/SDL_blit_copy.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_blit_copy.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_blit_slow.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_blit_slow.c
+$(objects)/SDL_blit_slow.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_blit_slow.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_bmp.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_bmp.c
+$(objects)/SDL_bmp.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_bmp.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_clipboard.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_clipboard.c
+$(objects)/SDL_clipboard.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_clipboard.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_egl.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_egl.c
+$(objects)/SDL_egl.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_egl.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_fillrect.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_fillrect.c
+$(objects)/SDL_fillrect.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_fillrect.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_pixels.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_pixels.c
+$(objects)/SDL_pixels.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_pixels.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_rect.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_rect.c
+$(objects)/SDL_rect.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_rect.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_shape.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_shape.c
+$(objects)/SDL_shape.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_shape.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_stretch.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_stretch.c
+$(objects)/SDL_stretch.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_stretch.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_surface.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_surface.c
+$(objects)/SDL_surface.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_surface.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_video.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_video.c
+$(objects)/SDL_video.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_video.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_vulkan_utils.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_vulkan_utils.c
+$(objects)/SDL_vulkan_utils.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_vulkan_utils.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_yuv.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/SDL_yuv.c
+$(objects)/SDL_yuv.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/SDL_yuv.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/yuv_rgb.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/yuv2rgb/yuv_rgb.c
+$(objects)/yuv_rgb.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/yuv2rgb/yuv_rgb.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_nullevents.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/dummy/SDL_nullevents.c
+$(objects)/SDL_nullevents.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/dummy/SDL_nullevents.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_nullframebuffer.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/dummy/SDL_nullframebuffer.c
+$(objects)/SDL_nullframebuffer.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/dummy/SDL_nullframebuffer.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_nullvideo.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/dummy/SDL_nullvideo.c
+$(objects)/SDL_nullvideo.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/dummy/SDL_nullvideo.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_diskaudio.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/audio/disk/SDL_diskaudio.c
+$(objects)/SDL_diskaudio.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/audio/disk/SDL_diskaudio.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_dummyaudio.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/audio/dummy/SDL_dummyaudio.c
+$(objects)/SDL_dummyaudio.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/audio/dummy/SDL_dummyaudio.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_sysloadso.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/loadso/dlopen/SDL_sysloadso.c
+$(objects)/SDL_sysloadso.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/loadso/dlopen/SDL_sysloadso.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoaclipboard.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoaclipboard.m
+$(objects)/SDL_cocoaclipboard.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoaclipboard.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoaevents.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoaevents.m
+$(objects)/SDL_cocoaevents.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoaevents.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoakeyboard.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoakeyboard.m
+$(objects)/SDL_cocoakeyboard.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoakeyboard.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoamessagebox.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoamessagebox.m
+$(objects)/SDL_cocoamessagebox.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoamessagebox.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoametalview.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoametalview.m
+$(objects)/SDL_cocoametalview.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoametalview.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoamodes.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoamodes.m
+$(objects)/SDL_cocoamodes.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoamodes.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoamouse.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoamouse.m
+$(objects)/SDL_cocoamouse.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoamouse.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoamousetap.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoamousetap.m
+$(objects)/SDL_cocoamousetap.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoamousetap.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoaopengl.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoaopengl.m
+$(objects)/SDL_cocoaopengl.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoaopengl.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoaopengles.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoaopengles.m
+$(objects)/SDL_cocoaopengles.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoaopengles.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoashape.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoashape.m
+$(objects)/SDL_cocoashape.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoashape.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoavideo.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoavideo.m
+$(objects)/SDL_cocoavideo.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoavideo.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoavulkan.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoavulkan.m
+$(objects)/SDL_cocoavulkan.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoavulkan.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_cocoawindow.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/video/cocoa/SDL_cocoawindow.m
+$(objects)/SDL_cocoawindow.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/video/cocoa/SDL_cocoawindow.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_render_metal.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/render/metal/SDL_render_metal.m
+$(objects)/SDL_render_metal.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/render/metal/SDL_render_metal.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_systhread.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/thread/pthread/SDL_systhread.c
+$(objects)/SDL_systhread.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/thread/pthread/SDL_systhread.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_syssem.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/thread/pthread/SDL_syssem.c
+$(objects)/SDL_syssem.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/thread/pthread/SDL_syssem.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_sysmutex.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/thread/pthread/SDL_sysmutex.c
+$(objects)/SDL_sysmutex.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/thread/pthread/SDL_sysmutex.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_syscond.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/thread/pthread/SDL_syscond.c
+$(objects)/SDL_syscond.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/thread/pthread/SDL_syscond.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_systls.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/thread/pthread/SDL_systls.c
+$(objects)/SDL_systls.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/thread/pthread/SDL_systls.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_coreaudio.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/audio/coreaudio/SDL_coreaudio.m
+$(objects)/SDL_coreaudio.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/audio/coreaudio/SDL_coreaudio.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_sysjoystick.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/joystick/darwin/SDL_sysjoystick.c
+$(objects)/SDL_sysjoystick.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/joystick/darwin/SDL_sysjoystick.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_syshaptic.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/haptic/darwin/SDL_syshaptic.c
+$(objects)/SDL_syshaptic.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/haptic/darwin/SDL_syshaptic.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_syspower.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/power/macosx/SDL_syspower.c
+$(objects)/SDL_syspower.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/power/macosx/SDL_syspower.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_sysfilesystem.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/filesystem/cocoa/SDL_sysfilesystem.m
+$(objects)/SDL_sysfilesystem.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/filesystem/cocoa/SDL_sysfilesystem.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_systimer.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/timer/unix/SDL_systimer.c
+$(objects)/SDL_systimer.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/timer/unix/SDL_systimer.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_rwopsbundlesupport.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/file/cocoa/SDL_rwopsbundlesupport.m
+$(objects)/SDL_rwopsbundlesupport.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/file/cocoa/SDL_rwopsbundlesupport.m
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_poll.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/core/unix/SDL_poll.c
+$(objects)/SDL_poll.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/core/unix/SDL_poll.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
 
-$(objects)/SDL_dummy_main.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/main/dummy/SDL_dummy_main.c
+$(objects)/SDL_dummy_main.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/main/dummy/SDL_dummy_main.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 
-$(objects)/SDL_test_assert.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_assert.c
+$(objects)/SDL_test_assert.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_assert.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_common.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_common.c
+$(objects)/SDL_test_common.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_common.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_compare.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_compare.c
+$(objects)/SDL_test_compare.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_compare.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_crc32.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_crc32.c
+$(objects)/SDL_test_crc32.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_crc32.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_font.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_font.c
+$(objects)/SDL_test_font.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_font.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_fuzzer.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_fuzzer.c
+$(objects)/SDL_test_fuzzer.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_fuzzer.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_harness.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_harness.c
+$(objects)/SDL_test_harness.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_harness.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_imageBlit.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_imageBlit.c
+$(objects)/SDL_test_imageBlit.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_imageBlit.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_imageBlitBlend.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_imageBlitBlend.c
+$(objects)/SDL_test_imageBlitBlend.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_imageBlitBlend.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_imageFace.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_imageFace.c
+$(objects)/SDL_test_imageFace.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_imageFace.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_imagePrimitives.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_imagePrimitives.c
+$(objects)/SDL_test_imagePrimitives.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_imagePrimitives.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_imagePrimitivesBlend.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_imagePrimitivesBlend.c
+$(objects)/SDL_test_imagePrimitivesBlend.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_imagePrimitivesBlend.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_log.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_log.c
+$(objects)/SDL_test_log.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_log.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_md5.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_md5.c
+$(objects)/SDL_test_md5.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_md5.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_memory.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_memory.c
+$(objects)/SDL_test_memory.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_memory.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@ 
-$(objects)/SDL_test_random.lo: /Users/lcavalle/projects/rt_new/SDL2-2.0.8/src/test/SDL_test_random.c
+$(objects)/SDL_test_random.lo: /Users/ldedier/Projects/RT1/SDL2-2.0.8/src/test/SDL_test_random.c
 	$(RUN_CMD_CC)$(LIBTOOL) --tag=CC --mode=compile $(CC) $(CFLAGS) $(EXTRA_CFLAGS) -MMD -MT $@ -c $< -o $@
 

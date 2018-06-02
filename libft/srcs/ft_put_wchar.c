@@ -18,7 +18,7 @@ void	ft_2_bytes_len(unsigned char str[4], int value)
 	str[1] = 128 | (value & 63);
 }
 
-int		ft_put_wchar(int value, int fd)
+int		ft_put_wchar(int value, t_pf *pf)
 {
 	int				len;
 	unsigned char	str[4];
@@ -39,9 +39,9 @@ int		ft_put_wchar(int value, int fd)
 	if (len <= MB_CUR_MAX)
 	{
 		while (i < len && i < MB_CUR_MAX)
-			ft_putchar_buff(str[i++], fd);
+			ft_putchar_buff(str[i++], pf);
 	}
 	else
-		ft_putchar_buff(value, fd);
+		ft_putchar_buff(value, pf);
 	return (0);
 }

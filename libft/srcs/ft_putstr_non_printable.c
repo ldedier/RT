@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void	ft_putstr_non_printable(char const *s, size_t n, int fd)
+void	ft_putstr_non_printable(char const *s, size_t n, t_pf *pf)
 {
 	int display;
 	int i;
@@ -22,9 +22,9 @@ void	ft_putstr_non_printable(char const *s, size_t n, int fd)
 	{
 		display = 0;
 		if (ft_isprint(s[i]))
-			ft_get_buffer(&(s[i]), 1, &display, fd);
+			ft_get_buffer(&(s[i]), 1, &display, pf);
 		else
-			ft_get_buffer(".", 1, &display, fd);
+			ft_get_buffer(".", 1, &display, pf);
 		i++;
 	}
 }

@@ -91,6 +91,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_new_image.c\
 				 ft_get_name.c\
 				 ft_export.c\
+				 ft_export_y4m.c\
 				 lights_toon.c \
 				 convolute.c\
 				 filters.c\
@@ -111,8 +112,10 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 map_file.c\
 				 tracer2.c\
 				 insides.c\
+				 automatic.c\
+				 defining.c\
 				 insides2.c\
-				 automatic.c
+				 video.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 

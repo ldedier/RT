@@ -17,26 +17,14 @@
 		<cobject>
 			<positionXYZ>-2 -1.5 0</positionXYZ>
 			<object name = "sphere">
-				<color>0x0000FF</color>
-				<transparency>0.8</transparency>
+				<transparency>0.75</transparency>
+				<reflection>0.4</reflection>
+				<positionXYZ>-0.5 0.2 0</positionXYZ>
+				<radius>0.3</radius>
+				<color>0x00ff00</color>
 			</object>
-		</cobject>
-		<cobject>
-			<positionXYZ>0 -1.5 0</positionXYZ>
-			<object name = "sphere">
-				<color>0xffffff</color>
-			<refraction>1.008</refraction>
-				<transparency>0.8</transparency>
-			</object>
-		</cobject>
-		<cobject>
-			<positionXYZ>2 -1.5 0</positionXYZ>
-			<object name = "sphere">
-				<color>0xFF0000</color>
-				<transparency>0.8</transparency>
-			</object>
-		</cobject>
-	</objlist>
+			</cobject>
+		</objlist>
 	<lightlist>
 		<light type="point">
 			<color>0xffffff</color>
@@ -45,7 +33,11 @@
 		</light>
 	</lightlist>
 	<ambientlight>
-		<intensity>0.15</intensity>
+		<intensity>0.2</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
+	<fog>
+		<intensity>0</intensity>
+		<color>0x222222</color>
+	</fog>
 </scene>

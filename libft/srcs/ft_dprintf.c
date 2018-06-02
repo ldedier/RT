@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/07 01:04:36 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/08 23:30:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 04:25:58 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ static t_pf_func g_pf_arr[NB_CHARS] =
 	['n'] = ft_pf_n
 };
 
-int		ft_display_error(int fd)
+int		ft_display_error(t_pf *pf)
 {
 	int display;
 
 	ft_reset_return();
 	display = 1;
-	ft_get_buffer("", 0, &display, fd);
+	ft_get_buffer("", 0, &display, pf);
 	return (-1);
 }
 
@@ -83,11 +83,11 @@ int		ft_process_percent(const char *format, int *i, t_pf *pf, va_list va)
 		else
 			display = g_pf_arr[(int)(format[*i])](pf, va, format[*i]);
 		if (display == -1)
-			return (ft_display_error(pf->fd));
+			return (ft_display_error(pf));
 		*i += 1;
 	}
 	if (ft_may_error_next_conv(format, *i))
-		ft_empty_buffer(pf->fd);
+		ft_empty_buffer(pf);
 	ft_init_pf(pf);
 	return (0);
 }
@@ -99,12 +99,13 @@ int		ft_dvprintf(int fd, const char *format, va_list va)
 
 	pf.fd = fd;
 	ft_init_pf(&pf);
+	pf.sprintf = 0;
 	i = 0;
 	while (format[i] != '\0')
 	{
 		while (format[i] != '\0' && format[i] != '%')
 		{
-			ft_putchar_buff(format[i], pf.fd);
+			ft_putchar_buff(format[i], &pf);
 			i++;
 		}
 		if (format[i] == '%')
@@ -113,7 +114,7 @@ int		ft_dvprintf(int fd, const char *format, va_list va)
 				return (-1);
 		}
 	}
-	ft_empty_buffer(pf.fd);
+	ft_empty_buffer(&pf);
 	return (ft_reset_return());
 }
 

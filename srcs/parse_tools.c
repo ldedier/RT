@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/29 18:45:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/30 18:44:37 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ t_cobject		*ft_new_cobject(void)
 	cobject->objlist = NULL;
 	cobject->negative = 0;
 	cobject->regular = 1;
+	cobject->name = NULL;
+	cobject->defining = 0;
 	return (cobject);
 }
 

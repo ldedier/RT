@@ -12,6 +12,27 @@
 
 #include "rt.h"
 
+
+void	ft_give_default_characteristics_cobject(char *attribute,
+		t_cobject *cobject)
+{
+	if (!ft_strcmp(attribute, "sphere_torus"))
+	{
+		cobject->cobject_union.sphere_torus.nb_spheres = 16;
+		cobject->cobject_union.sphere_torus.spheres_radius = 1;
+		cobject->cobject_union.sphere_torus.radius = 5;
+	}
+	else if (!ft_strcmp(attribute, "adn"))
+	{
+		cobject->cobject_union.adn.length = 20;
+		cobject->cobject_union.adn.radius = 2;
+		cobject->cobject_union.adn.color1 = 0xFF0000;
+		cobject->cobject_union.adn.color2 = 0x0000FF;
+		cobject->cobject_union.adn.color3 = 0x00FFFF;
+		cobject->cobject_union.adn.style = e_plain;
+	}
+}
+
 void	ft_give_default_characteristics(t_object *object)
 {
 	if (object->intersect_func == intersect_sphere)
@@ -138,6 +159,10 @@ void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
 			!ft_strcmp("sphere_torus", parser->attribute))
 		radius = &(world->cobjlist->cobject->cobject_union\
 				.sphere_torus.radius);
+	else if (parser->parse_enum == e_parse_cobject &&
+			!ft_strcmp("adn", parser->attribute))
+		radius = &(world->cobjlist->cobject->cobject_union\
+				.adn.radius);
 	else
 	{
 		ft_dprintf(2, "line %d: current object does not have radius tag",

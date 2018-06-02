@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 17:10:27 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/27 19:58:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/29 23:37:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_process_obj_parsing(t_obj_parser *parser, char *s)
 			g_pf_arr[enum_obj_usemtl](&i, s, parser);
 		else
 		{
-			ft_printf("olaalaaaa: %s\n",&(s[i]));
+			ft_printf("erreur de parsing d'obj: %s\n", &(s[i]));
 			exit(1);
 		}
 		while (s[i] == '\n')

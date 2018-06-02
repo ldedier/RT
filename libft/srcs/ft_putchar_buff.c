@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-void	ft_putchar_buff(char c, int fd)
+void	ft_putchar_buff(char c, t_pf *pf)
 {
 	int		display;
 	char	str[2];
@@ -20,5 +20,5 @@ void	ft_putchar_buff(char c, int fd)
 	display = 0;
 	str[0] = c;
 	str[1] = '\0';
-	ft_get_buffer((char *)str, 1, &display, fd);
+	ft_get_buffer((char *)str, 1, &display, pf);
 }

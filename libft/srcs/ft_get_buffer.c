@@ -6,26 +6,29 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 14:55:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/08 23:13:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 18:44:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	ft_empty_buffer(int fd)
+void	ft_empty_buffer(t_pf *pf)
 {
 	int		display;
 	char	*toprint;
 
 	display = 0;
-	toprint = ft_get_buffer("", 0, &display, fd);
-	write(fd, toprint, display);
+	toprint = ft_get_buffer("", 0, &display, pf);
+	if (pf->sprintf)
+		ft_strcat(&(pf->buffer[ft_add_return(0)]), toprint);
+	else
+		write(pf->fd, toprint, display);
 	ft_add_return(display);
 	display = 1;
-	ft_get_buffer("", 0, &display, fd);
+	ft_get_buffer("", 0, &display, pf);
 }
 
-char	*ft_get_buffer(const void *s, size_t n, int *display, int fd)
+char	*ft_get_buffer(const void *s, size_t n, int *display, t_pf *pf)
 {
 	static char	buffer[BUF_SIZE] = {0};
 	static int	cursor = 0;
@@ -41,8 +44,11 @@ char	*ft_get_buffer(const void *s, size_t n, int *display, int fd)
 		}
 		else
 		{
-			ft_empty_buffer(fd);
-			write(fd, s, n);
+			ft_empty_buffer(pf);
+			if (pf->sprintf)
+				ft_strncat(&(pf->buffer[ft_add_return(0)]), s, n);
+			else
+				write(pf->fd, s, n);
 			ft_add_return(n);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:28:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/29 04:21:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/02 02:40:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void    ft_process(t_world *e)
 		e->cam->rotation.x -= e->cam->speed;
 	if (e->keys[left])
 		e->cam->rotation.x += e->cam->speed;
-	apply_rotation(e->cam);
 	if (e->keys[key_w])
 		e->cam->o = translate_vec(e->cam->o, e->cam->look, e->cam->speed);
 	if (e->keys[key_s])
@@ -54,7 +53,6 @@ void    ft_process(t_world *e)
 	if (e->keys[key_8])
 		e->selected_cobject->o.y -= e->cam->speed;
 
-
 	if (e->keys[key_4])
 		e->selected_cobject->o.x += e->cam->speed;
 	if (e->keys[key_5])
@@ -77,6 +75,12 @@ void    ft_process(t_world *e)
 		e->selected_cobject->r.z += M_PI / 16;
 	if (e->keys[key_v])
 		e->selected_cobject->r.z -= M_PI / 16;
+	if (e->animate)
+	{
+		ft_pivot_camera(e->cam, e->selected_cobject->o);
+		ft_look_at(e->cam, e->selected_cobject->o);
+	}
+	apply_rotation(e->cam);
 	ft_compute_matrices_clist(e->cobjlist);
-	print_clist(e->cobjlist);
+//	print_clist(e->cobjlist);
 }
