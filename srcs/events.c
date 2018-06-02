@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 22:25:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/02 01:53:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/02 02:51:47 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press)
 			e->keys[key_o] = press;
 		else if (event.key.keysym.sym == SDLK_p)
 			e->keys[key_p] = press;
-		else if (event.key.keysym.sym == SDLK_f)
-			e->keys[key_f] = press;
+		else if (event.key.keysym.sym == SDLK_f && press == 1)
+			e->animate = !e->animate;
 		else if (event.key.keysym.sym == SDLK_LCTRL)
 			e->keys[key_ctrl] = press;
 		else if (event.key.keysym.sym == SDLK_SPACE)
@@ -84,6 +84,21 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press)
 					ft_export_rt(e, ".ppm");
 					e->can_export = 0;
 				}
+			}
+			else
+				e->can_export = 1;
+		}
+		else if (event.key.keysym.sym == SDLK_h)
+		{
+			if (press == 1 && e->can_export)
+			{
+				if (e->exporting_video)
+				{
+					ft_export_y4m(e->video);
+					e->exporting_video = 0;
+				}
+				else
+					e->exporting_video = 1;
 			}
 			else
 				e->can_export = 1;

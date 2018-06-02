@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 23:46:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/02 03:00:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		get_input(t_world *e)
 		}
 	}
 	if (any_key_pressed(e) || (e->animate && SDL_GetTicks() - e->ticks >
-		   	ANIMATE_TIMING))
+		   	ANIMATE_TIMING) || e->exporting_video)
 	{
 		e->ticks = SDL_GetTicks();
 		//if (e->cancel_render == 0)
@@ -69,6 +69,8 @@ int		get_input(t_world *e)
 			e->progress = 0;
 			printf("INPUT PRESSED, CANCELING RENDERING\n");
 			paint_threaded_fast(e);
+			if(e->exporting_video)
+				ft_add_frame_to_video(e);
 		}
 		//}
 		//SDL_Delay(12);

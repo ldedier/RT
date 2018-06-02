@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:28:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/02 01:54:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/02 02:40:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,6 @@ void    ft_process(t_world *e)
 		e->selected_cobject->r.z += M_PI / 16;
 	if (e->keys[key_v])
 		e->selected_cobject->r.z -= M_PI / 16;
-	if (e->keys[key_f])
-		e->animate = !e->animate;
-
 	if (e->animate)
 	{
 		ft_pivot_camera(e->cam, e->selected_cobject->o);

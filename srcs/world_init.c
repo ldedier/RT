@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 22:42:23 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/02 03:25:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void			set_defaults(t_world *world)
 	world->can_export = 1;
 	world->animate = 0;
 	world->focus = 0;
+	world->exporting_video = 0;
+	init_video(&(world->video));
 	world->ticks = SDL_GetTicks();
 	set_defaults_2(world);
 	ft_init_keys(world);

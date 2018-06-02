@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/02 01:50:59 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/02 06:57:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@
 
 # define FAST_HRES 160
 # define FAST_VRES 120
-# define HRES 1600
-# define VRES 1200
+# define HRES 160
+# define VRES 120
 # define PROGRESS_BAR_HEIGHT 20
 # define PERSPECTIVE 2
 # define ZOOM 1.5
@@ -117,6 +117,7 @@ typedef enum	e_keys
 	key_e,
 	key_q,
 	key_f,
+	key_h,
 	key_z,
 	key_c,
 	key_x,
@@ -485,11 +486,13 @@ typedef struct			s_world
 	t_illum				fog;
 	int					nlights;
 	int					progress;
+	int					exporting_video;
 	int					cancel_render;
 	int					can_export;
 	int					shader;
 	int					animate;
 	int					focus;
+	t_video				video;
 	Uint32				ticks;
 }						t_world;
 
@@ -587,6 +590,7 @@ t_object				*ft_new_triangle(t_cobject cobject);
 t_cobject				*ft_new_cobject(void);
 t_cut					*ft_new_cut(void);
 void					ft_init_light(t_light *light);
+void					init_video(t_video *video);
 /*
  ** parser
  */
@@ -910,6 +914,13 @@ void					ft_compute_matrix(t_object *object);
 void					ft_compute_matrices_clist(t_cobjlist *cobjects);
 t_line					ft_transform_line(t_object object, t_line t);
 void					ft_transform_hit_back(t_hit *hit);
+
+
+/*
+** video
+*/
+
+void				ft_add_frame_to_video(t_world *world);
 
 /*
 ** export

@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/31 19:33:26 by ldedier          ###   ########.fr        #
+#    Updated: 2018/06/02 02:47:08 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,6 +91,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_new_image.c\
 				 ft_get_name.c\
 				 ft_export.c\
+				 ft_export_y4m.c\
 				 lights_toon.c \
 				 convolute.c\
 				 filters.c\
@@ -112,7 +113,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 tracer2.c\
 				 insides.c\
 				 automatic.c\
-				 defining.c
+				 defining.c\
+				 video.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 

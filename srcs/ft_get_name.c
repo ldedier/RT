@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 16:14:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/14 18:53:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/02 02:08:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,12 @@ char	*ft_get_name(char *extension)
 {
 	time_t t;
 	struct tm *tm;
-	t = time(NULL);
-	tm = localtime(&t);
 	char *s;
 	char *str;
 	int i;
+
+	t = time(NULL);
+	tm = localtime(&t);
 //	printf("now: %d-%d-%d %d:%d:%d\n", tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday, tm->tm_hour, tm->tm_min, tm->tm_sec);
 	s = ft_strjoin("RT export: ", asctime(tm));
 	ft_remove_backslash(s);
