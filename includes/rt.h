@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/01 05:57:10 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/02 05:50:31 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -480,6 +480,21 @@ typedef enum			e_filters
 	e_nfilters
 }						t_filters;
 
+typedef struct			s_colorpicker
+{
+	t_pixel				pix;
+	t_pixel				pos;
+	t_color				*color;
+}						t_colorpicker;
+
+typedef struct			s_rangebar
+{
+	double				min;
+	double				max;
+	t_pixel				pix;
+	double				*value;
+}						t_rangebar;
+
 typedef struct			s_menu
 {
 	int					type;
@@ -488,6 +503,13 @@ typedef struct			s_menu
 	SDL_Texture			*texture;
 	SDL_Color			color;
 	TTF_Font			*fonts[3];
+	int					active_rb;
+	int					active_cp;
+	int					nb_others_rb;
+	int					nb_others_cp;
+	t_rangebar			others_rb[2];
+	t_colorpicker		others_cp[2];
+
 }						t_menu;
 
 typedef struct			s_world
@@ -919,7 +941,8 @@ void				ft_print_triangle_caracteristics(t_object object, int fd);
 ** Mouse events
 */
 void				ft_mouse_motion(t_world *world, SDL_Event event);
-void				ft_mouse_button(t_world *world, SDL_Event event);
+void				ft_mouse_button_down(t_world *world, SDL_Event event);
+void				ft_mouse_button_up(t_world *world, SDL_Event event);
 
 /*
 ** Menu

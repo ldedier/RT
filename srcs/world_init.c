@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 23:00:33 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/02 06:44:16 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,36 @@ TTF_Font		*ft_load_font(char *str, int quality)
 	return (font);
 }
 
+t_pixel			ft_new_pixel(int x, int y)
+{
+	t_pixel		pix;
+
+	pix.x = x;
+	pix.y = y;
+	return (pix);
+}
+
+t_rangebar		ft_new_rangebar(double min, double max, t_pixel pix, double *value)
+{
+	t_rangebar	rb;
+
+	rb.min = min;
+	rb.max = max;
+	rb.pix = pix;
+	rb.value = value;
+	return(rb);
+}
+
+t_colorpicker	ft_new_colorpicker(t_pixel pix, t_pixel pos, t_color *color)
+{
+	t_colorpicker	cp;
+
+	cp.pix = pix;
+	cp.pos = pos;
+	cp.color = color;
+	return(cp);
+}
+
 void			set_defaults(t_world *world)
 {
 	world->cam->o = CAMERA_POS;
@@ -68,9 +98,22 @@ void			set_defaults(t_world *world)
 	world->nb_export = 0;
 	set_defaults_2(world);
 	ft_init_keys(world);
+
 	world->mouse_press = 0;
-	world->menu.type = 1;
-	world->menu.fonts[0] = ft_load_font("alice.ttf", 100);
+	world->menu.type = 3;
+	world->menu.fonts[0] = ft_load_font("Raleway.ttf", 200);
+	world->menu.fonts[1] = ft_load_font("Raleway-Bold.ttf", 200);
+
+	world->menu.active_rb = -1;
+	world->menu.nb_others_rb = 2;
+	world->menu.others_rb[0] = ft_new_rangebar(0, 1, ft_new_pixel(world->canvas->win_size.x + 20 + 10 + 80, 200), &(world->ambient.in));
+	world->menu.others_rb[1] = ft_new_rangebar(0, 0.7, ft_new_pixel(world->canvas->win_size.x + 20 + 10 + 50, 310), &(world->fog.in));
+	
+	world->menu.active_cp = -1;
+	world->menu.nb_others_cp = 2;
+	world->menu.others_cp[0] = ft_new_colorpicker(ft_new_pixel(world->canvas->win_size.x + 20 + 10 + 30 + 210, 120), ft_new_pixel(0, 0), &(world->ambient.color));
+	world->menu.others_cp[1] = ft_new_colorpicker(ft_new_pixel(world->canvas->win_size.x + 20 + 10 + 30 + 210, 270), ft_new_pixel(0, 0), &(world->fog.color));
+
 	world->bmp_parser = ft_parse_bmp("kirby.bmp");
 }
 

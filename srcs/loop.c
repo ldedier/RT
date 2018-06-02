@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 21:31:07 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/01 23:41:14 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int		get_input(t_world *e, char *filename)
 		if (event.type == SDL_KEYUP)
 			ft_keys_event(e, event, 0, filename);
 		if (event.type == SDL_MOUSEBUTTONDOWN)
-			ft_mouse_button(e, event);
+			ft_mouse_button_down(e, event);
+		if (event.type == SDL_MOUSEBUTTONUP)
+			ft_mouse_button_up(e, event);
 		if (event.type == SDL_MOUSEMOTION)
 			ft_mouse_motion(e, event);
 		if (event.window.event == SDL_WINDOWEVENT_CLOSE ||
