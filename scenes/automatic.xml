@@ -14,6 +14,9 @@
 		</cobject>
 		<cobject type="adn">
 			<color>0xFF0000</color>
+			<color1>0xFF00FF</color1>
+			<color2>0x00FF00</color2>
+			<style>plain</style>
 			<length>50</length>
 			<radius>50</radius>
 		</cobject>

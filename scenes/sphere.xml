@@ -6,28 +6,14 @@
 	<objlist>
 		<cobject>
 			<object name = "sphere">
-				<negative>1</negative>
+				<transparency>0.75</transparency>
+				<reflection>0.4</reflection>
 				<positionXYZ>-0.5 0.2 0</positionXYZ>
 				<radius>0.3</radius>
 				<color>0x00ff00</color>
 			</object>
-		</cobject>
-		<cobject>
-			<object name = "sphere">
-				<positionXYZ>0 1 0</positionXYZ>
-				<radius>1</radius>
-				<color>0xffffff</color>
-			</object>
-		</cobject>
-		<cobject>
-			<positionXYZ>0 1 0</positionXYZ>
-			<rotationXYZ>0 0 0</rotationXYZ>
-			<color>0x00FF00</color>
-			<reflection>0</reflection>
-			<object name="plane">
-			</object>
-		</cobject>
-	</objlist>
+			</cobject>
+		</objlist>
 	<lightlist>
 		<light type="point">
 			<color>0xFFFFFF</color>
@@ -36,11 +22,11 @@
 		</light>
 	</lightlist>
 	<ambientlight>
-		<intensity>0.4</intensity>
+		<intensity>0.2</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
 	<fog>
 		<intensity>0</intensity>
-		<color>0xFFFFFF</color>
+		<color>0x222222</color>
 	</fog>
 </scene>

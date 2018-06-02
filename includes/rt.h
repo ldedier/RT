@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/02 06:57:15 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/02 20:36:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@
 
 # define FAST_HRES 160
 # define FAST_VRES 120
-# define HRES 160
-# define VRES 120
+# define HRES 1600
+# define VRES 1200
 # define PROGRESS_BAR_HEIGHT 20
 # define PERSPECTIVE 2
 # define ZOOM 1.5
@@ -86,7 +86,7 @@
 # define EPSILON3 0.000001 //plus petit = moins de solution
 # define EPSILON4 0.00000001 // on considere ca comme zero complexe (surtout used dans quartic)
 # define SPEED 0.1
-# define MAX_BOUNCE 20
+# define MAX_BOUNCE 5
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
