@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 09:48:49 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/02 17:17:31 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/03 00:12:52 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,14 @@ void	intersect_positive(t_objlist *objlist, t_object obj, t_line line,
 	{
 		newhit.obj = obj;
 		if (((newhit.t = get_smallest_legal_pos_val(newhit, sols, hit->t,
-							transformed, objlist, 1, &other)) > 0) && (newhit.t < hit->t || hit->t == -1))
+							transformed, objlist, 1, &other)) > 0))
 		{
 			newhit.point = ft_point3d_add(transformed.o,
 					ft_point3d_scalar(transformed.v, newhit.t));
-				newhit.normal = obj.normal_func(obj, newhit.point, transformed);
-				ft_transform_hit_back(&newhit, line);
+			newhit.normal = obj.normal_func(obj, newhit.point, transformed);
+			ft_transform_hit_back(&newhit, line);
+			if (newhit.t < hit->t || hit->t == -1)
+			{
 				*hit = newhit;
 				if (ft_dot_product(hit->normal, line.v) > 0)
 				{
@@ -62,6 +64,7 @@ void	intersect_positive(t_objlist *objlist, t_object obj, t_line line,
 				}
 				else
 					hit->enter = 1;
+			}
 		}
 	}
 }
@@ -80,7 +83,7 @@ void	intersect_negative(t_objlist *objlist, t_object obj, t_line line,
 	{
 		newhit.obj = obj;
 		if (((newhit.t = get_smallest_legal_pos_val(newhit, sols, hit->t,
-							transformed, objlist, 0, &other)) > 0) && (newhit.t < hit->t || hit->t == -1))
+							transformed, objlist, 0, &other)) > 0))
 		{
 			newhit.point = ft_point3d_add(transformed.o,ft_point3d_scalar(transformed.v, newhit.t));
 				newhit.normal = obj.normal_func(obj, newhit.point, transformed);
@@ -91,6 +94,8 @@ void	intersect_negative(t_objlist *objlist, t_object obj, t_line line,
 				newhit.obj.refract = other.refract;
 				newhit.obj.transp = other.transp;
 				ft_transform_hit_back(&newhit, line);
+				if (newhit.t < hit->t || hit->t == -1)
+				{
 				*hit = newhit;
 				if (ft_dot_product(hit->normal, line.v) > 0)
 				{
@@ -99,6 +104,7 @@ void	intersect_negative(t_objlist *objlist, t_object obj, t_line line,
 				}
 				else
 					hit->enter = 1;
+		}
 		}
 	}
 }
