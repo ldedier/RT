@@ -6,18 +6,18 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/02 15:19:14 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/02 17:17:25 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //DONE	fix <perturbation>asdf</perturbation> segfault
 //DONE	transparency shadows: canviar color i perdre llum PER CADA SRAY
 //		en teoria canviar shadows.c i lights.c nhi ha prou
-//TODO	arreglar ellipsoid (?)
+//NOPE	arreglar ellipsoid (?)
 //TODO	arreglar que es fagin reflexes i phongs a dintre 
 //			(nomes si no es negatiu i la camera esta a fora)
 //TODO	arreglar scale
-//TODO	test all negatives
+//DONE	test all negatives
 //DONE	reflexion
 //DONE	directional light
 //DONE	nimin valors atribut (si reflection es 0 no cal calcular...)
@@ -33,11 +33,11 @@
 //DONE	paint_threaded only when a key is pressed, and not always
 //DONE	paint threaded on enter press.
 //DONE	fix enter detection (only push start threading)
-//TODO	fps counter
+//NOPE	fps counter
 //DONE	progress bar
-//TODO	better distribution of pixels in threads, to avoid very expensive zones
+//NOPE	better distribution of pixels in threads, to avoid very expensive zones
 //DONE	mr bean
-//TODO	(?)start rendering detailed scene when not moving, cancel if move again
+//NOPE	(?)start rendering detailed scene when not moving, cancel if move again
 //DONE separate normals and intersections calculating
 
 #ifndef RT_H
@@ -346,8 +346,10 @@ typedef struct			s_object
 {
 	t_mat4				transform_pos;
 	t_mat4				transform_dir;
+	t_mat4				transform_scale;
 	t_mat4				transform_dir_inv;
 	t_mat4				transform_pos_inv;
+	t_mat4				transform_scale_inv;
 	t_object_union		object_union;
 	int					(*intersect_func)(t_line, struct s_object, double sols[MAX_DEGREE]);
 	int					(*inside_func)(t_hit h, struct s_object);
@@ -891,7 +893,7 @@ void					apply_rotation(t_camera *cam);
 void					ft_compute_matrix(t_object *object);
 void					ft_compute_matrices_clist(t_cobjlist *cobjects);
 t_line					ft_transform_line(t_object object, t_line t);
-void					ft_transform_hit_back(t_hit *hit);
+void					ft_transform_hit_back(t_hit *hit, t_line line);
 
 /*
  ** export

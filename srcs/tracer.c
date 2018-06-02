@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/31 02:53:12 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/02 17:17:29 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,13 @@ t_line				ft_transform_line(t_object object, t_line t)
 	return line;
 }
 
-void				ft_transform_hit_back(t_hit *hit)
+void				ft_transform_hit_back(t_hit *hit, t_line original)
 {
 	t_hit tmp;
 
 	tmp = *hit;
 	hit->point = ft_point3d_mat4_mult(tmp.point, tmp.obj.transform_pos);
+	hit->t = magnitude(newvector(original.o, hit->point));
 	hit->normal = normalize(
 			ft_point3d_mat4_mult(tmp.normal, tmp.obj.transform_dir));
 	hit->pert = normalize(
