@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/03 06:35:29 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/03 08:05:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ void	ft_process_parsing_texture(t_parser *parser, t_object *object)
 	if (!ft_strcmp(parser->attribute, "sphere"))
 		object->texture_func = texture_sphere;
 	else if (!ft_strcmp(parser->attribute, "cone"))
-		object->texture_func = texture_sphere;
+		object->texture_func = texture_cone;
 	else if (!ft_strcmp(parser->attribute, "cylinder"))
-		object->texture_func = texture_sphere;
+		object->texture_func = texture_cylinder;
 	else if (!ft_strcmp(parser->attribute, "plane"))
-		object->texture_func = texture_sphere;
+		object->texture_func = texture_plane;
 	else
 		object->texture_func = NULL;
 }
