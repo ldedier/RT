@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 16:24:17 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/03 06:35:29 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,20 @@ void	set_funcs(t_object *obj,
 	obj->normal_func = normal_func;
 }
 
+void	ft_process_parsing_texture(t_parser *parser, t_object *object)
+{
+	if (!ft_strcmp(parser->attribute, "sphere"))
+		object->texture_func = texture_sphere;
+	else if (!ft_strcmp(parser->attribute, "cone"))
+		object->texture_func = texture_sphere;
+	else if (!ft_strcmp(parser->attribute, "cylinder"))
+		object->texture_func = texture_sphere;
+	else if (!ft_strcmp(parser->attribute, "plane"))
+		object->texture_func = texture_sphere;
+	else
+		object->texture_func = NULL;
+}
+
 void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 {
 	if (!ft_strcmp(parser->attribute, "sphere"))
@@ -112,6 +126,7 @@ void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 				parser->attribute);
 		exit(1);
 	}
+	ft_process_parsing_texture(parser, object);
 }
 
 void	ft_parse_angle(t_parser *parser, t_world *world, char *line)

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 04:44:53 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/03 07:33:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void				ft_transform_hit_back(t_hit *hit, t_line original)
 
 	(void)original;
 	tmp = *hit;
+	hit->old_point = hit->point;
+	hit->old_normal = hit->normal;
 	hit->point = ft_point3d_mat4_mult(tmp.point, tmp.obj.transform_pos);
 //	hit->t = magnitude(newvector(original.o, hit->point));
 	hit->normal = normalize(

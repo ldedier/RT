@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 05:44:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/03 06:01:13 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/03 07:10:37 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ft_parse_texture(t_parser *parser, t_world *world, char *line)
 	{
 		tmp = ft_get_between_tag(&line);
 		world->cobjlist->cobject->objlist->object->parser = ft_parse_bmp(tmp);
+		free(tmp);
 	}
 	else
 	{

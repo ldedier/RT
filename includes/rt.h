@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 05:58:53 by ldedier          ###   ########.fr       */
+/*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
+/*   Updated: 2018/06/03 07:34:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,7 +371,7 @@ typedef struct			s_object
 	int					(*intersect_func)(t_line, struct s_object, double sols[MAX_DEGREE]);
 	int					(*inside_func)(t_hit h, struct s_object);
 	t_point3d			(*normal_func)(struct s_object, t_point3d, t_line line);
-	int					(*texture_func)(struct s_object, t_hit hit);
+	int					(*texture_func)(struct s_object, t_hit *hit);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
@@ -423,6 +423,8 @@ struct			s_hit
 	t_object			obj;
 	t_point3d			point;
 	t_point3d			normal;
+	t_point3d			old_point;
+	t_point3d			old_normal;
 	t_point3d			pert;
 	t_point3d			bounce;
 	t_point3d			pertbounce;
@@ -851,15 +853,15 @@ t_quartic				get_quartic_mobius(t_line line, t_object obj);
 void					ft_init_aux(t_auxquart_init *g, t_line line);
 
 /*
- **cuts
- */
+**cuts
+*/
 int						ft_evaluate_cut(t_cut cut, t_point3d pos);
 double					get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
 		double min, t_line transformed, t_objlist *objlist, int neg, t_object *other);
 
 /*
- **negatives
- */
+**negatives
+*/
 int						is_inside_other(t_hit h, t_objlist *objlist, int neg,
 		t_object *other);
 void					intersect_positive(t_objlist *objlist, t_object obj,
@@ -949,11 +951,12 @@ void					ft_pivot_camera(t_camera *cam, t_point3d tolook);
 ** textures
 */
 
-int						texture_sphere(t_object obj, t_hit hit);
-int						texture_cylinder(t_object obj, t_hit hit);
-int						texture_plane(t_object obj, t_hit hit);
-int						texture_cone(t_object obj, t_hit hit);
+int						texture_sphere(t_object obj, t_hit *hit);
+int						texture_cylinder(t_object obj, t_hit *hit);
+int						texture_plane(t_object obj, t_hit *hit);
+int						texture_cone(t_object obj, t_hit *hit);
 t_bmp_parser			ft_parse_bmp(char *src);
+t_color					get_object_color(t_hit *hit);
 
 /*
 ** matrices
