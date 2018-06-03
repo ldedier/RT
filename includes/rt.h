@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 00:33:16 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/03 04:45:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -415,6 +415,7 @@ struct			s_hit
 	t_point3d			pertbounce;
 	int					enter;
 //	t_color				col;
+	double				t_scale;
 	double				t;
 };
 
