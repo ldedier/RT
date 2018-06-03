@@ -17,6 +17,7 @@
 			<rotationXYZ>0 0 0</rotationXYZ>
 			<color> 0x0000FF </color>
 			<object name="sphere">
+				<texture>resources/textures/earth.bmp</texture>
 			</object>
 		</cobject>
 	</objlist>

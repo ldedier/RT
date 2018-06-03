@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 04:45:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/03 05:58:53 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,6 +348,17 @@ typedef union			s_object_union
 	t_box				box;
 }						t_object_union;
 
+
+
+typedef struct          s_bmp_parser
+{
+	unsigned char       *pixels;
+	int                 width;
+	int                 height;
+	int                 bitmap_index;
+	short               bpp;
+}                       t_bmp_parser;
+
 typedef struct			s_object
 {
 	t_mat4				transform_pos;
@@ -360,6 +371,7 @@ typedef struct			s_object
 	int					(*intersect_func)(t_line, struct s_object, double sols[MAX_DEGREE]);
 	int					(*inside_func)(t_hit h, struct s_object);
 	t_point3d			(*normal_func)(struct s_object, t_point3d, t_line line);
+	int					(*texture_func)(struct s_object, t_hit hit);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
@@ -371,6 +383,7 @@ typedef struct			s_object
 	double				refract;
 	double				transp;
 	int					negative;
+	t_bmp_parser		parser;
 	t_cobject			*cobject;
 }						t_object;
 
@@ -701,6 +714,8 @@ void					ft_parse_length(t_parser *p, t_world *w, char *l);
 void					ft_parse_color_n(t_parser *p, t_world *w, char *l,
 						int n);
 void					ft_parse_style(t_parser *p, t_world *w, char *l);
+void					ft_parse_texture(t_parser *p, t_world *w, char *l);
+int						parse_light(char *line, t_light *rlight);
 
 /*
  **vectors
@@ -929,6 +944,16 @@ void					apply_rotation(t_camera *cam);
 
 void					ft_look_at(t_camera *cam, t_point3d tolook);
 void					ft_pivot_camera(t_camera *cam, t_point3d tolook);
+
+/*
+** textures
+*/
+
+int						texture_sphere(t_object obj, t_hit hit);
+int						texture_cylinder(t_object obj, t_hit hit);
+int						texture_plane(t_object obj, t_hit hit);
+int						texture_cone(t_object obj, t_hit hit);
+t_bmp_parser			ft_parse_bmp(char *src);
 
 /*
 ** matrices
