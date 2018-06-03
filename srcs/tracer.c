@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 00:12:46 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/03 21:00:58 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,11 @@ double				get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
 	double res;
 	int i;
 
-	res = min;
+	res = min + EPSILON2;
 	i = 0;
 	while (i < sols.nbsols)
 	{
-		if (sols.roots[i] > 0 && (sols.roots[i] < res || res == -1))
+		if (sols.roots[i] > 0 && (sols.roots[i] < res || equal_double(res, -1)))
 		{
 			newhit.point = ft_point3d_add(transformed.o, ft_point3d_scalar(
 						transformed.v, sols.roots[i]));

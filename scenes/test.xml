@@ -34,4 +34,5 @@
 		<intensity>0.17</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
+	<filter name="motion_blur"></filter>
 </scene>

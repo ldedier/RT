@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 00:12:43 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/03 21:02:11 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 //DONE	transparency shadows: canviar color i perdre llum PER CADA SRAY
 //		en teoria canviar shadows.c i lights.c nhi ha prou
 //NOPE	arreglar ellipsoid (?)
-//TODO	arreglar que es fagin reflexes i phongs a dintre 
+//NOPE	arreglar que es fagin reflexes i phongs a dintre 
 //			(nomes si no es negatiu i la camera esta a fora)
-//TODO	arreglar scale
+//DONE!!!!!!!	arreglar scale
 //DONE	test all negatives
 //DONE	reflexion
 //DONE	directional light
@@ -25,8 +25,9 @@
 //DONE	negative object
 //done	antialiasing / other filters
 //DONE	fix sometimes cancel the render and go into antialiasing. cause is calling join_threads 2 times in a row and 2nd one returns 0 so assumes it rendered.
-//TODO	controls chachis -> select object
+//LDEDIER	controls chachis -> select object
 //TODO	antialiasing multiple rays per pixel (then get the mean)
+//TODO	motion blur
 //DONE	cartoon shading.
 //TODO	gooch shading -> borders bons pel cartoon?
 //DONE	low resolution when moving camera
@@ -376,7 +377,6 @@ struct			s_hit
 	t_point3d			bounce;
 	t_point3d			pertbounce;
 	int					enter;
-//	t_color				col;
 	double				t;
 };
 
@@ -468,6 +468,7 @@ typedef enum			e_filters
 	e_sobel,
 	e_emboss,
 	e_grey,
+	e_motion_blur,
 	e_nfilters
 }						t_filters;
 
@@ -840,6 +841,7 @@ void    set_funcs(t_object *obj,
 		int (*intersect_func)(t_line, t_object, double[MAX_DEGREE]),
 		int (*inside_func)(t_hit, t_object),
 		t_point3d (*normal_func)(t_object, t_point3d, t_line));
+int						equal_double(double a, double b);
 
 
 /*
