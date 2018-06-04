@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 22:25:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/03 00:33:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/04 03:09:12 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,18 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press)
 			e->keys[key_o] = press;
 		else if (event.key.keysym.sym == SDLK_p)
 			e->keys[key_p] = press;
+		else if (event.key.keysym.sym == SDLK_n)
+			e->keys[key_n] = press;
+		else if (event.key.keysym.sym == SDLK_m)
+			e->keys[key_m] = press;
 		else if (event.key.keysym.sym == SDLK_f && press == 1)
 			e->animate = !e->animate;
 		else if (event.key.keysym.sym == SDLK_LCTRL)
 			e->keys[key_ctrl] = press;
+		else if (event.key.keysym.sym == SDLK_k)
+			e->keys[key_k] = press;
+		else if (event.key.keysym.sym == SDLK_l)
+			e->keys[key_l] = press;
 		else if (event.key.keysym.sym == SDLK_SPACE)
 			e->keys[key_space] = press;
 		else if (event.key.keysym.sym == SDLK_RETURN && e->progress == 0)

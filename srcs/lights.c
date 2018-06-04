@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 07:31:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/04 09:04:16 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,24 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_shadow **shadows, t_color 
 	return (shine);
 }
 
+/*
+t_illum			get_object_color(t_hit *hit)
+{
+	t_illum ret;
+
+	if (hit->obj.parser.width == -1)
+	{
+		ret.in = hit->obj.transp;
+		ret.color = hit->obj.c;
+	}
+	else
+	{
+		ret = hit->obj.texture_func(hit->obj, hit);
+	}
+	return (ret);
+}
+*/
+
 t_color			get_object_color(t_hit *hit)
 {
 	if (hit->obj.parser.width == -1)
@@ -109,7 +127,7 @@ t_color			illuminate(t_world *world, t_hit *hit, t_shadow **shadows, int fast)
 	plaincol = pert_color(hit);
 	illu = getillum(world, hit, shadows);
 
-	transp_scaled = interpole_color(sqrt(hit->obj.transp), BLACK_COLOR, get_object_color(hit));
+	transp_scaled = interpole_color(sqrt(hit->obj.transp), BLACK_COLOR, pert_color(hit));
 //	transp_scaled = interpole_color(sqrt(hit->obj.transp), BLACK_COLOR, hit->obj.c);
 	lightcol = interpole_color(illu.in, transp_scaled, interpole_color(
 				getwhiteratio(illu.color, 0.3, 1), illu.color, plaincol));

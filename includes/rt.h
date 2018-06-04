@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/03 07:34:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/04 03:08:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,10 @@ typedef enum	e_keys
 	key_c,
 	key_x,
 	key_v,
+	key_k,
+	key_l,
+	key_n,
+	key_m,
 	key_ctrl,
 	key_space,
 	key_shift,
@@ -717,6 +721,11 @@ void					ft_parse_color_n(t_parser *p, t_world *w, char *l,
 						int n);
 void					ft_parse_style(t_parser *p, t_world *w, char *l);
 void					ft_parse_texture(t_parser *p, t_world *w, char *l);
+
+void					ft_parse_trans_x(t_parser *p, t_world *w, char *l);
+void					ft_parse_trans_y(t_parser *p, t_world *w, char *l);
+void					ft_parse_stretch_x(t_parser *p, t_world *w, char *l);
+void					ft_parse_stretch_y(t_parser *p, t_world *w, char *l);
 int						parse_light(char *line, t_light *rlight);
 
 /*

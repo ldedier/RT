@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/03 08:05:51 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/04 01:57:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,13 @@ void	ft_give_default_characteristics(t_object *object)
 	}
 	else if (object->intersect_func == intersect_hyperboloid)
 		object->object_union.hyperboloid.radius = 1;
+	else if (object->intersect_func == intersect_plane)
+	{
+		object->object_union.plane.texture_stretch_x = 1;
+		object->object_union.plane.texture_stretch_y = 1;
+		object->object_union.plane.texture_trans_x = 0;
+		object->object_union.plane.texture_trans_y = 0;
+	}
 }
 
 void	set_funcs(t_object *obj,

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/03 05:39:35 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/04 02:01:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@ static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 		ft_parse_color_n(parser, world, line, 3);
 	else if (!ft_strcmp(parser->tag, "style"))
 		ft_parse_style(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "texture_trans_x"))
+		ft_parse_trans_x(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "texture_trans_y"))
+		ft_parse_trans_y(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "texture_stretch_x"))
+		ft_parse_stretch_x(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "texture_stretch_y"))
+		ft_parse_stretch_y(parser, world, line);
 	else if (strcmp(parser->tag, "scene") &&
 			strcmp(parser->tag, "objlist") &&
 			strcmp(parser->tag, "lightlist"))
