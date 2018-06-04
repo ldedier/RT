@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/04 22:20:20 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/04 23:30:46 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -521,6 +521,10 @@ typedef struct			s_menu
 	t_dropdown			filters;
 	t_bmp_parser		cartoon;
 	t_bmp_parser		cartoon2;
+	t_bmp_parser		photo;
+	t_bmp_parser		video;
+	t_bmp_parser		stop;
+	t_bmp_parser		save;
 }						t_menu;
 
 typedef struct			s_world

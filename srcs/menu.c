@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:29:20 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/04 22:20:16 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/04 23:38:36 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,24 +412,24 @@ void	ft_menu_others(t_world *world)
 	}
 	//<-- /RANGEBARS -->
 	//<-- CARTOON -->
-	t_bmp_parser cartoon;
+	t_bmp_parser bmp;
 	if (world->shader == 2)
-		cartoon = world->menu.cartoon2;
+		bmp = world->menu.cartoon2;
 	else
-		cartoon = world->menu.cartoon;
+		bmp = world->menu.cartoon;
 	world->menu.rect.x = world->canvas->win_size.x + 20 + 54;
 	world->menu.rect.y = 556;
-	world->menu.rect.w = cartoon.width;
-	world->menu.rect.h = cartoon.height;
+	world->menu.rect.w = bmp.width;
+	world->menu.rect.h = bmp.height;
 	ft_new_menu_surface(world);
 	int *pix = (int *)(world->menu.surface->pixels);
 	int y = 0;
-	while (y < cartoon.height)
+	while (y < bmp.height)
 	{
 		int x = 0;
-		while (x < cartoon.width)
+		while (x < bmp.width)
 		{
-			pix[y * world->menu.rect.w + x] = ft_get_pixel(x, cartoon.height - y, cartoon.pixels, cartoon.width, cartoon.bpp);
+			pix[y * world->menu.rect.w + x] = ft_get_pixel(x, bmp.height - y, bmp.pixels, bmp.width, bmp.bpp);
 			x++;
 		}
 		y++;
@@ -445,6 +445,112 @@ void	ft_menu_others(t_world *world)
 		ft_show_filters(world);
 	//<-- /FILTERS -->
 	//<-- /BLOC_1 -->
+
+
+	//<-- BLOC_2 -->
+	world->menu.rect.x = world->canvas->win_size.x + 20 + 20;
+	world->menu.rect.y = 20 + 60 + 30 + 530 + 20;
+	world->menu.rect.w = MENU_WIDTH - 40 - 40;
+	world->menu.rect.h = 200;
+	ft_new_menu_surface(world);
+	SDL_FillRect(world->menu.surface, NULL, 0x222222);
+	ft_add_menu_surface(world);
+	world->menu.rect.x = world->canvas->win_size.x + 20 + 20 + 25;
+	world->menu.rect.y = 20 + 60 + 30 + 530 + 20 + 20;
+	world->menu.rect.w = MENU_WIDTH - 40 - 40 - 50;
+	world->menu.rect.h = 200 - 40;
+	ft_new_menu_surface(world);
+	SDL_FillRect(world->menu.surface, NULL, 0xF8F8FF);
+	ft_add_menu_surface(world);
+	world->menu.rect.x = world->canvas->win_size.x + 20 + 20 + 25;
+	world->menu.rect.y = 20 + 60 + 30 + 530 + 20 + 20;
+	world->menu.rect.w = MENU_WIDTH - 40 - 40 - 50;
+	world->menu.rect.h = 40;
+	ft_new_menu_surface(world);
+	SDL_FillRect(world->menu.surface, NULL, 0x666666);
+	ft_add_menu_surface(world);
+	world->menu.color.r = 255;
+	world->menu.color.g = 255;
+	world->menu.color.b = 255;
+	world->menu.color.a = 255;
+	world->menu.rect.x = world->canvas->win_size.x + 20 + 45 + 145;
+	world->menu.rect.y = 680 + 10;
+	world->menu.rect.w = 70;
+	world->menu.rect.h = 20;
+	ft_add_text(world, 1, "Export");
+	//<-- PHOTO -->
+	bmp = world->menu.photo;
+	world->menu.rect.x = world->canvas->win_size.x + 20 + 75;
+	world->menu.rect.y = 750;
+	world->menu.rect.w = bmp.width;
+	world->menu.rect.h = bmp.height;
+	ft_new_menu_surface(world);
+	pix = (int *)(world->menu.surface->pixels);
+	y = 0;
+	while (y < bmp.height)
+	{
+		int x = 0;
+		while (x < bmp.width)
+		{
+			if (y < 2)
+				pix[y * world->menu.rect.w + x] = 0xF8F8FF;
+			else
+				pix[y * world->menu.rect.w + x] = ft_get_pixel(x, bmp.height - y, bmp.pixels, bmp.width, bmp.bpp);
+			x++;
+		}
+		y++;
+	}
+	ft_add_menu_surface(world);
+	//<-- /PHOTO -->
+	//<-- VIDEO -->
+	bmp = world->menu.video;
+	world->menu.rect.x = world->canvas->win_size.x + 20 + 75 + 125;
+	world->menu.rect.y = 760;
+	world->menu.rect.w = bmp.width;
+	world->menu.rect.h = bmp.height;
+	ft_new_menu_surface(world);
+	pix = (int *)(world->menu.surface->pixels);
+	y = 0;
+	while (y < bmp.height)
+	{
+		int x = 0;
+		while (x < bmp.width)
+		{
+			if (y < 2)
+				pix[y * world->menu.rect.w + x] = 0xF8F8FF;
+			else
+				pix[y * world->menu.rect.w + x] = ft_get_pixel(x, bmp.height - y, bmp.pixels, bmp.width, bmp.bpp);
+			x++;
+		}
+		y++;
+	}
+	ft_add_menu_surface(world);
+	//<-- /VIDEO -->
+	//<-- SAVE -->
+	bmp = world->menu.save;
+	world->menu.rect.x = world->canvas->win_size.x + 20 + 75 + 250;
+	world->menu.rect.y = 752;
+	world->menu.rect.w = bmp.width;
+	world->menu.rect.h = bmp.height;
+	ft_new_menu_surface(world);
+	pix = (int *)(world->menu.surface->pixels);
+	y = 0;
+	while (y < bmp.height)
+	{
+		int x = 0;
+		while (x < bmp.width)
+		{
+			if (y < 2)
+				pix[y * world->menu.rect.w + x] = 0xF8F8FF;
+			else
+				pix[y * world->menu.rect.w + x] = ft_get_pixel(x, bmp.height - y, bmp.pixels, bmp.width, bmp.bpp);
+			x++;
+		}
+		y++;
+	}
+	ft_add_menu_surface(world);
+	//<-- /SAVE -->
+	//<-- /BLOC_2 -->
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 22:20:22 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/04 23:30:40 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,6 +274,10 @@ void			set_defaults(t_world *world)
 	world->menu.cartoon = ft_parse_bmp("cartoon.bmp");
 	world->menu.cartoon2 = ft_parse_bmp("cartoon2.bmp");
 
+	world->menu.photo = ft_parse_bmp("photo.bmp");
+	world->menu.video = ft_parse_bmp("video.bmp");
+	world->menu.stop = ft_parse_bmp("stop.bmp");
+	world->menu.save = ft_parse_bmp("save.bmp");
 	
 	
 	
