@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/02 07:14:23 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/04 08:39:57 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,46 @@ void	ft_mouse_motion(t_world *world, SDL_Event event)
 	if (world->menu.active_cp >= 0)
 	{
 		int i = world->menu.active_cp;
-		int x = event.motion.x - (world->menu.others_cp[i].pix.x + world->menu.others_cp[i].pos.x);
-		int y = event.motion.y - (world->menu.others_cp[i].pix.y + world->menu.others_cp[i].pos.y);
-		
-		//regarder si x, y dans l'intervalle [0, 100]
-		//si oui, diviser x et y par 100
-		//trouver le r,g.b et donc la couleur correspondante
-		//pour cela faire la double boucle et s'arreter quand trouver
-		//soit exactement, soit tres proche si 1er donne pas de solution
-		
-		//world->menu.others_cp[i].color->col = value;
-		printf("%d %d\n", x, y);
+		int x = event.motion.x - world->menu.others_cp[i].pix.x;
+		int y = event.motion.y - world->menu.others_cp[i].pix.y;
+		if (x < 0)
+			x = 0;
+		else if (x > 100)
+			x = 100;
+		if (y < 0)
+			y = 0;
+		else if (y > 100)
+			y = 100;
+		*(world->menu.others_cp[i].color) = world->menu.color_map[y * 100 + x];
+		world->menu.others_cp[i].pos.x = x;
+		world->menu.others_cp[i].pos.y = y;
 		paint_threaded_fast(world);;
 	}
+}
 
+void	ft_sort_menu_filters(t_world *world)
+{
+	int		changed;
+	int		i;
+	int		tmp;
+
+	changed = 1;
+	while (changed == 1)
+	{
+		changed = 0;
+		i = 1;
+		while ((i + 1) < (e_nfilters + 1))
+		{
+			if (world->menu.filters_list[i] > world->menu.filters_list[i + 1])
+			{
+				tmp = world->menu.filters_list[i];
+				world->menu.filters_list[i] = world->menu.filters_list[i + 1];
+				world->menu.filters_list[i + 1] = tmp;
+				changed = 1;
+			}
+			i++;
+		}
+	}	
 }
 
 void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
@@ -72,43 +98,108 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 			x <= (start + 30 + 140) && y >= 30 && y <= 70)
 	{
 		world->menu.type = MENU_OBJECTS;
+		if (world->menu.filter_active == 1)
+			world->menu.filter_active = 0;
 		update_progress_bar(world);
 	}
 	else if (world->menu.type != MENU_LIGHTS && x >= (start + 30 + 150) &&
 			x <= (start + 30 + 150 + 140) && y >= 30 && y <= 70)
 	{
 		world->menu.type = MENU_LIGHTS;
+		if (world->menu.filter_active == 1)
+			world->menu.filter_active = 0;
 		update_progress_bar(world);
 	}
 	else if (world->menu.type != MENU_OTHERS && x >= (start + 30 + 150 + 150) &&
 			x <= (start + 30 + 150 + 150 + 140) && y >= 30 && y <= 70)
 	{
 		world->menu.type = MENU_OTHERS;
+		if (world->menu.filter_active == 1)
+			world->menu.filter_active = 0;
 		update_progress_bar(world);
 	}
 	else if (world->menu.type == MENU_OTHERS)
 	{
+		if (world->menu.filter_active == 0)
+		{
+			if (x >= (world->menu.filters.pos.x) && x <= (world->menu.filters.pos.x + world->menu.filters.size.x) &&
+					y >= (world->menu.filters.pos.y) && y <= (world->menu.filters.pos.y + world->menu.filters.size.y))
+			{
+				world->menu.filter_active = 1;
+				update_progress_bar(world);
+				return ;
+			}
+		}
+		else if (world->menu.filter_active == 1)
+		{
+			int x0 = world->menu.filters.pos.x;
+			int x1 = world->menu.filters.pos.x + world->menu.filters.size.x;
+			int tmp = world->menu.filters_list[0];
+			int i = 0;
+			while (i < (e_nfilters + 1))
+			{
+				int y0 = world->menu.filters.pos.y + i * (world->menu.filters.size.y + 2);
+				int y1 = y0 + world->menu.filters.size.y;
+				if (x >= x0 && x <= x1 && y >= y0 && y <= y1)
+					break ;
+				i++;
+			}
+			if (i == (e_nfilters + 1))
+			{
+				i = 0;
+				world->menu.filters_list[0] = world->menu.filters_list[i];
+				world->menu.filters_list[i] = tmp;
+				ft_sort_menu_filters(world);
+				world->menu.filter_active = 0;
+				if (i < (e_nfilters + 1))
+				{
+					world->filters[tmp] = 0;
+					world->filters[world->menu.filters_list[0]] = 1;
+				}
+				update_progress_bar(world);
+			}
+			else
+			{
+				world->menu.filters_list[0] = world->menu.filters_list[i];
+				world->menu.filters_list[i] = tmp;
+				ft_sort_menu_filters(world);
+				world->menu.filter_active = 0;
+				if (i < (e_nfilters + 1))
+				{
+					world->filters[tmp] = 0;
+					world->filters[world->menu.filters_list[0]] = 1;
+				}
+				update_progress_bar(world);
+				return ;
+			}
+		}
+		if (world->menu.filter_active == 1)
+			world->menu.filter_active = 0;
 		i = 0;
 		while (i < world->menu.nb_others_rb)
 		{
-			int x0 = world->menu.others_rb[i].pix.x + ((*(world->menu.others_rb[i].value) * 100) / world->menu.others_rb[i].max);
+			//int x0 = world->menu.others_rb[i].pix.x + ((*(world->menu.others_rb[i].value) * 100) / world->menu.others_rb[i].max);
+			int x0 = world->menu.others_rb[i].pix.x + ((world->menu.others_rb[i].min * 100) / world->menu.others_rb[i].max);
+			int x1 = world->menu.others_rb[i].pix.x + ((world->menu.others_rb[i].max * 100) / world->menu.others_rb[i].max);
 			int y0 = world->menu.others_rb[i].pix.y;
-			if (x >= (x0) && x <= (x0 + 8) && y >= (y0 - 3) && y <= (y0 - 3 + 12))
+			if (x >= (x0) && x <= (x1 + 8) && y >= (y0 - 3) && y <= (y0 - 3 + 12))
 			{
 				world->menu.active_rb = i;
-				break;
+				ft_mouse_motion(world, event);
+				return ;
 			}
 			i++;
 		}
 		i = 0;
 		while (i < world->menu.nb_others_cp)
 		{
-			int x0 = world->menu.others_cp[i].pix.x + world->menu.others_cp[i].pos.x;
-			int y0 = world->menu.others_cp[i].pix.y + world->menu.others_cp[i].pos.x;
-			if (x >= (x0) && x <= (x0 + 7) && y >= (y0) && y <= (y0 + 7))
+			int x0 = world->menu.others_cp[i].pix.x;
+			int y0 = world->menu.others_cp[i].pix.y;
+			if (x >= (x0) && x <= (x0 + 100) && y >= (y0) && y <= (y0 + 100))
 			{
 				world->menu.active_cp = i;
-				break;
+				ft_mouse_motion(world, event);
+				return ;
 			}
 			i++;
 		}
@@ -141,13 +232,7 @@ void	ft_mouse_button_down(t_world *world, SDL_Event event)
 
 void	ft_mouse_button_up_menu(t_world *world, SDL_Event event)
 {
-	int		x;
-	int		y;
-	int		start;
-
-	x = event.button.x;
-	y = event.button.y;
-	start = world->canvas->win_size.x;
+	(void)event;
 	if (world->menu.active_rb >= 0)
 		world->menu.active_rb = -1;
 	if (world->menu.active_cp >= 0)

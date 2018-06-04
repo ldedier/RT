@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/02 05:50:31 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/04 07:35:58 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@
 # define EPSILON3 0.000001 //plus petit = moins de solution
 # define EPSILON4 0.00000001 // on considere ca comme zero complexe (surtout used dans quartic)
 # define SPEED 0.1
-# define MAX_BOUNCE 20
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
@@ -495,6 +494,13 @@ typedef struct			s_rangebar
 	double				*value;
 }						t_rangebar;
 
+typedef struct			s_dropdown
+{
+	t_pixel				pos;
+	t_pixel				size;
+	int					levels;
+}						t_dropdown;
+
 typedef struct			s_menu
 {
 	int					type;
@@ -507,9 +513,12 @@ typedef struct			s_menu
 	int					active_cp;
 	int					nb_others_rb;
 	int					nb_others_cp;
-	t_rangebar			others_rb[2];
+	t_rangebar			others_rb[3];
 	t_colorpicker		others_cp[2];
-
+	t_color				color_map[100 * 100];
+	int					filters_list[e_nfilters + 1];
+	int					filter_active;
+	t_dropdown			filters;
 }						t_menu;
 
 typedef struct			s_world
@@ -534,6 +543,8 @@ typedef struct			s_world
 	int					mouse_press;
 	t_bmp_parser		bmp_parser;
 	t_menu				menu;
+	double				max_bounce;
+	t_bmp_parser		cartoon;
 }						t_world;
 
 typedef struct			s_thr_par

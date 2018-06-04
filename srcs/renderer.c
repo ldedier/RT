@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/28 23:22:02 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/04 06:40:32 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		else
 			illuminated_c = illuminate_toon(world, hit, srays, fast);
 		fogged_c = interpole_color(fog, illuminated_c, world->fog.color);
-		if (bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON)
+		if (bounce < world->max_bounce && hit->obj.reflect > EPSILON)
 			reflect_c = ray_color(newray(translate_vec(hit->point,
 							hit->pertbounce, EPSILON), hit->pertbounce, ray.n),
 					world, bounce + 1, 0);
 		else
 			reflect_c = get_color(0x000000);
-		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON)
+		if (bounce < world->max_bounce && hit->obj.transp > EPSILON)
 			refract_c = ray_color(newray(translate_vec(hit->point, 
 					ray.v, EPSILON), refraction(hit, &ray), ray.n),
 					world, bounce + 1, 0);
