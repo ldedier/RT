@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:29:20 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/04 08:39:52 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/04 22:20:16 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,6 +411,31 @@ void	ft_menu_others(t_world *world)
 		i++;
 	}
 	//<-- /RANGEBARS -->
+	//<-- CARTOON -->
+	t_bmp_parser cartoon;
+	if (world->shader == 2)
+		cartoon = world->menu.cartoon2;
+	else
+		cartoon = world->menu.cartoon;
+	world->menu.rect.x = world->canvas->win_size.x + 20 + 54;
+	world->menu.rect.y = 556;
+	world->menu.rect.w = cartoon.width;
+	world->menu.rect.h = cartoon.height;
+	ft_new_menu_surface(world);
+	int *pix = (int *)(world->menu.surface->pixels);
+	int y = 0;
+	while (y < cartoon.height)
+	{
+		int x = 0;
+		while (x < cartoon.width)
+		{
+			pix[y * world->menu.rect.w + x] = ft_get_pixel(x, cartoon.height - y, cartoon.pixels, cartoon.width, cartoon.bpp);
+			x++;
+		}
+		y++;
+	}
+	ft_add_menu_surface(world);
+	//<-- /CARTOON -->
 	//<-- FILTERS -->
 	world->menu.color.r = 0;
 	world->menu.color.g = 0;
@@ -419,28 +444,6 @@ void	ft_menu_others(t_world *world)
 	if (world->menu.filter_active == 1)
 		ft_show_filters(world);
 	//<-- /FILTERS -->
-	//<-- CARTOON -->
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45;
-	world->menu.rect.y = 560;
-	world->menu.rect.w = 350;
-	world->menu.rect.h = 50;
-	ft_new_menu_surface(world);
-	int *pix = (int *)(world->menu.surface->pixels);
-	int y = 0;
-	while (y < world->menu.rect.h)
-	{
-		int x = 0;
-		while (x < world->menu.rect.w)
-		{
-			int color = ft_get_pixel(x, world->cartoon.height - y, world->cartoon.pixels, world->cartoon.width, world->cartoon.bpp);;
-			pix[y * world->menu.rect.w + x] = color;
-			x++;
-		}
-		y++;
-	}
-	ft_add_menu_surface(world);
-	//<-- /CARTOON -->
-
 	//<-- /BLOC_1 -->
 }
 

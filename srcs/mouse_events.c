@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/04 08:39:57 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/04 22:20:18 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,16 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 				return ;
 			}
 			i++;
+		}
+		int x0 = world->canvas->win_size.x + 20 + 54;
+		int y0 = 556;
+		if (x >= (x0) && x <= (x0 + world->menu.cartoon.width) && y >= (y0) && y <= (y0 + world->menu.cartoon.height))
+		{
+			if (world->shader == 2)
+				world->shader = 1;
+			else
+				world->shader = 2;
+			paint_threaded_fast(world);;
 		}
 	}
 }

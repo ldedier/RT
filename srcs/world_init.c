@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 08:40:03 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/04 22:20:22 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,9 +271,13 @@ void			set_defaults(t_world *world)
 	}
 	world->menu.filters = ft_new_dropdown(ft_new_pixel(world->canvas->win_size.x + 20 + 45 + 174, 402), ft_new_pixel(195, 36), e_nfilters);
 
+	world->menu.cartoon = ft_parse_bmp("cartoon.bmp");
+	world->menu.cartoon2 = ft_parse_bmp("cartoon2.bmp");
 
-
-	world->cartoon = ft_parse_bmp("cartoon7.bmp");
+	
+	
+	
+	
 	world->bmp_parser = ft_parse_bmp("kirby.bmp");
 }
 

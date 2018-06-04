@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/04 07:35:58 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/04 22:20:20 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -519,6 +519,8 @@ typedef struct			s_menu
 	int					filters_list[e_nfilters + 1];
 	int					filter_active;
 	t_dropdown			filters;
+	t_bmp_parser		cartoon;
+	t_bmp_parser		cartoon2;
 }						t_menu;
 
 typedef struct			s_world
@@ -544,7 +546,6 @@ typedef struct			s_world
 	t_bmp_parser		bmp_parser;
 	t_menu				menu;
 	double				max_bounce;
-	t_bmp_parser		cartoon;
 }						t_world;
 
 typedef struct			s_thr_par
