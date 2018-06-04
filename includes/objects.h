@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 21:04:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 06:58:34 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 02:07:12 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ typedef struct		s_cone
 
 typedef struct		s_plane
 {
+	double			texture_stretch_x;
+	double			texture_stretch_y;
+	int				texture_trans_x;
+	int				texture_trans_y;
 }					t_plane;
 
 typedef struct		s_cylinder

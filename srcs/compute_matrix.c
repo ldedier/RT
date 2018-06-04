@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 04:57:37 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/02 17:17:27 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 02:38:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,16 @@ void	ft_compute_matrices(t_cobject *cobject)
 		// ft_printf("rotate\n");
 		// ft_print_mat4(rotate);
 
-		t_mat4 translate = ft_mat4_translate_vec(ft_point3d_add(cobject->o,  ft_point3d_mult(cobject->s, object->o)));
+		t_mat4 translate;
+			translate = ft_mat4_translate_vec(ft_point3d_add(cobject->o,  ft_point3d_mult(cobject->s, object->o)));
 		// ft_printf("translate\n");
-		// ft_print_mat4(translate);
-		t_mat4 scale = ft_mat4_scale_vec(
+		t_mat4 scale;
+		if (object->intersect_func != intersect_plane)
+			scale = ft_mat4_scale_vec(
 				ft_new_vec3(object->s.x * cobject->s.x,
 					object->s.y * cobject->s.y, object->s.z * cobject->s.z));
+		else
+			scale = ft_mat4_eye();
 		// ft_printf("scale\n");
 		// ft_print_mat4(scale);
 

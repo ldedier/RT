@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 16:24:17 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 01:57:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,13 @@ void	ft_give_default_characteristics(t_object *object)
 	}
 	else if (object->intersect_func == intersect_hyperboloid)
 		object->object_union.hyperboloid.radius = 1;
+	else if (object->intersect_func == intersect_plane)
+	{
+		object->object_union.plane.texture_stretch_x = 1;
+		object->object_union.plane.texture_stretch_y = 1;
+		object->object_union.plane.texture_trans_x = 0;
+		object->object_union.plane.texture_trans_y = 0;
+	}
 }
 
 void	set_funcs(t_object *obj,
@@ -74,6 +81,20 @@ void	set_funcs(t_object *obj,
 	obj->intersect_func = intersect_func;
 	obj->inside_func = inside_func;
 	obj->normal_func = normal_func;
+}
+
+void	ft_process_parsing_texture(t_parser *parser, t_object *object)
+{
+	if (!ft_strcmp(parser->attribute, "sphere"))
+		object->texture_func = texture_sphere;
+	else if (!ft_strcmp(parser->attribute, "cone"))
+		object->texture_func = texture_cone;
+	else if (!ft_strcmp(parser->attribute, "cylinder"))
+		object->texture_func = texture_cylinder;
+	else if (!ft_strcmp(parser->attribute, "plane"))
+		object->texture_func = texture_plane;
+	else
+		object->texture_func = NULL;
 }
 
 void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
@@ -112,6 +133,7 @@ void	ft_process_parsing_object_attributes(t_parser *parser, t_object *object)
 				parser->attribute);
 		exit(1);
 	}
+	ft_process_parsing_texture(parser, object);
 }
 
 void	ft_parse_angle(t_parser *parser, t_world *world, char *line)

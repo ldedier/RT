@@ -60,10 +60,18 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press)
 			e->keys[key_o] = press;
 		else if (event.key.keysym.sym == SDLK_p)
 			e->keys[key_p] = press;
+		else if (event.key.keysym.sym == SDLK_n)
+			e->keys[key_n] = press;
+		else if (event.key.keysym.sym == SDLK_m)
+			e->keys[key_m] = press;
 		else if (event.key.keysym.sym == SDLK_f && press == 1)
 			e->animate = !e->animate;
 		else if (event.key.keysym.sym == SDLK_LCTRL)
 			e->keys[key_ctrl] = press;
+		else if (event.key.keysym.sym == SDLK_k)
+			e->keys[key_k] = press;
+		else if (event.key.keysym.sym == SDLK_l)
+			e->keys[key_l] = press;
 		else if (event.key.keysym.sym == SDLK_SPACE)
 			e->keys[key_space] = press;
 		else if (event.key.keysym.sym == SDLK_RETURN && e->progress == 0)
@@ -123,7 +131,7 @@ void	ft_pivot_camera(t_camera *cam, t_point3d tolook)
 	double dist;
 	double anglep = atan2(cam->o.z - tolook.z, cam->o.x - tolook.x);
 	anglep += M_PI / 48.0;
-	vec_dist = ft_point3d_cmp(tolook, cam->o);	
+	vec_dist = ft_point3d_cmp(tolook, cam->o);
 	dist = sqrt(vec_dist.x * vec_dist.x + vec_dist.z * vec_dist.z);
 	cam->o.x = dist * cos(anglep) + tolook.x;
 	cam->o.z = dist * sin(anglep) + tolook.z;
@@ -148,7 +156,7 @@ void	ft_look_at(t_camera *cam, t_point3d tolook)
 
 	double angle_x = -atan2(vec_look_at.x, vec_look_at.z);
 //	if (angle_x < -M_PI_2)
-//	{	
+//	{
 //		angle_x += M_PI_2;
 ////		exit(1);
 	//}

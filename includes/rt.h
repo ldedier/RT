@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/04 09:17:35 by ldedier          ###   ########.fr       */
+/*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
+/*   Updated: 2018/06/04 09:25:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@
 # define EPSILON3 0.000001 //plus petit = moins de solution
 # define EPSILON4 0.00000001 // on considere ca comme zero complexe (surtout used dans quartic)
 # define SPEED 0.1
-# define MAX_BOUNCE 15
+# define MAX_BOUNCE 2
 # define AA_SQ_SIZE 1
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
@@ -134,6 +134,10 @@ typedef enum	e_keys
 	key_c,
 	key_x,
 	key_v,
+	key_k,
+	key_l,
+	key_n,
+	key_m,
 	key_ctrl,
 	key_space,
 	key_shift,
@@ -352,6 +356,17 @@ typedef union			s_object_union
 	t_box				box;
 }						t_object_union;
 
+
+
+typedef struct          s_bmp_parser
+{
+	unsigned char       *pixels;
+	int                 width;
+	int                 height;
+	int                 bitmap_index;
+	short               bpp;
+}                       t_bmp_parser;
+
 typedef struct			s_object
 {
 	t_mat4				transform_pos;
@@ -364,6 +379,7 @@ typedef struct			s_object
 	int					(*intersect_func)(t_line, struct s_object, double sols[MAX_DEGREE]);
 	int					(*inside_func)(t_hit h, struct s_object);
 	t_point3d			(*normal_func)(struct s_object, t_point3d, t_line line);
+	int					(*texture_func)(struct s_object, t_hit *hit);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
@@ -375,6 +391,7 @@ typedef struct			s_object
 	double				refract;
 	double				transp;
 	int					negative;
+	t_bmp_parser		parser;
 	t_cobject			*cobject;
 }						t_object;
 
@@ -414,6 +431,8 @@ struct			s_hit
 	t_object			obj;
 	t_point3d			point;
 	t_point3d			normal;
+	t_point3d			old_point;
+	t_point3d			old_normal;
 	t_point3d			pert;
 	t_point3d			bounce;
 	t_point3d			pertbounce;
@@ -705,6 +724,13 @@ void					ft_parse_length(t_parser *p, t_world *w, char *l);
 void					ft_parse_color_n(t_parser *p, t_world *w, char *l,
 						int n);
 void					ft_parse_style(t_parser *p, t_world *w, char *l);
+void					ft_parse_texture(t_parser *p, t_world *w, char *l);
+
+void					ft_parse_trans_x(t_parser *p, t_world *w, char *l);
+void					ft_parse_trans_y(t_parser *p, t_world *w, char *l);
+void					ft_parse_stretch_x(t_parser *p, t_world *w, char *l);
+void					ft_parse_stretch_y(t_parser *p, t_world *w, char *l);
+int						parse_light(char *line, t_light *rlight);
 
 /*
  **vectors
@@ -840,15 +866,15 @@ t_quartic				get_quartic_mobius(t_line line, t_object obj);
 void					ft_init_aux(t_auxquart_init *g, t_line line);
 
 /*
- **cuts
- */
+**cuts
+*/
 int						ft_evaluate_cut(t_cut cut, t_point3d pos);
 double					get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
 		double min, t_line transformed, t_objlist *objlist, int neg, t_object *other);
 
 /*
- **negatives
- */
+**negatives
+*/
 int						is_inside_other(t_hit h, t_objlist *objlist, int neg,
 		t_object *other);
 void					intersect_positive(t_objlist *objlist, t_object obj,
@@ -934,6 +960,17 @@ void					apply_rotation(t_camera *cam);
 
 void					ft_look_at(t_camera *cam, t_point3d tolook);
 void					ft_pivot_camera(t_camera *cam, t_point3d tolook);
+
+/*
+** textures
+*/
+
+int						texture_sphere(t_object obj, t_hit *hit);
+int						texture_cylinder(t_object obj, t_hit *hit);
+int						texture_plane(t_object obj, t_hit *hit);
+int						texture_cone(t_object obj, t_hit *hit);
+t_bmp_parser			ft_parse_bmp(char *src);
+t_color					get_object_color(t_hit *hit);
 
 /*
 ** matrices

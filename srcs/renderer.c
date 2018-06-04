@@ -76,7 +76,7 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 					ray.v, EPSILON), refraction(hit, &ray)),
 					world, bounce + 1, 0);
 		else
-			refract_c = get_color(0x0);//pert_color(hit);
+			refract_c = pert_color(hit);
 		return (freeret(interpole_color(hit->obj.transp,
 						interpole_color(hit->obj.reflect,
 							fogged_c, reflect_c), refract_c), &hit, &aux));
@@ -110,7 +110,7 @@ t_color				render_pixel(t_world *world, t_pixel pix, int fast)
 			}
 		}
 	}
-	else 
+	else
 	{
 		aapix.x = 0;
 		aapix.y = 0;

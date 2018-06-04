@@ -116,8 +116,11 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 defining.c\
 				 insides2.c\
 				 video.c\
-				 automatic.c \
-				 tools.c
+				 tools.c\
+				 ft_parse_bmp.c\
+				 parse_texture.c\
+				 textures.c\
+				 parse_plane_textures.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 

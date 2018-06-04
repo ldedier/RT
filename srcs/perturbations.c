@@ -42,12 +42,12 @@ t_color	pert_color(t_hit *hit)
 	t_color	ret;
 	t_color	inv;
 
-	ret = hit->obj.c;
+	ret = get_object_color(hit);
 	inv = scale_convert_color(add_scale_intcolors(get_intcolor(WHITE_COLOR),
 				get_intcolor(ret), -1), 1);
-	if (hit->obj.pert == e_chess && 
-			(((sin(hit->point.x) > 0 ? 1 : -1) *
-			  (sin(hit->point.z) > 0 ? 1 : -1)) > 0))
+	if (hit->obj.pert == e_chess &&
+			(((sin(hit->old_point.x) > 0 ? 1 : -1) *
+			  (sin(hit->old_point.z) > 0 ? 1 : -1)) > 0))
 		return (inv);
 	if (hit->obj.pert == e_spiral)
 	{
