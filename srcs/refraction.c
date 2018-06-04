@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 02:55:19 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/29 18:45:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/04 20:51:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,9 @@ t_point3d	refraction(t_hit *hit, t_line *line)
 	double n;
 
 	if (hit->enter)
-	{
-		n = line->n / hit->obj.refract;
-		line->n = hit->obj.refract;
-	}
+		n = 1 / hit->obj.refract;
 	else
-	{
 		n = hit->obj.refract;
-		line->n = 1;
-	}
 	c1 = -ft_dot_product(hit->normal, line->v);
 	c2 = sqrt(1 - (n * n) * (1 - (c1 * c1)));
 	if (c1 > 0)
