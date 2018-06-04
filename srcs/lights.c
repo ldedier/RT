@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 23:21:20 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 21:39:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_shadow **shadows, t_color 
 	return (shine);
 }
 
-/*
+
 t_illum			get_object_color(t_hit *hit)
 {
 	t_illum ret;
@@ -101,13 +101,11 @@ t_illum			get_object_color(t_hit *hit)
 		ret.color = hit->obj.c;
 	}
 	else
-	{
 		ret = hit->obj.texture_func(hit->obj, hit);
-	}
 	return (ret);
 }
-*/
 
+/*
 t_color			get_object_color(t_hit *hit)
 {
 	if (hit->obj.parser.width == -1)
@@ -115,7 +113,7 @@ t_color			get_object_color(t_hit *hit)
 	else
 		return get_color(hit->obj.texture_func(hit->obj, hit));
 }
-
+*/
 t_color			illuminate(t_world *world, t_hit *hit, t_shadow **shadows, int fast)
 {
 	t_illum	illu;

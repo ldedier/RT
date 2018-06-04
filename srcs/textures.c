@@ -6,16 +6,17 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 05:33:22 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 09:03:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/05 01:26:37 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-int		ft_get_pixel(int x, int y, t_bmp_parser parser)
+t_illum		ft_get_pixel(int x, int y, t_bmp_parser parser)
 {
 	int		nb;
 	char	color[4];
+	t_illum res;
 
 	nb = (x * (parser.bpp / 8)) + (y * (parser.bpp / 8) * parser.width);
 	color[0] = parser.pixels[nb];
@@ -23,19 +24,25 @@ int		ft_get_pixel(int x, int y, t_bmp_parser parser)
 	color[2] = parser.pixels[nb + 2];
 	color[3] = 0;
 
+	res.color = get_color(*(int *)color);
 	//alpha
-	return (*(int *)color);
+	if (parser.bpp == 24)
+		res.in = 1;
+	else
+	{
+		res.in = color[3] / 255.0;
+	}
+	return (res);
 }
 
-int		texture_sphere(t_object obj, t_hit *hit)
+t_illum		texture_sphere(t_object obj, t_hit *hit)
 {
 	t_point3d p = hit->old_normal;
 	float u = 0.5 + ((atan2(p.z, p.x)) / (2 * M_PI));
 	float v = 0.5 - (asin(p.y) / M_PI);
 	u = (int)(u * obj.parser.width);
 	v = (int)(v * obj.parser.height);
-	int col = ft_get_pixel(u, v, obj.parser);
-	return (col);
+	return (ft_get_pixel(u, v, obj.parser));
 }
 
 t_point3d	abs_point(t_point3d point)
@@ -43,7 +50,7 @@ t_point3d	abs_point(t_point3d point)
 	return ft_new_vec3(fabs(point.x), fabs(point.y), fabs(point.z));
 }
 
-int		texture_plane(t_object obj, t_hit *hit)
+t_illum		texture_plane(t_object obj, t_hit *hit)
 {
 	t_point3d m_UAxis;
 
@@ -53,31 +60,35 @@ int		texture_plane(t_object obj, t_hit *hit)
 	t_point3d m_VAxis = crossprod(m_UAxis, hit->old_normal);
 	float u = (int)(ft_dot_product(hit->old_point, m_UAxis) * 
 			(obj.parser.width * obj.object_union.plane.texture_stretch_x) +
-				obj.object_union.plane.texture_trans_x) % (obj.parser.width);
+				obj.object_union.plane.texture_trans_x - 100000000) % (obj.parser.width);
 	float v = (int)(ft_dot_product(hit->old_point, m_VAxis) * 
 			(obj.parser.height * obj.object_union.plane.texture_stretch_y) 
-			+ obj.object_union.plane.texture_trans_y) % (obj.parser.height);
+			+ obj.object_union.plane.texture_trans_y + 100000000) % (obj.parser.height);
 	if (u < 0)
 		u *= -1;
 	if (v < 0)
 		v *= -1;
-	int col = ft_get_pixel(u, v, obj.parser);
-	return (col);
+	return (ft_get_pixel(u, v, obj.parser));
 }
 
-int		texture_cylinder(t_object obj, t_hit *hit)
+t_illum		texture_cylinder(t_object obj, t_hit *hit)
+{
+	t_point3d d;
+
+	printf("%f\n", atan2(0.5, 0.5));
+	d = hit->old_point;
+	double u = (int)fabs(d.x * 100) % obj.parser.width;
+//	double v = atan2(d.y, d.z) * obj.parser.height;
+	double v = (atan(d.z / d.y) / (2 * M_PI)) * obj.parser.height;
+	printf("%f\n", v);
+	return (ft_get_pixel(u, v, obj.parser));
+}
+
+t_illum		texture_cone(t_object obj, t_hit *hit)
 {
 	(void) obj;
 	(void) hit;
 
-	return (0);
-}
-
-int		texture_cone(t_object obj, t_hit *hit)
-{
-	(void) obj;
-	(void) hit;
-
-	return (0);
+	return (ft_get_pixel(1, 1, obj.parser));
 }
 

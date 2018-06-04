@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 09:25:54 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/05 00:33:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@
 # define EPSILON3 0.000001 //plus petit = moins de solution
 # define EPSILON4 0.00000001 // on considere ca comme zero complexe (surtout used dans quartic)
 # define SPEED 0.1
-# define MAX_BOUNCE 2
+# define MAX_BOUNCE 4
 # define AA_SQ_SIZE 1
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
@@ -285,7 +285,6 @@ typedef struct			s_line
 	t_point3d			v;
 	int x;
 	int y;
-	double n;
 	t_point3d oldo;
 	t_point3d oldv;
 }						t_line;
@@ -367,6 +366,12 @@ typedef struct          s_bmp_parser
 	short               bpp;
 }                       t_bmp_parser;
 
+typedef struct			s_illum
+{
+	double				in;
+	t_color				color;
+}						t_illum;
+
 typedef struct			s_object
 {
 	t_mat4				transform_pos;
@@ -379,7 +384,7 @@ typedef struct			s_object
 	int					(*intersect_func)(t_line, struct s_object, double sols[MAX_DEGREE]);
 	int					(*inside_func)(t_hit h, struct s_object);
 	t_point3d			(*normal_func)(struct s_object, t_point3d, t_line line);
-	int					(*texture_func)(struct s_object, t_hit *hit);
+	t_illum				(*texture_func)(struct s_object, t_hit *hit);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
@@ -485,12 +490,6 @@ typedef struct			s_light
 	double				angle;
 	char				type;
 }						t_light;
-
-typedef struct			s_illum
-{
-	double				in;
-	t_color				color;
-}						t_illum;
 
 typedef enum			e_filters
 {
@@ -965,12 +964,12 @@ void					ft_pivot_camera(t_camera *cam, t_point3d tolook);
 ** textures
 */
 
-int						texture_sphere(t_object obj, t_hit *hit);
-int						texture_cylinder(t_object obj, t_hit *hit);
-int						texture_plane(t_object obj, t_hit *hit);
-int						texture_cone(t_object obj, t_hit *hit);
+t_illum					texture_sphere(t_object obj, t_hit *hit);
+t_illum					texture_cylinder(t_object obj, t_hit *hit);
+t_illum					texture_plane(t_object obj, t_hit *hit);
+t_illum					texture_cone(t_object obj, t_hit *hit);
 t_bmp_parser			ft_parse_bmp(char *src);
-t_color					get_object_color(t_hit *hit);
+t_illum					get_object_color(t_hit *hit);
 
 /*
 ** matrices

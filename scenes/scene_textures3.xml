@@ -9,6 +9,9 @@
 			<rotationXYZ>1.5707 0 0</rotationXYZ>
 			<color> 0x00FFFF </color>
 			<object name="plane">
+				<positionXYZ>10 10 10</positionXYZ>
+		</object>
+			<object name="plane">
 				<texture_trans_x>0</texture_trans_x>
 				<texture_trans_y>0</texture_trans_y>
 				<texture_stretch_x>1</texture_stretch_x>
@@ -34,6 +37,9 @@
 					<inequality>more than</inequality>
 					<value>5</value>
 				</cut>
+			</object>
+			<object name="cylinder">
+				<texture>resources/textures/texture2.bmp</texture>
 			</object>
 		</cobject>
 	</objlist>

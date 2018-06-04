@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/04 08:40:03 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 21:49:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,16 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		else
 			reflect_c = pert_color(hit);
 		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON && !fast)
-			refract_c = ray_color(newray(translate_vec(hit->point,
+		{
+			if(fabs(hit->obj.refract - 1) > EPSILON)
+				refract_c = ray_color(newray(translate_vec(hit->point,
 					ray.v, EPSILON), refraction(hit, &ray)),
 					world, bounce + 1, 0);
+			else
+				refract_c = ray_color(newray(translate_vec(hit->point,
+					ray.v, EPSILON), ray.v),
+					world, bounce, 0);
+		}
 		else
 			refract_c = pert_color(hit);
 		return (freeret(interpole_color(hit->obj.transp,

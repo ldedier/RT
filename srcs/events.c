@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 22:25:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 09:15:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/04 22:59:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ void	ft_right_click_event(t_world *e, SDL_Event event)
 	line = newray(point, newvector(e->cam->o, point));
 	if ((hit = trace(line, e->cobjlist)))
 	{
+		ft_print_point3d(hit->old_point);
 		e->selected_cobject = hit->obj.cobject;
 		//ft_look_at(e->cam, hit->obj.cobject->o);
 	}
@@ -208,6 +209,7 @@ void	ft_mouse_down(t_world *e, SDL_Event event)
 		{
 			SDL_SetRelativeMouseMode(SDL_TRUE);
 			e->focus = 1;
+			ft_right_click_event(e, event);
 		}
 		else
 		{
