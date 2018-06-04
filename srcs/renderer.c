@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/02 15:19:38 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 08:40:03 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 							hit->pertbounce, EPSILON), hit->pertbounce),
 					world, bounce + 1, 0);
 		else
-			reflect_c = get_color(0x000000);
+			reflect_c = pert_color(hit);
 		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON && !fast)
 			refract_c = ray_color(newray(translate_vec(hit->point,
 					ray.v, EPSILON), refraction(hit, &ray)),
 					world, bounce + 1, 0);
 		else
-			refract_c = get_color(0x000000);
+			refract_c = get_color(0x0);//pert_color(hit);
 		return (freeret(interpole_color(hit->obj.transp,
 						interpole_color(hit->obj.reflect,
 							fogged_c, reflect_c), refract_c), &hit, &aux));
@@ -87,13 +87,38 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 t_color				render_pixel(t_world *world, t_pixel pix, int fast)
 {
 	t_point3d	point;
-	t_color		ret;
-	t_line line;
+	t_intcolor	ret;
+	t_line		line;
+	t_pixel		aapix;
 
-	point = screen2world(pix, world);
-	line = newray(point, newvector(world->cam->o, point));
-	line.x = pix.x;
-	line.y = pix.y;
-	ret = ray_color(line, world, 0, fast);
-	return (ret);
+	ret = new_intcolor();
+	if (!fast)
+	{
+		aapix.x = -1;
+		while (++aapix.x < world->aa_sq_size)
+		{
+			aapix.y = -1;
+			while (++aapix.y < world->aa_sq_size)
+			{
+				point = screen2world(pix, world, aapix);
+				line = newray(point, newvector(world->cam->o, point));
+				line.x = pix.x;
+				line.y = pix.y;
+				ret = add_scale_intcolors(ret,
+						get_intcolor(ray_color(line, world, 0, fast)),
+						1.f / world->aa_sq_size / world->aa_sq_size);
+			}
+		}
+	}
+	else 
+	{
+		aapix.x = 0;
+		aapix.y = 0;
+		point = screen2world(pix, world, aapix);
+		line = newray(point, newvector(world->cam->o, point));
+		line.x = pix.x;
+		line.y = pix.y;
+		return (ray_color(line, world, 0, fast));
+	}
+	return (scale_convert_color(ret, 1));
 }

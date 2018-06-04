@@ -6,10 +6,11 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 21:02:11 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 09:06:46 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//TDOO	reflection = 1 && bounces = 0 renders BLACK.AAAAAAAH
 //DONE	fix <perturbation>asdf</perturbation> segfault
 //DONE	transparency shadows: canviar color i perdre llum PER CADA SRAY
 //		en teoria canviar shadows.c i lights.c nhi ha prou
@@ -26,8 +27,9 @@
 //done	antialiasing / other filters
 //DONE	fix sometimes cancel the render and go into antialiasing. cause is calling join_threads 2 times in a row and 2nd one returns 0 so assumes it rendered.
 //LDEDIER	controls chachis -> select object
-//TODO	antialiasing multiple rays per pixel (then get the mean)
-//TODO	motion blur
+//LDEDIER	fix chess for non vertical planes
+//DONE	antialiasing multiple rays per pixel (then get the mean)
+//DONE/NOPE	motion blur
 //DONE	cartoon shading.
 //TODO	gooch shading -> borders bons pel cartoon?
 //DONE	low resolution when moving camera
@@ -93,6 +95,7 @@
 # define EPSILON4 0.00000001 // on considere ca comme zero complexe (surtout used dans quartic)
 # define SPEED 0.1
 # define MAX_BOUNCE 15
+# define AA_SQ_SIZE 1
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
@@ -490,6 +493,7 @@ typedef struct			s_world
 	int					cancel_render;
 	int					can_export;
 	int					shader;
+	int					aa_sq_size;
 }						t_world;
 
 typedef struct			s_thr_par
@@ -726,7 +730,7 @@ void					draw_borders(t_canvas *canvas);
  **render
  */
 t_color					render_pixel(t_world *world, t_pixel pix, int fast);
-t_point3d				screen2world(t_pixel pix, t_world *world);
+t_point3d				screen2world(t_pixel pix, t_world *world, t_pixel aa);
 void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
 t_line					newray(t_point3d p, t_point3d vec);
 t_hit					*trace(t_line line, t_cobjlist *cobjlist);

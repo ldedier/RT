@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/22 09:44:28 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 06:00:45 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void			set_defaults(t_world *world)
 	world->canvas->npixels = world->canvas->win_size.x *
 		world->canvas->win_size.y;
 	world->can_export = 1;
+	world->aa_sq_size = AA_SQ_SIZE;
 	set_defaults_2(world);
 	ft_init_keys(world);
 }

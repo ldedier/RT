@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:02:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 21:03:44 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 08:23:04 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void		motion_blur(t_canvas *canvas)
 {
 	double	*filter;
 
-	printf("MOTION BLURRRRRRRRR LOCUUUUUUUUU\n");
 	filter = ft_memalloc(sizeof(double) * 25);
 	filter[0] = 0.222222;
 	filter[1] = 0.277778;

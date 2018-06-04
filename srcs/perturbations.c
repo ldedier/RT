@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:44:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/29 18:52:51 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/03 23:13:25 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ t_point3d	pert_normal(t_hit *hit)
 		angle = sin(hit->point.x);
 	else
 		angle = 0;
-	pert = normalize(rotate_axis(hit->normal, normalize(crossprod(hit->normal, hit->point)), angle * 0.2));
+	pert = normalize(rotate_axis(hit->normal,
+				normalize(crossprod(hit->normal, hit->point)), angle * 0.2));
 	if (hit->obj.pert == e_noise)
 	{
 		angle = 0.12;
@@ -43,7 +44,7 @@ t_color	pert_color(t_hit *hit)
 
 	ret = hit->obj.c;
 	inv = scale_convert_color(add_scale_intcolors(get_intcolor(WHITE_COLOR),
-				get_intcolor(hit->obj.c), -1), 1);
+				get_intcolor(ret), -1), 1);
 	if (hit->obj.pert == e_chess && 
 			(((sin(hit->point.x) > 0 ? 1 : -1) *
 			  (sin(hit->point.z) > 0 ? 1 : -1)) > 0))
