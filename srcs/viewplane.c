@@ -6,21 +6,33 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/20 04:10:48 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/20 08:21:52 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 09:06:53 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-t_point3d	screen2world(t_pixel pix, t_world *world)
+t_point3d	screen2world(t_pixel pix, t_world *world, t_pixel aa)
 {
 	t_camera	*cam;
 	t_point3d	p;
 	t_point3d	scale;
+	double		aa_offset;
+	double		offset;
 
 	cam = world->cam;
-	scale.x = -world->canvas->halved_win_size.x * cam->pd + cam->pd * pix.x + cam->pd / 2;;
-	scale.y = world->canvas->halved_win_size.y * cam->pd - cam->pd * pix.y + cam->pd / 2;
+
+	aa_offset = cam->pd / world->aa_sq_size;
+	offset = aa_offset * aa.x + aa_offset / 2;
+
+	scale.x = -world->canvas->halved_win_size.x *
+		cam->pd + cam->pd * pix.x + offset;//cam->pd / 2;
+
+	offset = aa_offset * aa.y;
+
+	scale.y = world->canvas->halved_win_size.y *
+		cam->pd - cam->pd * pix.y + offset;//cam->pd / 2;
+
 	scale.z = cam->fd;
 	p = translate_vec(
 			translate_vec(

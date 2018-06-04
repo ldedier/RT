@@ -6,17 +6,18 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 00:33:16 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/04 09:17:35 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//TDOO	reflection = 1 && bounces = 0 renders BLACK.AAAAAAAH
 //DONE	fix <perturbation>asdf</perturbation> segfault
 //DONE	transparency shadows: canviar color i perdre llum PER CADA SRAY
 //		en teoria canviar shadows.c i lights.c nhi ha prou
 //NOPE	arreglar ellipsoid (?)
-//TODO	arreglar que es fagin reflexes i phongs a dintre
+//NOPE	arreglar que es fagin reflexes i phongs a dintre
 //			(nomes si no es negatiu i la camera esta a fora)
-//TODO	arreglar scale
+//DONE!!!!!!!	arreglar scale
 //DONE	test all negatives
 //DONE	reflexion
 //DONE	directional light
@@ -25,8 +26,10 @@
 //DONE	negative object
 //done	antialiasing / other filters
 //DONE	fix sometimes cancel the render and go into antialiasing. cause is calling join_threads 2 times in a row and 2nd one returns 0 so assumes it rendered.
-//TODO	controls chachis -> select object
-//TODO	antialiasing multiple rays per pixel (then get the mean)
+//LDEDIER	controls chachis -> select object
+//LDEDIER	fix chess for non vertical planes
+//DONE	antialiasing multiple rays per pixel (then get the mean)
+//DONE/NOPE	motion blur
 //DONE	cartoon shading.
 //TODO	gooch shading -> borders bons pel cartoon?
 //DONE	low resolution when moving camera
@@ -94,7 +97,8 @@
 # define EPSILON3 0.000001 //plus petit = moins de solution
 # define EPSILON4 0.00000001 // on considere ca comme zero complexe (surtout used dans quartic)
 # define SPEED 0.1
-# define MAX_BOUNCE 5
+# define MAX_BOUNCE 15
+# define AA_SQ_SIZE 1
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
@@ -414,7 +418,6 @@ struct			s_hit
 	t_point3d			bounce;
 	t_point3d			pertbounce;
 	int					enter;
-//	t_color				col;
 	double				t;
 };
 
@@ -477,6 +480,7 @@ typedef enum			e_filters
 	e_sobel,
 	e_emboss,
 	e_grey,
+	e_motion_blur,
 	e_nfilters
 }						t_filters;
 
@@ -504,6 +508,7 @@ typedef struct			s_world
 	int					focus;
 	t_video				video;
 	Uint32				ticks;
+	int					aa_sq_size;
 }						t_world;
 
 typedef struct			s_thr_par
@@ -752,7 +757,7 @@ void					draw_borders(t_canvas *canvas);
 **render
 */
 t_color					render_pixel(t_world *world, t_pixel pix, int fast);
-t_point3d				screen2world(t_pixel pix, t_world *world);
+t_point3d				screen2world(t_pixel pix, t_world *world, t_pixel aa);
 void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
 t_line					newray(t_point3d p, t_point3d vec);
 t_hit					*trace(t_line line, t_cobjlist *cobjlist);
@@ -867,6 +872,7 @@ void    set_funcs(t_object *obj,
 		int (*intersect_func)(t_line, t_object, double[MAX_DEGREE]),
 		int (*inside_func)(t_hit, t_object),
 		t_point3d (*normal_func)(t_object, t_point3d, t_line));
+int						equal_double(double a, double b);
 
 
 /*

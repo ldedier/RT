@@ -111,5 +111,5 @@
 		<intensity>0.37</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
-	<filter name="sobel"></filter>
+	<filter name="motion_blur"></filter>
 </scene>

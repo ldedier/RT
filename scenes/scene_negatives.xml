@@ -7,7 +7,7 @@
 		<cobject>
 			<positionXYZ>0 1 0</positionXYZ>
 			<object name="plane">
-				<color>0x555555</color>
+				<color>0xBBBB66</color>
 				<perturbation name="chess"></perturbation>
 			</object>
 			<object name="sphere">
@@ -52,10 +52,9 @@
 				<big_radius>0.75</big_radius>
 				<small_radius>0.25</small_radius>
 			</object>
-			<object name="sphere">
-				<positionXYZ>-0.7 -0.7 0</positionXYZ>
-				<rotationXYZ>0.10 0 0.1</rotationXYZ>
-				<radius>0.5</radius>
+			<object name="plane">
+				<positionXYZ>-0.3 -0.3 0</positionXYZ>
+				<rotationXYZ>3.24 0 0.1</rotationXYZ>
 				<negative>1</negative>
 			</object>
 		</cobject>

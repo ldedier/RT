@@ -5,23 +5,22 @@
 	</camera>
 	<objlist>
 		<cobject>
-			<object name="sphere">
-				<color>0xff00ff</color>
+			<object name="plane">
+				<color>0xffffff</color>
 				<positionXYZ>0 0 0</positionXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
-				<reflection>0</reflection>
-				<perturbation name = "chess"></perturbation>
+			</object>
+		</cobject>
+		<cobject>
+			<object name="sphere">
+				<color>0xffffff</color>
+				<positionXYZ>0 0 0</positionXYZ>
+				<rotationXYZ>0 0 0</rotationXYZ>
+				<transparency>1</transparency>
 			</object>
 		</cobject>
 	</objlist>
 	<lightlist>
-		<light type="point">
-			<color>0xFFFFFF</color>
-			<positionXYZ>2.8 -1.5 0</positionXYZ>
-			<rotationXYZ>0 0 0</rotationXYZ>
-			<angle>1.2</angle>
-			<intensity>0.7</intensity>
-		</light>
 		<light type="point">
 			<color>0xFFFFFF</color>
 			<positionXYZ>-2.8 -1.5 0</positionXYZ>

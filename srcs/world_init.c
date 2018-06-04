@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/02 03:25:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/04 09:16:13 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void			set_defaults(t_world *world)
 	world->exporting_video = 0;
 	init_video(&(world->video));
 	world->ticks = SDL_GetTicks();
+	world->aa_sq_size = AA_SQ_SIZE;
 	set_defaults_2(world);
 	ft_init_keys(world);
 }

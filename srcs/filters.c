@@ -6,11 +6,45 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:02:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/27 18:45:37 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 08:23:04 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+void		motion_blur(t_canvas *canvas)
+{
+	double	*filter;
+
+	filter = ft_memalloc(sizeof(double) * 25);
+	filter[0] = 0.222222;
+	filter[1] = 0.277778;
+	filter[2] = 0.222222;
+	filter[3] = 0.055556;
+	filter[4] = 0;
+	filter[5] = 0.277778;
+	filter[6] = 0.444444;
+	filter[7] = 0.444444;
+	filter[8] = 0.222222;
+	filter[9] = 0.055556;
+	filter[10] = 0.222222;
+	filter[11] = 0.444444;
+	filter[12] = 0.555556;
+	filter[13] = 0.444444;
+	filter[14] = 0.222222;
+	filter[15] = 0.055556;
+	filter[16] = 0.222222;
+	filter[17] = 0.444444;
+	filter[18] = 0.444444;
+	filter[19] = 0.277778;
+	filter[20] = 0;
+	filter[21] = 0.055556;
+	filter[22] = 0.222222;
+	filter[23] = 0.277778;
+	filter[24] = 0.222222;
+	convolute(canvas, filter, 5, 1);
+	free(filter);
+}
 
 void		gauss_blur(t_canvas *canvas)
 {

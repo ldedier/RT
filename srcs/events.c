@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 22:25:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/03 00:33:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/04 09:15:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,11 +175,15 @@ void	ft_right_click_event(t_world *e, SDL_Event event)
 	t_hit *hit;
 	t_line line;
 	t_point3d point;
+	t_pixel pixel;
+
+	pixel.x = 1;
+	pixel.y = 1;
 
 	hit = NULL;
 	pix.x = event.button.x;
 	pix.y = event.button.y;
-	point = screen2world(pix, e);
+	point = screen2world(pix, e, pixel);
 	line = newray(point, newvector(e->cam->o, point));
 	if ((hit = trace(line, e->cobjlist)))
 	{

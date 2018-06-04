@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/05/29 21:36:50 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/06/04 09:12:34 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -115,7 +115,9 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 automatic.c\
 				 defining.c\
 				 insides2.c\
-				 video.c
+				 video.c\
+				 automatic.c \
+				 tools.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 
