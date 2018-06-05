@@ -43,6 +43,37 @@ static t_color		freeret(t_color c, t_hit **hit, t_shadowsfree *aux)
 	return (c);
 }
 
+static float		distance(t_point3d a, t_point3d b)
+{
+	return (sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z)));
+}
+
+static t_color		ebloui(t_world *world, t_line ray)
+{
+	int		i;
+	float	coeff;
+	float	sum;
+
+	sum = 0.0f;
+	i = 0;
+	while (i < world->nlights)
+	{
+		coeff = -ft_dot_product(ray.v, world->lights[i].v);
+		coeff /= distance(ray.o, world->lights[i].o);
+		//printf("%f\n", distance(ray.o, world->lights[i].o));
+		//printf("%f\n", distance(world->cam->o, world->lights[i].o));
+		if (coeff > 0)
+		{
+			if (coeff < 0)
+				coeff /= distance(world->cam->o, world->lights[i].o);
+			sum += coeff;
+		}
+		i++;
+	}
+	sum = ft_fclamp(0, sum, 1);
+	return (interpole_color(sum, world->fog.color, get_color(0xffffff)));
+}
+
 static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 {
 	t_hit			*hit;
@@ -65,13 +96,13 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		else
 			illuminated_c = illuminate_toon(world, hit, shadows, fast);
 		fogged_c = interpole_color(fog, illuminated_c, world->fog.color);
-		if (bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON  && !fast)
+		if (bounce < world->max_bounce && hit->obj.reflect > EPSILON && !fast)
 			reflect_c = ray_color(newray(translate_vec(hit->point,
 							hit->pertbounce, EPSILON), hit->pertbounce),
 					world, bounce + 1, 0);
 		else
 			reflect_c = pert_color(hit);
-		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON && !fast)
+		if (bounce < world->max_bounce && hit->obj.transp > EPSILON && !fast)
 			refract_c = ray_color(newray(translate_vec(hit->point,
 					ray.v, EPSILON), refraction(hit, &ray)),
 					world, bounce + 1, 0);
@@ -81,7 +112,8 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 						interpole_color(hit->obj.reflect,
 							fogged_c, reflect_c), refract_c), &hit, &aux));
 	}
-	return (freeret(world->fog.color, &hit, NULL));
+	illuminated_c = ebloui(world, ray);
+	return (freeret(illuminated_c, &hit, NULL));
 }
 
 t_color				render_pixel(t_world *world, t_pixel pix, int fast)

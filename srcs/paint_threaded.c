@@ -73,7 +73,7 @@ int			join_threads(t_world *world)
 			world->cancel_render = 0;
 			cancel = 1;
 		}
-		if (world->thr_state[++i] == 2 || 
+		if (world->thr_state[++i] == 2 ||
 				(world->thr_state[i] == 1 && cancel == 1))
 		{
 			printf("joining thread %i of %i\n",i , NTHREADS);
@@ -86,7 +86,7 @@ int			join_threads(t_world *world)
 		}
 		if (i == NTHREADS)
 			i = -1;
-		if (get_input(world))
+		if (get_input(world, ""))
 			end(world);
 	}
 	if ((ret = (cancel == 1)) == 1)

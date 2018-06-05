@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/04 09:12:34 by ldedier          ###   ########.fr        #
+#    Updated: 2018/06/05 02:55:47 by aherriau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,9 +38,8 @@ LIBFT_INCLUDEDIR = includes
 LIBMATDIR = libmat
 LIBMAT_INCLUDEDIR = includes
 
-LIBSDL2DIR = SDL2-2.0.8
-LIBSDL2_INCLUDEDIR = include
-LIBSDL2_LIBDIR = build/.libs
+SDL2 = ./frameworks/SDL2.framework/Versions/A/SDL2
+SDL2_TTF = ./frameworks/SDL2_ttf.framework/Versions/A/SDL2_ttf
 
 SRCS_NO_PREFIX = camera_rotations.c\
 				 colors.c\
@@ -79,7 +78,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 vectors2.c\
 				 world_maker.c\
 				 loop.c\
-				 events.c\
+				 key_events.c\
 				 process.c \
 				 world_init.c\
 				 compute_matrix.c \
@@ -120,7 +119,11 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_parse_bmp.c\
 				 parse_texture.c\
 				 textures.c\
-				 parse_plane_textures.c
+				 parse_plane_textures.c\
+				 ft_parse_bmp.c\
+				 ft_export_scene.c\
+				 mouse_events.c\
+				 menu.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 
@@ -128,16 +131,12 @@ SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
 OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
 INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
 
-LIBSDL2 = ./$(LIBSDL2DIR)/$(LIBSDL2_LIBDIR)/libSDL2-2.0.0.dylib
-
 INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
-	  -I $(LIBMATDIR)/$(LIBMAT_INCLUDEDIR)\
-	  -I $(LIBSDL2DIR)/$(LIBSDL2_INCLUDEDIR)\
+	  -I $(LIBMATDIR)/$(LIBMAT_INCLUDEDIR)
 
 CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror  $(INC)
 
 LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
-		 -L $(LIBSDL2DIR)/$(LIBSDL2_LIBDIR) -lsdl2\
 		 -fsanitize=address
 
 opti:
@@ -148,24 +147,18 @@ all: $(BINDIR)/$(NAME)
 debug:
 	@make -j all DEBUG=1
 
-$(LIBSDL2):
-	@cd $(LIBSDL2DIR);./configure
-	@echo "$(OK_COLOR)$(NAME) SDL2 configured with success !$(EOC)"
-	@make -C $(LIBSDL2DIR)
-	@echo "$(OK_COLOR)SDL2 linked with success !$(EOC)"
-
-$(BINDIR)/$(NAME): $(OBJECTS) $(LIBSDL2)
+$(BINDIR)/$(NAME): $(OBJECTS)
 	@make -C $(LIBFTDIR)
 	@make -C $(LIBMATDIR)
-	$(CC) -o $@ $^ $(LFLAGS)
+	$(CC) -o $@ $^ $(LFLAGS) -F ./frameworks -framework SDL2 -framework SDL2_ttf
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
-	@install_name_tool -change /usr/local/lib/libSDL2-2.0.0.dylib \
-		$(LIBSDL2) $(NAME)
+	@install_name_tool -change @rpath/SDL2.framework/Versions/A/SDL2 $(SDL2) $(NAME)
+	@install_name_tool -change @rpath/SDL2_ttf.framework/Versions/A/SDL2_ttf $(SDL2_TTF) $(NAME)
 	@echo $(NAME) > .gitignore
 	@echo $(OBJECTS) >> .gitignore
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
-	$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) -c $< -o $@ $(CFLAGS) -F ./frameworks
 
 clean:
 	@make clean -C $(LIBFTDIR)
@@ -176,7 +169,6 @@ fclean: clean
 	@rm -f $(NAME)
 	@make fclean -C $(LIBFTDIR)
 	@make fclean -C $(LIBMATDIR)
-	@make clean -C $(LIBSDL2DIR)
 
 re: fclean opti
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 09:25:54 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/05 02:50:34 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@
 #ifndef RT_H
 # define RT_H
 
-# include <SDL.h>
+# include <SDL2/SDL.h>
+# include <SDL2_ttf/SDL_ttf.h>
 # include <string.h>
 # include <stdio.h>
 # include <errno.h>
@@ -64,21 +65,27 @@
 # include <complex.h>
 # include <sys/mman.h>
 # include <sys/stat.h>
+#include <sys/types.h>
 
 # define NTHREADS 8
 # define STACK 0
 # define POP 1
 # define MAX_DEGREE 4
 
-# define FAST_HRES 160
-# define FAST_VRES 120
-# define HRES 1600
-# define VRES 1200
-# define PROGRESS_BAR_HEIGHT 20
+# define FAST_HRES 130
+# define FAST_VRES 100
+# define HRES 1300
+# define VRES 1000
+# define MENU_WIDTH 500
+# define PROGRESS_BAR_HEIGHT 16
 # define PERSPECTIVE 2
 # define ZOOM 1.5
 # define CAMERA_FD 1
 # define ANIMATE_TIMING 30
+
+#define MENU_OBJECTS	1
+#define MENU_LIGHTS		2
+#define MENU_OTHERS		3
 
 # define AXIS_X (t_point3d){.x=1.0,.y=0.0,.z=0.0}
 # define AXIS_Y (t_point3d){.x=0.0,.y=1.0,.z=0.0}
@@ -356,16 +363,14 @@ typedef union			s_object_union
 	t_box				box;
 }						t_object_union;
 
-
-
-typedef struct          s_bmp_parser
+typedef struct			s_bmp_parser
 {
-	unsigned char       *pixels;
-	int                 width;
-	int                 height;
-	int                 bitmap_index;
-	short               bpp;
-}                       t_bmp_parser;
+	unsigned char		*pixels;
+	int					width;
+	int					height;
+	int					bitmap_index;
+	short				bpp;
+}						t_bmp_parser;
 
 typedef struct			s_object
 {
@@ -378,8 +383,9 @@ typedef struct			s_object
 	t_object_union		object_union;
 	int					(*intersect_func)(t_line, struct s_object, double sols[MAX_DEGREE]);
 	int					(*inside_func)(t_hit h, struct s_object);
-	t_point3d			(*normal_func)(struct s_object, t_point3d, t_line line);
+	t_point3d		(*normal_func)(struct s_object, t_point3d, t_line line);
 	int					(*texture_func)(struct s_object, t_hit *hit);
+	void				(*print_caracteristics)(struct s_object obj, int fd);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
@@ -492,6 +498,7 @@ typedef struct			s_illum
 	t_color				color;
 }						t_illum;
 
+
 typedef enum			e_filters
 {
 	e_gauss_blur,
@@ -502,6 +509,54 @@ typedef enum			e_filters
 	e_motion_blur,
 	e_nfilters
 }						t_filters;
+
+typedef struct			s_colorpicker
+{
+	t_pixel				pix;
+	t_pixel				pos;
+	t_color				*color;
+}						t_colorpicker;
+
+typedef struct			s_rangebar
+{
+	double				min;
+	double				max;
+	t_pixel				pix;
+	double				*value;
+}						t_rangebar;
+
+typedef struct			s_dropdown
+{
+	t_pixel				pos;
+	t_pixel				size;
+	int					levels;
+}						t_dropdown;
+
+typedef struct			s_menu
+{
+	int					type;
+	SDL_Rect			rect;
+	SDL_Surface			*surface;
+	SDL_Texture			*texture;
+	SDL_Color			color;
+	TTF_Font			*fonts[3];
+	int					active_rb;
+	int					active_cp;
+	int					nb_others_rb;
+	int					nb_others_cp;
+	t_rangebar			others_rb[3];
+	t_colorpicker		others_cp[2];
+	t_color				color_map[100 * 100];
+	int					filters_list[e_nfilters + 1];
+	int					filter_active;
+	t_dropdown			filters;
+	t_bmp_parser		cartoon;
+	t_bmp_parser		cartoon2;
+	t_bmp_parser		photo;
+	t_bmp_parser		video;
+	t_bmp_parser		stop;
+	t_bmp_parser		save;
+}						t_menu;
 
 typedef struct			s_world
 {
@@ -522,12 +577,16 @@ typedef struct			s_world
 	int					exporting_video;
 	int					cancel_render;
 	int					can_export;
+	int					nb_export;
 	int					shader;
 	int					animate;
 	int					focus;
 	t_video				video;
 	Uint32				ticks;
 	int					aa_sq_size;
+	t_bmp_parser		bmp_parser;
+	t_menu				menu;
+	double				max_bounce;
 }						t_world;
 
 typedef struct			s_thr_par
@@ -599,12 +658,12 @@ typedef struct  s_mmap
 /*
  ** input
  */
-void					ft_loop(t_world *world);
+void					ft_loop(t_world *world, char *filename);
 int						draw_frame(void *param);
 int						key_press(int keycode, void *param);
 int						end(t_world *world);
-int						get_input(t_world *e);
-void					ft_keys_event(t_world *world, SDL_Event event, int down);
+int						get_input(t_world *e, char *filename);
+void					ft_keys_event(t_world *world, SDL_Event event, int down, char *filename);
 void					ft_process(t_world *world);
 void					ft_mouse_motion(t_world *world, SDL_Event event);
 void					ft_mouse_down(t_world *world, SDL_Event event);
@@ -993,6 +1052,42 @@ void				ft_add_frame_to_video(t_world *world);
 */
 
 int					ft_export_rt(t_world *world, char *extension);
+
+/*
+** bmp reader
+*/
+
+int		ft_get_pixel(int x, int y, t_bmp_parser parser);
+
+/*
+** scene exporter
+*/
+int					ft_export_scene(t_world *world, char *filename);
+void				ft_print_sphere_caracteristics(t_object object, int fd);
+void				ft_print_plane_caracteristics(t_object object, int fd);
+void				ft_print_cone_caracteristics(t_object object, int fd);
+void				ft_print_cylinder_caracteristics(t_object object, int fd);
+void				ft_print_ellipsoid_caracteristics(t_object object, int fd);
+void				ft_print_torus_caracteristics(t_object object, int fd);
+void				ft_print_goursat_caracteristics(t_object object, int fd);
+void				ft_print_lemniscate_caracteristics(t_object object, int fd);
+void				ft_print_roman_caracteristics(t_object object, int fd);
+void				ft_print_piriform_caracteristics(t_object object, int fd);
+void				ft_print_hyperboloid_caracteristics(t_object object, int fd);
+void				ft_print_paraboloid_caracteristics(t_object object, int fd);
+void				ft_print_triangle_caracteristics(t_object object, int fd);
+
+/*
+** Mouse events
+*/
+void				ft_mouse_motion(t_world *world, SDL_Event event);
+void				ft_mouse_button_down(t_world *world, SDL_Event event);
+void				ft_mouse_button_up(t_world *world, SDL_Event event);
+
+/*
+** Menu
+*/
+void				ft_display_menu(t_world *world);
 
 /*
 ** error

@@ -51,11 +51,11 @@ int		texture_plane(t_object obj, t_hit *hit)
 	m_UAxis.y = hit->old_normal.z;
 	m_UAxis.z = hit->old_normal.x;
 	t_point3d m_VAxis = crossprod(m_UAxis, hit->old_normal);
-	float u = (int)(ft_dot_product(hit->old_point, m_UAxis) * 
+	float u = (int)(ft_dot_product(hit->old_point, m_UAxis) *
 			(obj.parser.width * obj.object_union.plane.texture_stretch_x) +
 				obj.object_union.plane.texture_trans_x) % (obj.parser.width);
-	float v = (int)(ft_dot_product(hit->old_point, m_VAxis) * 
-			(obj.parser.height * obj.object_union.plane.texture_stretch_y) 
+	float v = (int)(ft_dot_product(hit->old_point, m_VAxis) *
+			(obj.parser.height * obj.object_union.plane.texture_stretch_y)
 			+ obj.object_union.plane.texture_trans_y) % (obj.parser.height);
 	if (u < 0)
 		u *= -1;
@@ -80,4 +80,3 @@ int		texture_cone(t_object obj, t_hit *hit)
 
 	return (0);
 }
-
