@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 12:13:19 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/05 21:35:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,8 +237,8 @@ void			set_defaults(t_world *world)
 	world->max_bounce = 1;
 
 	world->menu.type = 3;
-	world->menu.fonts[0] = ft_load_font("Raleway.ttf", 200);
-	world->menu.fonts[1] = ft_load_font("Raleway-Bold.ttf", 200);
+	world->menu.fonts[0] = ft_load_font(PATH"/resources/fonts/Raleway.ttf", 200);
+	world->menu.fonts[1] = ft_load_font(PATH"/resources/fonts/Raleway-Bold.ttf", 200);
 
 	world->menu.active_rb = -1;
 	world->menu.nb_others_rb = 3;
@@ -277,18 +277,15 @@ void			set_defaults(t_world *world)
 	}
 	world->menu.filters = ft_new_dropdown(ft_new_pixel(world->canvas->win_size.x + 20 + 45 + 174, 402), ft_new_pixel(195, 36), e_nfilters);
 
-	world->menu.cartoon = ft_parse_bmp("cartoon.bmp");
-	world->menu.cartoon2 = ft_parse_bmp("cartoon2.bmp");
+	world->menu.cartoon = ft_parse_bmp(PATH"/resources/textures/cartoon.bmp");
+	world->menu.cartoon2 = ft_parse_bmp(PATH"/resources/textures/cartoon2.bmp");
 
-	world->menu.photo = ft_parse_bmp("photo.bmp");
-	world->menu.video = ft_parse_bmp("video.bmp");
-	world->menu.stop = ft_parse_bmp("stop.bmp");
-	world->menu.save = ft_parse_bmp("save.bmp");
+	world->menu.photo = ft_parse_bmp(PATH"/resources/textures/photo.bmp");
+	world->menu.video = ft_parse_bmp(PATH"/resources/textures/video.bmp");
+	world->menu.stop = ft_parse_bmp(PATH"/resources/textures/stop.bmp");
+	world->menu.save = ft_parse_bmp(PATH"/resources/textures/save.bmp");
 
-
-
-
-	world->bmp_parser = ft_parse_bmp("kirby.bmp");
+	world->bmp_parser = ft_parse_bmp(PATH"/resources/textures/kirby.bmp");
 }
 
 t_canvas		*new_canvas(void)

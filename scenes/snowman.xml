@@ -156,8 +156,5 @@
 		<intensity>0.37</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
-	<fog>
-		<color>0xFFFFFF</color>
-		<intensity>0.1</intensity>
-	</fog>
+	<shader type="cartoon"></shader>
 </scene>
