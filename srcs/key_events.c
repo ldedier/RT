@@ -12,7 +12,7 @@
 
 #include "rt.h"
 
-void	ft_keys_event(t_world *e, SDL_Event event, int press, char *filename)
+void	ft_keys_event(t_world *e, SDL_Event event, int press)
 {
 	if (e->focus || !e->focus)
 	{
@@ -117,7 +117,7 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press, char *filename)
 			{
 				if (e->can_export)
 				{
-					ft_export_scene(e, filename);
+					ft_export_scene(e);
 					e->can_export = 0;
 				}
 			}

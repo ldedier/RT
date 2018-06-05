@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/02 03:00:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/05 03:40:00 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ static int	any_key_pressed(t_world *world)
 	return (0);
 }
 
-int		get_input(t_world *e, char *filename)
+int		get_input(t_world *e)
 {
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_KEYDOWN)
-			ft_keys_event(e, event, 1, filename);
+			ft_keys_event(e, event, 1);
 		if (event.type == SDL_KEYUP)
-			ft_keys_event(e, event, 0, filename);
+			ft_keys_event(e, event, 0);
 		if (event.type == SDL_MOUSEBUTTONDOWN)
 			ft_mouse_button_down(e, event);
 		if (event.type == SDL_MOUSEBUTTONUP)
@@ -80,12 +80,12 @@ int		get_input(t_world *e, char *filename)
 	return (0);
 }
 
-void	ft_loop(t_world *e, char *filename)
+void	ft_loop(t_world *e)
 {
 	SDL_WarpMouseInWindow(e->canvas->window, (HRES + MENU_WIDTH) / 2,
 			(VRES + PROGRESS_BAR_HEIGHT) / 2);
 	paint_threaded_fast(e);
-	while (!get_input(e, filename))
+	while (!get_input(e))
 		;
 	end(e);
 }

@@ -87,7 +87,7 @@ int			join_threads(t_world *world)
 		}
 		if (i == NTHREADS)
 			i = -1;
-		if (get_input(world, ""))
+		if (get_input(world))
 			end(world);
 	}
 	if ((ret = (cancel == 1)) == 1)
@@ -103,7 +103,7 @@ void		paint_threaded(t_world *world)
 	t_thr_par	*tpar;
 	int			p_y;
 	int			i;
-	
+
 	i = -1;
 	p_y = 0;
 	printf("%i\n",world->canvas->win_size.y);
