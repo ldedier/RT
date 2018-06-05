@@ -1,0 +1,54 @@
+<scene>
+	<camera>
+		<positionXYZ>0 0 -2</positionXYZ>
+		<rotationXYZ>0 0 0</rotationXYZ>
+	</camera>
+	<objlist>
+		<define name="box">
+			<object name="plane">
+				<color>0x00FFFF</color>
+				<rotationXYZ>1.5707 0 0</rotationXYZ>
+				<positionXYZ>0 0 50</positionXYZ>
+			</object>
+			<object name="plane">
+				<color>0x0000FF</color>
+				<rotationXYZ>1.5707 0 0</rotationXYZ>
+				<positionXYZ>0 0 -50</positionXYZ>
+			</object>
+			<object name="plane">
+				<color>0xFF00FF</color>
+				<rotationXYZ>0 0 1.5707</rotationXYZ>
+				<positionXYZ>50 0 0</positionXYZ>
+			</object>
+			<object name="plane">
+				<color>0xFFFF00</color>
+				<rotationXYZ>0 0 1.5707</rotationXYZ>
+				<positionXYZ>-50 0 0</positionXYZ>
+			</object>
+		</define>
+		<def_cobject name="box">
+			<positionXYZ>6 9 6</positionXYZ>
+		</def_cobject>
+		<cobject>
+			<positionXYZ>-6 3 10</positionXYZ>
+			<object name = "goursat">
+				<color>0x00ff00</color>
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+		<light type="point">
+			<color>0xFFFFFF</color>
+			<positionXYZ>0 -2 0</positionXYZ>
+			<intensity>1</intensity>
+		</light>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.4</intensity>
+		<color>0xFFFFFF</color>
+	</ambientlight>
+	<fog>
+		<intensity>0</intensity>
+		<color>0xFFFFFF</color>
+	</fog>
+</scene>

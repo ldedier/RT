@@ -1,0 +1,46 @@
+<scene>
+	<camera>
+		<positionXYZ>3 0.7 -10</positionXYZ>
+		<rotationXYZ>0 0 0</rotationXYZ>
+	</camera>
+	<objlist>
+		<cobject>
+			<object name="plane">
+				<color>0xff0000</color>
+				<rotationXYZ>1.5707 0 0</rotationXYZ>
+				<positionXYZ>0 0 15</positionXYZ>
+			</object>
+		</cobject>
+		<cobject>
+			<object name="torus">
+				<cut type="relative">
+					<cutXYZ>1 2 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>3</value>
+				</cut>
+			</object>
+		</cobject>
+		<cobject>
+		<positionXYZ>10 0 0</positionXYZ>
+			<object name="torus">
+				<color>0x0000FF</color>
+				<cut type="relative">
+					<cutXYZ>2 4 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>6</value>
+				</cut>
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+		<light type="point">
+			<color>0xFFFFFF</color>
+			<positionXYZ>0 -2 0</positionXYZ>
+			<intensity>1</intensity>
+		</light>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.5</intensity>
+		<color>0xFFFFFF</color>
+	</ambientlight>
+</scene>

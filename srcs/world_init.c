@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 06:43:49 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/05 22:36:25 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,6 @@ t_pixel	ft_color_pos(t_world *world, t_color color)
 			if (tmp < dist)
 			{
 				dist = tmp;
-				printf("AAAAAAAA\n");
 				pix.x = x;
 				pix.y = y;
 			}
@@ -288,7 +287,7 @@ void			set_defaults(t_world *world)
 	world->menu.stop = ft_parse_bmp(PATH"/resources/textures/stop.bmp");
 	world->menu.save = ft_parse_bmp(PATH"/resources/textures/save.bmp");
 
-	world->bmp_parser = ft_parse_bmp(PATH"/resources/textures/kirby.bmp");
+	//world->bmp_parser = ft_parse_bmp(PATH"/resources/textures/kirby.bmp");
 }
 
 t_canvas		*new_canvas(void)

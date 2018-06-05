@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/27 07:08:14 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/03 06:26:10 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/05 22:37:10 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_mmap  ft_map_file(char *filename)
 	int size;
 	struct stat s;
 
+	printf("%s\n", filename);
 	fd = open (filename, O_RDONLY);
 	if (fd == -1)
 	{
