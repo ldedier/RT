@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 05:33:22 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 01:26:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/05 04:02:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ t_illum		ft_get_pixel(int x, int y, t_bmp_parser parser)
 	if (parser.bpp == 24)
 		res.in = 1;
 	else
-	{
 		res.in = color[3] / 255.0;
-	}
 	return (res);
 }
 
@@ -43,11 +41,6 @@ t_illum		texture_sphere(t_object obj, t_hit *hit)
 	u = (int)(u * obj.parser.width);
 	v = (int)(v * obj.parser.height);
 	return (ft_get_pixel(u, v, obj.parser));
-}
-
-t_point3d	abs_point(t_point3d point)
-{
-	return ft_new_vec3(fabs(point.x), fabs(point.y), fabs(point.z));
 }
 
 t_illum		texture_plane(t_object obj, t_hit *hit)
@@ -75,12 +68,10 @@ t_illum		texture_cylinder(t_object obj, t_hit *hit)
 {
 	t_point3d d;
 
-	printf("%f\n", atan2(0.5, 0.5));
 	d = hit->old_point;
 	double u = (int)fabs(d.x * 100) % obj.parser.width;
-//	double v = atan2(d.y, d.z) * obj.parser.height;
-	double v = (atan(d.z / d.y) / (2 * M_PI)) * obj.parser.height;
-	printf("%f\n", v);
+	double v = ((atan(d.z / d.y) + (M_PI / 2)) / (M_PI));
+	v = (int)(v * obj.parser.height);
 	return (ft_get_pixel(u, v, obj.parser));
 }
 
@@ -89,6 +80,10 @@ t_illum		texture_cone(t_object obj, t_hit *hit)
 	(void) obj;
 	(void) hit;
 
-	return (ft_get_pixel(1, 1, obj.parser));
+	t_point3d d;
+	d = hit->old_point;
+	double u = (int)fabs(d.x *  10) % obj.parser.width;
+	double v = ((atan(d.z / d.y) + (M_PI / 2)) / (M_PI));
+	v = (int)(v * obj.parser.height);
+	return (ft_get_pixel(u, v, obj.parser));
 }
-
