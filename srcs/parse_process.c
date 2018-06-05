@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/29 17:08:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/04 02:01:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 	else if (!ft_strcmp(parser->tag, "small_radius"))
 		ft_parse_small_radius(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "goursatAB"))
-			ft_parse_goursat_ab(parser, world, line);
+		ft_parse_goursat_ab(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "cut"))
 		ft_process_parsing_cut_start(parser, world);
 	else if (!ft_strcmp(parser->tag, "cutXYZ"))
@@ -49,6 +49,22 @@ static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 		ft_parse_spheres_radius(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "length"))
 		ft_parse_length(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "color1"))
+		ft_parse_color_n(parser, world, line, 1);
+	else if (!ft_strcmp(parser->tag, "color2"))
+		ft_parse_color_n(parser, world, line, 2);
+	else if (!ft_strcmp(parser->tag, "color3"))
+		ft_parse_color_n(parser, world, line, 3);
+	else if (!ft_strcmp(parser->tag, "style"))
+		ft_parse_style(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "texture_trans_x"))
+		ft_parse_trans_x(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "texture_trans_y"))
+		ft_parse_trans_y(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "texture_stretch_x"))
+		ft_parse_stretch_x(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "texture_stretch_y"))
+		ft_parse_stretch_y(parser, world, line);
 	else if (strcmp(parser->tag, "scene") &&
 			strcmp(parser->tag, "objlist") &&
 			strcmp(parser->tag, "lightlist"))
@@ -82,6 +98,8 @@ void		ft_process_parsing_stack_2(t_parser *parser, t_world *world,
 		ft_parse_filter(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "negative"))
 		ft_parse_negative(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "texture"))
+		ft_parse_texture(parser, world, line);
 	else
 		ft_process_parsing_stack_3(parser, world, line);
 }
@@ -101,6 +119,10 @@ void		ft_process_parsing_stack(t_parser *parser, t_world *world,
 		ft_process_parsing_object_start(parser, world);
 	else if (!ft_strcmp(parser->tag, "cobject"))
 		ft_process_parsing_cobject_start(parser, world);
+	else if (!ft_strcmp(parser->tag, "define"))
+		ft_process_parsing_define_start(parser, world);
+	else if (!ft_strcmp(parser->tag, "def_cobject"))
+		ft_process_parsing_def_cobject_start(parser, world);
 	else if (!ft_strcmp(parser->tag, "ambientlight"))
 		parser->parse_enum = e_parse_ambient;
 	else if (!ft_strcmp(parser->tag, "fog"))
@@ -128,9 +150,16 @@ void		ft_process_parsing(t_parser *parser, t_world *world, char *line)
 			parser->parse_enum = e_parse_cobject;
 		else
 		{
-			if (parser->parse_enum == e_parse_cobject && 
-					parser->attribute != NULL)
-				ft_process_automatic(parser, world);
+			if (parser->parse_enum == e_parse_cobject)
+			{
+				if (parser->attribute != NULL && 
+						world->cobjlist->cobject->name == NULL)
+					ft_process_automatic(parser, world);
+				else if (world->cobjlist->cobject->name != NULL && 
+					world->cobjlist->cobject->defining)
+					ft_process_switch_list_cobject(&(world->cobjlist), 
+						&(world->defcobjlist));
+			}
 			parser->parse_enum = e_parse_scene;
 		}
 		if (parser->attribute != NULL)

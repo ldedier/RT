@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/05 04:28:50 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/05 09:56:46 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	*render_thr(void *thpar)
 	printf("##thread started: %i\n",selfid);
 	p.x = 0;
 	p_y = ((t_thr_par*)thpar)->p_y;
+	printf("%i\n",p_y);
 	while (world->cancel_render == 0 && p.x < world->canvas->win_size.x)
 	{
 		p.y = p_y;
@@ -73,7 +74,7 @@ int			join_threads(t_world *world)
 			world->cancel_render = 0;
 			cancel = 1;
 		}
-		if (world->thr_state[++i] == 2 || 
+		if (world->thr_state[++i] == 2 ||
 				(world->thr_state[i] == 1 && cancel == 1))
 		{
 			printf("joining thread %i of %i\n",i , NTHREADS);
@@ -86,7 +87,7 @@ int			join_threads(t_world *world)
 		}
 		if (i == NTHREADS)
 			i = -1;
-		if (get_input(world))
+		if (get_input(world, ""))
 			end(world);
 	}
 	if ((ret = (cancel == 1)) == 1)
@@ -105,6 +106,7 @@ void		paint_threaded(t_world *world)
 	
 	i = -1;
 	p_y = 0;
+	printf("%i\n",world->canvas->win_size.y);
 	while (++i < NTHREADS)
 	{
 		if (!(tpar = malloc(sizeof(t_thr_par))))

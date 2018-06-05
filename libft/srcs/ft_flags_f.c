@@ -18,6 +18,6 @@ int		ft_pf_f(t_pf *pf, va_list va, char c)
 	pf->var.flottant = va_arg(va, double);
 	if (!pf->precised_precision)
 		pf->flags.precision = 6;
-	ft_putdbl(pf->var.flottant, pf->flags.precision, pf->fd);
+	ft_putdbl(pf->var.flottant, pf->flags.precision, pf);
 	return (0);
 }

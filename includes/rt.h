@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/05 04:28:47 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/05 12:13:04 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //DONE	transparency shadows: canviar color i perdre llum PER CADA SRAY
 //		en teoria canviar shadows.c i lights.c nhi ha prou
 //NOPE	arreglar ellipsoid (?)
-//NOPE	arreglar que es fagin reflexes i phongs a dintre 
+//NOPE	arreglar que es fagin reflexes i phongs a dintre
 //			(nomes si no es negatiu i la camera esta a fora)
 //DONE!!!!!!!	arreglar scale
 //DONE	test all negatives
@@ -43,10 +43,13 @@
 //NOPE	(?)start rendering detailed scene when not moving, cancel if move again
 //DONE separate normals and intersections calculating
 
+//SEGFAULT IF MOVING SELECTED WITH NO ITEMS
+
 #ifndef RT_H
 # define RT_H
 
-# include <SDL.h>
+# include <SDL2/SDL.h>
+# include <SDL2_ttf/SDL_ttf.h>
 # include <string.h>
 # include <stdio.h>
 # include <errno.h>
@@ -62,19 +65,26 @@
 # include <complex.h>
 # include <sys/mman.h>
 # include <sys/stat.h>
+#include <sys/types.h>
 
-# define NTHREADS 8
+# define NTHREADS 4
 # define STACK 0
 # define POP 1
 # define MAX_DEGREE 4
 
 # define FAST_RATIO 1
-# define HRES 1300
-# define VRES 1000
-# define PROGRESS_BAR_HEIGHT 20
+# define HRES 500
+# define VRES 1300
+# define MENU_WIDTH 500
+# define PROGRESS_BAR_HEIGHT 16
 # define PERSPECTIVE 2
-# define ZOOM 1.5
+# define ZOOM 1.f
 # define CAMERA_FD 1
+# define ANIMATE_TIMING 30
+
+#define MENU_OBJECTS	1
+#define MENU_LIGHTS		2
+#define MENU_OTHERS		3
 
 # define AXIS_X (t_point3d){.x=1.0,.y=0.0,.z=0.0}
 # define AXIS_Y (t_point3d){.x=0.0,.y=1.0,.z=0.0}
@@ -93,7 +103,7 @@
 # define EPSILON3 0.000001 //plus petit = moins de solution
 # define EPSILON4 0.00000001 // on considere ca comme zero complexe (surtout used dans quartic)
 # define SPEED 0.1
-# define MAX_BOUNCE 15
+# define MAX_BOUNCE 2
 # define AA_SQ_SIZE 1
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
@@ -102,6 +112,7 @@
 # define BACKGROUND_COLOR get_color(0x222222)
 
 typedef struct	s_hit t_hit;
+typedef struct	s_cobject t_cobject;
 
 typedef enum	e_keys
 {
@@ -123,10 +134,16 @@ typedef enum	e_keys
 	key_d,
 	key_e,
 	key_q,
+	key_f,
+	key_h,
 	key_z,
 	key_c,
 	key_x,
 	key_v,
+	key_k,
+	key_l,
+	key_n,
+	key_m,
 	key_ctrl,
 	key_space,
 	key_shift,
@@ -345,6 +362,15 @@ typedef union			s_object_union
 	t_box				box;
 }						t_object_union;
 
+typedef struct			s_bmp_parser
+{
+	unsigned char		*pixels;
+	int					width;
+	int					height;
+	int					bitmap_index;
+	short				bpp;
+}						t_bmp_parser;
+
 typedef struct			s_object
 {
 	t_mat4				transform_pos;
@@ -356,7 +382,9 @@ typedef struct			s_object
 	t_object_union		object_union;
 	int					(*intersect_func)(t_line, struct s_object, double sols[MAX_DEGREE]);
 	int					(*inside_func)(t_hit h, struct s_object);
-	t_point3d			(*normal_func)(struct s_object, t_point3d, t_line line);
+	t_point3d		(*normal_func)(struct s_object, t_point3d, t_line line);
+	int					(*texture_func)(struct s_object, t_hit *hit);
+	void				(*print_caracteristics)(struct s_object obj, int fd);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
@@ -368,13 +396,48 @@ typedef struct			s_object
 	double				refract;
 	double				transp;
 	int					negative;
+	t_bmp_parser		parser;
+	t_cobject			*cobject;
 }						t_object;
+
+typedef struct			s_objlist
+{
+	t_object			*object;
+	struct s_objlist	*next;
+}						t_objlist;
+
+typedef union			u_cobject_union
+{
+	t_sphere_torus		sphere_torus;
+	t_adn				adn;
+}						t_cobject_union;
+
+struct			s_cobject
+{
+	t_point3d			o;
+	t_point3d			s;
+	t_point3d			r;
+	t_color				c;
+	double				shine;
+	double				reflect;
+	double				refract;
+	double				transp;
+	t_perturbations		pert;
+	t_objlist			*objlist;
+	t_cobject_union		cobject_union;
+	int					negative;
+	int					regular;
+	char				*name;
+	int					defining;
+};
 
 struct			s_hit
 {
 	t_object			obj;
 	t_point3d			point;
 	t_point3d			normal;
+	t_point3d			old_point;
+	t_point3d			old_normal;
 	t_point3d			pert;
 	t_point3d			bounce;
 	t_point3d			pertbounce;
@@ -400,35 +463,6 @@ typedef struct			s_auxcone
 	   double				cov;
 	   */
 }						t_auxcone;
-
-typedef struct			s_objlist
-{
-	t_object			*object;
-	struct s_objlist	*next;
-}						t_objlist;
-
-typedef union			u_cobject_union
-{
-	t_sphere_torus		sphere_torus;
-	t_adn				adn;
-}						t_cobject_union;
-
-typedef struct			s_cobject
-{
-	t_point3d			o;
-	t_point3d			s;
-	t_point3d			r;
-	t_color				c;
-	double				shine;
-	double				reflect;
-	double				refract;
-	double				transp;
-	t_perturbations		pert;
-	t_objlist			*objlist;
-	t_cobject_union		cobject_union;
-	int					negative;
-	int					regular;
-}						t_cobject;
 
 typedef struct			s_cobjlist
 {
@@ -463,6 +497,7 @@ typedef struct			s_illum
 	t_color				color;
 }						t_illum;
 
+
 typedef enum			e_filters
 {
 	e_gauss_blur,
@@ -474,6 +509,54 @@ typedef enum			e_filters
 	e_nfilters
 }						t_filters;
 
+typedef struct			s_colorpicker
+{
+	t_pixel				pix;
+	t_pixel				pos;
+	t_color				*color;
+}						t_colorpicker;
+
+typedef struct			s_rangebar
+{
+	double				min;
+	double				max;
+	t_pixel				pix;
+	double				*value;
+}						t_rangebar;
+
+typedef struct			s_dropdown
+{
+	t_pixel				pos;
+	t_pixel				size;
+	int					levels;
+}						t_dropdown;
+
+typedef struct			s_menu
+{
+	int					type;
+	SDL_Rect			rect;
+	SDL_Surface			*surface;
+	SDL_Texture			*texture;
+	SDL_Color			color;
+	TTF_Font			*fonts[3];
+	int					active_rb;
+	int					active_cp;
+	int					nb_others_rb;
+	int					nb_others_cp;
+	t_rangebar			others_rb[3];
+	t_colorpicker		others_cp[2];
+	t_color				color_map[100 * 100];
+	int					filters_list[e_nfilters + 1];
+	int					filter_active;
+	t_dropdown			filters;
+	t_bmp_parser		cartoon;
+	t_bmp_parser		cartoon2;
+	t_bmp_parser		photo;
+	t_bmp_parser		video;
+	t_bmp_parser		stop;
+	t_bmp_parser		save;
+}						t_menu;
+
 typedef struct			s_world
 {
 	t_light				lights[MAX_LIGHTS];
@@ -484,15 +567,25 @@ typedef struct			s_world
 	int					thr_state[NTHREADS];
 	int					filters[e_nfilters];
 	t_cobjlist			*cobjlist;
+	t_cobjlist			*defcobjlist;
 	t_cobject			*selected_cobject;
 	t_illum				ambient;
 	t_illum				fog;
 	int					nlights;
 	int					progress;
+	int					exporting_video;
 	int					cancel_render;
 	int					can_export;
+	int					nb_export;
 	int					shader;
+	int					animate;
+	int					focus;
+	t_video				video;
+	Uint32				ticks;
 	int					aa_sq_size;
+	t_bmp_parser		bmp_parser;
+	t_menu				menu;
+	double				max_bounce;
 }						t_world;
 
 typedef struct			s_thr_par
@@ -564,14 +657,15 @@ typedef struct  s_mmap
 /*
  ** input
  */
-void					ft_loop(t_world *world);
+void					ft_loop(t_world *world, char *filename);
 int						draw_frame(void *param);
 int						key_press(int keycode, void *param);
 int						end(t_world *world);
-int						get_input(t_world *e);
-void					ft_keys_event(t_world *world, SDL_Event event, int down);
+int						get_input(t_world *e, char *filename);
+void					ft_keys_event(t_world *world, SDL_Event event, int down, char *filename);
 void					ft_process(t_world *world);
 void					ft_mouse_motion(t_world *world, SDL_Event event);
+void					ft_mouse_down(t_world *world, SDL_Event event);
 
 /*
  ** world
@@ -587,6 +681,7 @@ t_object				create_sphere(t_point3d pos, double red, t_color color);
 void					add_obj(t_objlist **lst, t_object *object);
 void					add_obj_cpy(t_objlist **lst, t_object *object);
 void					add_cobj(t_cobjlist **lst, t_cobject *cobject);
+void					add_cobj_cpy(t_cobjlist **lst, t_cobject *cobject);
 void					del_clst(t_cobjlist **lst);
 void					del_lst(t_objlist **lst);
 t_object				*ft_new_object(t_cobject cobject);
@@ -594,6 +689,7 @@ t_object				*ft_new_triangle(t_cobject cobject);
 t_cobject				*ft_new_cobject(void);
 t_cut					*ft_new_cut(void);
 void					ft_init_light(t_light *light);
+void					init_video(t_video *video);
 /*
  ** parser
  */
@@ -646,6 +742,10 @@ void					ft_process_parsing_object_start(t_parser *p,
 		t_world *w);
 void					ft_process_parsing_cobject_start(t_parser *p,
 		t_world *w);
+void					ft_process_parsing_def_cobject_start(t_parser *p,
+		t_world *w);
+void					ft_process_parsing_define_start(t_parser *p,
+		t_world *w);
 void					ft_process_parsing_scale(t_parser *p, t_world *w,
 		char *l);
 void					ft_process_parsing_stack(t_parser *p, t_world *w,
@@ -661,6 +761,8 @@ void					ft_process_parsing_object_attributes(t_parser *p,
 void					ft_process_parsing_cut_attributes(t_parser *p,
 		t_cut *cut);
 void					ft_give_default_characteristics(t_object *object);
+void					ft_give_default_characteristics_cobject(char *attribute,
+	   					t_cobject *cobject);
 void					ft_process_parsing_cut_start(t_parser *p, t_world *w);
 void					ft_process_parsing_cut_xyz(t_parser *p, t_world *w,
 		char *l);
@@ -677,6 +779,16 @@ void					ft_process_parsing_vertex_c(t_parser *p,t_world *w,
 void					ft_parse_nb_spheres(t_parser *p, t_world *w, char *l);
 void					ft_parse_spheres_radius(t_parser *p, t_world *w, char *l);
 void					ft_parse_length(t_parser *p, t_world *w, char *l);
+void					ft_parse_color_n(t_parser *p, t_world *w, char *l,
+						int n);
+void					ft_parse_style(t_parser *p, t_world *w, char *l);
+void					ft_parse_texture(t_parser *p, t_world *w, char *l);
+
+void					ft_parse_trans_x(t_parser *p, t_world *w, char *l);
+void					ft_parse_trans_y(t_parser *p, t_world *w, char *l);
+void					ft_parse_stretch_x(t_parser *p, t_world *w, char *l);
+void					ft_parse_stretch_y(t_parser *p, t_world *w, char *l);
+int						parse_light(char *line, t_light *rlight);
 
 /*
  **vectors
@@ -692,18 +804,18 @@ double					proj(t_point3d v1, t_point3d v2);
 t_point3d				create_vec(double x, double y, double z);
 t_point3d				reflection(t_point3d n, t_point3d v);
 t_point3d				refraction(t_hit *hit, t_line *line);
-
+t_line					newray(t_point3d p, t_point3d vec);
 /*
- **colors
- */
+**colors
+*/
 t_color					interpole_color(double t, t_color c1, t_color c2);
 t_color					get_color(int color);
 t_color					add_colors(t_color c1, t_color c2);
 t_color					scale_color(t_color c, double t);
 
 /*
- **int colors (for filter calculations)
- */
+**int colors (for filter calculations)
+*/
 t_intcolor				new_intcolor(void);
 t_intcolor				add_scale_intcolors(t_intcolor icol1, t_intcolor icol2,
 		double scale);
@@ -713,8 +825,8 @@ t_color					scale_convert_color(t_intcolor icol, double t);
 t_intcolor				scale_intcolor(t_intcolor c, double scale);
 
 /*
- **filters
- */
+**filters
+*/
 void					apply_convolution(t_world *world);
 void					convolute(t_canvas *canvas, double *filter,
 		int filter_size, int den);
@@ -727,8 +839,8 @@ void					grey(t_canvas *canvas);
 void					draw_borders(t_canvas *canvas);
 
 /*
- **render
- */
+**render
+*/
 t_color					render_pixel(t_world *world, t_pixel pix, int fast);
 t_point3d				screen2world(t_pixel pix, t_world *world, t_pixel aa);
 void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
@@ -741,8 +853,8 @@ t_color					illuminate_toon(t_world *world, t_hit *hit,
 		t_shadow **shadows, int fast);
 
 /*
- **paint window
- */
+**paint window
+*/
 void					paint_threaded_fast(t_world *world);
 void					fill_canvas(t_world *world);
 int						join_threads(t_world *world);
@@ -751,8 +863,8 @@ void					paint_not_threaded(t_world *world);
 void					update_progress_bar(t_world *world);
 
 /*
- ** intersections
- */
+** intersections
+*/
 int						intersect_sphere(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
 int						intersect_cone(t_line line, t_object obj,
@@ -783,8 +895,8 @@ int						intersect_mobius(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
 
 /*
- **normals
- */
+**normals
+*/
 t_point3d				normal_sphere(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_cone(t_object sphere, t_point3d t, t_line l);
 t_point3d				normal_plane(t_object sphere, t_point3d t, t_line l);
@@ -802,8 +914,8 @@ t_point3d				normal_mobius(t_object object, t_point3d p, t_line l);
 
 
 /*
- **quartics
- */
+**quartics
+*/
 t_quartic				get_quartic_piriform(t_line line);
 t_quartic				get_quartic_roman(t_line line);
 t_quartic				get_quartic_lemniscate(t_line line);
@@ -813,15 +925,15 @@ t_quartic				get_quartic_mobius(t_line line, t_object obj);
 void					ft_init_aux(t_auxquart_init *g, t_line line);
 
 /*
- **cuts
- */
+**cuts
+*/
 int						ft_evaluate_cut(t_cut cut, t_point3d pos);
 double					get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
 		double min, t_line transformed, t_objlist *objlist, int neg, t_object *other);
 
 /*
- **negatives
- */
+**negatives
+*/
 int						is_inside_other(t_hit h, t_objlist *objlist, int neg,
 		t_object *other);
 void					intersect_positive(t_objlist *objlist, t_object obj,
@@ -839,18 +951,19 @@ int						inside_paraboloid(t_hit h, t_object obj);
 int						inside_hyperboloid(t_hit h, t_object obj);
 
 /*
- **tools
- */
+**tools
+*/
 void    set_funcs(t_object *obj,
 		int (*intersect_func)(t_line, t_object, double[MAX_DEGREE]),
 		int (*inside_func)(t_hit, t_object),
 		t_point3d (*normal_func)(t_object, t_point3d, t_line));
 int						equal_double(double a, double b);
+t_pixel					fast_div(const t_canvas *canvas);
 
 
 /*
- **inequalities
- */
+**inequalities
+*/
 int						less_than(double a, double b);
 int						bigger_than(double a, double b);
 int						less_than_or_equal(double a, double b);
@@ -858,58 +971,128 @@ int						bigger_than_or_equal(double a, double b);
 int						equal(double a, double b);
 
 /*
- **perturbations
- */
+**perturbations
+*/
 t_point3d				pert_normal(t_hit *hit);
 t_color					pert_color(t_hit *hit);
 
 
 /*
- ** automatics
- */
+** automatics
+*/
 
 void					ft_process_automatic(t_parser *parser, t_world *world);
 
 /*
- **translations
- */
+** defining
+*/
+
+void					ft_process_switch_list_cobject(t_cobjlist ** cobjlist,
+		t_cobjlist ** defcobjlist);
+int						already_exists_defcobj(char *name, t_cobjlist *cobjlst);
+t_cobject				*get_defcobject(char *name, t_cobjlist *cobjlst);
+
+/*
+**translations
+*/
 t_point3d				translate_vec(t_point3d p, t_point3d v, double scale);
 void					translate(t_object *obj, t_point3d v);
 t_point3d				scale(t_point3d p, double scale);
 
 /*
- **rotations
- */
+**rotations
+*/
 t_point3d				rotate_axis(t_point3d v, t_point3d axis, double angle);
 t_point3d				rotate_vec(t_point3d v, t_point3d a);
 void					rotate(t_object *obj, t_point3d a);
 
 /*
- **camera rotations
- */
+** camera rotations
+*/
 void					rotate_hor(t_camera *cam, double angle);
 void					rotate_ver(t_camera *cam, double angle);
 void					camera_reset(t_camera *cam);
 void					apply_rotation(t_camera *cam);
 
 /*
- ** matrices
- */
+** automatic render
+*/
+
+void					ft_look_at(t_camera *cam, t_point3d tolook);
+void					ft_pivot_camera(t_camera *cam, t_point3d tolook);
+
+/*
+** textures
+*/
+
+int						texture_sphere(t_object obj, t_hit *hit);
+int						texture_cylinder(t_object obj, t_hit *hit);
+int						texture_plane(t_object obj, t_hit *hit);
+int						texture_cone(t_object obj, t_hit *hit);
+t_bmp_parser			ft_parse_bmp(char *src);
+t_color					get_object_color(t_hit *hit);
+
+/*
+** matrices
+*/
 
 void					ft_compute_matrix(t_object *object);
 void					ft_compute_matrices_clist(t_cobjlist *cobjects);
 t_line					ft_transform_line(t_object object, t_line t);
 void					ft_transform_hit_back(t_hit *hit, t_line line);
 
+
 /*
- ** export
- */
+** video
+*/
+
+void				ft_add_frame_to_video(t_world *world);
+
+/*
+** export
+*/
 
 int					ft_export_rt(t_world *world, char *extension);
 
 /*
- ** error
- */
+** bmp reader
+*/
+
+int		ft_get_pixel(int x, int y, t_bmp_parser parser);
+
+/*
+** scene exporter
+*/
+int					ft_export_scene(t_world *world, char *filename);
+void				ft_print_sphere_caracteristics(t_object object, int fd);
+void				ft_print_plane_caracteristics(t_object object, int fd);
+void				ft_print_cone_caracteristics(t_object object, int fd);
+void				ft_print_cylinder_caracteristics(t_object object, int fd);
+void				ft_print_ellipsoid_caracteristics(t_object object, int fd);
+void				ft_print_torus_caracteristics(t_object object, int fd);
+void				ft_print_goursat_caracteristics(t_object object, int fd);
+void				ft_print_lemniscate_caracteristics(t_object object, int fd);
+void				ft_print_roman_caracteristics(t_object object, int fd);
+void				ft_print_piriform_caracteristics(t_object object, int fd);
+void				ft_print_hyperboloid_caracteristics(t_object object, int fd);
+void				ft_print_paraboloid_caracteristics(t_object object, int fd);
+void				ft_print_triangle_caracteristics(t_object object, int fd);
+
+/*
+** Mouse events
+*/
+void				ft_mouse_motion(t_world *world, SDL_Event event);
+void				ft_mouse_button_down(t_world *world, SDL_Event event);
+void				ft_mouse_button_up(t_world *world, SDL_Event event);
+
+/*
+** Menu
+*/
+void				ft_display_menu(t_world *world);
+
+/*
+** error
+*/
 
 t_mmap			ft_map_file(char *filename);
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/07 01:13:42 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/08 23:45:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/05/31 18:37:40 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 # define NB_CHARS	255
 # define BUF_SIZE	1000000
@@ -88,8 +89,9 @@ typedef struct		s_pf
 	int				parse_precision;
 	int				parse_padding;
 	int				precised_precision;
-	int				ret;
+	char			*buffer;
 	int				fd;
+	int				sprintf;
 }					t_pf;
 
 typedef int			(*t_pf_func)(t_pf *, va_list, char);
@@ -97,6 +99,7 @@ typedef void		(*t_get_val)(t_pf *, va_list);
 
 int					ft_printf(const char *restrict format, ...);
 int					ft_dprintf(int fd, const char *restrict format, ...);
+int					ft_sprintf(char *buff, const char *restrict format, ...);
 int					ft_dvprintf(int fd, const char *restrict ft, va_list va);
 void				ft_init_pf(t_pf *pf);
 int					ft_add_return(int n);
@@ -137,9 +140,6 @@ int					ft_pf_percent(t_pf *pf, va_list va, char c);
 int					ft_pf_star(t_pf *pf, va_list va, char c);
 int					ft_pf_digit(t_pf *pf, va_list va, char c);
 
-void				ft_add_padding_pre(t_pf pf, int no_padding_byte);
-void				ft_add_padding_post(t_pf pf, int no_padding_byte);
-
 int					ft_pf_len_d(t_pf pf);
 int					ft_pf_len_u(t_pf pf);
 int					ft_pf_len_s(t_pf pf);
@@ -157,15 +157,15 @@ void				ft_bzero(void *s, size_t n);
 size_t				ft_strlen(char const *s);
 char				*ft_strncpy(char *dest, char const *src, size_t n);
 int					ft_isprint(int c);
-void				ft_putchar_buff(char c, int fd);
-void				ft_putbin(size_t nb, int fd);
-void				ft_putdbl(double d, int precision, int fd);
-void				ft_putnbr_buff(int nbr, int fd);
-void				ft_putnbr_unsigned(unsigned int n, int fd);
-void				ft_putnbr_max(uintmax_t n, int fd);
-void				ft_putstr_non_printable(const char *s, size_t n, int fd);
+void				ft_putchar_buff(char c, t_pf *pf);
+void				ft_putbin(size_t nb, t_pf *pf);
+void				ft_putdbl(double d, int precision, t_pf *pf);
+void				ft_putnbr_buff(int nbr, t_pf *pf);
+void				ft_putnbr_unsigned(unsigned int n, t_pf *pf);
+void				ft_putnbr_max(uintmax_t n, t_pf *pf);
+void				ft_putstr_non_printable(const char *s, size_t n, t_pf *pf);
 intmax_t			ft_abs_max(intmax_t a);
-void				ft_putnstr(char const *str, size_t n, int fd);
+void				ft_putnstr(char const *str, size_t n, t_pf *pf);
 double				ft_fabs(double a);
 int					ft_min(int a, int b);
 int					ft_max(int a, int b);
@@ -184,29 +184,30 @@ void				ft_gtvar_ullint(t_pf *pf, va_list va);
 void				ft_gtvar_uintmax_t(t_pf *pf, va_list va);
 void				ft_gtvar_ushort_int(t_pf *pf, va_list va);
 
-void				ft_puthex_max(uintmax_t n, int maj, int fd);
-void				ft_putoctal_max(uintmax_t n, int fd);
-char				*ft_get_buffer(const void *s, size_t n, int *disp, int fd);
-void				ft_empty_buffer(int fd);
+void				ft_puthex_max(uintmax_t n, int maj, t_pf *pf);
+void				ft_putoctal_max(uintmax_t n, t_pf *pf);
+char				*ft_get_buffer(const void *s, size_t n, int *disp, t_pf *pf);
+void				ft_empty_buffer(t_pf *pf);
 void				ft_no_number(t_pf *pf);
 void				get_casted_value(t_pf *pf, va_list va);
 void				get_casted_value_unsigned(t_pf *pf, va_list va);
 void				get_casted_value_unsigned_maj(t_pf *pf, va_list va);
-void				ft_add_padding_pre(t_pf pf, int no_padding_byte);
-void				ft_add_padding_post(t_pf pf, int no_padding_byte);
-void				ft_add_padding_pre_standard(t_pf pf, int no_padding_byte);
-void				ft_add_padding_pre_zeros(t_pf pf, int no_padding_byte);
-void				ft_add_precision_base(t_pf pf, int base);
-void				ft_add_precision_o(t_pf pf);
-void				ft_add_precision_base_u(t_pf pf, int base);
-void				ft_add_prefix(t_pf pf);
-int					ft_put_wchar(int value, int fd);
-void				ft_putwstr(int *data, int fd);
-void				ft_putwnstr(int *data, int precision, int fd);
+void				ft_add_padding_pre(t_pf *pf, int no_padding_byte);
+void				ft_add_padding_post(t_pf *pf, int no_padding_byte);
+void				ft_add_padding_pre_standard(t_pf *pf, int no_padding_byte);
+void				ft_add_padding_pre_zeros(t_pf *pf, int no_padding_byte);
+void				ft_add_precision_base(t_pf *pf, int base);
+void				ft_add_precision_o(t_pf *pf);
+void				ft_add_precision_base_u(t_pf *pf, int base);
+void				ft_add_prefix(t_pf *pf);
+int					ft_put_wchar(int value, t_pf *pf);
+void				ft_putwstr(int *data, t_pf *pf);
+void				ft_putwnstr(int *data, int precision, t_pf *pf);
 void				ft_4_bytes_len(unsigned char str[4], int value);
 void				ft_3_bytes_len(unsigned char str[4], int value);
 int					ft_wstrlen(int *data);
 int					ft_wstrlen_prec(int *data, int precision);
 int					ft_has_forbidden_values(t_pf pf);
 int					ft_may_error_next_conv(const char *format, int i);
+int					ft_process_percent(const char *ft, int *i, t_pf *f, va_list v);
 #endif

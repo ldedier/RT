@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/22 09:44:26 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/02 03:00:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,20 @@ static int	any_key_pressed(t_world *world)
 	return (0);
 }
 
-int		get_input(t_world *e)
+int		get_input(t_world *e, char *filename)
 {
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event))
 	{
 		if (event.type == SDL_KEYDOWN)
-			ft_keys_event(e, event, 1);
+			ft_keys_event(e, event, 1, filename);
 		if (event.type == SDL_KEYUP)
-			ft_keys_event(e, event, 0);
+			ft_keys_event(e, event, 0, filename);
+		if (event.type == SDL_MOUSEBUTTONDOWN)
+			ft_mouse_button_down(e, event);
+		if (event.type == SDL_MOUSEBUTTONUP)
+			ft_mouse_button_up(e, event);
 		if (event.type == SDL_MOUSEMOTION)
 			ft_mouse_motion(e, event);
 		if (event.window.event == SDL_WINDOWEVENT_CLOSE ||
@@ -45,8 +49,10 @@ int		get_input(t_world *e)
 			return (1);
 		}
 	}
-	if (any_key_pressed(e))
+	if (any_key_pressed(e) || (e->animate && SDL_GetTicks() - e->ticks >
+		   	ANIMATE_TIMING) || e->exporting_video)
 	{
+		e->ticks = SDL_GetTicks();
 		//if (e->cancel_render == 0)
 		//{
 		e->keys[mouse_move] = 0;
@@ -65,6 +71,8 @@ int		get_input(t_world *e)
 			e->progress = 0;
 			printf("INPUT PRESSED, CANCELING RENDERING\n");
 			paint_threaded_fast(e);
+			if(e->exporting_video)
+				ft_add_frame_to_video(e);
 		}
 		//}
 		//SDL_Delay(12);
@@ -72,11 +80,12 @@ int		get_input(t_world *e)
 	return (0);
 }
 
-void	ft_loop(t_world *e)
+void	ft_loop(t_world *e, char *filename)
 {
-	SDL_SetRelativeMouseMode(SDL_TRUE);
+	SDL_WarpMouseInWindow(e->canvas->window, (HRES + MENU_WIDTH) / 2,
+			(VRES + PROGRESS_BAR_HEIGHT) / 2);
 	paint_threaded_fast(e);
-	while (!get_input(e))
+	while (!get_input(e, filename))
 		;
 	end(e);
 }

@@ -12,13 +12,13 @@
 
 #include "ft_printf.h"
 
-void	ft_putoctal_max(uintmax_t nb, int fd)
+void	ft_putoctal_max(uintmax_t nb, t_pf *pf)
 {
 	if ((nb / 8) == 0)
-		ft_putchar_buff(nb % 8 + '0', fd);
+		ft_putchar_buff(nb % 8 + '0', pf);
 	else
 	{
-		ft_putoctal_max((uintmax_t)nb / (uintmax_t)8, fd);
-		ft_putchar_buff(nb % 8 + '0', fd);
+		ft_putoctal_max((uintmax_t)nb / (uintmax_t)8, pf);
+		ft_putchar_buff(nb % 8 + '0', pf);
 	}
 }

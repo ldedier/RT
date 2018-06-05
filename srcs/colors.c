@@ -61,6 +61,5 @@ void			paint_pixel(t_pixel p, t_color c, t_canvas *canvas)
 	int *pix;
 
 	pix = (int *)canvas->surface->pixels;
-	//printf("%i %i\n",p.x,p.y);fflush(stdout);
 	pix[p.x + p.y * canvas->win_size.x] = c.col;
 }

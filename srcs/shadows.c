@@ -30,7 +30,7 @@ static void	get_shadow_illum(t_shadow *shadow, t_world *world, t_light light,
 {
 	t_hit	*hit;
 	t_line	sray;
-	
+
 	if ((hit = trace(shadow->sray, world->cobjlist)))
 	{
 		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON &&

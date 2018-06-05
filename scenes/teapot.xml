@@ -6,7 +6,7 @@
 	<objlist>
 		<cobject type="obj">
 			<color>0xFF0000</color>
-			<src>resources/objs/al.obj</src>
+			<src>resources/objs/teapot.obj</src>
 		</cobject>
 		<cobject>
 			<rotationXYZ>1.5707 0 0</rotationXYZ>

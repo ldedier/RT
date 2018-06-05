@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 03:14:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/05 04:28:49 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/05 12:13:16 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_parse_resolution(t_parser *parser, t_world *world, char *line)
 {
+	t_pixel	div;
 	if (parser->parse_enum != e_parse_scene)
 	{
 		ft_dprintf(2, "line %d: current object can not have resolution\n",
@@ -22,16 +23,17 @@ void	ft_parse_resolution(t_parser *parser, t_world *world, char *line)
 	}
 	read_int(&line, &(world->canvas->win_size.x));
 	read_int(&line, &(world->canvas->win_size.y));
-	if (world->canvas->win_size.x > 1300 || world->canvas->win_size.y > 1000)
+	if (world->canvas->win_size.y < 1000)
 	{
-		ft_dprintf(2, "line %d: maximum resolution is 1300x1000\n",
+		ft_dprintf(2, "line %d: minimum vertical resolution is 1000\n",
 				parser->nb_lines);
 		exit(1);
 	}
 	world->canvas->halved_win_size.x = world->canvas->win_size.x / 2;
 	world->canvas->halved_win_size.y = world->canvas->win_size.y / 2;
-	world->canvas->fast_win_size.x = world->canvas->win_size.x / 10 / FAST_RATIO;
-	world->canvas->fast_win_size.y = world->canvas->win_size.y / 10 / FAST_RATIO;
+	div = fast_div(world->canvas);
+	world->canvas->fast_win_size.x = world->canvas->win_size.x / div.x / FAST_RATIO;
+	world->canvas->fast_win_size.y = world->canvas->win_size.y / div.y / FAST_RATIO;
 	world->canvas->ratio = (double)world->canvas->win_size.x /
 		(double)world->canvas->win_size.y;
 	world->canvas->pb_rect.y = world->canvas->win_size.y;

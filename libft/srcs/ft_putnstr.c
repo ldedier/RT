@@ -12,10 +12,10 @@
 
 #include "ft_printf.h"
 
-void	ft_putnstr(char const *s, size_t n, int fd)
+void	ft_putnstr(char const *s, size_t n, t_pf *pf)
 {
 	int display;
 
 	display = 0;
-	ft_get_buffer(s, n, &display, fd);
+	ft_get_buffer(s, n, &display, pf);
 }
