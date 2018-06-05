@@ -8,31 +8,22 @@
 			<positionXYZ>0 0 30</positionXYZ>
 			<rotationXYZ>1.5707 0 0</rotationXYZ>
 			<color> 0x00FFFF </color>
-			<object name="plane">
-				<texture_trans_x>0</texture_trans_x>
-				<texture_trans_y>0</texture_trans_y>
-				<texture_stretch_x>1</texture_stretch_x>
-				<texture_stretch_y>1</texture_stretch_y>
+			<object name="sphere">
 				<texture>resources/textures/texture.bmp</texture>
-				<cut type="relative">
-					<cutXYZ>1 0 0</cutXYZ>
+				<cut type="color">
+					<cut_color>blue</cut_color>
 					<inequality>more than</inequality>
-					<value>5</value>
+					<value>0.5</value>
 				</cut>
-				<cut type="relative">
-					<cutXYZ>-1 0 0</cutXYZ>
+			</object>
+			<object name="plane">
+				<positionXYZ>30 30 30</positionXYZ>
+				<rotationXYZ>0 1.5707 0</rotationXYZ>
+				<texture>resources/textures/texture3.bmp</texture>
+				<cut type="color">
+					<cut_color>red</cut_color>
 					<inequality>more than</inequality>
-					<value>5</value>
-				</cut>
-				<cut type="relative">
-					<cutXYZ>0 0 1</cutXYZ>
-					<inequality>more than</inequality>
-					<value>5</value>
-				</cut>
-				<cut type="relative">
-					<cutXYZ>0 0 -1</cutXYZ>
-					<inequality>more than</inequality>
-					<value>5</value>
+					<value>0.1</value>
 				</cut>
 			</object>
 		</cobject>

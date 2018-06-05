@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 05:33:22 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 09:03:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/05 07:28:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int		ft_get_pixel(int x, int y, t_bmp_parser parser)
 	color[2] = parser.pixels[nb + 2];
 	color[3] = 0;
 
-	//alpha
 	return (*(int *)color);
 }
 
@@ -34,13 +33,7 @@ int		texture_sphere(t_object obj, t_hit *hit)
 	float v = 0.5 - (asin(p.y) / M_PI);
 	u = (int)(u * obj.parser.width);
 	v = (int)(v * obj.parser.height);
-	int col = ft_get_pixel(u, v, obj.parser);
-	return (col);
-}
-
-t_point3d	abs_point(t_point3d point)
-{
-	return ft_new_vec3(fabs(point.x), fabs(point.y), fabs(point.z));
+	return (ft_get_pixel(u, v, obj.parser));
 }
 
 int		texture_plane(t_object obj, t_hit *hit)
@@ -53,24 +46,26 @@ int		texture_plane(t_object obj, t_hit *hit)
 	t_point3d m_VAxis = crossprod(m_UAxis, hit->old_normal);
 	float u = (int)(ft_dot_product(hit->old_point, m_UAxis) *
 			(obj.parser.width * obj.object_union.plane.texture_stretch_x) +
-				obj.object_union.plane.texture_trans_x) % (obj.parser.width);
+				obj.object_union.plane.texture_trans_x - 100000000) % (obj.parser.width);
 	float v = (int)(ft_dot_product(hit->old_point, m_VAxis) *
 			(obj.parser.height * obj.object_union.plane.texture_stretch_y)
-			+ obj.object_union.plane.texture_trans_y) % (obj.parser.height);
+			+ obj.object_union.plane.texture_trans_y + 100000000) % (obj.parser.height);
 	if (u < 0)
 		u *= -1;
 	if (v < 0)
 		v *= -1;
-	int col = ft_get_pixel(u, v, obj.parser);
-	return (col);
+	return (ft_get_pixel(u, v, obj.parser));
 }
 
 int		texture_cylinder(t_object obj, t_hit *hit)
 {
-	(void) obj;
-	(void) hit;
+	t_point3d d;
 
-	return (0);
+	d = hit->old_point;
+	double u = (int)fabs(d.x * 100) % obj.parser.width;
+	double v = ((atan(d.z / d.y) + (M_PI / 2)) / (M_PI));
+	v = (int)(v * obj.parser.height);
+	return (ft_get_pixel(u, v, obj.parser));
 }
 
 int		texture_cone(t_object obj, t_hit *hit)
@@ -78,5 +73,10 @@ int		texture_cone(t_object obj, t_hit *hit)
 	(void) obj;
 	(void) hit;
 
-	return (0);
+	t_point3d d;
+	d = hit->old_point;
+	double u = (int)fabs(d.x *  100) % obj.parser.width;
+	double v = ((atan(d.z / d.y) + (M_PI / 2)) / (M_PI));
+	v = (int)(v * obj.parser.height);
+	return (ft_get_pixel(u, v, obj.parser));
 }

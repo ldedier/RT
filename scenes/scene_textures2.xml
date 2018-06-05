@@ -8,7 +8,7 @@
 			<positionXYZ>0 0 10</positionXYZ>
 			<rotationXYZ>0 0 0</rotationXYZ>
 			<color> 0x0000FF </color>
-			<transparency>0.5</transparency>
+			<transparency>1</transparency>
 			<object name="sphere">
 			</object>
 		</cobject>
