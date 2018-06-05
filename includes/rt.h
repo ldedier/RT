@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 02:50:34 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/05 03:40:47 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -658,12 +658,12 @@ typedef struct  s_mmap
 /*
  ** input
  */
-void					ft_loop(t_world *world, char *filename);
+void					ft_loop(t_world *world);
 int						draw_frame(void *param);
 int						key_press(int keycode, void *param);
 int						end(t_world *world);
-int						get_input(t_world *e, char *filename);
-void					ft_keys_event(t_world *world, SDL_Event event, int down, char *filename);
+int						get_input(t_world *e);
+void					ft_keys_event(t_world *world, SDL_Event event, int down);
 void					ft_process(t_world *world);
 void					ft_mouse_motion(t_world *world, SDL_Event event);
 void					ft_mouse_down(t_world *world, SDL_Event event);
@@ -1062,7 +1062,7 @@ int		ft_get_pixel(int x, int y, t_bmp_parser parser);
 /*
 ** scene exporter
 */
-int					ft_export_scene(t_world *world, char *filename);
+int					ft_export_scene(t_world *world);
 void				ft_print_sphere_caracteristics(t_object object, int fd);
 void				ft_print_plane_caracteristics(t_object object, int fd);
 void				ft_print_cone_caracteristics(t_object object, int fd);

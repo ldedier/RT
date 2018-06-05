@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 02:50:42 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/05 06:43:49 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,24 +181,27 @@ t_pixel	ft_color_pos(t_world *world, t_color color)
 		y++;
 	}
 	y = 0;
+	float dist = 100;
 	while (y < 100)
 	{
 		x = 0;
 		while (x < 100)
 		{
-			if (abs(world->menu.color_map[y * 100 + x].r - color.r) < 10 &&
-					abs(world->menu.color_map[y * 100 + x].g - color.g) < 10 &&
-					abs(world->menu.color_map[y * 100 + x].b - color.b) < 10)
+			int r = world->menu.color_map[y * 100 + x].r;
+            int g = world->menu.color_map[y * 100 + x].g;
+            int b = world->menu.color_map[y * 100 + x].b;
+            float tmp = sqrt((r - color.r) * (r - color.r) + (g - color.g) * (g - color.g) + (b - color.b) * (b - color.b));
+			if (tmp < dist)
 			{
+				dist = tmp;
+				printf("AAAAAAAA\n");
 				pix.x = x;
 				pix.y = y;
-				return (pix);
 			}
 			x++;
 		}
 		y++;
 	}
-
 	return (pix);
 }
 

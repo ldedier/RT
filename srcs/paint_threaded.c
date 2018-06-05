@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/04 09:06:47 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/05 03:42:32 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int			join_threads(t_world *world)
 		}
 		if (i == NTHREADS)
 			i = -1;
-		if (get_input(world, ""))
+		if (get_input(world))
 			end(world);
 	}
 	if ((ret = (cancel == 1)) == 1)

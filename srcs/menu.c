@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:29:20 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/04 23:38:36 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/05 04:02:56 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -503,9 +503,18 @@ void	ft_menu_others(t_world *world)
 	ft_add_menu_surface(world);
 	//<-- /PHOTO -->
 	//<-- VIDEO -->
-	bmp = world->menu.video;
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 75 + 125;
-	world->menu.rect.y = 760;
+	if (world->exporting_video == 1)
+	{
+		bmp = world->menu.stop;
+		world->menu.rect.x = world->canvas->win_size.x + 20 + 75 + 130;
+		world->menu.rect.y = 751;
+	}
+	else
+	{
+		bmp = world->menu.video;
+		world->menu.rect.x = world->canvas->win_size.x + 20 + 75 + 125;
+		world->menu.rect.y = 760;
+	}
 	world->menu.rect.w = bmp.width;
 	world->menu.rect.h = bmp.height;
 	ft_new_menu_surface(world);

@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/04 22:20:18 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/05 05:50:15 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ void	ft_mouse_motion(t_world *world, SDL_Event event)
 		int y = event.motion.y - world->menu.others_cp[i].pix.y;
 		if (x < 0)
 			x = 0;
-		else if (x > 100)
-			x = 100;
+		else if (x > 99)
+			x = 99;
 		if (y < 0)
 			y = 0;
-		else if (y > 100)
-			y = 100;
+		else if (y > 99)
+			y = 99;
 		*(world->menu.others_cp[i].color) = world->menu.color_map[y * 100 + x];
 		world->menu.others_cp[i].pos.x = x;
 		world->menu.others_cp[i].pos.y = y;
@@ -212,6 +212,35 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 			else
 				world->shader = 2;
 			paint_threaded_fast(world);;
+		}
+		x0 = world->canvas->win_size.x + 20 + 75;
+		y0 = 750;
+		if (x >= (x0) && x <= (x0 + world->menu.photo.width) && y >= (y0) && y <= (y0 + world->menu.photo.height))
+			ft_export_rt(world, ".ppm");
+		x0 = world->canvas->win_size.x + 20 + 75 + 250;
+		y0 = 752;
+		if (x >= (x0) && x <= (x0 + world->menu.save.width) && y >= (y0) && y <= (y0 + world->menu.save.height))
+			ft_export_scene(world);
+		if (world->exporting_video == 1)
+		{
+			x0 = world->canvas->win_size.x + 20 + 75 + 130;
+			y0 = 751;
+			if (x >= (x0) && x <= (x0 + world->menu.stop.width) && y >= (y0) && y <= (y0 + world->menu.stop.height))
+			{
+				world->exporting_video = 0;
+				//ft_export_y4m(world->video);
+				update_progress_bar(world);
+			}
+		}
+		else
+		{
+			x0 = world->canvas->win_size.x + 20 + 75 + 125;
+			y0 = 760;
+			if (x >= (x0) && x <= (x0 + world->menu.video.width) && y >= (y0) && y <= (y0 + world->menu.video.height))
+			{
+				world->exporting_video = 1;
+				update_progress_bar(world);
+			}
 		}
 	}
 }

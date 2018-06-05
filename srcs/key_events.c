@@ -6,13 +6,13 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:27:44 by aherriau          #+#    #+#             */
-/*   Updated: 2018/05/31 21:28:39 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/05 03:39:12 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	ft_keys_event(t_world *e, SDL_Event event, int press, char *filename)
+void	ft_keys_event(t_world *e, SDL_Event event, int press)
 {
 	if (e->focus || !e->focus)
 	{
@@ -117,7 +117,7 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press, char *filename)
 			{
 				if (e->can_export)
 				{
-					ft_export_scene(e, filename);
+					ft_export_scene(e);
 					e->can_export = 0;
 				}
 			}

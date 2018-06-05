@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:31:29 by aherriau          #+#    #+#             */
-/*   Updated: 2018/05/30 00:01:41 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/05 05:29:22 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,14 @@ void		ft_print_sphere_caracteristics(t_object obj, int fd)
 
 void		ft_print_plane_caracteristics(t_object obj, int fd)
 {
-	(void)obj;
-	(void)fd;
+	dprintf(fd,"\t\t\t\t<texture_stretch_x>%f</texture_stretch_x>\n",
+			obj.object_union.plane.texture_stretch_x);
+	dprintf(fd,"\t\t\t\t<texture_stretch_y>%f</texture_stretch_y>\n",
+			obj.object_union.plane.texture_stretch_y);
+	dprintf(fd,"\t\t\t\t<texture_trans_x>%d</texture_trans_x>\n",
+			obj.object_union.plane.texture_trans_x);
+	dprintf(fd,"\t\t\t\t<texture_trans_y>%d</texture_trans_y>\n",
+			obj.object_union.plane.texture_trans_y);
 }
 
 void		ft_print_cone_caracteristics(t_object obj, int fd)
@@ -144,6 +150,9 @@ void		ft_print_ellipsoid_caracteristics(t_object obj, int fd)
 {
 	dprintf(fd,"\t\t\t\t<radius>%f</radius>\n",
 			obj.object_union.ellipsoid.radius);
+	dprintf(fd,"\t\t\t\t<ellipsoidABC>%f %f %f</ellipsoidABC>\n",
+			obj.object_union.ellipsoid.abc.x, obj.object_union.ellipsoid.abc.y,
+			obj.object_union.ellipsoid.abc.z);
 }
 
 void		ft_print_torus_caracteristics(t_object obj, int fd)
@@ -156,8 +165,8 @@ void		ft_print_torus_caracteristics(t_object obj, int fd)
 
 void		ft_print_goursat_caracteristics(t_object obj, int fd)
 {
-	(void)obj;
-	(void)fd;
+	dprintf(fd,"\t\t\t\t<goursatAB>%f %f</goursatAB>\n",
+			obj.object_union.goursat.a, obj.object_union.goursat.b);
 }
 
 void		ft_print_lemniscate_caracteristics(t_object obj, int fd)
@@ -192,8 +201,15 @@ void		ft_print_paraboloid_caracteristics(t_object obj, int fd)
 
 void		ft_print_triangle_caracteristics(t_object obj, int fd)
 {
-	(void)obj;
-	(void)fd;
+	dprintf(fd,"\t\t\t\t<vertexA>%f %f %f</vertexA>\n",
+			obj.object_union.triangle.v1.x, obj.object_union.triangle.v1.y,
+			obj.object_union.triangle.v1.z);
+	dprintf(fd,"\t\t\t\t<vertexB>%f %f %f</vertexB>\n",
+			obj.object_union.triangle.v2.x, obj.object_union.triangle.v2.y,
+			obj.object_union.triangle.v2.z);
+	dprintf(fd,"\t\t\t\t<vertexC>%f %f %f</vertexC>\n",
+			obj.object_union.triangle.v3.x, obj.object_union.triangle.v3.y,
+			obj.object_union.triangle.v3.z);
 }
 
 static void	ft_print_cut(t_cut cut, int fd)
@@ -368,16 +384,14 @@ static void	ft_print_cobject(t_cobject cobj, int fd)
 	//dprintf(fd,"\t\t\t<negative>%d</negative>\n", cobj.negative);
 }
 
-int			ft_export_scene(t_world *world, char *filename)
+int			ft_export_scene(t_world *world)
 {
 	int			fd;
 	char		*name;
 	t_cobjlist	*lst;
 	t_objlist	*lst2;
 
-	name = ft_strjoin(filename, " (export ");
-	name = ft_strjoin(name, ft_itoa(++(world->nb_export)));
-	name = ft_strjoin(name, ")");
+	name = ft_strjoin("export", ft_itoa(++(world->nb_export)));
 	name = ft_strjoin(name, ".xml");
 	if ((fd = open(name, O_RDWR | O_CREAT, 0644)) == -1)
 		return (-1);
