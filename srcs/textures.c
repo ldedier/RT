@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 05:33:22 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 04:02:34 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/05 07:28:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_illum		texture_cone(t_object obj, t_hit *hit)
 
 	t_point3d d;
 	d = hit->old_point;
-	double u = (int)fabs(d.x *  10) % obj.parser.width;
+	double u = (int)fabs(d.x *  100) % obj.parser.width;
 	double v = ((atan(d.z / d.y) + (M_PI / 2)) / (M_PI));
 	v = (int)(v * obj.parser.height);
 	return (ft_get_pixel(u, v, obj.parser));

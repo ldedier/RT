@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 00:33:52 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/05 07:06:46 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@
 # define SPEED 0.1
 # define MAX_BOUNCE 4
 # define AA_SQ_SIZE 1
+# define VIDEO_RES_RATIO 10
 
 # define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
 # define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
@@ -338,6 +339,7 @@ typedef struct			s_cut
 	int					(*inequality)(double, double);
 	int					relative;
 	int					circular;
+	int					color;
 }						t_cut;
 
 typedef union			s_object_union
@@ -711,6 +713,8 @@ void					ft_process_parsing_cut_inequality(t_parser *p,t_world *w,
 		char *l);
 void					ft_process_parsing_cut_value(t_parser *p,t_world *w,
 		char *l);
+void					ft_process_parsing_cut_color(t_parser *p,t_world *w,
+		char *l);
 void					ft_process_parsing_vertex_a(t_parser *p,t_world *w,
 		char *l);
 void					ft_process_parsing_vertex_b(t_parser *p,t_world *w,
@@ -867,7 +871,7 @@ void					ft_init_aux(t_auxquart_init *g, t_line line);
 /*
 **cuts
 */
-int						ft_evaluate_cut(t_cut cut, t_point3d pos);
+int						ft_evaluate_cut(t_cut cut, t_point3d pos, t_hit hit);
 double					get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
 		double min, t_line transformed, t_objlist *objlist, int neg, t_object *other);
 

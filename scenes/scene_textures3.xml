@@ -8,14 +8,23 @@
 			<positionXYZ>0 0 30</positionXYZ>
 			<rotationXYZ>1.5707 0 0</rotationXYZ>
 			<color> 0x00FFFF </color>
-			<object name="cone">
-				<rotationXYZ>0 1.5707 0</rotationXYZ>
-				<angle>0.3</angle>
-				<texture>resources/textures/brick.bmp</texture>
+			<object name="sphere">
+				<texture>resources/textures/texture.bmp</texture>
+				<cut type="color">
+					<cut_color>blue</cut_color>
+					<inequality>more than</inequality>
+					<value>0.5</value>
+				</cut>
 			</object>
 			<object name="plane">
 				<positionXYZ>30 30 30</positionXYZ>
 				<rotationXYZ>0 1.5707 0</rotationXYZ>
+				<texture>resources/textures/texture3.bmp</texture>
+				<cut type="color">
+					<cut_color>red</cut_color>
+					<inequality>more than</inequality>
+					<value>0.1</value>
+				</cut>
 			</object>
 		</cobject>
 	</objlist>

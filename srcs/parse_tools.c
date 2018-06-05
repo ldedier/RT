@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/03 05:59:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/05 05:59:06 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ t_cut		*ft_new_cut(void)
 	cut->cut_xyz = ft_new_vec3(1, 0, 0);
 	cut->relative = 1;
 	cut->circular = 0;
+	cut->color = 0;
 	cut->inequality = less_than;
 	return (cut);
 }

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 20:09:40 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 03:26:12 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/05 06:51:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,13 @@
 void	ft_process_parsing_cut_attributes(t_parser *parser, t_cut *cut)
 {
 	if (!ft_strcmp(parser->attribute, "relative"))
-		cut->relative = 1;
+		;
 	else if (!ft_strcmp(parser->attribute, "absolute"))
 		cut->relative = 0;
+	else if (!ft_strcmp(parser->attribute, "color"))
+		cut->color = 1;
 	else if (!ft_strcmp(parser->attribute, "circular"))
-	{
-		cut->relative = 1;
 		cut->circular = 1;
-	}
 	else
 	{
 		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines,
@@ -51,6 +50,40 @@ void	ft_process_parsing_cut_xyz(t_parser *parser, t_world *world,
 	ft_process_tag_stack(parser);
 }
 
+int		ft_get_cut_color(t_parser *parser, char *str)
+{
+	if (!ft_strcmp("red", str))
+		return (0xff0000);
+	else if (!ft_strcmp("blue", str))
+		return (0x0000ff);
+	else if (!ft_strcmp("green", str))
+		return (0x00ff00);
+	else
+	{
+		ft_dprintf(2, "line %d: color \"%s\" illegal\n",parser->nb_lines, str);
+		exit(1);
+	}	
+}
+
+void	ft_process_parsing_cut_color(t_parser *parser, t_world *world,
+		char *line)
+{
+	int	*color;
+	char *tmp;
+	if (parser->parse_enum == e_parse_cut)
+		color = &(((t_cut *)(world->cobjlist->cobject->objlist->object->cuts->content))->color);
+	else
+	{
+		ft_dprintf(2, "line %d: current object can not have a cutXYZ tag\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	tmp = ft_get_between_tag(&line);
+	*color = ft_get_cut_color(parser, tmp);
+	free(tmp);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
 
 void	ft_attribute_inequality_func(int (**func)(double, double), char *desc,
 		t_parser * parser)

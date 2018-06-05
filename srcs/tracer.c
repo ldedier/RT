@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 00:31:37 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 21:00:58 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/05 07:30:59 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ int					izokay(t_hit newhit, double sol, t_line transformed)
 	ptr = newhit.obj.cuts;
 	relative_pos = ft_point3d_add(transformed.o,
 			ft_point3d_scalar(transformed.v, sol));
+
+	newhit.point = ft_point3d_add(transformed.o, ft_point3d_scalar(transformed.v, sol));
+ 	newhit.normal = newhit.obj.normal_func(newhit.obj, newhit.point, transformed);
 	absolute_pos = ft_point3d_mat4_mult(relative_pos, newhit.obj.transform_pos);
 	while (ptr != NULL)
 	{
@@ -73,7 +76,7 @@ int					izokay(t_hit newhit, double sol, t_line transformed)
 			point = relative_pos;
 		else
 			point = absolute_pos;
-		if (ft_evaluate_cut(cut, point) == 1)
+		if (ft_evaluate_cut(cut, point, newhit) == 1)
 			return (0);
 		ptr = ptr->next;
 	}
@@ -93,7 +96,7 @@ int					izokay_t(t_hit newhit, double sol, t_line line)
 	while (ptr != NULL)
 	{
 		cut = *((t_cut *)(ptr->content));
-		if (ft_evaluate_cut(cut, absolute_pos) == 1)
+		if (ft_evaluate_cut(cut, absolute_pos, newhit) == 1)
 			return (0);
 		ptr = ptr->next;
 	}
