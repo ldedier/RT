@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 03:40:47 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/06 01:24:19 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@
 # define POP 1
 # define MAX_DEGREE 4
 
+# define HWIN 1300
+# define VWIN 1000
 # define FAST_RATIO 1
 # define HRES 1300
 # define VRES 1000
@@ -167,6 +169,9 @@ typedef struct			s_canvas
 	SDL_Surface			*surface;
 	SDL_Rect			pb_rect;
 	SDL_Rect			screen;
+	SDL_Texture			*win_texture;
+	SDL_Surface			*win_surface;
+	SDL_Rect			win;
 	t_pixel				win_size;
 	t_pixel				fast_win_size;
 	t_pixel				halved_win_size;
@@ -673,6 +678,7 @@ void					ft_mouse_down(t_world *world, SDL_Event event);
 int						new_world(char* file, t_world **world);
 t_canvas				*new_canvas(void);
 void					set_defaults(t_world *world);
+void					set_color_pos(t_world *world);
 int						ft_init_all(t_canvas *canvas);
 void					ft_init_keys(t_world *world);
 int						read_world(t_world *world, char *file);

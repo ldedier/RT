@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:31:29 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/05 05:29:22 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/05 23:26:14 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,8 +287,6 @@ static char	*ft_get_object_name(t_object obj)
 		return ("paraboloid");
 	if (obj.intersect_func == intersect_triangle)
 		return ("triangle");
-	//if (obj.intersect_func == intersect_box)
-	//	return ("box");
 	return ("UNKNOWN");
 }
 
@@ -391,8 +389,7 @@ int			ft_export_scene(t_world *world)
 	t_cobjlist	*lst;
 	t_objlist	*lst2;
 
-	name = ft_strjoin("export", ft_itoa(++(world->nb_export)));
-	name = ft_strjoin(name, ".xml");
+	name = ft_get_name(".xml");
 	if ((fd = open(name, O_RDWR | O_CREAT, 0644)) == -1)
 		return (-1);
 	dprintf(fd,"<scene>\n");

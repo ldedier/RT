@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/05 05:50:15 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/06 01:20:13 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_sort_menu_filters(t_world *world)
 	{
 		changed = 0;
 		i = 1;
-		while ((i + 1) < (e_nfilters + 1))
+		while ((i + 1) < (5 + 1))
 		{
 			if (world->menu.filters_list[i] > world->menu.filters_list[i + 1])
 			{
@@ -89,29 +89,27 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 	int		i;
 	int		x;
 	int		y;
-	int		start;
 
 	x = event.button.x;
 	y = event.button.y;
-	start = world->canvas->win_size.x;
-	if (world->menu.type != MENU_OBJECTS && x >= (start + 30) &&
-			x <= (start + 30 + 140) && y >= 30 && y <= 70)
+	if (world->menu.type != MENU_OBJECTS && x >= (HWIN + 30) &&
+			x <= (HWIN + 30 + 140) && y >= 30 && y <= 70)
 	{
 		world->menu.type = MENU_OBJECTS;
 		if (world->menu.filter_active == 1)
 			world->menu.filter_active = 0;
 		update_progress_bar(world);
 	}
-	else if (world->menu.type != MENU_LIGHTS && x >= (start + 30 + 150) &&
-			x <= (start + 30 + 150 + 140) && y >= 30 && y <= 70)
+	else if (world->menu.type != MENU_LIGHTS && x >= (HWIN + 30 + 150) &&
+			x <= (HWIN + 30 + 150 + 140) && y >= 30 && y <= 70)
 	{
 		world->menu.type = MENU_LIGHTS;
 		if (world->menu.filter_active == 1)
 			world->menu.filter_active = 0;
 		update_progress_bar(world);
 	}
-	else if (world->menu.type != MENU_OTHERS && x >= (start + 30 + 150 + 150) &&
-			x <= (start + 30 + 150 + 150 + 140) && y >= 30 && y <= 70)
+	else if (world->menu.type != MENU_OTHERS && x >= (HWIN + 30 + 150 + 150) &&
+			x <= (HWIN + 30 + 150 + 150 + 140) && y >= 30 && y <= 70)
 	{
 		world->menu.type = MENU_OTHERS;
 		if (world->menu.filter_active == 1)
@@ -136,7 +134,7 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 			int x1 = world->menu.filters.pos.x + world->menu.filters.size.x;
 			int tmp = world->menu.filters_list[0];
 			int i = 0;
-			while (i < (e_nfilters + 1))
+			while (i < (5 + 1))
 			{
 				int y0 = world->menu.filters.pos.y + i * (world->menu.filters.size.y + 2);
 				int y1 = y0 + world->menu.filters.size.y;
@@ -144,14 +142,14 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 					break ;
 				i++;
 			}
-			if (i == (e_nfilters + 1))
+			if (i == (5 + 1))
 			{
 				i = 0;
 				world->menu.filters_list[0] = world->menu.filters_list[i];
 				world->menu.filters_list[i] = tmp;
 				ft_sort_menu_filters(world);
 				world->menu.filter_active = 0;
-				if (i < (e_nfilters + 1))
+				if (i < (5 + 1))
 				{
 					world->filters[tmp] = 0;
 					world->filters[world->menu.filters_list[0]] = 1;
@@ -164,7 +162,7 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 				world->menu.filters_list[i] = tmp;
 				ft_sort_menu_filters(world);
 				world->menu.filter_active = 0;
-				if (i < (e_nfilters + 1))
+				if (i < (5 + 1))
 				{
 					world->filters[tmp] = 0;
 					world->filters[world->menu.filters_list[0]] = 1;
@@ -203,7 +201,7 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 			}
 			i++;
 		}
-		int x0 = world->canvas->win_size.x + 20 + 54;
+		int x0 = HWIN + 20 + 54;
 		int y0 = 556;
 		if (x >= (x0) && x <= (x0 + world->menu.cartoon.width) && y >= (y0) && y <= (y0 + world->menu.cartoon.height))
 		{
@@ -213,17 +211,17 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 				world->shader = 2;
 			paint_threaded_fast(world);;
 		}
-		x0 = world->canvas->win_size.x + 20 + 75;
+		x0 = HWIN + 20 + 75;
 		y0 = 750;
 		if (x >= (x0) && x <= (x0 + world->menu.photo.width) && y >= (y0) && y <= (y0 + world->menu.photo.height))
 			ft_export_rt(world, ".ppm");
-		x0 = world->canvas->win_size.x + 20 + 75 + 250;
+		x0 = HWIN + 20 + 75 + 250;
 		y0 = 752;
 		if (x >= (x0) && x <= (x0 + world->menu.save.width) && y >= (y0) && y <= (y0 + world->menu.save.height))
 			ft_export_scene(world);
 		if (world->exporting_video == 1)
 		{
-			x0 = world->canvas->win_size.x + 20 + 75 + 130;
+			x0 = HWIN + 20 + 75 + 130;
 			y0 = 751;
 			if (x >= (x0) && x <= (x0 + world->menu.stop.width) && y >= (y0) && y <= (y0 + world->menu.stop.height))
 			{
@@ -234,7 +232,7 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 		}
 		else
 		{
-			x0 = world->canvas->win_size.x + 20 + 75 + 125;
+			x0 = HWIN + 20 + 75 + 125;
 			y0 = 760;
 			if (x >= (x0) && x <= (x0 + world->menu.video.width) && y >= (y0) && y <= (y0 + world->menu.video.height))
 			{

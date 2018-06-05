@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 22:36:25 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/06 01:13:00 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,15 @@ t_pixel	ft_color_pos(t_world *world, t_color color)
 	return (pix);
 }
 
+void			set_color_pos(t_world *world)
+{
+	ft_color_map(world);
+	world->menu.active_cp = -1;
+	world->menu.nb_others_cp = 2;
+	world->menu.others_cp[0] = ft_new_colorpicker(ft_new_pixel(HWIN + 20 + 45 + 34, 250), ft_color_pos(world, world->ambient.color), &(world->ambient.color));
+	world->menu.others_cp[1] = ft_new_colorpicker(ft_new_pixel(HWIN + 20 + 45 + 34 + 200, 250), ft_color_pos(world, world->fog.color), &(world->fog.color));
+}
+
 void			set_defaults(t_world *world)
 {
 	world->cam->o = CAMERA_POS;
@@ -244,17 +253,9 @@ void			set_defaults(t_world *world)
 
 	world->menu.active_rb = -1;
 	world->menu.nb_others_rb = 3;
-	world->menu.others_rb[0] = ft_new_rangebar(0, 1, ft_new_pixel(world->canvas->win_size.x + 20 + 45 + 30, 220), &(world->ambient.in));
-	world->menu.others_rb[1] = ft_new_rangebar(0, 0.7, ft_new_pixel(world->canvas->win_size.x + 20 + 45 + 30 + 200, 220), &(world->fog.in));
-	world->menu.others_rb[2] = ft_new_rangebar(0, 50, ft_new_pixel(world->canvas->win_size.x + 20 + 45 + 174 + 45, 402 + 80 + 15), &(world->max_bounce));
-
-	ft_color_map(world);
-
-	world->menu.active_cp = -1;
-	world->menu.nb_others_cp = 2;
-	world->menu.others_cp[0] = ft_new_colorpicker(ft_new_pixel(world->canvas->win_size.x + 20 + 45 + 34, 250), ft_color_pos(world, world->ambient.color), &(world->ambient.color));
-	world->menu.others_cp[1] = ft_new_colorpicker(ft_new_pixel(world->canvas->win_size.x + 20 + 45 + 34 + 200, 250), ft_color_pos(world, world->fog.color), &(world->fog.color));
-
+	world->menu.others_rb[0] = ft_new_rangebar(0, 1, ft_new_pixel(HWIN + 20 + 45 + 30, 220), &(world->ambient.in));
+	world->menu.others_rb[1] = ft_new_rangebar(0, 0.7, ft_new_pixel(HWIN + 20 + 45 + 30 + 200, 220), &(world->fog.in));
+	world->menu.others_rb[2] = ft_new_rangebar(0, 50, ft_new_pixel(HWIN + 20 + 45 + 174 + 45, 402 + 80 + 15), &(world->max_bounce));
 
 	world->menu.filter_active = 0;
 	if (world->filters[0] == 1)
@@ -277,7 +278,7 @@ void			set_defaults(t_world *world)
 			world->menu.filters_list[j++] = i;
 		i++;
 	}
-	world->menu.filters = ft_new_dropdown(ft_new_pixel(world->canvas->win_size.x + 20 + 45 + 174, 402), ft_new_pixel(195, 36), e_nfilters);
+	world->menu.filters = ft_new_dropdown(ft_new_pixel(HWIN + 20 + 45 + 174, 402), ft_new_pixel(195, 36), e_nfilters);
 
 	world->menu.cartoon = ft_parse_bmp(PATH"/resources/textures/cartoon.bmp");
 	world->menu.cartoon2 = ft_parse_bmp(PATH"/resources/textures/cartoon2.bmp");
@@ -306,7 +307,7 @@ t_canvas		*new_canvas(void)
 	canvas->halved_win_size.y = VRES / 2;
 	canvas->ratio = (double)HRES / (double)VRES;
 	canvas->pb_rect.x = 0;
-	canvas->pb_rect.y = canvas->win_size.y;
+	canvas->pb_rect.y = VWIN;
 	canvas->pb_rect.w = 0;
 	canvas->pb_rect.h = PROGRESS_BAR_HEIGHT;
 	if (!(ft_init_all(canvas)))
@@ -316,24 +317,34 @@ t_canvas		*new_canvas(void)
 
 int			ft_init_all(t_canvas *canvas)
 {
-	canvas->screen.x = 0;
-	canvas->screen.y = 0;
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		return (0);
 	if (TTF_Init() < 0)
 		return (0);
+	canvas->win.x = 0;
+	canvas->win.y = 0;
+	canvas->win.w = HWIN;
+	canvas->win.h = VWIN + PROGRESS_BAR_HEIGHT;
 	canvas->screen.w = canvas->win_size.x;
-	canvas->screen.h = canvas->win_size.y + PROGRESS_BAR_HEIGHT;
+	canvas->screen.h = canvas->win_size.y;
+	canvas->screen.x = (canvas->win.w / 2) - (canvas->screen.w / 2);
+	canvas->screen.y = ((canvas->win.h - PROGRESS_BAR_HEIGHT) / 2) - (canvas->screen.h / 2);
+	
+	printf("%d %d\n", canvas->screen.x, canvas->screen.y);
+	
 	if (!(canvas->window = SDL_CreateWindow("rt",
-					canvas->screen.x, canvas->screen.y,
-					canvas->screen.w + MENU_WIDTH, canvas->screen.h, 0)))
+					canvas->win.x, canvas->win.y,
+					canvas->win.w + MENU_WIDTH, canvas->win.h, 0)))
 		return (0);
 	if(!(canvas->renderer = SDL_CreateRenderer(canvas->window, -1, 0)))
 		return (0);
 	if (SDL_RenderSetLogicalSize(canvas->renderer,
-				canvas->screen.w + MENU_WIDTH, canvas->screen.h) < 0)
+				canvas->win.w + MENU_WIDTH, canvas->win.h) < 0)
 		return (0);
 	if (SDL_SetRenderDrawColor(canvas->renderer, 0, 0, 0, 255) < 0)
+		return (0);
+	if (!(canvas->win_surface = SDL_CreateRGBSurface(0,
+					canvas->win.w, canvas->win.h, 32, 0, 0, 0, 0)))
 		return (0);
 	if (!(canvas->surface = SDL_CreateRGBSurface(0,
 					canvas->screen.w, canvas->screen.h, 32, 0, 0, 0, 0)))

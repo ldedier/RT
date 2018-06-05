@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:29:20 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/05 04:02:56 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/06 00:49:26 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,19 @@ void	ft_add_header_text(t_world *world)
 	world->menu.color.b = 255;
 	world->menu.color.a = 255;
 
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 10 + 7;
+	world->menu.rect.x = HWIN + 20 + 10 + 7;
 	world->menu.rect.y = 20 + 10 + 4;
 	world->menu.rect.w = 125;
 	world->menu.rect.h = 35;
 	ft_add_text(world, 0, "Objects");
 
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 10 + 140 + 10 + 12;
+	world->menu.rect.x = HWIN + 20 + 10 + 140 + 10 + 12;
 	world->menu.rect.y = 20 + 10 + 5;
 	world->menu.rect.w = 115;
 	world->menu.rect.h = 32;
 	ft_add_text(world, 0, "Lights");
 
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 10 + 140 + 10 + 140 + 10 + 11;
+	world->menu.rect.x = HWIN + 20 + 10 + 140 + 10 + 140 + 10 + 11;
 	world->menu.rect.y = 20 + 10 + 5;
 	world->menu.rect.w = 120;
 	world->menu.rect.h = 33;
@@ -71,7 +71,7 @@ void	ft_add_header_text(t_world *world)
 
 void	ft_menu_objects(t_world *world)
 {
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 10;
+	world->menu.rect.x = HWIN + 20 + 10;
 	world->menu.rect.y = 20 + 10;
 	world->menu.rect.w = 140;
 	world->menu.rect.h = 40;
@@ -84,7 +84,7 @@ void	ft_menu_objects(t_world *world)
 
 void	ft_menu_lights(t_world *world)
 {
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 10 + 140 + 10;
+	world->menu.rect.x = HWIN + 20 + 10 + 140 + 10;
 	world->menu.rect.y = 20 + 10;
 	world->menu.rect.w = 140;
 	world->menu.rect.h = 40;
@@ -159,12 +159,12 @@ void	ft_show_filters(t_world *world)
 	world->menu.rect.x = world->menu.filters.pos.x;
 	world->menu.rect.y = world->menu.filters.pos.y + world->menu.filters.size.y + 2;
 	world->menu.rect.w = world->menu.filters.size.x;
-	world->menu.rect.h = (e_nfilters - 1) * (world->menu.filters.size.y + 2);
+	world->menu.rect.h = (5 - 1) * (world->menu.filters.size.y + 2);
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0x222222);
 	ft_add_menu_surface(world);
 	i = 1;
-	while (i < (e_nfilters + 1))
+	while (i < (5 + 1))
 	{
 		world->menu.rect.x = world->menu.filters.pos.x;
 		world->menu.rect.y = world->menu.filters.pos.y + i * (world->menu.filters.size.y + 2);
@@ -200,7 +200,7 @@ void	ft_color_hue(t_world *world)
 
 void	ft_menu_others(t_world *world)
 {
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 10 + 140 + 10 + 140 + 10;
+	world->menu.rect.x = HWIN + 20 + 10 + 140 + 10 + 140 + 10;
 	world->menu.rect.y = 20 + 10;
 	world->menu.rect.w = 140;
 	world->menu.rect.h = 40;
@@ -210,7 +210,7 @@ void	ft_menu_others(t_world *world)
 	ft_add_header_text(world);
 
 	//<-- BLOC_1 -->
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 20;
+	world->menu.rect.x = HWIN + 20 + 20;
 	world->menu.rect.y = 20 + 60 + 30;
 	world->menu.rect.w = MENU_WIDTH - 40 - 40;
 	world->menu.rect.h = 530;
@@ -218,56 +218,56 @@ void	ft_menu_others(t_world *world)
 	SDL_FillRect(world->menu.surface, NULL, 0x222222);
 	ft_add_menu_surface(world);
 	//<-- AMBIENT -->
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45;
+	world->menu.rect.x = HWIN + 20 + 45;
 	world->menu.rect.y = 20 + 60 + 30 + 20;
 	world->menu.rect.w = (MENU_WIDTH - 40 - 120) / 2;
 	world->menu.rect.h = 350 - 130 + 10;
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0xF8F8FF);
 	ft_add_menu_surface(world);
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45;
+	world->menu.rect.x = HWIN + 20 + 45;
 	world->menu.rect.y = 20 + 60 + 30 + 20;
 	world->menu.rect.w = (MENU_WIDTH - 40 - 120) / 2;
 	world->menu.rect.h = 40;
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0x666666);
 	ft_add_menu_surface(world);
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45 + 44;
+	world->menu.rect.x = HWIN + 20 + 45 + 44;
 	world->menu.rect.y = 140;
 	world->menu.rect.w = 80;
 	world->menu.rect.h = 20;
 	ft_add_text(world, 1, "Ambient");
 	//<-- /AMBIENT -->
 	//<-- FOG -->
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45 + 200;
+	world->menu.rect.x = HWIN + 20 + 45 + 200;
 	world->menu.rect.y = 20 + 60 + 30 + 20;
 	world->menu.rect.w = (MENU_WIDTH - 40 - 120) / 2;
 	world->menu.rect.h = 350 - 130 + 10;
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0xF8F8FF);
 	ft_add_menu_surface(world);
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45 + 200;
+	world->menu.rect.x = HWIN + 20 + 45 + 200;
 	world->menu.rect.y = 20 + 60 + 30 + 20;
 	world->menu.rect.w = (MENU_WIDTH - 40 - 120) / 2;
 	world->menu.rect.h = 40;
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0x666666);
 	ft_add_menu_surface(world);
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45 + 44 + 220;
+	world->menu.rect.x = HWIN + 20 + 45 + 44 + 220;
 	world->menu.rect.y = 140;
 	world->menu.rect.w = 40;
 	world->menu.rect.h = 18;
 	ft_add_text(world, 1, "Fog");
 	//<-- /FOG -->
 	//<-- AMBIENT_COLOR -->
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45 + 64;
+	world->menu.rect.x = HWIN + 20 + 45 + 64;
 	world->menu.rect.y = 180;
 	world->menu.rect.w = 40;
 	world->menu.rect.h = 20;
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0x222222);
 	ft_add_menu_surface(world);
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45 + 64 + 3;
+	world->menu.rect.x = HWIN + 20 + 45 + 64 + 3;
 	world->menu.rect.y = 180 + 3;
 	world->menu.rect.w = 34;
 	world->menu.rect.h = 14;
@@ -302,14 +302,14 @@ void	ft_menu_others(t_world *world)
 	ft_add_menu_surface(world);
 	//<-- /AMBIENT_COLOR -->
 	//<-- FOG_COLOR -->
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45 + 64 + 200;
+	world->menu.rect.x = HWIN + 20 + 45 + 64 + 200;
 	world->menu.rect.y = 180;
 	world->menu.rect.w = 40;
 	world->menu.rect.h = 20;
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0x222222);
 	ft_add_menu_surface(world);
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45 + 64 + 200 + 3;
+	world->menu.rect.x = HWIN + 20 + 45 + 64 + 200 + 3;
 	world->menu.rect.y = 180 + 3;
 	world->menu.rect.w = 34;
 	world->menu.rect.h = 14;
@@ -343,14 +343,14 @@ void	ft_menu_others(t_world *world)
 	ft_add_menu_surface(world);
 	//<-- /FOG_COLOR -->
 	//<-- FILTER -->
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45;
+	world->menu.rect.x = HWIN + 20 + 45;
 	world->menu.rect.y = 400;
 	world->menu.rect.w = (MENU_WIDTH - 40 - 120) / 2;
 	world->menu.rect.h = 40;
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0x666666);
 	ft_add_menu_surface(world);
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45 + 57;
+	world->menu.rect.x = HWIN + 20 + 45 + 57;
 	world->menu.rect.y = 410;
 	world->menu.rect.w = 55;
 	world->menu.rect.h = 20;
@@ -369,19 +369,19 @@ void	ft_menu_others(t_world *world)
 	world->menu.color.g = 255;
 	world->menu.color.b = 255;
 	world->menu.color.a = 255;
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45;
+	world->menu.rect.x = HWIN + 20 + 45;
 	world->menu.rect.y = 480;
 	world->menu.rect.w = (MENU_WIDTH - 40 - 120) / 2;
 	world->menu.rect.h = 40;
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0x666666);
 	ft_add_menu_surface(world);
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45 + 45;
+	world->menu.rect.x = HWIN + 20 + 45 + 45;
 	world->menu.rect.y = 490;
 	world->menu.rect.w = 80;
 	world->menu.rect.h = 20;
 	ft_add_text(world, 1, "Bounces");
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45 + 174;
+	world->menu.rect.x = HWIN + 20 + 45 + 174;
 	world->menu.rect.y = 402 + 80;
 	world->menu.rect.w = 195;
 	world->menu.rect.h = 36;
@@ -417,7 +417,7 @@ void	ft_menu_others(t_world *world)
 		bmp = world->menu.cartoon2;
 	else
 		bmp = world->menu.cartoon;
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 54;
+	world->menu.rect.x = HWIN + 20 + 54;
 	world->menu.rect.y = 556;
 	world->menu.rect.w = bmp.width;
 	world->menu.rect.h = bmp.height;
@@ -448,21 +448,21 @@ void	ft_menu_others(t_world *world)
 
 
 	//<-- BLOC_2 -->
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 20;
+	world->menu.rect.x = HWIN + 20 + 20;
 	world->menu.rect.y = 20 + 60 + 30 + 530 + 20;
 	world->menu.rect.w = MENU_WIDTH - 40 - 40;
 	world->menu.rect.h = 200;
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0x222222);
 	ft_add_menu_surface(world);
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 20 + 25;
+	world->menu.rect.x = HWIN + 20 + 20 + 25;
 	world->menu.rect.y = 20 + 60 + 30 + 530 + 20 + 20;
 	world->menu.rect.w = MENU_WIDTH - 40 - 40 - 50;
 	world->menu.rect.h = 200 - 40;
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0xF8F8FF);
 	ft_add_menu_surface(world);
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 20 + 25;
+	world->menu.rect.x = HWIN + 20 + 20 + 25;
 	world->menu.rect.y = 20 + 60 + 30 + 530 + 20 + 20;
 	world->menu.rect.w = MENU_WIDTH - 40 - 40 - 50;
 	world->menu.rect.h = 40;
@@ -473,14 +473,14 @@ void	ft_menu_others(t_world *world)
 	world->menu.color.g = 255;
 	world->menu.color.b = 255;
 	world->menu.color.a = 255;
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 45 + 145;
+	world->menu.rect.x = HWIN + 20 + 45 + 145;
 	world->menu.rect.y = 680 + 10;
 	world->menu.rect.w = 70;
 	world->menu.rect.h = 20;
 	ft_add_text(world, 1, "Export");
 	//<-- PHOTO -->
 	bmp = world->menu.photo;
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 75;
+	world->menu.rect.x = HWIN + 20 + 75;
 	world->menu.rect.y = 750;
 	world->menu.rect.w = bmp.width;
 	world->menu.rect.h = bmp.height;
@@ -506,13 +506,13 @@ void	ft_menu_others(t_world *world)
 	if (world->exporting_video == 1)
 	{
 		bmp = world->menu.stop;
-		world->menu.rect.x = world->canvas->win_size.x + 20 + 75 + 130;
+		world->menu.rect.x = HWIN + 20 + 75 + 130;
 		world->menu.rect.y = 751;
 	}
 	else
 	{
 		bmp = world->menu.video;
-		world->menu.rect.x = world->canvas->win_size.x + 20 + 75 + 125;
+		world->menu.rect.x = HWIN + 20 + 75 + 125;
 		world->menu.rect.y = 760;
 	}
 	world->menu.rect.w = bmp.width;
@@ -537,7 +537,7 @@ void	ft_menu_others(t_world *world)
 	//<-- /VIDEO -->
 	//<-- SAVE -->
 	bmp = world->menu.save;
-	world->menu.rect.x = world->canvas->win_size.x + 20 + 75 + 250;
+	world->menu.rect.x = HWIN + 20 + 75 + 250;
 	world->menu.rect.y = 752;
 	world->menu.rect.w = bmp.width;
 	world->menu.rect.h = bmp.height;
@@ -566,15 +566,15 @@ void	ft_menu_others(t_world *world)
 
 void	ft_display_menu(t_world *world)
 {
-	world->menu.rect.x = world->canvas->win_size.x;
+	world->menu.rect.x = HWIN;
 	world->menu.rect.y = 0;
 	world->menu.rect.w = MENU_WIDTH;
-	world->menu.rect.h = world->canvas->win_size.y + PROGRESS_BAR_HEIGHT;
+	world->menu.rect.h = VWIN + PROGRESS_BAR_HEIGHT;
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0xF8F8FF);
 	ft_add_menu_surface(world);
 
-	world->menu.rect.x = world->canvas->win_size.x + 20;
+	world->menu.rect.x = HWIN + 20;
 	world->menu.rect.y = 20;
 	world->menu.rect.w = MENU_WIDTH - 40;
 	world->menu.rect.h = 60;
