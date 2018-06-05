@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 23:03:33 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/31 10:27:07 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 10:27:32 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ static void	get_shadow_illum(t_shadow *shadow, t_world *world, t_light light,
 				dotprod(shadow->sray.v,
 					newvector(hit->point, light.o)) > 0)
 		{
-			shadow->il.in += (1 - hit->obj.transp) * (1 - shadow->il.in);
+			shadow->il.in += (hit->obj.transp) * (1 - shadow->il.in);
 			sray = shadow->sray;
 			shadow->sray = newray(translate_vec(hit->point, shadow->sray.v,
 						EPSILON), shadow->sray.v);
 			get_shadow_illum(shadow, world, light, bounce + 1);
 			shadow->sray = sray;
 			shadow->icol = add_scale_intcolors(shadow->icol,
-					get_intcolor(hit->obj.c), 1 - hit->obj.transp);
+					get_intcolor(pert_color(hit)), hit->obj.transp);
 		}
 		if (bounce == 0)
 		{

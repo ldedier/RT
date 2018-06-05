@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/04 09:06:47 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/05 04:28:50 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int			join_threads(t_world *world)
 	printf("threads joined, progress: %i, ret: %i\n", world->progress, ret);
 	world->progress = 0;
 	world->cancel_render = 0;
-	printf("oju que ara el join retorna %i\n",ret);fflush(stdout);
 	return (ret);
 }
 
@@ -118,14 +117,13 @@ void		paint_threaded(t_world *world)
 			exit(0);
 		p_y += world->canvas->win_size.y / NTHREADS;
 	}
-	printf("oju ara crido join threads desde paint_threaded\n");fflush(stdout);
+	printf("joining threads...\n");
 	if (!join_threads(world))
 	{
 		apply_convolution(world);
 		if (world->shader == 2)
 			draw_borders(world->canvas);
 		fill_canvas(world);
-		printf("canvas filled\n");fflush(stdout);
 	}
 }
 

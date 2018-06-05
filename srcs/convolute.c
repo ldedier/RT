@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:02:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 21:00:46 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 10:12:43 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ void	apply_convolution(t_world *world)
 	if (world->filters[e_gauss_blur])
 		gauss_blur(world->canvas);
 	if (world->filters[e_motion_blur])
-		gauss_blur(world->canvas);
+		motion_blur(world->canvas);
 	printf("filters applied\n");
 }

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/04 08:40:03 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 11:10:25 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,18 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		else
 			illuminated_c = illuminate_toon(world, hit, shadows, fast);
 		fogged_c = interpole_color(fog, illuminated_c, world->fog.color);
-		if (bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON  && !fast)
+		if (bounce < MAX_BOUNCE && hit->obj.reflect > EPSILON2  && !fast)
 			reflect_c = ray_color(newray(translate_vec(hit->point,
-							hit->pertbounce, EPSILON), hit->pertbounce),
+							hit->pertbounce, EPSILON2), hit->pertbounce),
 					world, bounce + 1, 0);
 		else
 			reflect_c = pert_color(hit);
-		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON && !fast)
+		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON2 && !fast)
 			refract_c = ray_color(newray(translate_vec(hit->point,
-					ray.v, EPSILON), refraction(hit, &ray)),
+					ray.v, EPSILON2), refraction(hit, &ray)),
 					world, bounce + 1, 0);
 		else
-			refract_c = get_color(0x0);//pert_color(hit);
+			refract_c = pert_color(hit);
 		return (freeret(interpole_color(hit->obj.transp,
 						interpole_color(hit->obj.reflect,
 							fogged_c, reflect_c), refract_c), &hit, &aux));

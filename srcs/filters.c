@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:02:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/04 08:23:04 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/04 10:23:00 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		motion_blur(t_canvas *canvas)
 	filter[22] = 0.222222;
 	filter[23] = 0.277778;
 	filter[24] = 0.222222;
-	convolute(canvas, filter, 5, 1);
+	convolute(canvas, filter, 5, 7);
 	free(filter);
 }
 

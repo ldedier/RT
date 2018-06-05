@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/04 09:06:46 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/05 04:28:47 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,9 @@
 # define POP 1
 # define MAX_DEGREE 4
 
-# define FAST_HRES 160
-# define FAST_VRES 120
-# define HRES 1600
-# define VRES 1200
+# define FAST_RATIO 1
+# define HRES 1300
+# define VRES 1000
 # define PROGRESS_BAR_HEIGHT 20
 # define PERSPECTIVE 2
 # define ZOOM 1.5
@@ -720,6 +719,7 @@ void					apply_convolution(t_world *world);
 void					convolute(t_canvas *canvas, double *filter,
 		int filter_size, int den);
 void					gauss_blur(t_canvas *canvas);
+void					motion_blur(t_canvas *canvas);
 void					sharpen(t_canvas *canvas);
 void					emboss(t_canvas *canvas);
 void					sobel(t_canvas *canvas);

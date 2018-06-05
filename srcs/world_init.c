@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 06:00:45 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/05 04:28:52 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,11 @@ t_canvas		*new_canvas(void)
 		return (NULL);
 	canvas->win_size.x = HRES;
 	canvas->win_size.y = VRES;
-	canvas->fast_win_size.x = FAST_HRES;
-	canvas->fast_win_size.x = FAST_VRES;
+	canvas->fast_win_size.x = canvas->win_size.x / 10 / FAST_RATIO;
+	canvas->fast_win_size.y = canvas->win_size.y / 10 / FAST_RATIO;
 	canvas->halved_win_size.x = HRES / 2;
 	canvas->halved_win_size.y = VRES / 2;
-	canvas->ratio = HRES / VRES;
+	canvas->ratio = (double)HRES / (double)VRES;
 	canvas->pb_rect.x = 0;
 	canvas->pb_rect.y = canvas->win_size.y;
 	canvas->pb_rect.w = 0;

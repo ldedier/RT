@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 02:21:28 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/01 01:56:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/05 03:39:22 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void			paint_pixel(t_pixel p, t_color c, t_canvas *canvas)
 	int *pix;
 
 	pix = (int *)canvas->surface->pixels;
+	//printf("%i %i\n",p.x,p.y);fflush(stdout);
 	pix[p.x + p.y * canvas->win_size.x] = c.col;
 }

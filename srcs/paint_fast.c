@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 08:53:58 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/17 01:45:45 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/05 04:28:49 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ static void	*render_thr_fast(void *thpar)
 	p.x = -1;
 	world = ((t_thr_par *)thpar)->world;
 	p_y = ((t_thr_par*)thpar)->p_y;
-	psize.x = world->canvas->win_size.x / FAST_HRES;
-	psize.y = world->canvas->win_size.y / FAST_VRES;
-	while (++p.x < FAST_HRES)
+	psize.x = world->canvas->win_size.x / world->canvas->fast_win_size.x;
+	psize.y = world->canvas->win_size.y / world->canvas->fast_win_size.y;
+	while (++p.x < world->canvas->fast_win_size.x)
 	{
 		p.y = p_y - 1;
 		pscaled.x = p.x * psize.x;
-		while (++p.y < p_y + FAST_VRES / NTHREADS)
+		while (++p.y < p_y + world->canvas->fast_win_size.y / NTHREADS)
 		{
 			pscaled.y = p.y * psize.y;
 			render_big_pixel(world, psize, pscaled);
@@ -74,7 +74,7 @@ void		paint_threaded_fast(t_world *world)
 		tpar->p_y = p_y;
 		if (pthread_create(&(ids[i]), NULL, render_thr_fast, (void*)tpar))
 			exit(0);
-		p_y += FAST_VRES / NTHREADS;
+		p_y += world->canvas->fast_win_size.y / NTHREADS;
 	}
 	while (--i >= 0)
 		if (pthread_join(ids[i], NULL))

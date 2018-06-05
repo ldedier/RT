@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 03:14:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/03 20:59:09 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/05 04:28:49 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,26 @@ void	ft_parse_resolution(t_parser *parser, t_world *world, char *line)
 	}
 	read_int(&line, &(world->canvas->win_size.x));
 	read_int(&line, &(world->canvas->win_size.y));
+	if (world->canvas->win_size.x > 1300 || world->canvas->win_size.y > 1000)
+	{
+		ft_dprintf(2, "line %d: maximum resolution is 1300x1000\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	world->canvas->halved_win_size.x = world->canvas->win_size.x / 2;
+	world->canvas->halved_win_size.y = world->canvas->win_size.y / 2;
+	world->canvas->fast_win_size.x = world->canvas->win_size.x / 10 / FAST_RATIO;
+	world->canvas->fast_win_size.y = world->canvas->win_size.y / 10 / FAST_RATIO;
+	world->canvas->ratio = (double)world->canvas->win_size.x /
+		(double)world->canvas->win_size.y;
+	world->canvas->pb_rect.y = world->canvas->win_size.y;
+	world->cam->pd = ZOOM / world->canvas->win_size.x;
+	world->canvas->npixels = world->canvas->win_size.x *
+		world->canvas->win_size.y;
+	world->canvas->screen.w = world->canvas->win_size.x;
+	world->canvas->screen.h = world->canvas->win_size.y;
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_init_all(world->canvas);
 	ft_process_tag_stack(parser);
 }
 
