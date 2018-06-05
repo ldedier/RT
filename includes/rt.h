@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/10 18:02:45 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/05 12:13:04 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/05 21:19:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@
 # define MAX_DEGREE 4
 
 # define FAST_RATIO 1
-# define HRES 500
-# define VRES 1300
+# define HRES 1300
+# define VRES 1000
 # define MENU_WIDTH 500
 # define PROGRESS_BAR_HEIGHT 16
 # define PERSPECTIVE 2
