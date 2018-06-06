@@ -7,9 +7,13 @@
 		<cobject>
 			<positionXYZ>0 0 10</positionXYZ>
 			<rotationXYZ>0 0 0</rotationXYZ>
-			<color> 0x0000FF </color>
-			<transparency>0.5</transparency>
 			<object name="sphere">
+				<texture>resources/textures/earth2.bmp</texture>
+				<cut type = "color">
+					<cut_color>blue</cut_color>
+					<inequality>more than</inequality>
+					<value>0.5</value>
+				</cut>
 			</object>
 		</cobject>
 		<cobject>

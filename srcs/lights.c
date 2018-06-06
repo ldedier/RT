@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/04 21:39:34 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/06 01:25:38 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,22 @@ int			get_object_color(t_hit *hit)
 	if (hit->obj.parser.width == -1)
 		ret = hit->obj.c.col;
 	else
-		ret = hit->obj.texture_func(hit->obj, hit);
+		ret = hit->obj.texture_func(hit->obj, hit, hit->obj.parser);
 	return (ret);
 }
+
+int			get_object_color_normal(t_hit *hit)
+{
+	int ret;
+
+	if (hit->obj.parser_normal.width == -1)
+		ret = 0x0000ff;
+	else
+		ret = hit->obj.texture_func(hit->obj, hit, hit->obj.parser_normal);
+	return (ret);
+}
+
+
 
 /*
 t_color			get_object_color(t_hit *hit)

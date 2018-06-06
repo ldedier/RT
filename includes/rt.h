@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 03:40:47 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/06 01:19:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -387,11 +387,13 @@ typedef struct			s_object
 	t_mat4				transform_pos_inv;
 	t_mat4				transform_scale_inv;
 	t_object_union		object_union;
-	int					(*intersect_func)(t_line, struct s_object, double sols[MAX_DEGREE]);
+	int					(*intersect_func)(t_line, struct s_object,
+						double sols[MAX_DEGREE]);
 	int					(*inside_func)(t_hit h, struct s_object);
 	void				(*print_caracteristics)(struct s_object obj, int fd);
 	t_point3d			(*normal_func)(struct s_object, t_point3d, t_line line);
-	int				(*texture_func)(struct s_object, t_hit *hit);
+	int					(*texture_func)(struct s_object, t_hit *hit,
+						t_bmp_parser parser);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
@@ -404,6 +406,7 @@ typedef struct			s_object
 	double				transp;
 	int					negative;
 	t_bmp_parser		parser;
+	t_bmp_parser		parser_normal;
 	t_cobject			*cobject;
 }						t_object;
 
@@ -445,6 +448,7 @@ struct			s_hit
 	t_point3d			normal;
 	t_point3d			old_point;
 	t_point3d			old_normal;
+	t_point3d			unbumped_old_normal;
 	t_point3d			pert;
 	t_point3d			bounce;
 	t_point3d			pertbounce;
@@ -785,6 +789,8 @@ void					ft_parse_color_n(t_parser *p, t_world *w, char *l,
 						int n);
 void					ft_parse_style(t_parser *p, t_world *w, char *l);
 void					ft_parse_texture(t_parser *p, t_world *w, char *l);
+void					ft_parse_normal_texture(t_parser *p, t_world *w, 
+						char *l);
 
 void					ft_parse_trans_x(t_parser *p, t_world *w, char *l);
 void					ft_parse_trans_y(t_parser *p, t_world *w, char *l);
@@ -1027,12 +1033,13 @@ void					ft_pivot_camera(t_camera *cam, t_point3d tolook);
 ** textures
 */
 
-int					texture_sphere(t_object obj, t_hit *hit);
-int					texture_cylinder(t_object obj, t_hit *hit);
-int					texture_plane(t_object obj, t_hit *hit);
-int					texture_cone(t_object obj, t_hit *hit);
-t_bmp_parser			ft_parse_bmp(char *src);
+int					texture_sphere(t_object obj, t_hit *hit, t_bmp_parser p);
+int					texture_cylinder(t_object obj, t_hit *hit, t_bmp_parser p);
+int					texture_plane(t_object obj, t_hit *hit, t_bmp_parser p);
+int					texture_cone(t_object obj, t_hit *hit, t_bmp_parser p);
+t_bmp_parser		ft_parse_bmp(char *src);
 int					get_object_color(t_hit *hit);
+int					get_object_color_normal(t_hit *hit);
 
 /*
 ** matrices

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 05:59:06 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/06 00:09:53 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_object		*ft_new_object(t_cobject cobject)
 //	object->cuts = ft_lstdup(NULL);
 	object->cuts = NULL;
 	object->parser = new_bmp_parser();
+	object->parser_normal = new_bmp_parser();
 	object->negative = 0;
 	return (object);
 }

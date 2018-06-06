@@ -1,0 +1,41 @@
+<scene>
+	<camera>
+		<positionXYZ>0 0 20</positionXYZ>
+		<rotationXYZ>0 0 0</rotationXYZ>
+	</camera>
+	<objlist>
+		<cobject>
+			<positionXYZ>5 0 30</positionXYZ>
+			<color> 0x666666 </color>
+			<shine>1000000</shine>
+			<object name="sphere">
+				<normal_texture>resources/textures/normal.bmp</normal_texture>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>0 0 30</positionXYZ>
+			<color> 0xFFFFFF </color>
+			<shine>15</shine>
+			<object name="sphere">
+				<normal_texture>resources/textures/golf.bmp</normal_texture>
+			</object>>
+		</cobject>
+		<cobject>
+			<positionXYZ>-5 0 30</positionXYZ>
+			<object name="sphere">
+				<color>0x00FF00</color>
+				<normal_texture>resources/textures/dragon.bmp</normal_texture>
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+		<light type="point">
+			<color>0xFFFFFF</color>
+			<positionXYZ>0 0 0</positionXYZ>
+			<intensity>1</intensity>
+		</light>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.5</intensity>
+	</ambientlight>
+</scene>
