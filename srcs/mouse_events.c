@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/06 01:20:13 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/06 08:56:03 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,16 @@ void	ft_mouse_motion(t_world *world, SDL_Event event)
 		world->menu.others_cp[i].pos.x = x;
 		world->menu.others_cp[i].pos.y = y;
 		paint_threaded_fast(world);;
+	}
+	if (world->menu.scroll_lights.active == 1)
+	{
+		int new_pos = event.motion.y - 140 - world->menu.scroll_lights.step;
+		if (new_pos < 0)
+			new_pos = 0;
+		else if ((new_pos + world->menu.scroll_lights.height) > (world->menu.scroll_lights.len - 10))
+			new_pos = world->menu.scroll_lights.len - 10 - world->menu.scroll_lights.height;
+		world->menu.scroll_lights.pos = new_pos;
+		update_progress_bar(world);
 	}
 }
 
@@ -115,6 +125,36 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 		if (world->menu.filter_active == 1)
 			world->menu.filter_active = 0;
 		update_progress_bar(world);
+	}
+	else if (world->menu.type == MENU_LIGHTS)
+	{
+		int x0 = HWIN + 443;
+		int y0 = 140 + world->menu.scroll_lights.pos;
+		if (x >= (x0) && x<= (x0 + 10) && y >= (y0) && y <= (y0 + world->menu.scroll_lights.height))
+		{
+			world->menu.scroll_lights.active = 1;
+			world->menu.scroll_lights.step = y - 135 - world->menu.scroll_lights.pos;
+		}
+		else if (x >= (x0) && x<= (x0 + 10) && y >= (140) && y <= (140 + world->menu.scroll_lights.len - 10))
+		{
+			world->menu.scroll_lights.active = 1;
+			world->menu.scroll_lights.step = world->menu.scroll_lights.height / 2;
+			ft_mouse_motion(world, event);
+		}
+		int i = 0;
+		x0 = HWIN + 55;
+		y0 = world->menu.first_light.y;
+		while (i < world->menu.nb_lights)
+		{
+			int y1 = y0 + i * (50 + 15);
+			if (x >= (x0) && x<= (x0 + 360) && y >= (y1) && y <= (y1 + 50))
+			{
+				world->menu.active_light = world->menu.lights[i];
+				update_progress_bar(world);
+				break ;
+			}
+			i++;
+		}
 	}
 	else if (world->menu.type == MENU_OTHERS)
 	{
@@ -354,6 +394,8 @@ void	ft_mouse_button_up_menu(t_world *world, SDL_Event event)
 		world->menu.active_rb = -1;
 	if (world->menu.active_cp >= 0)
 		world->menu.active_cp = -1;
+	if (world->menu.scroll_lights.active == 1)
+		world->menu.scroll_lights.active = 0;
 }
 
 void	ft_mouse_button_up(t_world *world, SDL_Event event)

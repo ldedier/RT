@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/06 01:13:00 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/06 08:56:07 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,31 @@ t_pixel	ft_color_pos(t_world *world, t_color color)
 	return (pix);
 }
 
+int     		ft_scrollbar_size(t_world *world, int len)
+{
+	int     h;
+	float   size;
+
+	h = world->nlights * (50 + 15);
+	if (h <= len)
+		size = 1;
+	else
+		size = len / (float)h;
+	return ((len - 10) * size);
+}
+
+t_scrollbar		ft_new_scrollbar(t_world *world, int len)
+{
+	t_scrollbar	sb;
+
+	sb.active = 0;
+	sb.len = len;
+	sb.height = ft_scrollbar_size(world, len);
+	sb.pos = 0;
+	sb.step = 0;
+	return (sb);
+}
+
 void			set_color_pos(t_world *world)
 {
 	ft_color_map(world);
@@ -211,6 +236,37 @@ void			set_color_pos(t_world *world)
 	world->menu.nb_others_cp = 2;
 	world->menu.others_cp[0] = ft_new_colorpicker(ft_new_pixel(HWIN + 20 + 45 + 34, 250), ft_color_pos(world, world->ambient.color), &(world->ambient.color));
 	world->menu.others_cp[1] = ft_new_colorpicker(ft_new_pixel(HWIN + 20 + 45 + 34 + 200, 250), ft_color_pos(world, world->fog.color), &(world->fog.color));
+	world->menu.scroll_lights = ft_new_scrollbar(world, 265);
+	if (world->nlights > 0)
+	{
+		world->menu.active_light = 0;
+		world->menu.first_light.x = 0;
+		world->menu.first_light.y = 145;
+	}
+	else
+	{
+		world->menu.active_light = -1;
+		world->menu.first_light.x = -1;
+		world->menu.first_light.y = -1;
+	}
+	if (world->nlights <= 4)
+		world->menu.nb_lights = world->nlights;
+	else
+		world->menu.nb_lights = 4;
+	int i = 0;
+	while (i < 5)
+		world->menu.lights[i++] = -1;
+
+	int n = world->nlights;
+	float k;
+	if (n == 5)
+		k = 2;
+	else if (n <= 10)
+		k = 1;
+	else
+		k = ((float)n / 10) - 1;
+	float size = world->menu.scroll_lights.len / (float)(n * (50 + 15) + k * (50 + 15));
+	world->menu.fact = 1 / size;
 }
 
 void			set_defaults(t_world *world)
@@ -247,7 +303,7 @@ void			set_defaults(t_world *world)
 	ft_init_keys(world);
 	world->max_bounce = 1;
 
-	world->menu.type = 3;
+	world->menu.type = 2;
 	world->menu.fonts[0] = ft_load_font(PATH"/resources/fonts/Raleway.ttf", 200);
 	world->menu.fonts[1] = ft_load_font(PATH"/resources/fonts/Raleway-Bold.ttf", 200);
 

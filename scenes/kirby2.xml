@@ -1,0 +1,69 @@
+<scene>
+	<camera>
+		<positionXYZ>0 0 0</positionXYZ>
+		<rotationXYZ>0 0 0</rotationXYZ>
+	</camera>
+	<objlist>
+		<cobject>
+			<positionXYZ>0 0 10</positionXYZ>
+			<rotationXYZ>0 0.5 0</rotationXYZ>
+			<object name="sphere">
+				<rotationXYZ>0 1.5707 0</rotationXYZ>
+				<radius>2</radius>
+				<color>0xFEA1CE</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>2 -0.15 -0.3</positionXYZ>
+				<rotationXYZ>1.5707 0 1.5707</rotationXYZ>
+				<ellipsoidABC>0.58 0.7 0.62</ellipsoidABC>
+				<color>0xF8B3B6</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>-2 -0.5 -0.7</positionXYZ>
+				<rotationXYZ>-0.45 0 0</rotationXYZ>
+				<ellipsoidABC>0.65 0.65 0.8</ellipsoidABC>
+				<color>0xF8B3B6</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>1 2 0</positionXYZ>
+				<rotationXYZ>0.7 -0.1 1.5707</rotationXYZ>
+				<ellipsoidABC>0.5 0.75 1.5</ellipsoidABC>
+				<color>0xCF2446</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>-1 2 0.4</positionXYZ>
+				<rotationXYZ>0.7 0.2 1.5707</rotationXYZ>
+				<ellipsoidABC>0.5 0.75 1.5</ellipsoidABC>
+				<color>0xCF2446</color>
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+		<light type="point">
+			<color>0xFFFFFF</color>
+			<positionXYZ>0 -5 0</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<angle>1.2</angle>
+			<intensity>0.7</intensity>
+		</light>
+		<light type="point">
+			<color>0xFF0000</color>
+			<positionXYZ>0 -10 0</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<angle>1.2</angle>
+			<intensity>0.7</intensity>
+		</light>
+		<light type="point">
+			<color>0x0000FF</color>
+			<positionXYZ>0 -15 0</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<angle>1.2</angle>
+			<intensity>0.7</intensity>
+		</light>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.47</intensity>
+		<color>0xFFFFFF</color>
+	</ambientlight>
+	<shader type="normal"></shader>
+</scene>

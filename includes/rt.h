@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/06 01:24:19 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/06 08:56:09 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -536,6 +536,15 @@ typedef struct			s_dropdown
 	int					levels;
 }						t_dropdown;
 
+typedef struct			s_scrollbar
+{
+	int					active;
+	int					len;
+	int					height;
+	int					pos;
+	int					step;
+}						t_scrollbar;
+
 typedef struct			s_menu
 {
 	int					type;
@@ -560,6 +569,13 @@ typedef struct			s_menu
 	t_bmp_parser		video;
 	t_bmp_parser		stop;
 	t_bmp_parser		save;
+
+	t_scrollbar			scroll_lights;
+	int					active_light;
+	int					nb_lights;
+	t_pixel				first_light;
+	int					lights[5];
+	float				fact;
 }						t_menu;
 
 typedef struct			s_world

@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:29:20 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/06 00:49:26 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/06 08:55:57 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,116 @@ void	ft_menu_lights(t_world *world)
 	SDL_FillRect(world->menu.surface, NULL, 0x666666);
 	ft_add_menu_surface(world);
 	ft_add_header_text(world);
+	
+	world->menu.rect.x = HWIN + 20 + 20;
+	world->menu.rect.y = 135;
+	world->menu.rect.w = MENU_WIDTH - 40 - 40;
+	world->menu.rect.h = world->menu.scroll_lights.len;
+	ft_new_menu_surface(world);
+	SDL_FillRect(world->menu.surface, NULL, 0x222222);
+	ft_add_menu_surface(world);
+
+	world->menu.rect.x = HWIN + 443;
+	world->menu.rect.y = 140;
+	world->menu.rect.w = 10;
+	world->menu.rect.h = world->menu.scroll_lights.len - 10;
+	ft_new_menu_surface(world);
+	SDL_FillRect(world->menu.surface, NULL, 0xF8F8FF);
+	ft_add_menu_surface(world);
+
+	world->menu.rect.x = HWIN + 443;
+	world->menu.rect.y = 140 + world->menu.scroll_lights.pos;
+	world->menu.rect.w = 10;
+	world->menu.rect.h = world->menu.scroll_lights.height;
+	ft_new_menu_surface(world);
+	SDL_FillRect(world->menu.surface, NULL, 0x666666);
+	ft_add_menu_surface(world);
+
+	int i = 0;
+	int j = 0;
+	char *str;
+	world->menu.nb_lights = 0;
+	world->menu.first_light.x = -1;
+	while (i < world->nlights)
+	{
+		int y0 = 145 + i * (50 + 15) - (world->menu.scroll_lights.pos * world->menu.fact);
+		int y1 = y0 + 50;
+		if ((y0 >= 135 && y0 <= 400) || (y1 >= 135 && y1 <= 400))
+		{
+			if (world->menu.first_light.x == -1)
+			{
+				world->menu.first_light.x = i;
+				world->menu.first_light.y = y0;
+			}
+			world->menu.lights[j++] = i;
+			(world->menu.nb_lights)++;
+			world->menu.rect.x = HWIN + 55;
+			world->menu.rect.y = y0;
+			world->menu.rect.w = 360;
+			world->menu.rect.h = 50;
+			ft_new_menu_surface(world);
+			SDL_FillRect(world->menu.surface, NULL, 0xF8F8FF);
+			ft_add_menu_surface(world);
+			if (i == world->menu.active_light)
+			{
+				world->menu.rect.x = HWIN + 55;
+				world->menu.rect.y = y0;
+				world->menu.rect.w = 140;
+				world->menu.rect.h = 50;
+				ft_new_menu_surface(world);
+				SDL_FillRect(world->menu.surface, NULL, 0x666666);
+				ft_add_menu_surface(world);
+				world->menu.color.r = 255;
+				world->menu.color.g = 255;
+				world->menu.color.b = 255;
+				world->menu.color.a = 255;
+				world->menu.rect.x = HWIN + 50 + 30;
+				world->menu.rect.y = y0 + 15;
+				world->menu.rect.w = 85;
+				world->menu.rect.h = 25;
+				str = ft_strjoin("Light ", ft_itoa(i));
+				ft_add_text(world, 0, str);
+				free(str);
+			}
+			else
+			{
+				world->menu.color.r = 0;
+				world->menu.color.g = 0;
+				world->menu.color.b = 0;
+				world->menu.color.a = 0;
+				world->menu.rect.x = HWIN + 50 + 30;
+				world->menu.rect.y = y0 + 15;
+				world->menu.rect.w = 85;
+				world->menu.rect.h = 25;
+				str = ft_strjoin("Light ", ft_itoa(i));
+				ft_add_text(world, 0, str);
+				free(str);
+			}
+		}
+		i++;
+	}
+
+	//printf("%d\n", world->menu.active_light);
+	//printf("%d\n", world->menu.nb_lights);
+	//i = 0;
+	//while (i < 5)
+	//	printf("%d ", world->menu.lights[i++]);
+	//printf("\n%d %d\n\n\n", world->menu.first_light.x, world->menu.first_light.y);
+
+	world->menu.rect.x = HWIN + 55;
+	world->menu.rect.y = 80;
+	world->menu.rect.w = 360;
+	world->menu.rect.h = 55;
+	ft_new_menu_surface(world);
+	SDL_FillRect(world->menu.surface, NULL, 0xF8F8FF);
+	ft_add_menu_surface(world);
+	world->menu.rect.x = HWIN + 55;
+	world->menu.rect.y = 400;
+	world->menu.rect.w = 360;
+	world->menu.rect.h = 65;
+	ft_new_menu_surface(world);
+	SDL_FillRect(world->menu.surface, NULL, 0xF8F8FF);
+	ft_add_menu_surface(world);
 
 }
 
