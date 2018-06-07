@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/06 08:56:07 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/07 07:58:40 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,25 +229,43 @@ t_scrollbar		ft_new_scrollbar(t_world *world, int len)
 	return (sb);
 }
 
-void			set_color_pos(t_world *world)
+void			set_positions(t_world *world)
 {
+
+	init_video(world, &(world->video));
+	world->menu.others_rb[0] = ft_new_rangebar(0, 1, ft_new_pixel(world->canvas->win.w + 20 + 45 + 30, 220), &(world->ambient.in));
+	world->menu.others_rb[1] = ft_new_rangebar(0, 0.7, ft_new_pixel(world->canvas->win.w + 20 + 45 + 30 + 200, 220), &(world->fog.in));
+	world->menu.others_rb[2] = ft_new_rangebar(0, 50, ft_new_pixel(world->canvas->win.w + 20 + 45 + 174 + 45, 402 + 80 + 15), &(world->max_bounce));
+
+	world->menu.filters = ft_new_dropdown(ft_new_pixel(world->canvas->win.w + 20 + 45 + 174, 402), ft_new_pixel(195, 36), e_nfilters);
+
 	ft_color_map(world);
-	world->menu.active_cp = -1;
 	world->menu.nb_others_cp = 2;
-	world->menu.others_cp[0] = ft_new_colorpicker(ft_new_pixel(HWIN + 20 + 45 + 34, 250), ft_color_pos(world, world->ambient.color), &(world->ambient.color));
-	world->menu.others_cp[1] = ft_new_colorpicker(ft_new_pixel(HWIN + 20 + 45 + 34 + 200, 250), ft_color_pos(world, world->fog.color), &(world->fog.color));
+	world->menu.others_cp[0] = ft_new_colorpicker(ft_new_pixel(world->canvas->win.w + 20 + 45 + 34, 250), ft_color_pos(world, world->ambient.color), &(world->ambient.color));
+	world->menu.others_cp[1] = ft_new_colorpicker(ft_new_pixel(world->canvas->win.w + 20 + 45 + 34 + 200, 250), ft_color_pos(world, world->fog.color), &(world->fog.color));
 	world->menu.scroll_lights = ft_new_scrollbar(world, 265);
 	if (world->nlights > 0)
 	{
 		world->menu.active_light = 0;
 		world->menu.first_light.x = 0;
 		world->menu.first_light.y = 145;
+		world->menu.nb_lights_rb = 5;
+		world->menu.lights_rb[0] = ft_new_rangebar(0, 2 * M_PI, ft_new_pixel(world->canvas->win.w + 40 + 25 + 205, 518), &(world->lights[world->menu.active_light].angle));
+		world->menu.lights_rb[1] = ft_new_rangebar(0, 1, ft_new_pixel(world->canvas->win.w + 40 + 25 + 42, 580), &(world->lights[world->menu.active_light].intensity));
+		world->menu.lights_rb[2] = ft_new_rangebar(0, 2 * M_PI, ft_new_pixel(world->canvas->win.w + 40 + 25 + 222, 630), &(world->lights[world->menu.active_light].v.x));
+		world->menu.lights_rb[3] = ft_new_rangebar(0, 2 * M_PI, ft_new_pixel(world->canvas->win.w + 40 + 25 + 222, 665), &(world->lights[world->menu.active_light].v.y));
+		world->menu.lights_rb[4] = ft_new_rangebar(0, 2 * M_PI, ft_new_pixel(world->canvas->win.w + 40 + 25 + 222, 700), &(world->lights[world->menu.active_light].v.z));
+		world->menu.nb_lights_cp = 1;
+		world->menu.lights_cp[0] = ft_new_colorpicker(ft_new_pixel(world->canvas->win.w + 65 + 46, 615), ft_color_pos(world,
+					world->lights[world->menu.active_light].c), &(world->lights[world->menu.active_light].c));
 	}
 	else
 	{
 		world->menu.active_light = -1;
 		world->menu.first_light.x = -1;
 		world->menu.first_light.y = -1;
+		world->menu.nb_lights_rb = 0;
+		world->menu.nb_lights_cp = 0;
 	}
 	if (world->nlights <= 4)
 		world->menu.nb_lights = world->nlights;
@@ -276,7 +294,6 @@ void			set_defaults(t_world *world)
 	world->cam->up = normalize(CAMERA_UP);
 	world->cam->right = normalize(crossprod(world->cam->look, world->cam->up));
 	world->cam->fd = CAMERA_FD;
-	world->cam->pd = ZOOM / HRES;
 	world->cam->rotation = POINT_ZERO;
 	world->shader = 1;
 	world->nlights = 0;
@@ -289,29 +306,25 @@ void			set_defaults(t_world *world)
 	world->cam->speed = SPEED;
 	world->progress = 0;
 	world->cancel_render = 0;
-	world->canvas->npixels = world->canvas->win_size.x *
-		world->canvas->win_size.y;
 	world->can_export = 1;
 	world->animate = 0;
 	world->focus = 0;
 	world->exporting_video = 0;
-	init_video(&(world->video));
 	world->ticks = SDL_GetTicks();
 	world->aa_sq_size = AA_SQ_SIZE;
 	world->nb_export = 0;
 	set_defaults_2(world);
 	ft_init_keys(world);
-	world->max_bounce = 1;
+	world->max_bounce = 4;
 
 	world->menu.type = 2;
 	world->menu.fonts[0] = ft_load_font(PATH"/resources/fonts/Raleway.ttf", 200);
 	world->menu.fonts[1] = ft_load_font(PATH"/resources/fonts/Raleway-Bold.ttf", 200);
 
 	world->menu.active_rb = -1;
+	world->menu.active_cp = -1;
+	
 	world->menu.nb_others_rb = 3;
-	world->menu.others_rb[0] = ft_new_rangebar(0, 1, ft_new_pixel(HWIN + 20 + 45 + 30, 220), &(world->ambient.in));
-	world->menu.others_rb[1] = ft_new_rangebar(0, 0.7, ft_new_pixel(HWIN + 20 + 45 + 30 + 200, 220), &(world->fog.in));
-	world->menu.others_rb[2] = ft_new_rangebar(0, 50, ft_new_pixel(HWIN + 20 + 45 + 174 + 45, 402 + 80 + 15), &(world->max_bounce));
 
 	world->menu.filter_active = 0;
 	if (world->filters[0] == 1)
@@ -334,7 +347,6 @@ void			set_defaults(t_world *world)
 			world->menu.filters_list[j++] = i;
 		i++;
 	}
-	world->menu.filters = ft_new_dropdown(ft_new_pixel(HWIN + 20 + 45 + 174, 402), ft_new_pixel(195, 36), e_nfilters);
 
 	world->menu.cartoon = ft_parse_bmp(PATH"/resources/textures/cartoon.bmp");
 	world->menu.cartoon2 = ft_parse_bmp(PATH"/resources/textures/cartoon2.bmp");
@@ -344,66 +356,85 @@ void			set_defaults(t_world *world)
 	world->menu.stop = ft_parse_bmp(PATH"/resources/textures/stop.bmp");
 	world->menu.save = ft_parse_bmp(PATH"/resources/textures/save.bmp");
 
+
+	world->menu.light_point_t = ft_parse_bmp(PATH"/resources/textures/light-point_t.bmp");
+	world->menu.light_spotlight_t = ft_parse_bmp(PATH"/resources/textures/light-spotlight_t.bmp");
+	world->menu.light_directional_t = ft_parse_bmp(PATH"/resources/textures/light-directional_t.bmp");
+
+	world->menu.light_point = ft_parse_bmp(PATH"/resources/textures/light-point.bmp");
+	world->menu.light_spotlight = ft_parse_bmp(PATH"/resources/textures/light-spotlight.bmp");
+	world->menu.light_directional = ft_parse_bmp(PATH"/resources/textures/light-directional.bmp");
+
 	//world->bmp_parser = ft_parse_bmp(PATH"/resources/textures/kirby.bmp");
 }
 
 t_canvas		*new_canvas(void)
 {
 	t_canvas	*canvas;
-	t_pixel		div;
 
 	if ((canvas = malloc(sizeof(t_canvas))) == NULL)
 		return (NULL);
-	canvas->win_size.x = HRES;
-	canvas->win_size.y = VRES;
-	div = fast_div(canvas);
-	canvas->fast_win_size.x = canvas->win_size.x / div.x / FAST_RATIO;
-	canvas->fast_win_size.y = canvas->win_size.y / div.y / FAST_RATIO;
-	canvas->halved_win_size.x = HRES / 2;
-	canvas->halved_win_size.y = VRES / 2;
-	canvas->ratio = (double)HRES / (double)VRES;
-	canvas->pb_rect.x = 0;
-	canvas->pb_rect.y = VWIN;
-	canvas->pb_rect.w = 0;
-	canvas->pb_rect.h = PROGRESS_BAR_HEIGHT;
-	if (!(ft_init_all(canvas)))
+	canvas->win_size.x = -1;
+	canvas->win_size.y = -1;
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+		return (NULL);
+	if (TTF_Init() < 0)
 		return (NULL);
 	return (canvas);
 }
 
-int			ft_init_all(t_canvas *canvas)
+int			ft_init_sdl(t_world *world)
 {
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+	t_pixel	div;
+
+	if (world->canvas->win_size.x == -1 && world->canvas->win_size.y == -1)
+	{
+		SDL_DisplayMode dm;
+		SDL_GetCurrentDisplayMode(0, &dm);
+		world->canvas->win_size.x = dm.w - MENU_WIDTH;
+		world->canvas->win_size.y = dm.h - 4 * PROGRESS_BAR_HEIGHT;
+	}
+	div = fast_div(world->canvas);
+	world->canvas->fast_win_size.x = world->canvas->win_size.x / div.x / FAST_RATIO;
+	world->canvas->fast_win_size.y = world->canvas->win_size.y / div.y / FAST_RATIO;
+	world->canvas->halved_win_size.x = world->canvas->win_size.x / 2;
+	world->canvas->halved_win_size.y = world->canvas->win_size.y / 2;
+	world->canvas->ratio = (double)(world->canvas->win_size.x) / (double)(world->canvas->win_size.y);
+	world->canvas->pb_rect.x = 0;
+	world->canvas->pb_rect.w = 0;
+	world->canvas->pb_rect.h = PROGRESS_BAR_HEIGHT;
+	world->canvas->npixels = world->canvas->win_size.x * world->canvas->win_size.y;
+	world->cam->pd = ZOOM / world->canvas->win_size.x;
+
+	world->canvas->win.x = 0;
+	world->canvas->win.y = 0;
+	world->canvas->win.w = world->canvas->win_size.x;
+	if (world->canvas->win_size.y < MENU_HEIGHT)
+		world->canvas->win.h = MENU_HEIGHT + PROGRESS_BAR_HEIGHT;
+	else
+		world->canvas->win.h = world->canvas->win_size.y + PROGRESS_BAR_HEIGHT;
+	world->canvas->pb_rect.y = world->canvas->win.h - PROGRESS_BAR_HEIGHT;
+	world->canvas->screen.w = world->canvas->win_size.x;
+	world->canvas->screen.h = world->canvas->win_size.y;
+	//world->canvas->screen.x = (world->canvas->win.w / 2) - (world->canvas->screen.w / 2);
+	world->canvas->screen.x = 0;
+	world->canvas->screen.y = ((world->canvas->win.h - PROGRESS_BAR_HEIGHT) / 2) - (world->canvas->screen.h / 2);
+	if (!(world->canvas->window = SDL_CreateWindow("rt",
+					world->canvas->win.x, world->canvas->win.y,
+					world->canvas->win.w + MENU_WIDTH, world->canvas->win.h, 0)))
 		return (0);
-	if (TTF_Init() < 0)
+	if(!(world->canvas->renderer = SDL_CreateRenderer(world->canvas->window, -1, 0)))
 		return (0);
-	canvas->win.x = 0;
-	canvas->win.y = 0;
-	canvas->win.w = HWIN;
-	canvas->win.h = VWIN + PROGRESS_BAR_HEIGHT;
-	canvas->screen.w = canvas->win_size.x;
-	canvas->screen.h = canvas->win_size.y;
-	canvas->screen.x = (canvas->win.w / 2) - (canvas->screen.w / 2);
-	canvas->screen.y = ((canvas->win.h - PROGRESS_BAR_HEIGHT) / 2) - (canvas->screen.h / 2);
-	
-	printf("%d %d\n", canvas->screen.x, canvas->screen.y);
-	
-	if (!(canvas->window = SDL_CreateWindow("rt",
-					canvas->win.x, canvas->win.y,
-					canvas->win.w + MENU_WIDTH, canvas->win.h, 0)))
+	if (SDL_RenderSetLogicalSize(world->canvas->renderer,
+				world->canvas->win.w + MENU_WIDTH, world->canvas->win.h) < 0)
 		return (0);
-	if(!(canvas->renderer = SDL_CreateRenderer(canvas->window, -1, 0)))
+	if (SDL_SetRenderDrawColor(world->canvas->renderer, 0, 0, 0, 255) < 0)
 		return (0);
-	if (SDL_RenderSetLogicalSize(canvas->renderer,
-				canvas->win.w + MENU_WIDTH, canvas->win.h) < 0)
+	if (!(world->canvas->win_surface = SDL_CreateRGBSurface(0,
+					world->canvas->win.w, world->canvas->win.h, 32, 0, 0, 0, 0)))
 		return (0);
-	if (SDL_SetRenderDrawColor(canvas->renderer, 0, 0, 0, 255) < 0)
-		return (0);
-	if (!(canvas->win_surface = SDL_CreateRGBSurface(0,
-					canvas->win.w, canvas->win.h, 32, 0, 0, 0, 0)))
-		return (0);
-	if (!(canvas->surface = SDL_CreateRGBSurface(0,
-					canvas->screen.w, canvas->screen.h, 32, 0, 0, 0, 0)))
+	if (!(world->canvas->surface = SDL_CreateRGBSurface(0,
+					world->canvas->screen.w, world->canvas->screen.h, 32, 0, 0, 0, 0)))
 		return (0);
 	return (1);
 }

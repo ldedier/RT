@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/06 08:56:09 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/07 07:58:38 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,9 @@
 # define POP 1
 # define MAX_DEGREE 4
 
-# define HWIN 1300
-# define VWIN 1000
 # define FAST_RATIO 1
-# define HRES 1300
-# define VRES 1000
 # define MENU_WIDTH 500
+# define MENU_HEIGHT 840
 # define PROGRESS_BAR_HEIGHT 16
 # define PERSPECTIVE 2
 # define ZOOM 1.f
@@ -576,6 +573,16 @@ typedef struct			s_menu
 	t_pixel				first_light;
 	int					lights[5];
 	float				fact;
+	t_bmp_parser		light_point_t;
+	t_bmp_parser		light_spotlight_t;
+	t_bmp_parser		light_directional_t;
+	int					nb_lights_rb;
+	int					nb_lights_cp;
+	t_rangebar			lights_rb[5];
+	t_colorpicker		lights_cp[1];
+	t_bmp_parser		light_point;
+	t_bmp_parser		light_spotlight;
+	t_bmp_parser		light_directional;
 }						t_menu;
 
 typedef struct			s_world
@@ -694,9 +701,9 @@ void					ft_mouse_down(t_world *world, SDL_Event event);
 int						new_world(char* file, t_world **world);
 t_canvas				*new_canvas(void);
 void					set_defaults(t_world *world);
-void					set_color_pos(t_world *world);
-int						ft_init_all(t_canvas *canvas);
+void					set_positions(t_world *world);
 void					ft_init_keys(t_world *world);
+int						ft_init_sdl(t_world *world);
 int						read_world(t_world *world, char *file);
 void					populate_world(t_world *world, unsigned char scene);
 t_object				create_sphere(t_point3d pos, double red, t_color color);
@@ -711,7 +718,7 @@ t_object				*ft_new_triangle(t_cobject cobject);
 t_cobject				*ft_new_cobject(void);
 t_cut					*ft_new_cut(void);
 void					ft_init_light(t_light *light);
-void					init_video(t_video *video);
+void					init_video(t_world *world, t_video *video);
 /*
  ** parser
  */
@@ -1113,6 +1120,7 @@ void				ft_mouse_button_up(t_world *world, SDL_Event event);
 ** Menu
 */
 void				ft_display_menu(t_world *world);
+t_pixel				ft_color_pos(t_world *world, t_color color);
 
 /*
 ** error
