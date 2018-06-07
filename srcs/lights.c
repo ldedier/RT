@@ -76,7 +76,7 @@ static t_illum	getshine(t_world *world, t_hit *hit, t_shadow **shadows, t_color 
 	shine.in = 0;
 	i = -1;
 	while (++i < world->nlights)
-		if (shadows[i]) 
+		if (shadows[i])
 		{
 			lig = world->lights[i];
 			if (lig.type != 'd')
@@ -113,6 +113,8 @@ int			get_object_color_normal(t_hit *hit)
 		ret = hit->obj.texture_func(hit->obj, hit, hit->obj.parser_normal);
 	return (ret);
 }
+
+
 
 /*
 t_color			get_object_color(t_hit *hit)

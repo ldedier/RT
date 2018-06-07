@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 05:44:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/03 07:10:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/06 07:24:53 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,36 @@ void	ft_parse_texture(t_parser *parser, t_world *world, char *line)
 			 (!ft_strcmp("plane", parser->attribute))))
 	{
 		tmp = ft_get_between_tag(&line);
-		world->cobjlist->cobject->objlist->object->parser = ft_parse_bmp(tmp);
+		world->cobjlist->cobject->objlist->object->parser = 
+			ft_parse_bmp(tmp);
 		free(tmp);
 	}
 	else
 	{
-		ft_dprintf(2, "line %d: current object can not have a texture tag\n",
+		ft_dprintf(
+			2, "line %d: current object can not have a texture tag\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_parse_normal_texture(t_parser *parser, t_world *world, char *line)
+{
+	char *tmp;
+
+	if ((parser->parse_enum == e_parse_object) &&
+			((!ft_strcmp("sphere", parser->attribute))))
+	{
+		tmp = ft_get_between_tag(&line);
+		world->cobjlist->cobject->objlist->object->parser_normal = ft_parse_bmp(tmp);
+		free(tmp);
+	}
+	else
+	{
+		ft_dprintf(
+			2, "line %d: current object can not have a normal texture tag\n",
 				parser->nb_lines);
 		exit(1);
 	}

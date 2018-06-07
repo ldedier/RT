@@ -19,7 +19,6 @@
 			<transparency>0.5</transparency>
 			<object name="sphere">
 				<texture>resources/textures/earth2.bmp</texture>
-				<perturbation name="chess"></perturbation>
 			</object>
 		</cobject>
 		<cobject>

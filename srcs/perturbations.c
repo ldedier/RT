@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:44:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/04 21:44:55 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/07 06:43:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,49 @@ t_point3d	pert_normal(t_hit *hit)
 	return (pert);
 }
 
+t_color		get_perlin_color(t_hit *hit)
+{
+	double noiseCoef;
+	int i;
+	noiseCoef = 0;
+	i = 1;
+	while(i < 5)
+	{
+		noiseCoef += (1.0f / i ) * fabs((perlin(i * 10 * hit->old_point.x, 
+						i * 10 * hit->old_point.y,
+						i * 10 * hit->old_point.z)));
+		i++;
+	}
+	return interpole_color(ft_fclamp(0, noiseCoef, 1), BLACK_COLOR, WHITE_COLOR);
+}
+
+t_color		get_marbre_color(t_hit *hit)
+{
+	double noiseCoef;
+	int i;
+	noiseCoef = 0;
+	i = 1;
+	while (i < 5)
+	{
+		noiseCoef += (1.0f / i ) * fabs((perlin(i * 10 * hit->old_point.x, 
+						i * 10 * hit->old_point.y,
+						i * 10 * hit->old_point.z)));
+		i++;
+	}
+	noiseCoef = 0.5f * sin((hit->old_point.x + hit->old_point.y) * 5 + noiseCoef) + 0.5f;
+	return (interpole_color(ft_fclamp(0, noiseCoef, 1), WHITE_COLOR, BLACK_COLOR));
+}
+
 t_color	pert_color(t_hit *hit)
 {
 	t_color	ret;
 	t_color	inv;
 
+
+	if (hit->obj.pert == e_perlin)
+		return get_perlin_color(hit);
+	if (hit->obj.pert == e_marble)
+		return get_marbre_color(hit);
 	ret = get_color(get_object_color(hit));
 	inv = scale_convert_color(add_scale_intcolors(get_intcolor(WHITE_COLOR),
 				get_intcolor(ret), -1), 1);
@@ -49,9 +87,5 @@ t_color	pert_color(t_hit *hit)
 			(((sin(hit->old_point.x) > 0 ? 1 : -1) *
 			  (sin(hit->old_point.z) > 0 ? 1 : -1)) > 0))
 		return (inv);
-	if (hit->obj.pert == e_spiral)
-	{
-		return (inv);
-	}
 	return (ret);
 }

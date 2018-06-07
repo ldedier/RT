@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 03:40:00 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/07 05:57:03 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int		get_input(t_world *e)
 
 void	ft_loop(t_world *e)
 {
-	SDL_WarpMouseInWindow(e->canvas->window, (HRES + MENU_WIDTH) / 2,
-			(VRES + PROGRESS_BAR_HEIGHT) / 2);
+	SDL_WarpMouseInWindow(e->canvas->window,
+			(e->canvas->win_size.x + MENU_WIDTH) / 2, e->canvas->win.h / 2);
 	paint_threaded_fast(e);
 	while (!get_input(e))
 		;

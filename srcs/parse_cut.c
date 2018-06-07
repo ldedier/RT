@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 20:09:40 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 06:51:48 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/07 01:45:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_process_parsing_cut_xyz(t_parser *parser, t_world *world,
 	ft_process_tag_stack(parser);
 }
 
-int		ft_get_cut_color(t_parser *parser, char *str)
+int		ft_get_color(t_parser *parser, char *str)
 {
 	if (!ft_strcmp("red", str))
 		return (0xff0000);
@@ -74,12 +74,34 @@ void	ft_process_parsing_cut_color(t_parser *parser, t_world *world,
 		color = &(((t_cut *)(world->cobjlist->cobject->objlist->object->cuts->content))->color);
 	else
 	{
-		ft_dprintf(2, "line %d: current object can not have a cutXYZ tag\n",
+		ft_dprintf(2, "line %d: current object can not have a cut_color tag\n",
 				parser->nb_lines);
 		exit(1);
 	}
 	tmp = ft_get_between_tag(&line);
-	*color = ft_get_cut_color(parser, tmp);
+	*color = ft_get_color(parser, tmp);
+	free(tmp);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_process_parsing_mod_color(t_parser *parser, t_world *world,
+		char *line)
+{
+	int	*color;
+	char *tmp;
+
+	(void)world;
+	if (parser->parse_enum == e_parse_mod)
+		color = &(parser->mod.color);
+	else
+	{
+		ft_dprintf(2, "line %d: current object can not have a mod_color tag\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	tmp = ft_get_between_tag(&line);
+	*color = ft_get_color(parser, tmp);
 	free(tmp);
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
 	ft_process_tag_stack(parser);
@@ -106,13 +128,16 @@ void	ft_attribute_inequality_func(int (**func)(double, double), char *desc,
 	}
 }
 
-void	ft_process_parsing_cut_inequality(t_parser *parser, t_world *world,
+void	ft_process_parsing_inequality(t_parser *parser, t_world *world,
 		char *line)
 {
 	int		(**func)(double, double);
 	char	*tmp;
+
 	if (parser->parse_enum == e_parse_cut)
 		func = &(((t_cut *)(world->cobjlist->cobject->objlist->object->cuts->content))->inequality);
+	else if (parser->parse_enum == e_parse_mod)
+		func = &(parser->mod.inequality);
 	else
 	{
 		ft_dprintf(2, "line %d: current object can not have a inequality tag\n",
@@ -125,16 +150,37 @@ void	ft_process_parsing_cut_inequality(t_parser *parser, t_world *world,
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
 	ft_process_tag_stack(parser);
 }
-void	ft_process_parsing_cut_value(t_parser *parser, t_world *world,
+
+void	ft_process_parsing_value(t_parser *parser, t_world *world,
 		char *line)
 {
 	double	*value;
 
 	if (parser->parse_enum == e_parse_cut)
 		value = &(((t_cut *)(world->cobjlist->cobject->objlist->object->cuts->content))->value);
+	else if (parser->parse_enum == e_parse_mod)
+		value = &(parser->mod.value);
 	else
 	{
 		ft_dprintf(2, "line %d: current object can not have a value tag\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	read_double(&line, value);
+	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	ft_process_tag_stack(parser);
+}
+
+void	ft_process_parsing_mod_value(t_parser *parser, t_world *world,
+		char *line)
+{
+	double	*value;
+	(void) world;
+	if (parser->parse_enum == e_parse_mod)
+		value = &(parser->mod.mod_value);
+	else
+	{
+		ft_dprintf(2, "line %d: current object can not have a mod value tag\n",
 				parser->nb_lines);
 		exit(1);
 	}

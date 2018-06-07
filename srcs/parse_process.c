@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 06:38:21 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/06 23:27:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,13 @@ static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 	else if (!ft_strcmp(parser->tag, "cutXYZ"))
 		ft_process_parsing_cut_xyz(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "inequality"))
-		ft_process_parsing_cut_inequality(parser, world, line);
+		ft_process_parsing_inequality(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "value"))
-		ft_process_parsing_cut_value(parser, world, line);
+		ft_process_parsing_value(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "mod_value"))
+		ft_process_parsing_mod_value(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "mod_color"))
+		ft_process_parsing_mod_color(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "vertexA"))
 		ft_process_parsing_vertex_a(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "vertexB"))
@@ -65,6 +69,10 @@ static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 		ft_parse_stretch_x(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "texture_stretch_y"))
 		ft_parse_stretch_y(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "mod_transp") || 
+				!ft_strcmp(parser->tag, "mod_refract") || 
+					!ft_strcmp(parser->tag, "mod_reflect"))
+		ft_process_parsing_mod_start(parser, world);
 	else if (strcmp(parser->tag, "scene") &&
 			strcmp(parser->tag, "objlist") &&
 			strcmp(parser->tag, "lightlist"))
@@ -100,6 +108,8 @@ void		ft_process_parsing_stack_2(t_parser *parser, t_world *world,
 		ft_parse_negative(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "texture"))
 		ft_parse_texture(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "normal_texture"))
+		ft_parse_normal_texture(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "cut_color"))
 		ft_process_parsing_cut_color(parser, world, line);
 	else
@@ -139,6 +149,19 @@ void		ft_process_parsing_stack(t_parser *parser, t_world *world,
 		ft_process_parsing_stack_2(parser, world, line);
 }
 
+
+void		ft_transfer_mod_parser(t_parser *parser, t_world *world)
+{
+	if (!ft_strcmp(parser->tag, "mod_transp"))
+		world->cobjlist->cobject->objlist->object->mod_transp = parser->mod;
+	else if (!ft_strcmp(parser->tag, "mod_refract"))
+		world->cobjlist->cobject->objlist->object->mod_refract = parser->mod;
+	else if (!ft_strcmp(parser->tag, "mod_reflect"))
+		world->cobjlist->cobject->objlist->object->mod_reflect = parser->mod;
+	else
+		exit(1);
+}
+
 void		ft_process_parsing(t_parser *parser, t_world *world, char *line)
 {
 	ft_process_tag_stack(parser);
@@ -150,15 +173,20 @@ void		ft_process_parsing(t_parser *parser, t_world *world, char *line)
 			parser->parse_enum = e_parse_object;
 		else if (!ft_strcmp(parser->tag, "object"))
 			parser->parse_enum = e_parse_cobject;
+		else if (!ft_strncmp(parser->tag, "mod_", 4))
+		{
+			parser->parse_enum = e_parse_object;
+			ft_transfer_mod_parser(parser, world);
+		}
 		else
 		{
 			if (parser->parse_enum == e_parse_cobject)
 			{
 				if (parser->attribute != NULL && 
-						world->cobjlist->cobject->name == NULL)
+						world->cobjlist->cobject->name == NULL) // fin de cobject auto
 					ft_process_automatic(parser, world);
 				else if (world->cobjlist->cobject->name != NULL && 
-					world->cobjlist->cobject->defining)
+					world->cobjlist->cobject->defining) //fin de define
 					ft_process_switch_list_cobject(&(world->cobjlist), 
 						&(world->defcobjlist));
 			}

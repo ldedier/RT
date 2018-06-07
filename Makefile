@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
+#    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/05 21:37:02 by ldedier          ###   ########.fr        #
+#    Updated: 2018/06/07 22:59:42 by jfortin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= rt
 
-CC		= gcc -g
+CC		= gcc
 
 PWD = \"$(shell pwd)\"
 
@@ -22,7 +22,7 @@ EOC = \033[0m
 DEBUG ?= 0
 
 ifeq ($(DEBUG), 1)
-	CFLAGS += -DDEBUG
+	CFLAGS += -g -DDEBUG -fsanitize=address
 else
 	CFLAGS += -Ofast
 endif
@@ -34,12 +34,15 @@ INCLUDESDIR = includes
 
 LIBFTDIR = libft
 LIBFT_INCLUDEDIR = includes
+LIBFT = $(LIBFTDIR)/libft.a
 
 LIBMATDIR = libmat
 LIBMAT_INCLUDEDIR = includes
+LIBMAT = $(LIBMATDIR)/libmat.a
 
-SDL2 = ./frameworks/SDL2.framework/Versions/A/SDL2
-SDL2_TTF = ./frameworks/SDL2_ttf.framework/Versions/A/SDL2_ttf
+LIBSDL2DIR = ~/.brew/lib
+LIBSDL2_INCLUDEDIR = ~/.brew/Cellar/sdl2/2.0.8/include/SDL2/
+LIBSDL2TTF_INCLUDEDIR = ~/.brew/Cellar/sdl2_ttf/2.0.14/include/SDL2/
 
 SRCS_NO_PREFIX = camera_rotations.c\
 				 colors.c\
@@ -123,47 +126,47 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_parse_bmp.c\
 				 ft_export_scene.c\
 				 mouse_events.c\
-				 menu.c
+				 menu.c\
+				 perlin.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 
-SOURCES = $(addprefix $(SRCDIR)/, $(SRCS_NO_PREFIX))
-OBJECTS = $(addprefix $(OBJDIR)/, $(SRCS_NO_PREFIX:%.c=%.o))
+SOURCES  = $(addprefix $(SRCDIR)/,      $(SRCS_NO_PREFIX))
+OBJECTS  = $(addprefix $(OBJDIR)/,      $(SRCS_NO_PREFIX:%.c=%.o))
 INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
 
 INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
-	  -I $(LIBMATDIR)/$(LIBMAT_INCLUDEDIR)
+	  -I $(LIBMATDIR)/$(LIBMAT_INCLUDEDIR)\
+	  -I $(LIBSDL2_INCLUDEDIR)\
+	  -I $(LIBSDL2TTF_INCLUDEDIR)
 
-CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror  $(INC)
+CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror $(INC)
 
-LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
-		 -fsanitize=address
+LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat
 
 opti:
 	@make -j all
 
-all: $(BINDIR)/$(NAME)
+all:
+	@make -C $(LIBFTDIR) all
+	@make -C $(LIBMATDIR) all
+	@make $(BINDIR)/$(NAME)
 
 debug:
 	@make -j all DEBUG=1
 
-$(BINDIR)/$(NAME): $(OBJECTS)
-	@make -C $(LIBFTDIR)
-	@make -C $(LIBMATDIR)
-	$(CC) -o $@ $^ $(LFLAGS) -F ./frameworks -framework SDL2 -framework SDL2_ttf
+$(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT) $(LIBMAT)
+	$(CC) -o $@ $^ $(LFLAGS) -L $(LIBSDL2DIR) -lsdl2 -lsdl2_ttf
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
-	@install_name_tool -change @rpath/SDL2.framework/Versions/A/SDL2 $(SDL2) $(NAME)
-	@install_name_tool -change @rpath/SDL2_ttf.framework/Versions/A/SDL2_ttf $(SDL2_TTF) $(NAME)
-	@echo $(NAME) > .gitignore
-	@echo $(OBJECTS) >> .gitignore
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
-	$(CC) -c $< -o $@ $(CFLAGS) -F ./frameworks
+	@mkdir -p $(OBJDIR)
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
 	@make clean -C $(LIBFTDIR)
 	@make clean -C $(LIBMATDIR)
-	@rm -f $(OBJECTS)
+	@rm -rf $(OBJDIR)
 
 fclean: clean
 	@rm -f $(NAME)

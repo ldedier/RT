@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 01:57:00 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/07 00:32:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,6 @@ static void	ft_process_parsing_object_attributes_2(t_parser *parser, t_object *o
 		set_func(object, ft_print_paraboloid_caracteristics);
 	else if (!ft_strcmp(parser->attribute, "hyperboloid"))
 		set_func(object, ft_print_hyperboloid_caracteristics);
-	else
-	{
-		ft_dprintf(2, "line %d: attribute %s unknown\n", parser->nb_lines,
-				parser->attribute);
-		exit(1);
-	}
 }
 
 void	set_funcs(t_object *obj,
@@ -202,8 +196,14 @@ void	ft_parse_angle(t_parser *parser, t_world *world, char *line)
 void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
 {
 	double *radius;
-
-	if (parser->parse_enum == e_parse_object &&
+	
+	if (!parser->attribute)
+	{
+		ft_dprintf(2, "line %d: current object does not have radius tag",
+				parser->nb_lines);
+		exit(1);
+	}
+	else if (parser->parse_enum == e_parse_object &&
 			!ft_strcmp("sphere", parser->attribute))
 		radius = &(world->cobjlist->cobject->objlist->object\
 				->object_union.sphere.radius);

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/01 02:36:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/06 22:39:12 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,19 @@ void	ft_process_parsing_light_start(t_parser *parser, t_world *world)
 				parser->attribute);
 		exit(1);
 	}
+}
+
+void	ft_process_parsing_mod_start(t_parser *parser, t_world *world)
+{
+	(void)world;
+	if (parser->parse_enum != e_parse_object)
+	{
+		ft_dprintf(2, "line %d: can only declare mod inside objects\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	parser->parse_enum = e_parse_mod;
+	parser->mod = ft_new_mod();
 }
 
 void	ft_process_parsing_cut_start(t_parser *parser, t_world *world)
