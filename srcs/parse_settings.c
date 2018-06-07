@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 03:14:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/05 12:13:16 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/06 22:50:32 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	ft_parse_resolution(t_parser *parser, t_world *world, char *line)
 	}
 	read_int(&line, &(world->canvas->win_size.x));
 	read_int(&line, &(world->canvas->win_size.y));
-	if (world->canvas->win_size.y < 1000)
+/*	if (world->canvas->win_size.y < 1000)
 	{
 		ft_dprintf(2, "line %d: minimum vertical resolution is 1000\n",
 				parser->nb_lines);
 		exit(1);
-	}
+	}*/
 	world->canvas->halved_win_size.x = world->canvas->win_size.x / 2;
 	world->canvas->halved_win_size.y = world->canvas->win_size.y / 2;
 	div = fast_div(world->canvas);

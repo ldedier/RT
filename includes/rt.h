@@ -6,10 +6,13 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/06 16:01:33 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/07 23:29:49 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+//TODO	ebloui
+//TODO	parse antialiasin
+////TODO	parse antialiasingg
 //TDOO	reflection = 1 && bounces = 0 renders BLACK.AAAAAAAH
 //DONE	fix <perturbation>asdf</perturbation> segfault
 //DONE	transparency shadows: canviar color i perdre llum PER CADA SRAY
@@ -24,6 +27,7 @@
 //DONE	nimin valors atribut (si reflection es 0 no cal calcular...)
 //DONE	perturbation (wave, random, spikes...)
 //DONE	negative object
+
 //done	antialiasing / other filters
 //DONE	fix sometimes cancel the render and go into antialiasing. cause is calling join_threads 2 times in a row and 2nd one returns 0 so assumes it rendered.
 //LDEDIER	controls chachis -> select object
@@ -67,7 +71,7 @@
 # include <sys/stat.h>
 #include <sys/types.h>
 
-# define NTHREADS 4
+# define NTHREADS 8
 # define STACK 0
 # define POP 1
 # define MAX_DEGREE 4
@@ -75,7 +79,7 @@
 # define HWIN 1300
 # define VWIN 1000
 # define FAST_RATIO 1
-# define HRES 1300
+# define HRES 1200
 # define VRES 1000
 # define MENU_WIDTH 500
 # define PROGRESS_BAR_HEIGHT 16
@@ -100,7 +104,7 @@
 # define AMBIENT_LIGHT 0.17
 # define AMBIENT_LIGHT_COL get_color(0xFFFFFF)
 # define PHONG 30.0
-# define EPSILON 0.01
+# define EPSILON 0.0000001
 # define EPSILON2 0.000000001 //plus petit = plus de quartic plutot que de cubic
 # define EPSILON3 0.000001 //plus petit = moins de solution
 # define EPSILON4 0.00000001 // on considere ca comme zero complexe (surtout used dans quartic)
