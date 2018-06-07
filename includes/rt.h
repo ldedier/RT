@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 06:34:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/07 22:55:31 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -523,6 +523,7 @@ typedef struct			s_light
 	double				intensity;
 	double				angle;
 	char				type;
+	char				ebloui;
 }						t_light;
 
 typedef enum			e_filters

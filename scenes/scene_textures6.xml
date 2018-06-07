@@ -1,6 +1,6 @@
 <scene>
 	<camera>
-		<positionXYZ>0 0 0</positionXYZ>
+		<positionXYZ>0 0 -10</positionXYZ>
 		<rotationXYZ>0 0 0</rotationXYZ>
 	</camera>
 	<objlist>
@@ -41,4 +41,5 @@
 	<ambientlight>
 		<intensity>0.5</intensity>
 	</ambientlight>
+	<resolution> 720 540 </resolution>
 </scene>
