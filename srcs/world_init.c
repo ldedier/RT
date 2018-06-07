@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 07:58:40 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/05 22:57:14 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,13 +317,13 @@ void			set_defaults(t_world *world)
 	ft_init_keys(world);
 	world->max_bounce = 4;
 
-	world->menu.type = 2;
+	world->menu.type = MENU_OBJECTS;
 	world->menu.fonts[0] = ft_load_font(PATH"/resources/fonts/Raleway.ttf", 200);
 	world->menu.fonts[1] = ft_load_font(PATH"/resources/fonts/Raleway-Bold.ttf", 200);
 
 	world->menu.active_rb = -1;
 	world->menu.active_cp = -1;
-	
+
 	world->menu.nb_others_rb = 3;
 
 	world->menu.filter_active = 0;

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 07:58:38 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/07 06:34:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@
 # include <complex.h>
 # include <sys/mman.h>
 # include <sys/stat.h>
-#include <sys/types.h>
+# include <sys/types.h>
 
 # define NTHREADS 4
 # define STACK 0
@@ -318,6 +318,14 @@ typedef struct			s_color
 	unsigned int		col;
 }						t_color;
 
+typedef struct			s_aux_render
+{
+	t_color				color;
+	double				f_refract;
+	double				f_reflect;
+	double				f_transp;
+}						t_aux_render;
+
 typedef struct			s_intcolor
 {
 	float				r;
@@ -337,7 +345,8 @@ typedef enum			e_perturbations
 	e_waves,
 	e_noise,
 	e_chess,
-	e_spiral
+	e_perlin,
+	e_marble
 }						t_perturbations;
 
 typedef struct			s_cut
@@ -380,6 +389,15 @@ typedef struct			s_illum
 	t_color				color;
 }						t_illum;
 
+typedef struct			s_mod
+{
+	char				enabled;
+	double				value;
+	double				mod_value;
+	int					(*inequality)(double, double);
+	int					color;
+}						t_mod;
+
 typedef struct			s_object
 {
 	t_mat4				transform_pos;
@@ -389,11 +407,13 @@ typedef struct			s_object
 	t_mat4				transform_pos_inv;
 	t_mat4				transform_scale_inv;
 	t_object_union		object_union;
-	int					(*intersect_func)(t_line, struct s_object, double sols[MAX_DEGREE]);
+	int					(*intersect_func)(t_line, struct s_object,
+						double sols[MAX_DEGREE]);
 	int					(*inside_func)(t_hit h, struct s_object);
 	void				(*print_caracteristics)(struct s_object obj, int fd);
 	t_point3d			(*normal_func)(struct s_object, t_point3d, t_line line);
-	int				(*texture_func)(struct s_object, t_hit *hit);
+	int					(*texture_func)(struct s_object, t_hit *hit,
+						t_bmp_parser parser);
 	t_point3d			o;
 	t_point3d			s;
 	t_point3d			r;
@@ -406,6 +426,10 @@ typedef struct			s_object
 	double				transp;
 	int					negative;
 	t_bmp_parser		parser;
+	t_bmp_parser		parser_normal;
+	t_mod				mod_refract;
+	t_mod				mod_reflect;
+	t_mod				mod_transp;
 	t_cobject			*cobject;
 }						t_object;
 
@@ -447,6 +471,7 @@ struct			s_hit
 	t_point3d			normal;
 	t_point3d			old_point;
 	t_point3d			old_normal;
+	t_point3d			unbumped_old_normal;
 	t_point3d			pert;
 	t_point3d			bounce;
 	t_point3d			pertbounce;
@@ -662,6 +687,7 @@ typedef enum			e_parse_enum
 	e_parse_ambient,
 	e_parse_fog,
 	e_parse_cut,
+	e_parse_mod,
 	e_parse_scene
 }						t_parse_enum;
 
@@ -674,6 +700,7 @@ typedef struct			s_parser
 	int					nb_lines;
 	int					op;
 	int					got_scene;
+	t_mod				mod;
 }						t_parser;
 
 typedef struct  s_mmap
@@ -717,6 +744,7 @@ t_object				*ft_new_object(t_cobject cobject);
 t_object				*ft_new_triangle(t_cobject cobject);
 t_cobject				*ft_new_cobject(void);
 t_cut					*ft_new_cut(void);
+t_mod					ft_new_mod(void);
 void					ft_init_light(t_light *light);
 void					init_video(t_world *world, t_video *video);
 /*
@@ -795,11 +823,15 @@ void					ft_give_default_characteristics_cobject(char *attribute,
 void					ft_process_parsing_cut_start(t_parser *p, t_world *w);
 void					ft_process_parsing_cut_xyz(t_parser *p, t_world *w,
 		char *l);
-void					ft_process_parsing_cut_inequality(t_parser *p,t_world *w,
+void					ft_process_parsing_inequality(t_parser *p,t_world *w,
 		char *l);
-void					ft_process_parsing_cut_value(t_parser *p,t_world *w,
+void					ft_process_parsing_value(t_parser *p,t_world *w,
 		char *l);
 void					ft_process_parsing_cut_color(t_parser *p,t_world *w,
+		char *l);
+void					ft_process_parsing_mod_color(t_parser *p,t_world *w,
+		char *l);
+void					ft_process_parsing_mod_value(t_parser *p,t_world *w,
 		char *l);
 void					ft_process_parsing_vertex_a(t_parser *p,t_world *w,
 		char *l);
@@ -807,6 +839,7 @@ void					ft_process_parsing_vertex_b(t_parser *p,t_world *w,
 		char *l);
 void					ft_process_parsing_vertex_c(t_parser *p,t_world *w,
 		char *l);
+void					ft_process_parsing_mod_start(t_parser *p, t_world *w);
 void					ft_parse_nb_spheres(t_parser *p, t_world *w, char *l);
 void					ft_parse_spheres_radius(t_parser *p, t_world *w, char *l);
 void					ft_parse_length(t_parser *p, t_world *w, char *l);
@@ -814,6 +847,8 @@ void					ft_parse_color_n(t_parser *p, t_world *w, char *l,
 						int n);
 void					ft_parse_style(t_parser *p, t_world *w, char *l);
 void					ft_parse_texture(t_parser *p, t_world *w, char *l);
+void					ft_parse_normal_texture(t_parser *p, t_world *w,
+						char *l);
 
 void					ft_parse_trans_x(t_parser *p, t_world *w, char *l);
 void					ft_parse_trans_y(t_parser *p, t_world *w, char *l);
@@ -834,7 +869,7 @@ t_point3d				addvecs(t_point3d v1, t_point3d v2);
 double					proj(t_point3d v1, t_point3d v2);
 t_point3d				create_vec(double x, double y, double z);
 t_point3d				reflection(t_point3d n, t_point3d v);
-t_point3d				refraction(t_hit *hit, t_line *line);
+t_point3d				refraction(t_hit *hit, t_line *line, double refract);
 t_line					newray(t_point3d p, t_point3d vec);
 /*
 **colors
@@ -990,6 +1025,8 @@ void    set_funcs(t_object *obj,
 		t_point3d (*normal_func)(t_object, t_point3d, t_line));
 int						equal_double(double a, double b);
 t_pixel					fast_div(const t_canvas *canvas);
+double	get_sum(t_color color);
+
 
 
 /*
@@ -1006,7 +1043,7 @@ int						equal(double a, double b);
 */
 t_point3d				pert_normal(t_hit *hit);
 t_color					pert_color(t_hit *hit);
-
+double					perlin(double x, double y, double z);
 
 /*
 ** automatics
@@ -1056,12 +1093,13 @@ void					ft_pivot_camera(t_camera *cam, t_point3d tolook);
 ** textures
 */
 
-int					texture_sphere(t_object obj, t_hit *hit);
-int					texture_cylinder(t_object obj, t_hit *hit);
-int					texture_plane(t_object obj, t_hit *hit);
-int					texture_cone(t_object obj, t_hit *hit);
-t_bmp_parser			ft_parse_bmp(char *src);
+int					texture_sphere(t_object obj, t_hit *hit, t_bmp_parser p);
+int					texture_cylinder(t_object obj, t_hit *hit, t_bmp_parser p);
+int					texture_plane(t_object obj, t_hit *hit, t_bmp_parser p);
+int					texture_cone(t_object obj, t_hit *hit, t_bmp_parser p);
+t_bmp_parser		ft_parse_bmp(char *src);
 int					get_object_color(t_hit *hit);
+int					get_object_color_normal(t_hit *hit);
 
 /*
 ** matrices

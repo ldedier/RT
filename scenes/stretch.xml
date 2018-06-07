@@ -1,0 +1,50 @@
+<scene>
+	<camera>
+		<positionXYZ>0 0 20</positionXYZ>
+		<rotationXYZ>0 0 0</rotationXYZ>
+	</camera>
+	<objlist>
+		<cobject>
+			<positionXYZ>0 0 30</positionXYZ>
+			<rotationXYZ>1.5707 0 0</rotationXYZ>
+			<color> 0x00FFFF </color>
+			<object name="plane">
+				<texture_trans_x>0</texture_trans_x>
+				<texture_trans_y>0</texture_trans_y>
+				<texture_stretch_x>1</texture_stretch_x>
+				<texture_stretch_y>1</texture_stretch_y>
+				<texture>resources/textures/texture.bmp</texture>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>5</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>-1 0 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>5</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>0 0 1</cutXYZ>
+					<inequality>more than</inequality>
+					<value>5</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>0 0 -1</cutXYZ>
+					<inequality>more than</inequality>
+					<value>5</value>
+				</cut>
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+		<light type="point">
+			<color>0xFFFFFF</color>
+			<positionXYZ>0 0 0</positionXYZ>
+			<intensity>1</intensity>
+		</light>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.5</intensity>
+	</ambientlight>
+</scene>

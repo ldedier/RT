@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 20:02:34 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 07:46:59 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/06 20:41:43 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int			ft_evaluate_cut_color(t_cut cut, t_hit hit)
 {
 	t_color color;
 	hit.old_point = hit.point;
-	hit.old_normal = hit.normal;
+	hit.unbumped_old_normal = hit.normal;
 	color = get_color(get_object_color(&hit));
 	if (cut.color == 0xff0000)
 		return (cut.inequality((color.r / get_sum(color)), cut.value));

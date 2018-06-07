@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:21:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 01:17:28 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/07 02:08:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_compute_automatic_sphere_torus(t_cobject *sphere_torus)
 	i = 0;
 	angle = 0;
 	sphere = ft_new_object(*sphere_torus);
+	sphere->cobject = sphere_torus;
 	set_funcs(sphere, intersect_sphere, inside_sphere, normal_sphere);
 	sphere->object_union.sphere.radius =
 		sphere_torus->cobject_union.sphere_torus.spheres_radius;
@@ -107,6 +108,7 @@ void	ft_compute_automatic_adn(t_cobject *adn)
 	i = 0;
 	angle = 0;
 	sphere = ft_new_object(*adn);
+	sphere->cobject = adn;
 	set_funcs(sphere, intersect_sphere, inside_sphere, normal_sphere);
 	sphere->object_union.sphere.radius = adn->cobject_union.adn.radius / 4.0;
 	padding = adn->cobject_union.adn.radius / 2.0;
