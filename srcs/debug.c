@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 19:10:23 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/29 16:58:12 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/06 23:12:28 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,13 @@ void	print_lights(t_world *world)
 	}
 }
 
+void	ft_print_mod(t_mod mod)
+{
+	printf("%f\n", mod.value);
+	printf("%f\n", mod.mod_value);
+	printf("%#X\n", mod.color);
+}
+
 void	print_object(t_object obj)
 {
 	char	*shape;
@@ -117,5 +124,8 @@ void	print_object(t_object obj)
 			obj.r.x, obj.r.y, obj.r.z,
 			obj.c.col, obj.transp, obj.reflect,
 			obj.refract, obj.shine);
+	ft_print_mod(obj.mod_transp);
+	ft_print_mod(obj.mod_refract);
+	ft_print_mod(obj.mod_reflect);
 	fflush(stdout);
 }

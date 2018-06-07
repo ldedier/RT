@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/06 00:09:53 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/07 02:08:43 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,9 @@ t_object		*ft_new_object(t_cobject cobject)
 	object->parser = new_bmp_parser();
 	object->parser_normal = new_bmp_parser();
 	object->negative = 0;
+	object->mod_refract.enabled = 0;
+	object->mod_reflect.enabled = 0;
+	object->mod_transp.enabled = 0;
 	return (object);
 }
 
@@ -84,6 +87,18 @@ t_cut		*ft_new_cut(void)
 	cut->color = 0;
 	cut->inequality = less_than;
 	return (cut);
+}
+
+t_mod		ft_new_mod(void)
+{
+	t_mod res;
+
+	res.enabled = 1;
+	res.color = 0;
+	res.inequality = bigger_than;
+	res.value = 0.5;
+	res.mod_value = 0.5;
+	return (res);
 }
 
 void			ft_init_light(t_light *light)

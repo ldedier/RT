@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/05 22:55:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/07 00:32:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,8 +196,14 @@ void	ft_parse_angle(t_parser *parser, t_world *world, char *line)
 void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
 {
 	double *radius;
-
-	if (parser->parse_enum == e_parse_object &&
+	
+	if (!parser->attribute)
+	{
+		ft_dprintf(2, "line %d: current object does not have radius tag",
+				parser->nb_lines);
+		exit(1);
+	}
+	else if (parser->parse_enum == e_parse_object &&
 			!ft_strcmp("sphere", parser->attribute))
 		radius = &(world->cobjlist->cobject->objlist->object\
 				->object_union.sphere.radius);

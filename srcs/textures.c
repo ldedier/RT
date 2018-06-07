@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 05:33:22 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/06 09:10:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/06 20:33:20 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		ft_get_pixel(int x, int y, t_bmp_parser parser)
 int		texture_sphere(t_object obj, t_hit *hit, t_bmp_parser parser)
 {
 	(void)obj;
-	t_point3d p = hit->old_normal;
+	t_point3d p =normalize(hit->unbumped_old_normal);
 	float u = 0.5 + ((atan2(p.z, p.x)) / (2 * M_PI));
 	float v = 0.5 - (asin(p.y) / M_PI);
 	u = (int)(u * parser.width);

@@ -9,11 +9,18 @@
 			<rotationXYZ>0 0 0</rotationXYZ>
 			<object name="sphere">
 				<texture>resources/textures/earth2.bmp</texture>
-				<cut type = "color">
-					<cut_color>blue</cut_color>
+				<mod_transp>
+					<mod_color>blue</mod_color>
 					<inequality>more than</inequality>
 					<value>0.5</value>
-				</cut>
+					<mod_value>0.7</mod_value>
+				</mod_transp>
+				<mod_refract>
+					<mod_color>blue</mod_color>
+					<inequality>more than</inequality>
+					<value>0.5</value>
+					<mod_value>1.3</mod_value>
+				</mod_refract>
 			</object>
 		</cobject>
 		<cobject>
@@ -21,14 +28,6 @@
 			<rotationXYZ>0 0 0</rotationXYZ>
 			<color> 0x00FFFF </color>
 			<object name="plane">
-			</object>
-		</cobject>
-			<cobject>
-			<positionXYZ>0 0 0</positionXYZ>
-			<rotationXYZ>0 0 0</rotationXYZ>
-			<color>0xFFFFFF</color>
-			<object name="sphere">
-				<radius>0.2</radius>
 			</object>
 		</cobject>
 	</objlist>

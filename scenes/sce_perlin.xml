@@ -8,12 +8,12 @@
 			<positionXYZ>0 0 10</positionXYZ>
 			<rotationXYZ>0 0 0</rotationXYZ>
 			<object name="sphere">
-				<texture>resources/textures/earth2.bmp</texture>
 				<cut type = "color">
 					<cut_color>blue</cut_color>
 					<inequality>more than</inequality>
 					<value>0.5</value>
 				</cut>
+				<perturbation name="marble"></perturbation>
 			</object>
 		</cobject>
 		<cobject>
@@ -21,14 +21,7 @@
 			<rotationXYZ>0 0 0</rotationXYZ>
 			<color> 0x00FFFF </color>
 			<object name="plane">
-			</object>
-		</cobject>
-			<cobject>
-			<positionXYZ>0 0 0</positionXYZ>
-			<rotationXYZ>0 0 0</rotationXYZ>
-			<color>0xFFFFFF</color>
-			<object name="sphere">
-				<radius>0.2</radius>
+				<perturbation name="perlin"></perturbation>
 			</object>
 		</cobject>
 	</objlist>

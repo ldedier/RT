@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/05 05:52:12 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/07 08:05:11 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ static t_color		ebloui(t_world *world, t_line ray)
 	i = 0;
 	while (i < world->nlights)
 	{
-		coeff = -ft_dot_product(ray.v, world->lights[i].v);
+		if(world->lights[i].type == 'd')
+			coeff = -ft_dot_product(ray.v, world->lights[i].v);
+		else
+			coeff = -ft_dot_product(ray.v, normalize(ft_point3d_cmp(ray.o, world->lights[i].o)));
 		coeff /= distance(ray.o, world->lights[i].o);
-		//printf("%f\n", distance(ray.o, world->lights[i].o));
-		//printf("%f\n", distance(world->cam->o, world->lights[i].o));
 		if (coeff > 0)
 		{
 			if (coeff < 0)
@@ -74,6 +75,36 @@ static t_color		ebloui(t_world *world, t_line ray)
 	return (interpole_color(sum, world->fog.color, get_color(0xffffff)));
 }
 
+double				ft_process_mod(t_color color, double old, t_mod mod)
+{
+	int take_old;
+
+	if (!mod.enabled)
+		return old;
+	else
+	{
+		if (mod.color == 0xff0000)
+			take_old = (mod.inequality((color.r / get_sum(color)), mod.value));
+		else if (mod.color == 0x00ff00)
+			take_old = (mod.inequality((color.g / get_sum(color)), mod.value));
+		else
+			take_old = (mod.inequality((color.b / get_sum(color)), mod.value));
+		return (take_old ? mod.mod_value : old);
+	}
+}
+
+void				ft_init_aux_render(t_aux_render *x, t_hit *hit)
+{
+	t_color color;
+
+	color = get_color(get_object_color(hit));
+	x->f_refract = ft_process_mod(color, hit->obj.refract, hit->obj.mod_refract);
+	x->f_reflect = ft_process_mod(color, hit->obj.reflect, hit->obj.mod_reflect);
+	x->f_transp = ft_process_mod(color, hit->obj.transp, hit->obj.mod_transp);
+//	x->f_reflect = hit->obj.reflect;
+//	x->f_refract = hit->obj.refract;
+}
+
 static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 {
 	t_hit			*hit;
@@ -84,9 +115,11 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 	t_color			fogged_c;
 	t_color			illuminated_c;
 	double			fog;
+	t_aux_render 	x;
 
 	if ((hit = trace(ray, world->cobjlist)))
 	{
+		ft_init_aux_render(&x, hit);
 		fog = magnitude(newvector(hit->point, world->cam->o)) * world->fog.in;
 		fog = fog > 1.0 ? 1.0 : fog;
 		castshadows(world, hit, shadows);
@@ -96,27 +129,27 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		else
 			illuminated_c = illuminate_toon(world, hit, shadows, fast);
 		fogged_c = interpole_color(fog, illuminated_c, world->fog.color);
-		if (bounce < world->max_bounce && hit->obj.reflect > EPSILON && !fast)
+		if (bounce < world->max_bounce && x.f_reflect > EPSILON && !fast)
 			reflect_c = ray_color(newray(translate_vec(hit->point,
 							hit->pertbounce, EPSILON2), hit->pertbounce),
 					world, bounce + 1, 0);
 		else
 			reflect_c = pert_color(hit);
-		if (bounce < world->max_bounce && hit->obj.transp > EPSILON && !fast)
+		if (bounce < world->max_bounce && x.f_transp > EPSILON && !fast)
 		{
-			if(fabs(hit->obj.refract - 1) > EPSILON)
+			if (fabs(x.f_refract - 1) > EPSILON)
 				refract_c = ray_color(newray(translate_vec(hit->point,
-					ray.v, EPSILON), refraction(hit, &ray)),
-					world, bounce + 1, 0);
+								ray.v, EPSILON), refraction(hit, &ray, x.f_refract)),
+						world, bounce + 1, 0);
 			else
 				refract_c = ray_color(newray(translate_vec(hit->point,
-					ray.v, EPSILON), ray.v),
-					world, bounce, 0);
+								ray.v, EPSILON), ray.v),
+						world, bounce, 0);
 		}
 		else
 			refract_c = pert_color(hit);
-		return (freeret(interpole_color(hit->obj.transp,
-						interpole_color(hit->obj.reflect,
+		return (freeret(interpole_color(x.f_transp,
+						interpole_color(x.f_reflect,
 							fogged_c, reflect_c), refract_c), &hit, &aux));
 	}
 	illuminated_c = ebloui(world, ray);

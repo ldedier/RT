@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 09:48:49 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/06 06:41:13 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/07 02:34:58 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_point3d	bump_normal(t_point3d normal, t_point3d point, int color)
 	t_point3d bitangeant;
 	t_point3d newp;
 
-	newp= normalize(ft_new_vec3(point.x, 0, point.z));
+	newp = normalize(ft_new_vec3(point.x, 0, point.z));
 	tangeant = ft_point3d_cross_product(newp, ft_new_vec3(0, 1, 0));
 	bitangeant = ft_point3d_cross_product(tangeant, newp);
 	
@@ -51,7 +51,7 @@ t_point3d	bump_normal(t_point3d normal, t_point3d point, int color)
 	bumped.y = 2 * (col.g / 255.0) - 1;
 	bumped.z = 2 * (col.b / 255.0) - 1;
 	//printf("%f\n", bumped.z);
-		
+
 	return (normalize(ft_point3d_add(
 				ft_point3d_add(
 					ft_point3d_scalar(tangeant, bumped.x),

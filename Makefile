@@ -6,7 +6,7 @@
 #    By: ldedier <ldedier@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/05 21:37:02 by ldedier          ###   ########.fr        #
+#    Updated: 2018/06/07 03:38:59 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -123,7 +123,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_parse_bmp.c\
 				 ft_export_scene.c\
 				 mouse_events.c\
-				 menu.c
+				 menu.c\
+				 perlin.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
 

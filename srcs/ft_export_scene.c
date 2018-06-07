@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:31:29 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/05 05:29:22 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/07 06:42:41 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,8 +306,10 @@ static void	ft_print_obj_perturbation(t_object obj, int fd)
 		type = "noise";
 	else if (obj.pert == e_chess)
 		type = "chess";
-	else if (obj.pert == e_spiral)
-		type = "spiral";
+	else if (obj.pert == e_perlin)
+		type = "perlin";
+	else if (obj.pert == e_marble)
+		type = "marble";
 	else
 		type = "UNKNOWN";
 	dprintf(fd,"\t\t\t\t<perturbation name=\"%s\"></perturbation>\n", type);
@@ -354,8 +356,10 @@ static void	ft_print_cobj_perturbation(t_cobject cobj, int fd)
 		type = "noise";
 	else if (cobj.pert == e_chess)
 		type = "chess";
-	else if (cobj.pert == e_spiral)
-		type = "spiral";
+	else if (cobj.pert == e_perlin)
+		type = "perlin";
+	else if (cobj.pert == e_marble)
+		type = "marble";
 	else
 		type = "UNKNOWN";
 	dprintf(fd,"\t\t\t<perturbation name=\"%s\"></perturbation>\n", type);
