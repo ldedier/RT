@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:36:26 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/06 00:09:13 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/07 07:58:46 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,11 @@ int					new_world(char *file, t_world **world)
 		freecanvas(canvas);
 		return (freeworld(*world, rw_err));
 	}
-	set_color_pos(*world);
+	if (ft_init_sdl(*world) == 0)
+	{
+		freecanvas(canvas);
+		return (-3);
+	}
+	set_positions(*world);
 	return (0);
 }

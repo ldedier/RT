@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/06 01:20:13 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/07 07:58:31 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,35 +27,83 @@ void	ft_mouse_motion(t_world *world, SDL_Event event)
 	if (world->menu.active_rb >= 0)
 	{
 		int i = world->menu.active_rb;
-		float value = ((float)(event.motion.x - (world->menu.others_rb[i].pix.x + 4)) / 100) * world->menu.others_rb[i].max;
-		if (value >= world->menu.others_rb[i].min && value <= world->menu.others_rb[i].max)
-			*(world->menu.others_rb[i].value) = value;
-		else
+		if (world->menu.type == MENU_LIGHTS)
 		{
-			if (value < world->menu.others_rb[i].min)
-				*(world->menu.others_rb[i].value) = world->menu.others_rb[i].min;
-			if (value > world->menu.others_rb[i].max)
-				*(world->menu.others_rb[i].value) = world->menu.others_rb[i].max;
+			float value = ((float)(event.motion.x - (world->menu.lights_rb[i].pix.x + 4)) / 100) * world->menu.lights_rb[i].max;
+			if (value >= world->menu.lights_rb[i].min && value <= world->menu.lights_rb[i].max)
+				*(world->menu.lights_rb[i].value) = value;
+			else
+			{
+				if (value < world->menu.lights_rb[i].min)
+					*(world->menu.lights_rb[i].value) = world->menu.lights_rb[i].min;
+				if (value > world->menu.others_rb[i].max)
+					*(world->menu.lights_rb[i].value) = world->menu.lights_rb[i].max;
+			}
 		}
-		paint_threaded_fast(world);;
+		else if (world->menu.type == MENU_OTHERS)
+		{
+			float value = ((float)(event.motion.x - (world->menu.others_rb[i].pix.x + 4)) / 100) * world->menu.others_rb[i].max;
+			if (value >= world->menu.others_rb[i].min && value <= world->menu.others_rb[i].max)
+				*(world->menu.others_rb[i].value) = value;
+			else
+			{
+				if (value < world->menu.others_rb[i].min)
+					*(world->menu.others_rb[i].value) = world->menu.others_rb[i].min;
+				if (value > world->menu.others_rb[i].max)
+					*(world->menu.others_rb[i].value) = world->menu.others_rb[i].max;
+			}
+		}
+		world->cancel_render = 1;
+		join_threads(world);
+		paint_threaded_fast(world);
+		update_progress_bar(world);
 	}
 	if (world->menu.active_cp >= 0)
 	{
 		int i = world->menu.active_cp;
-		int x = event.motion.x - world->menu.others_cp[i].pix.x;
-		int y = event.motion.y - world->menu.others_cp[i].pix.y;
-		if (x < 0)
-			x = 0;
-		else if (x > 99)
-			x = 99;
-		if (y < 0)
-			y = 0;
-		else if (y > 99)
-			y = 99;
-		*(world->menu.others_cp[i].color) = world->menu.color_map[y * 100 + x];
-		world->menu.others_cp[i].pos.x = x;
-		world->menu.others_cp[i].pos.y = y;
-		paint_threaded_fast(world);;
+		if (world->menu.type == MENU_LIGHTS)
+		{
+			int x = event.motion.x - world->menu.lights_cp[i].pix.x;
+			int y = event.motion.y - world->menu.lights_cp[i].pix.y;
+			if (x < 0)
+				x = 0;
+			else if (x > 99)
+				x = 99;
+			if (y < 0)
+				y = 0;
+			else if (y > 99)
+				y = 99;
+			*(world->menu.lights_cp[i].color) = world->menu.color_map[y * 100 + x];
+			world->menu.lights_cp[i].pos.x = x;
+			world->menu.lights_cp[i].pos.y = y;
+		}
+		else if (world->menu.type == MENU_OTHERS)
+		{
+			int x = event.motion.x - world->menu.others_cp[i].pix.x;
+			int y = event.motion.y - world->menu.others_cp[i].pix.y;
+			if (x < 0)
+				x = 0;
+			else if (x > 99)
+				x = 99;
+			if (y < 0)
+				y = 0;
+			else if (y > 99)
+				y = 99;
+			*(world->menu.others_cp[i].color) = world->menu.color_map[y * 100 + x];
+			world->menu.others_cp[i].pos.x = x;
+			world->menu.others_cp[i].pos.y = y;
+		}
+		paint_threaded_fast(world);
+	}
+	if (world->menu.scroll_lights.active == 1)
+	{
+		int new_pos = event.motion.y - 140 - world->menu.scroll_lights.step;
+		if (new_pos < 0)
+			new_pos = 0;
+		else if ((new_pos + world->menu.scroll_lights.height) > (world->menu.scroll_lights.len - 10))
+			new_pos = world->menu.scroll_lights.len - 10 - world->menu.scroll_lights.height;
+		world->menu.scroll_lights.pos = new_pos;
+		update_progress_bar(world);
 	}
 }
 
@@ -92,29 +140,121 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 
 	x = event.button.x;
 	y = event.button.y;
-	if (world->menu.type != MENU_OBJECTS && x >= (HWIN + 30) &&
-			x <= (HWIN + 30 + 140) && y >= 30 && y <= 70)
+	if (world->menu.type != MENU_OBJECTS && x >= (world->canvas->win.w + 30) &&
+			x <= (world->canvas->win.w + 30 + 140) && y >= 30 && y <= 70)
 	{
 		world->menu.type = MENU_OBJECTS;
 		if (world->menu.filter_active == 1)
 			world->menu.filter_active = 0;
 		update_progress_bar(world);
 	}
-	else if (world->menu.type != MENU_LIGHTS && x >= (HWIN + 30 + 150) &&
-			x <= (HWIN + 30 + 150 + 140) && y >= 30 && y <= 70)
+	else if (world->menu.type != MENU_LIGHTS && x >= (world->canvas->win.w + 30 + 150) &&
+			x <= (world->canvas->win.w + 30 + 150 + 140) && y >= 30 && y <= 70)
 	{
 		world->menu.type = MENU_LIGHTS;
 		if (world->menu.filter_active == 1)
 			world->menu.filter_active = 0;
 		update_progress_bar(world);
 	}
-	else if (world->menu.type != MENU_OTHERS && x >= (HWIN + 30 + 150 + 150) &&
-			x <= (HWIN + 30 + 150 + 150 + 140) && y >= 30 && y <= 70)
+	else if (world->menu.type != MENU_OTHERS && x >= (world->canvas->win.w + 30 + 150 + 150) &&
+			x <= (world->canvas->win.w + 30 + 150 + 150 + 140) && y >= 30 && y <= 70)
 	{
 		world->menu.type = MENU_OTHERS;
 		if (world->menu.filter_active == 1)
 			world->menu.filter_active = 0;
 		update_progress_bar(world);
+	}
+	else if (world->menu.type == MENU_LIGHTS)
+	{
+		int x0 = world->canvas->win.w + 443;
+		int y0 = 140 + world->menu.scroll_lights.pos;
+		if (x >= (x0) && x<= (x0 + 10) && y >= (y0) && y <= (y0 + world->menu.scroll_lights.height))
+		{
+			world->menu.scroll_lights.active = 1;
+			world->menu.scroll_lights.step = y - 135 - world->menu.scroll_lights.pos;
+		}
+		else if (x >= (x0) && x<= (x0 + 10) && y >= (140) && y <= (140 + world->menu.scroll_lights.len - 10))
+		{
+			world->menu.scroll_lights.active = 1;
+			world->menu.scroll_lights.step = world->menu.scroll_lights.height / 2;
+			ft_mouse_motion(world, event);
+		}
+		int i = 0;
+		x0 = world->canvas->win.w + 55;
+		y0 = world->menu.first_light.y;
+		while (i < world->menu.nb_lights)
+		{
+			int y1 = y0 + i * (50 + 15);
+			if (x >= (x0) && x<= (x0 + 360) && y >= (y1) && y <= (y1 + 50))
+			{
+				world->menu.active_light = world->menu.lights[i];
+				world->menu.lights_rb[0].value = &(world->lights[world->menu.active_light].angle);
+				world->menu.lights_rb[1].value = &(world->lights[world->menu.active_light].intensity);
+				world->menu.lights_rb[2].value = &(world->lights[world->menu.active_light].v.x);
+				world->menu.lights_rb[3].value = &(world->lights[world->menu.active_light].v.y);
+				world->menu.lights_rb[4].value = &(world->lights[world->menu.active_light].v.z);
+				world->menu.lights_cp[0].color = &(world->lights[world->menu.active_light].c);
+				world->menu.lights_cp[0].pos = ft_color_pos(world, world->lights[world->menu.active_light].c);
+				update_progress_bar(world);
+				break ;
+			}
+			i++;
+		}
+		i = 0;
+		while (i < world->menu.nb_lights_rb)
+		{
+			int x0 = world->menu.lights_rb[i].pix.x + ((world->menu.lights_rb[i].min * 100) / world->menu.lights_rb[i].max);
+			int x1 = world->menu.lights_rb[i].pix.x + ((world->menu.lights_rb[i].max * 100) / world->menu.lights_rb[i].max);
+			int y0 = world->menu.lights_rb[i].pix.y;
+			if (x >= (x0) && x <= (x1 + 8) && y >= (y0 - 3) && y <= (y0 - 3 + 12))
+			{
+				world->menu.active_rb = i;
+				ft_mouse_motion(world, event);
+				return ;
+			}
+			i++;
+		}
+		i = 0;
+		while (i < world->menu.nb_lights_cp)
+		{
+			int x0 = world->menu.lights_cp[i].pix.x;
+			int y0 = world->menu.lights_cp[i].pix.y;
+			if (x >= (x0) && x <= (x0 + 100) && y >= (y0) && y <= (y0 + 100))
+			{
+				world->menu.active_cp = i;
+				ft_mouse_motion(world, event);
+				return ;
+			}
+			i++;
+		}
+		y0 = 765;
+		x0 = world->canvas->win.w + 105;
+		if (x >= (x0) && x <= (x0 + 60) && y >= (y0) && y <= (y0 + 60))
+		{
+			world->lights[world->menu.active_light].type = 'p';
+			world->cancel_render = 1;
+			join_threads(world);
+			paint_threaded_fast(world);
+			update_progress_bar(world);
+		}
+		x0 = world->canvas->win.w + 105 + 115;
+		if (x >= (x0) && x <= (x0 + 60) && y >= (y0) && y <= (y0 + 60))
+		{
+			world->lights[world->menu.active_light].type = 's';
+			world->cancel_render = 1;
+			join_threads(world);
+			paint_threaded_fast(world);
+			update_progress_bar(world);
+		}
+		x0 = world->canvas->win.w + 105 + 230;
+		if (x >= (x0) && x <= (x0 + 60) && y >= (y0) && y <= (y0 + 60))
+		{
+			world->lights[world->menu.active_light].type = 'd';
+			world->cancel_render = 1;
+			join_threads(world);
+			paint_threaded_fast(world);
+			update_progress_bar(world);
+		}
 	}
 	else if (world->menu.type == MENU_OTHERS)
 	{
@@ -167,6 +307,12 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 					world->filters[tmp] = 0;
 					world->filters[world->menu.filters_list[0]] = 1;
 				}
+				if (i > 0)
+				{
+					world->cancel_render = 1;
+					join_threads(world);
+					paint_threaded_fast(world);
+				}
 				update_progress_bar(world);
 				return ;
 			}
@@ -201,7 +347,7 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 			}
 			i++;
 		}
-		int x0 = HWIN + 20 + 54;
+		int x0 = world->canvas->win.w + 20 + 54;
 		int y0 = 556;
 		if (x >= (x0) && x <= (x0 + world->menu.cartoon.width) && y >= (y0) && y <= (y0 + world->menu.cartoon.height))
 		{
@@ -209,19 +355,22 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 				world->shader = 1;
 			else
 				world->shader = 2;
-			paint_threaded_fast(world);;
+			world->cancel_render = 1;
+			join_threads(world);
+			paint_threaded_fast(world);
+			update_progress_bar(world);
 		}
-		x0 = HWIN + 20 + 75;
+		x0 = world->canvas->win.w + 20 + 75;
 		y0 = 750;
 		if (x >= (x0) && x <= (x0 + world->menu.photo.width) && y >= (y0) && y <= (y0 + world->menu.photo.height))
 			ft_export_rt(world, ".ppm");
-		x0 = HWIN + 20 + 75 + 250;
+		x0 = world->canvas->win.w + 20 + 75 + 250;
 		y0 = 752;
 		if (x >= (x0) && x <= (x0 + world->menu.save.width) && y >= (y0) && y <= (y0 + world->menu.save.height))
 			ft_export_scene(world);
 		if (world->exporting_video == 1)
 		{
-			x0 = HWIN + 20 + 75 + 130;
+			x0 = world->canvas->win.w + 20 + 75 + 130;
 			y0 = 751;
 			if (x >= (x0) && x <= (x0 + world->menu.stop.width) && y >= (y0) && y <= (y0 + world->menu.stop.height))
 			{
@@ -232,7 +381,7 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 		}
 		else
 		{
-			x0 = HWIN + 20 + 75 + 125;
+			x0 = world->canvas->win.w + 20 + 75 + 125;
 			y0 = 760;
 			if (x >= (x0) && x <= (x0 + world->menu.video.width) && y >= (y0) && y <= (y0 + world->menu.video.height))
 			{
@@ -327,11 +476,11 @@ void	ft_mouse_button_down(t_world *world, SDL_Event event)
 			world->focus = 0;
 			SDL_SetRelativeMouseMode(SDL_FALSE);
 			SDL_WarpMouseInWindow(world->canvas->window,
-					(HRES + MENU_WIDTH) / 2, (VRES + PROGRESS_BAR_HEIGHT) / 2);
+					(world->canvas->win_size.x + MENU_WIDTH) / 2, world->canvas->win.h / 2);
 		}
 		else if (world->focus == 0)
 		{
-			if (event.button.x <= HRES)
+			if (event.button.x <= world->canvas->win_size.x)
 			{
 				SDL_SetRelativeMouseMode(SDL_TRUE);
 				world->focus = 1;
@@ -340,7 +489,7 @@ void	ft_mouse_button_down(t_world *world, SDL_Event event)
 	}
 	else if (event.button.button == SDL_BUTTON_LEFT)
 	{
-		if (event.button.x > HRES)
+		if (event.button.x > world->canvas->win_size.x)
 			ft_mouse_button_down_menu(world, event);
 		else if (world->focus == 0)
 			ft_left_click_event(world, event);
@@ -354,10 +503,12 @@ void	ft_mouse_button_up_menu(t_world *world, SDL_Event event)
 		world->menu.active_rb = -1;
 	if (world->menu.active_cp >= 0)
 		world->menu.active_cp = -1;
+	if (world->menu.scroll_lights.active == 1)
+		world->menu.scroll_lights.active = 0;
 }
 
 void	ft_mouse_button_up(t_world *world, SDL_Event event)
 {
-	if (event.button.button == SDL_BUTTON_LEFT && event.button.x > HRES)
+	if (event.button.button == SDL_BUTTON_LEFT && event.button.x > world->canvas->win_size.x)
 		ft_mouse_button_up_menu(world, event);
 }

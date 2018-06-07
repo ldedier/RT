@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/04 11:58:36 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/06 01:24:49 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/07 07:58:43 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	update_progress_bar(t_world *world)
 {
 	SDL_FillRect(world->canvas->win_surface, &(world->canvas->pb_rect), 0x0);
 	world->canvas->pb_rect.w = (int)((float)world->progress /
-			world->canvas->npixels * HWIN);
+			world->canvas->npixels * world->canvas->win.w);
 	SDL_FillRect(world->canvas->win_surface, &(world->canvas->pb_rect), 0x33DD33);
 	if (!(world->canvas->win_texture = SDL_CreateTextureFromSurface(world->
 					canvas->renderer, world->canvas->win_surface)))
