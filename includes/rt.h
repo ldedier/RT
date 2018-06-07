@@ -6,7 +6,7 @@
 /*   By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 21:50:43 by jfortin          ###   ########.fr       */
+/*   Updated: 2018/06/08 00:20:24 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -523,6 +523,7 @@ typedef struct			s_light
 	double				intensity;
 	double				angle;
 	char				type;
+	char				ebloui;
 }						t_light;
 
 typedef enum			e_filters

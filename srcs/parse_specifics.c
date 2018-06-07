@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 00:32:21 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/07 23:35:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,8 @@ void	ft_parse_angle(t_parser *parser, t_world *world, char *line)
 	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
 	ft_process_tag_stack(parser);
 }
+
+
 
 void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
 {

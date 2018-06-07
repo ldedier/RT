@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/07 08:05:11 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 00:21:09 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,36 +42,38 @@ static t_color		freeret(t_color c, t_hit **hit, t_shadowsfree *aux)
 	}
 	return (c);
 }
-
+/*
 static float		distance(t_point3d a, t_point3d b)
 {
 	return (sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z)));
-}
+*/
 
-static t_color		ebloui(t_world *world, t_line ray)
+static t_color		ebloui(t_world *world, t_line ray, double t, double *ratio)
 {
 	int		i;
 	float	coeff;
 	float	sum;
+	double dist;
 
 	sum = 0.0f;
 	i = 0;
 	while (i < world->nlights)
 	{
-		if(world->lights[i].type == 'd')
+		if (world->lights[i].type == 'd')
 			coeff = -ft_dot_product(ray.v, world->lights[i].v);
 		else
 			coeff = -ft_dot_product(ray.v, normalize(ft_point3d_cmp(ray.o, world->lights[i].o)));
-		coeff /= distance(ray.o, world->lights[i].o);
-		if (coeff > 0)
+		dist = magnitude(ft_point3d_cmp(ray.o, world->lights[i].o));
+		coeff /= (dist * dist);
+		if (coeff > 0 && (dist < t || t == -1))
 		{
-			if (coeff < 0)
-				coeff /= distance(world->cam->o, world->lights[i].o);
+	//		printf("coeff %f\n", coeff);
 			sum += coeff;
 		}
 		i++;
 	}
-	sum = ft_fclamp(0, sum, 1);
+	*ratio = ft_fclamp(0, sum, 1);
+	sum = *ratio;
 	return (interpole_color(sum, world->fog.color, get_color(0xffffff)));
 }
 
@@ -101,8 +103,8 @@ void				ft_init_aux_render(t_aux_render *x, t_hit *hit)
 	x->f_refract = ft_process_mod(color, hit->obj.refract, hit->obj.mod_refract);
 	x->f_reflect = ft_process_mod(color, hit->obj.reflect, hit->obj.mod_reflect);
 	x->f_transp = ft_process_mod(color, hit->obj.transp, hit->obj.mod_transp);
-//	x->f_reflect = hit->obj.reflect;
-//	x->f_refract = hit->obj.refract;
+	//	x->f_reflect = hit->obj.reflect;
+	//	x->f_refract = hit->obj.refract;
 }
 
 static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
@@ -114,7 +116,9 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 	t_color			refract_c;
 	t_color			fogged_c;
 	t_color			illuminated_c;
-	double			fog;
+	t_color			ebloui_c;
+	double fog;
+	double			ebloui_ratio;
 	t_aux_render 	x;
 
 	if ((hit = trace(ray, world->cobjlist)))
@@ -148,12 +152,16 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		}
 		else
 			refract_c = pert_color(hit);
+
+		ebloui_c = ebloui(world, ray, hit->t, &ebloui_ratio);
 		return (freeret(interpole_color(x.f_transp,
 						interpole_color(x.f_reflect,
-							fogged_c, reflect_c), refract_c), &hit, &aux));
+							interpole_color(ebloui_ratio , fogged_c, WHITE_COLOR),
+								reflect_c), refract_c), &hit, &aux));
+
 	}
-	illuminated_c = ebloui(world, ray);
-	return (freeret(illuminated_c, &hit, NULL));
+	ebloui_c = ebloui(world, ray, -1, &ebloui_ratio);
+	return (freeret(ebloui_c, &hit, NULL));
 }
 
 t_color				render_pixel(t_world *world, t_pixel pix, int fast)
