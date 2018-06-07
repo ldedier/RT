@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 06:34:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/07 21:50:43 by jfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@
 #ifndef RT_H
 # define RT_H
 
-# include <SDL2/SDL.h>
-# include <SDL2_ttf/SDL_ttf.h>
+# include <SDL.h>
+# include <SDL_ttf.h>
 # include <string.h>
 # include <stdio.h>
 # include <errno.h>
