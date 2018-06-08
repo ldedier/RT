@@ -23,8 +23,8 @@ void	ft_parse_resolution(t_parser *parser, t_world *world, char *line)
 	read_int(&line, &(world->canvas->win_size.x));
 	read_int(&line, &(world->canvas->win_size.y));
 	world->cam->pd = ZOOM / world->canvas->win_size.x;
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_fast_resolution(t_parser *parser, t_world *world, char *line)
@@ -37,8 +37,8 @@ void	ft_parse_fast_resolution(t_parser *parser, t_world *world, char *line)
 	}
 	read_int(&line, &(world->canvas->fast_win_size.x));
 	read_int(&line, &(world->canvas->fast_win_size.y));
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_filter(t_parser *parser, t_world *world, char *line)
@@ -62,8 +62,8 @@ void	ft_parse_filter(t_parser *parser, t_world *world, char *line)
 		world->filters[e_grey] = 1;
 	else if (!ft_strcmp(parser->attribute, "motion_blur"))
 		world->filters[e_motion_blur] = 1;
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_shader(t_parser *parser, t_world *world, char *line)
@@ -78,6 +78,6 @@ void	ft_parse_shader(t_parser *parser, t_world *world, char *line)
 		world->shader = 1;
 	else if (!ft_strcmp(parser->attribute, "cartoon"))
 		world->shader = 2;
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }

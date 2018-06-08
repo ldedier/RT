@@ -32,8 +32,8 @@ void	ft_parse_stretch_x(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_stretch_y(t_parser *parser, t_world *world, char *line)
@@ -56,8 +56,8 @@ void	ft_parse_stretch_y(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_trans_x(t_parser *parser, t_world *world, char *line)
@@ -74,8 +74,8 @@ void	ft_parse_trans_x(t_parser *parser, t_world *world, char *line)
 		exit(1);
 	}
 	read_int(&line, trans_x);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_trans_y(t_parser *parser, t_world *world, char *line)
@@ -92,6 +92,6 @@ void	ft_parse_trans_y(t_parser *parser, t_world *world, char *line)
 		exit(1);
 	}
 	read_int(&line, trans_y);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }

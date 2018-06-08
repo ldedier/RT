@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:48:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/16 03:52:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 05:43:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ void			ft_init_parser(t_parser *parser)
 	parser->tag = NULL;
 	parser->parse_enum = e_parse_scene;
 	parser->got_scene = 0;
+	parser->got_attribute = 0;
+	parser->attribute_stack = NULL;
+	ft_lstadd(&(parser->attribute_stack),
+			ft_lstnew(NULL, 0));
 }
 
 void			ft_check_parser(t_parser parser)
@@ -46,10 +50,19 @@ void			ft_free_parser(t_parser *parser)
 	while (*ptr)
 	{
 		tmp = *ptr;
+		free(((t_tag *)(tmp->content))->tag);
 		free(tmp->content);
 		free(tmp);
 		*ptr = (*ptr)->next;
 		i++;
+	}
+	ptr = &(parser->attribute_stack);
+	while (*ptr)
+	{
+		tmp = *ptr;
+		free(tmp->content);
+		free(tmp);
+		*ptr = (*ptr)->next;
 	}
 	if (i)
 	{

@@ -30,6 +30,7 @@
 					<inequality>more than</inequality>
 					<value>0</value>
 				</cut>
+				<radius>1</radius>
 			</object>
 			<object name="sphere">
 				<positionXYZ>0 -2 0</positionXYZ>

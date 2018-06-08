@@ -4,6 +4,13 @@
 		<rotationXYZ>0 0 0</rotationXYZ>
 	</camera>
 	<objlist>
+	<cobject>
+			<positionXYZ>0 5 10</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<color> 0x00FFFF </color>
+			<object name="plane">
+			</object>
+		</cobject>
 		<cobject>
 			<positionXYZ>0 0 10</positionXYZ>
 			<rotationXYZ>0 0 0</rotationXYZ>
@@ -23,19 +30,13 @@
 				</mod_refract>
 			</object>
 		</cobject>
-		<cobject>
-			<positionXYZ>0 5 10</positionXYZ>
-			<rotationXYZ>0 0 0</rotationXYZ>
-			<color> 0x00FFFF </color>
-			<object name="plane">
-			</object>
-		</cobject>
-	</objlist>
+		</objlist>
 	<lightlist>
 		<light type="point">
 			<color>0xFFFFFF</color>
 			<positionXYZ>0 0 0</positionXYZ>
 			<intensity>1</intensity>
+			<ebloui>1</ebloui>
 		</light>
 	</lightlist>
 	<ambientlight>

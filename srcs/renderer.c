@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 00:21:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 00:33:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ static t_color		ebloui(t_world *world, t_line ray, double t, double *ratio)
 	i = 0;
 	while (i < world->nlights)
 	{
+		if (!world->lights[i].ebloui)
+		{
+			i++;
+			continue;
+		}
 		if (world->lights[i].type == 'd')
 			coeff = -ft_dot_product(ray.v, world->lights[i].v);
 		else
@@ -66,10 +71,7 @@ static t_color		ebloui(t_world *world, t_line ray, double t, double *ratio)
 		dist = magnitude(ft_point3d_cmp(ray.o, world->lights[i].o));
 		coeff /= (dist * dist);
 		if (coeff > 0 && (dist < t || t == -1))
-		{
-	//		printf("coeff %f\n", coeff);
 			sum += coeff;
-		}
 		i++;
 	}
 	*ratio = ft_fclamp(0, sum, 1);

@@ -33,8 +33,8 @@ void	ft_process_parsing_pos(t_parser *parser, t_world *world, char *line)
 	read_double(&line, &(pos->x));
 	read_double(&line, &(pos->y));
 	read_double(&line, &(pos->z));
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_process_parsing_rot(t_parser *parser, t_world *world, char *line)
@@ -58,8 +58,8 @@ void	ft_process_parsing_rot(t_parser *parser, t_world *world, char *line)
 	read_double(&line, &(rot->x));
 	read_double(&line, &(rot->y));
 	read_double(&line, &(rot->z));
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_process_parsing_scale(t_parser *parser, t_world *world, char *line)
@@ -79,8 +79,8 @@ void	ft_process_parsing_scale(t_parser *parser, t_world *world, char *line)
 	read_double(&line, &(scale->x));
 	read_double(&line, &(scale->y));
 	read_double(&line, &(scale->z));
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_color(t_parser *parser, t_world *world, char *line)
@@ -106,8 +106,8 @@ void	ft_parse_color(t_parser *parser, t_world *world, char *line)
 	}
 	read_hex(&line, &(col));
 	*color = get_color(col);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_pert(t_parser *parser, t_world *world, char *line)
@@ -125,6 +125,6 @@ void	ft_parse_pert(t_parser *parser, t_world *world, char *line)
 		exit(1);
 	}
 	read_pert_type(parser, pert);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }

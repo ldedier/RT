@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 17:10:27 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/29 23:37:52 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 07:35:25 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_obj_func g_pf_arr[10] =
 	[enum_obj_vt] = ft_obj_hashtag,
 	[enum_obj_vn] = ft_obj_hashtag
 };
-
+/*
 void	ft_process_obj_parsing(t_obj_parser *parser, char *s)
 {
 	int i;
@@ -62,6 +62,39 @@ void	ft_process_obj_parsing(t_obj_parser *parser, char *s)
 			i++;
 	}
 }
+*/
+
+void	ft_process_obj_parsing(t_obj_parser *parser, char *s)
+{
+	int i;
+
+	i = 0;
+	if (s[i] == 'v' && s[i + 1] == ' ')
+		g_pf_arr[enum_obj_v](&i, s, parser);
+	else if (s[i] == 'f')
+		g_pf_arr[enum_obj_f](&i, s, parser);
+	else if (s[i] == 'v' && s[i + 1] == 't')
+		g_pf_arr[enum_obj_vt](&i, s, parser);
+	else if (s[i] == 'v' && s[i + 1] == 'n')
+		g_pf_arr[enum_obj_vt](&i, s, parser);
+	else if (s[i] == '#')
+		g_pf_arr[enum_obj_hashtag](&i, s, parser);
+	else if (s[i] == 'o')
+		g_pf_arr[enum_obj_o](&i, s, parser);	
+	else if (s[i] == 'g')
+		g_pf_arr[enum_obj_g](&i, s, parser);
+	else if (s[i] == 's')
+		g_pf_arr[enum_obj_s](&i, s, parser);
+	else if (!ft_strncmp("mtllib", &(s[i]), 6))
+		g_pf_arr[enum_obj_mtllib](&i, s, parser);
+	else if (!ft_strncmp("usemtl", &(s[i]), 6))
+		g_pf_arr[enum_obj_usemtl](&i, s, parser);
+	else
+	{
+		ft_printf("erreur de parsing d'obj: %s\n", &(s[i]));
+		exit(1);
+	}
+}
 
 void	ft_print_faces_tmp(t_list *faces)
 {
@@ -92,6 +125,7 @@ void	ft_print_vertices_tmp(t_list *vertices)
 		ptr = ptr->next;
 	}
 }
+
 
 void		ft_convert_to_array_vertices(t_obj_parser *parser)
 {
@@ -174,7 +208,7 @@ void	ft_print_faces(t_obj_parser parser)
 int		ft_fill_draw_array(t_obj_parser *parser)
 {
 	int nb_faces;
-	if (!(parser->draw_array = (double *)(malloc(sizeof(double) * 9 * parser->nb_faces))))
+	if (!(parser->draw_array = (double *)(malloc(sizeof(double) * 9 * parser->nb_faces + 1))))
 		return (0);
 	nb_faces = 0;
 //	printf("%d\n", parser->nb_faces);
@@ -196,6 +230,26 @@ int		ft_fill_draw_array(t_obj_parser *parser)
 	return (1);
 }
 
+void	ft_parse_obj_gnl(char *filename, t_obj_parser *parser)
+{
+	int fd;
+	char *line;
+
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_dprintf(2, "file can't be opened");
+		exit(1);
+	}
+	while (get_next_line(fd, &line) > 0)
+	{
+		ft_process_obj_parsing(parser, line);
+		free(line);
+	}
+	free(line);
+}
+
+
 t_obj_parser		ft_parse_obj(char *filename)
 {
 	t_obj_parser parser;
@@ -208,15 +262,21 @@ t_obj_parser		ft_parse_obj(char *filename)
 	parser.vertices_tmp = NULL;
 	parser.faces_tmp = NULL;
 	parser.materials = NULL;
-	ft_process_obj_parsing(&parser, (char *)map.ptr);	
+	ft_parse_obj_gnl(filename, &parser);
+//	ft_process_obj_parsing(&parser, (char *)map.ptr);	
+	printf("loooooooouuuuuuuu\n");
 	munmap(map.ptr, map.size);
 //ft_print_faces_tmp(parser.faces_tmp);
 //	printf("nb_faces: %d\n", parser.nb_faces);
 
 //	ft_print_vertices_tmp(parser.vertices_tmp);
-//	printf("nb_vertices: %d\n", parser.nb_vertices);	
+//	printf("nb_vertices: %d\n", parser.nb_vertices);
+	
+	printf("loooooooo\n");
 	ft_convert_to_array_vertices(&parser);
+	printf("luuuuuuuuuu\n");
 	ft_convert_to_array_faces(&parser);
+	printf("liiiiiii\n");
 	
 //  ft_print_vertices(parser);
 //	ft_print_faces(parser);

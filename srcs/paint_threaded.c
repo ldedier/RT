@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/05 09:56:46 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/08 01:43:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	*render_thr(void *thpar)
 	printf("##thread started: %i\n",selfid);
 	p.x = 0;
 	p_y = ((t_thr_par*)thpar)->p_y;
-	printf("%i\n",p_y);
 	while (world->cancel_render == 0 && p.x < world->canvas->win_size.x)
 	{
 		p.y = p_y;

@@ -33,8 +33,8 @@ void	ft_parse_negative(t_parser *parser, t_world *world, char *line)
 		exit(1);
 	}
 	read_int(&line, neg);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_ellipsoid_abc(t_parser *parser, t_world *world, char *line)
@@ -54,8 +54,8 @@ void	ft_parse_ellipsoid_abc(t_parser *parser, t_world *world, char *line)
 	read_double(&line, &(abc->x));
 	read_double(&line, &(abc->y));
 	read_double(&line, &(abc->z));
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_big_radius(t_parser *parser, t_world *world, char *line)
@@ -73,8 +73,8 @@ void	ft_parse_big_radius(t_parser *parser, t_world *world, char *line)
 		exit(1);
 	}
 	read_double(&line, big_rad);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_small_radius(t_parser *parser, t_world *world, char *line)
@@ -92,8 +92,8 @@ void	ft_parse_small_radius(t_parser *parser, t_world *world, char *line)
 		exit(1);
 	}
 	read_double(&line, small_rad);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_goursat_ab(t_parser *parser, t_world *world, char *line)
@@ -117,6 +117,6 @@ void	ft_parse_goursat_ab(t_parser *parser, t_world *world, char *line)
 	}
 	read_double(&line, a);
 	read_double(&line, b);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }

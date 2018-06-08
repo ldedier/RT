@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 00:20:24 by ldedier          ###   ########.fr       */
+/*   Created: 2018/06/08 02:58:52 by ldedier           #+#    #+#             */
+/*   Updated: 2018/06/08 08:11:34 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-# define NTHREADS 4
+# define NTHREADS 1
 # define STACK 0
 # define POP 1
 # define MAX_DEGREE 4
@@ -523,7 +523,7 @@ typedef struct			s_light
 	double				intensity;
 	double				angle;
 	char				type;
-	char				ebloui;
+	int					ebloui;
 }						t_light;
 
 typedef enum			e_filters
@@ -692,9 +692,16 @@ typedef enum			e_parse_enum
 	e_parse_scene
 }						t_parse_enum;
 
+typedef struct			s_tag
+{
+	char *tag;
+	int	has_attribute;
+}						t_tag;
+
 typedef struct			s_parser
 {
 	t_list				*tag_stack;
+	t_list				*attribute_stack;
 	char				*tag;
 	char				*attribute;
 	t_parse_enum		parse_enum;
@@ -702,6 +709,7 @@ typedef struct			s_parser
 	int					op;
 	int					got_scene;
 	t_mod				mod;
+	int					got_attribute;
 }						t_parser;
 
 typedef struct  s_mmap
@@ -770,9 +778,10 @@ void					ft_process_parsing_rot(t_parser *prsr, t_world *world,
 int						parse_line_new(char *line, t_world *world,
 		t_parser *parser);
 void					ft_init_parser(t_parser *parser);
-int						ft_parse_tag(char **line, char **tag, char **attribute);
-//int						ft_parse_tag(t_parser *parser, char **line);
-void					ft_process_tag_stack(t_parser *parser);
+int						ft_parse_tag(char **line, t_parser *parser);
+void					ft_process_tag_pop(t_parser *parser);
+void					ft_process_tag_stack_stack(t_parser *parser);
+void					ft_process_tag_pop(t_parser *parser);
 void					ft_parse_src(t_parser *parser, t_world *world, char *l);
 void					ft_parse_color(t_parser *pr, t_world *wld, char *l);
 void					ft_parse_transparency(t_parser *pr,
@@ -782,6 +791,7 @@ void					ft_parse_refraction(t_parser *p, t_world *w, char *l);
 void					ft_parse_reflection(t_parser *p, t_world *w, char *l);
 void					ft_parse_radius(t_parser *p, t_world *w, char *l);
 void					ft_parse_angle(t_parser *p, t_world *w, char *l);
+void					ft_parse_ebloui(t_parser *p, t_world *w, char *l);
 void					ft_parse_intensity(t_parser *p, t_world *w, char *l);
 void					ft_parse_negative(t_parser *par, t_world *w, char *l);
 void					ft_parse_pert(t_parser *p, t_world *w, char *l);
@@ -888,6 +898,8 @@ t_intcolor				add_scale_intcolors(t_intcolor icol1, t_intcolor icol2,
 		double scale);
 t_intcolor				get_intcolor(t_color color);
 t_intcolor				greyscale(t_intcolor ic);
+t_intcolor				redscale(t_intcolor ic);
+t_intcolor				cyanscale(t_intcolor ic);
 t_color					scale_convert_color(t_intcolor icol, double t);
 t_intcolor				scale_intcolor(t_intcolor c, double scale);
 

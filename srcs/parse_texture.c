@@ -34,8 +34,8 @@ void	ft_parse_texture(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_normal_texture(t_parser *parser, t_world *world, char *line)
@@ -56,6 +56,6 @@ void	ft_parse_normal_texture(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
