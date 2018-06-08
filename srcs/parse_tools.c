@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 02:08:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/07 22:55:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,5 @@ void			ft_init_light(t_light *light)
 	light->c = get_color(0xFFFFFF);
 	light->intensity = 1;
 	light->angle = M_PI / 4;
+	light->ebloui = 0;
 }

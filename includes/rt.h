@@ -525,6 +525,7 @@ typedef struct			s_light
 	double				intensity;
 	double				angle;
 	char				type;
+	char				ebloui;
 }						t_light;
 
 typedef enum			e_filters
