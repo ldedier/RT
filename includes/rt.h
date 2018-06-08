@@ -6,10 +6,10 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 07:54:11 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/08 09:04:19 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+//TODO fix shadow with directional light
 //NVM	reflection = 1 && bounces = 0 renders BLACK.AAAAAAAH
 //DONE	fix <perturbation>asdf</perturbation> segfault
 //DONE	transparency shadows: canviar color i perdre llum PER CADA SRAY
