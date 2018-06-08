@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/07 07:58:31 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/08 07:26:57 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,29 @@ void	ft_mouse_motion(t_world *world, SDL_Event event)
 		if (world->menu.type == MENU_LIGHTS)
 		{
 			float value = ((float)(event.motion.x - (world->menu.lights_rb[i].pix.x + 4)) / 100) * world->menu.lights_rb[i].max;
-			if (value >= world->menu.lights_rb[i].min && value <= world->menu.lights_rb[i].max)
-				*(world->menu.lights_rb[i].value) = value;
+			if (i <= 1)
+			{
+				if (value >= world->menu.lights_rb[i].min && value <= world->menu.lights_rb[i].max)
+					*(world->menu.lights_rb[i].value) = value;
+				else
+				{
+					if (value < world->menu.lights_rb[i].min)
+						*(world->menu.lights_rb[i].value) = world->menu.lights_rb[i].min;
+					if (value > world->menu.others_rb[i].max)
+						*(world->menu.lights_rb[i].value) = world->menu.lights_rb[i].max;
+				}
+			}
 			else
 			{
-				if (value < world->menu.lights_rb[i].min)
-					*(world->menu.lights_rb[i].value) = world->menu.lights_rb[i].min;
-				if (value > world->menu.others_rb[i].max)
-					*(world->menu.lights_rb[i].value) = world->menu.lights_rb[i].max;
+				if (value >= world->menu.lights_rb[i].min && value <= world->menu.lights_rb[i].max)
+					*(world->menu.lights_rb[i].value) = value - 1;
+				else
+				{
+					if (value < world->menu.lights_rb[i].min)
+						*(world->menu.lights_rb[i].value) = world->menu.lights_rb[i].min - 1;
+					if (value > world->menu.others_rb[i].max)
+						*(world->menu.lights_rb[i].value) = world->menu.lights_rb[i].max - 1;
+				}
 			}
 		}
 		else if (world->menu.type == MENU_OTHERS)
@@ -52,6 +67,32 @@ void	ft_mouse_motion(t_world *world, SDL_Event event)
 				if (value > world->menu.others_rb[i].max)
 					*(world->menu.others_rb[i].value) = world->menu.others_rb[i].max;
 			}
+		}
+		world->cancel_render = 1;
+		join_threads(world);
+		paint_threaded_fast(world);
+		update_progress_bar(world);
+	}
+	if (world->menu.active_grb >= 0)
+	{
+		int i = world->menu.active_grb;
+		int nb_val = world->menu.others_grb[i].max - world->menu.others_grb[i].min + 1;
+		float step = 108 / (float)(nb_val - 1);
+		int value = ft_clamp(0, event.motion.x - (world->menu.others_grb[i].pix.x + 4), 100);
+		int j = 0;
+		while (((j * step) - (step / 2)) <= value)
+			j++;
+		if (world->menu.others_grb[i].min == 0 && value < 100)
+			j--;
+		value = j;
+		if (value >= world->menu.others_grb[i].min && value <= world->menu.others_grb[i].max)
+			*(world->menu.others_grb[i].value) = (int)value;
+		else
+		{
+			if (value < world->menu.others_grb[i].min)
+				*(world->menu.others_grb[i].value) = world->menu.others_grb[i].min;
+			if (value > world->menu.others_grb[i].max)
+				*(world->menu.others_grb[i].value) = world->menu.others_grb[i].max;
 		}
 		world->cancel_render = 1;
 		join_threads(world);
@@ -95,6 +136,16 @@ void	ft_mouse_motion(t_world *world, SDL_Event event)
 		}
 		paint_threaded_fast(world);
 	}
+	if (world->menu.scroll_objects.active == 1)
+	{
+		int new_pos = event.motion.y - 140 - world->menu.scroll_objects.step;
+		if (new_pos < 0)
+			new_pos = 0;
+		else if ((new_pos + world->menu.scroll_objects.height) > (world->menu.scroll_objects.len - 10))
+			new_pos = world->menu.scroll_objects.len - 10 - world->menu.scroll_objects.height;
+		world->menu.scroll_objects.pos = new_pos;
+		update_progress_bar(world);
+	}
 	if (world->menu.scroll_lights.active == 1)
 	{
 		int new_pos = event.motion.y - 140 - world->menu.scroll_lights.step;
@@ -118,7 +169,7 @@ void	ft_sort_menu_filters(t_world *world)
 	{
 		changed = 0;
 		i = 1;
-		while ((i + 1) < (5 + 1))
+		while ((i + 1) < (e_nfilters + 1))
 		{
 			if (world->menu.filters_list[i] > world->menu.filters_list[i + 1])
 			{
@@ -163,6 +214,22 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 		if (world->menu.filter_active == 1)
 			world->menu.filter_active = 0;
 		update_progress_bar(world);
+	}
+	else if (world->menu.type == MENU_OBJECTS)
+	{
+		int x0 = world->canvas->win.w + 443;
+		int y0 = 140 + world->menu.scroll_objects.pos;
+		if (x >= (x0) && x<= (x0 + 10) && y >= (y0) && y <= (y0 + world->menu.scroll_objects.height))
+		{
+			world->menu.scroll_objects.active = 1;
+			world->menu.scroll_objects.step = y - 135 - world->menu.scroll_objects.pos;
+		}
+		else if (x >= (x0) && x<= (x0 + 10) && y >= (140) && y <= (140 + world->menu.scroll_objects.len - 10))
+		{
+			world->menu.scroll_objects.active = 1;
+			world->menu.scroll_objects.step = world->menu.scroll_objects.height / 2;
+			ft_mouse_motion(world, event);
+		}
 	}
 	else if (world->menu.type == MENU_LIGHTS)
 	{
@@ -274,7 +341,7 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 			int x1 = world->menu.filters.pos.x + world->menu.filters.size.x;
 			int tmp = world->menu.filters_list[0];
 			int i = 0;
-			while (i < (5 + 1))
+			while (i < (e_nfilters + 1))
 			{
 				int y0 = world->menu.filters.pos.y + i * (world->menu.filters.size.y + 2);
 				int y1 = y0 + world->menu.filters.size.y;
@@ -282,18 +349,9 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 					break ;
 				i++;
 			}
-			if (i == (5 + 1))
+			if (i == (e_nfilters + 1))
 			{
-				i = 0;
-				world->menu.filters_list[0] = world->menu.filters_list[i];
-				world->menu.filters_list[i] = tmp;
-				ft_sort_menu_filters(world);
 				world->menu.filter_active = 0;
-				if (i < (5 + 1))
-				{
-					world->filters[tmp] = 0;
-					world->filters[world->menu.filters_list[0]] = 1;
-				}
 				update_progress_bar(world);
 			}
 			else
@@ -302,11 +360,8 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 				world->menu.filters_list[i] = tmp;
 				ft_sort_menu_filters(world);
 				world->menu.filter_active = 0;
-				if (i < (5 + 1))
-				{
-					world->filters[tmp] = 0;
-					world->filters[world->menu.filters_list[0]] = 1;
-				}
+				world->filters[tmp] = 0;
+				world->filters[world->menu.filters_list[0]] = 1;
 				if (i > 0)
 				{
 					world->cancel_render = 1;
@@ -335,6 +390,20 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 			i++;
 		}
 		i = 0;
+		while (i < world->menu.nb_others_grb)
+		{
+			int x0 = world->menu.others_grb[i].pix.x;
+			int x1 = x0 + 108;
+			int y0 = world->menu.others_grb[i].pix.y;
+			if (x >= (x0) && x <= (x1 + 8) && y >= (y0 - 3) && y <= (y0 - 3 + 12))
+			{
+				world->menu.active_grb = i;
+				ft_mouse_motion(world, event);
+				return ;
+			}
+			i++;
+		}
+		i = 0;
 		while (i < world->menu.nb_others_cp)
 		{
 			int x0 = world->menu.others_cp[i].pix.x;
@@ -347,8 +416,8 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 			}
 			i++;
 		}
-		int x0 = world->canvas->win.w + 20 + 54;
-		int y0 = 556;
+		int x0 = world->canvas->win.w + 20 + 55;
+		int y0 = 565;
 		if (x >= (x0) && x <= (x0 + world->menu.cartoon.width) && y >= (y0) && y <= (y0 + world->menu.cartoon.height))
 		{
 			if (world->shader == 2)
@@ -457,7 +526,7 @@ void	ft_left_click_event(t_world *e, SDL_Event event)
 
 	hit = NULL;
 	pix.x = event.button.x;
-	pix.y = event.button.y;
+	pix.y = event.button.y - e->canvas->screen.y;
 	point = screen2world(pix, e, pixel);
 	line = newray(point, newvector(e->cam->o, point));
 	if ((hit = trace(line, e->cobjlist)))
@@ -501,8 +570,12 @@ void	ft_mouse_button_up_menu(t_world *world, SDL_Event event)
 	(void)event;
 	if (world->menu.active_rb >= 0)
 		world->menu.active_rb = -1;
+	if (world->menu.active_grb >= 0)
+		world->menu.active_grb = -1;
 	if (world->menu.active_cp >= 0)
 		world->menu.active_cp = -1;
+	if (world->menu.scroll_objects.active == 1)
+		world->menu.scroll_objects.active = 0;
 	if (world->menu.scroll_lights.active == 1)
 		world->menu.scroll_lights.active = 0;
 }

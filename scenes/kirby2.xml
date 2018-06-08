@@ -60,6 +60,27 @@
 			<angle>1.2</angle>
 			<intensity>0.7</intensity>
 		</light>
+		<light type="point">
+			<color>0xFFFFFF</color>
+			<positionXYZ>0 5 0</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<angle>1.2</angle>
+			<intensity>0.7</intensity>
+		</light>
+		<light type="directional">
+			<color>0xFF0000</color>
+			<positionXYZ>0 10 0</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<angle>1.2</angle>
+			<intensity>0.7</intensity>
+		</light>
+		<light type="point">
+			<color>0x0000FF</color>
+			<positionXYZ>0 15 0</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<angle>1.2</angle>
+			<intensity>0.7</intensity>
+		</light>
 	</lightlist>
 	<ambientlight>
 		<intensity>0.47</intensity>

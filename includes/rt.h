@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 06:34:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 07:54:11 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -431,6 +431,7 @@ typedef struct			s_object
 	t_mod				mod_reflect;
 	t_mod				mod_transp;
 	t_cobject			*cobject;
+	int					id;
 }						t_object;
 
 typedef struct			s_objlist
@@ -462,6 +463,7 @@ struct			s_cobject
 	int					regular;
 	char				*name;
 	int					defining;
+	int					id;
 };
 
 struct			s_hit
@@ -551,11 +553,18 @@ typedef struct			s_rangebar
 	double				*value;
 }						t_rangebar;
 
+typedef struct			s_grangebar
+{
+	double				min;
+	double				max;
+	t_pixel				pix;
+	int					*value;
+}						t_grangebar;
+
 typedef struct			s_dropdown
 {
 	t_pixel				pos;
 	t_pixel				size;
-	int					levels;
 }						t_dropdown;
 
 typedef struct			s_scrollbar
@@ -576,10 +585,13 @@ typedef struct			s_menu
 	SDL_Color			color;
 	TTF_Font			*fonts[3];
 	int					active_rb;
+	int					active_grb;
 	int					active_cp;
 	int					nb_others_rb;
+	int					nb_others_grb;
 	int					nb_others_cp;
-	t_rangebar			others_rb[3];
+	t_rangebar			others_rb[2];
+	t_grangebar			others_grb[2];
 	t_colorpicker		others_cp[2];
 	t_color				color_map[100 * 100];
 	int					filters_list[e_nfilters + 1];
@@ -597,7 +609,7 @@ typedef struct			s_menu
 	int					nb_lights;
 	t_pixel				first_light;
 	int					lights[5];
-	float				fact;
+	float				fact_lights;
 	t_bmp_parser		light_point_t;
 	t_bmp_parser		light_spotlight_t;
 	t_bmp_parser		light_directional_t;
@@ -608,6 +620,13 @@ typedef struct			s_menu
 	t_bmp_parser		light_point;
 	t_bmp_parser		light_spotlight;
 	t_bmp_parser		light_directional;
+	t_bmp_parser		ebloui;
+	t_bmp_parser		stereoscope;
+
+	int					nobjects;
+	t_scrollbar			scroll_objects;
+	int					nb_objects;
+	float				fact_objects;
 }						t_menu;
 
 typedef struct			s_world
@@ -618,7 +637,7 @@ typedef struct			s_world
 	int					keys[nkeys];
 	pthread_t			threads[NTHREADS];
 	int					thr_state[NTHREADS];
-	int					filters[e_nfilters];
+	int					filters[e_nfilters + 1];
 	t_cobjlist			*cobjlist;
 	t_cobjlist			*defcobjlist;
 	t_cobject			*selected_cobject;
@@ -638,7 +657,7 @@ typedef struct			s_world
 	int					aa_sq_size;
 	t_bmp_parser		bmp_parser;
 	t_menu				menu;
-	double				max_bounce;
+	int					max_bounce;
 }						t_world;
 
 typedef struct			s_thr_par
