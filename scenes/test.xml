@@ -16,16 +16,16 @@
 				<color>0xFF000</color>
 				<positionXYZ>0 -2 0</positionXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
-				<transparency>0.8</transparency>
+				<transparency>0</transparency>
 			</object>
 		</cobject>
 	</objlist>
 	<lightlist>
-		<light type="point">
+		<light type="spotlight">
 			<color>0xFFFFFF</color>
 			<positionXYZ>-2.8 -4.5 0</positionXYZ>
-			<rotationXYZ>0 0 0</rotationXYZ>
-			<angle>1.2</angle>
+			<rotationXYZ>0 1 0</rotationXYZ>
+			<angle>0.74</angle>
 			<intensity>1</intensity>
 		</light>
 	</lightlist>

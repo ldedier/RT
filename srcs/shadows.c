@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 23:03:33 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/07 23:32:23 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/08 04:03:03 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ void	castshadows(t_world *world, t_hit *hit, t_shadow **shadows)
 {
 	t_hit	*shit;
 	int		i;
+	int		shadow;
 
 	i = 0;
+	shadow = 0;
 	while (i < world->nlights)
 	{
 		shadows[i] = ft_memalloc(sizeof(t_shadow));
@@ -73,18 +75,19 @@ void	castshadows(t_world *world, t_hit *hit, t_shadow **shadows)
 					((world->lights[i].type != 'd' &&
 					  magnitude(newvector(shadows[i]->sray.o, shit->point)) <
 					  magnitude(newvector(hit->point, world->lights[i].o))) ||
-					 world->lights[i].type == 'd')) ||
-				(world->lights[i].type == 's' &&
-				 acos(dotprod(normalize(scale(shadows[i]->sray.v, -1)),
-						 world->lights[i].v)) > world->lights[i].angle))
+					 world->lights[i].type == 'd')))
 		{
 			if (shit->obj.transp < EPSILON)
-			{
-				free(shadows[i]);
-				shadows[i] = NULL;
-			}
+				shadow = 1;
 			else
 				get_shadow_illum(shadows[i], world, world->lights[i], 0);
+		}
+		if ((world->lights[i].type == 's' &&
+				acos(dotprod(normalize(scale(shadows[i]->sray.v, -1)),
+						world->lights[i].v)) > world->lights[i].angle) || shadow)
+		{
+			free(shadows[i]);
+			shadows[i] = NULL;
 		}
 		free(shit);
 		i++;

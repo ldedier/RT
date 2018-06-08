@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/06 16:18:11 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/08 00:00:33 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -391,8 +391,8 @@ int			ft_init_sdl(t_world *world)
 	{
 		SDL_DisplayMode dm;
 		SDL_GetCurrentDisplayMode(0, &dm);
-		world->canvas->win_size.x = dm.w - MENU_WIDTH;
-		world->canvas->win_size.y = dm.h - 4 * PROGRESS_BAR_HEIGHT;
+		world->canvas->win_size.x = 1600 - MENU_WIDTH;
+		world->canvas->win_size.y = 1200 - PROGRESS_BAR_HEIGHT;
 	}
 	div = fast_div(world->canvas);
 	world->canvas->fast_win_size.x = world->canvas->win_size.x / div.x / FAST_RATIO;

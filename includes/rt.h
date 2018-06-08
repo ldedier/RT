@@ -6,13 +6,10 @@
 /*   By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 23:29:49 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/08 04:03:00 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//TODO	ebloui
-//TODO	parse antialiasin
-////TODO	parse antialiasingg
 //TDOO	reflection = 1 && bounces = 0 renders BLACK.AAAAAAAH
 //DONE	fix <perturbation>asdf</perturbation> segfault
 //DONE	transparency shadows: canviar color i perdre llum PER CADA SRAY
@@ -71,7 +68,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-# define NTHREADS 8
+# define NTHREADS 1
 # define STACK 0
 # define POP 1
 # define MAX_DEGREE 4
@@ -178,6 +175,7 @@ typedef struct			s_canvas
 	t_pixel				halved_win_size;
 	int					npixels;
 	double				ratio;
+	int					fast_ratio;
 }						t_canvas;
 
 typedef struct			s_affine
@@ -790,8 +788,7 @@ void					ft_parse_negative(t_parser *par, t_world *w, char *l);
 void					ft_parse_pert(t_parser *p, t_world *w, char *l);
 void					read_pert_type(t_parser *par, t_perturbations *pert);
 void					ft_parse_resolution(t_parser *p, t_world *w, char *l);
-void					ft_parse_fast_resolution(t_parser *p, t_world *w,
-		char *l);
+void					ft_parse_antialiasing(t_parser *p, t_world *w, char *l);
 void					ft_parse_filter(t_parser *p, t_world *w, char *l);
 void					ft_parse_shader(t_parser *p, t_world *w, char *l);
 void					ft_parse_ellipsoid_abc(t_parser *p, t_world *w,
