@@ -20,8 +20,8 @@ static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 		ft_parse_resolution(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "perturbation"))
 		ft_parse_pert(parser, world, line);
-	else if (!ft_strcmp(parser->tag, "fast_resolution"))
-		ft_parse_fast_resolution(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "antialiasing"))
+		ft_parse_antialiasing(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "ellipsoidABC"))
 		ft_parse_ellipsoid_abc(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "big_radius"))
@@ -70,8 +70,8 @@ static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 		ft_parse_stretch_x(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "texture_stretch_y"))
 		ft_parse_stretch_y(parser, world, line);
-	else if (!ft_strcmp(parser->tag, "mod_transp") || 
-				!ft_strcmp(parser->tag, "mod_refract") || 
+	else if (!ft_strcmp(parser->tag, "mod_transp") ||
+				!ft_strcmp(parser->tag, "mod_refract") ||
 					!ft_strcmp(parser->tag, "mod_reflect"))
 		ft_process_parsing_mod_start(parser, world);
 	else if (strcmp(parser->tag, "scene") &&
@@ -189,12 +189,12 @@ void		ft_process_parsing(t_parser *parser, t_world *world, char *line)
 			if (parser->parse_enum == e_parse_cobject)
 			{
 				printf("ooooo%s\n", parser->attribute);
-				if (parser->attribute != NULL && 
+				if (parser->attribute != NULL &&
 						world->cobjlist->cobject->name == NULL) // fin de cobject auto
 					ft_process_automatic(parser, world);
-				else if (world->cobjlist->cobject->name != NULL && 
+				else if (world->cobjlist->cobject->name != NULL &&
 					world->cobjlist->cobject->defining) //fin de define
-					ft_process_switch_list_cobject(&(world->cobjlist), 
+					ft_process_switch_list_cobject(&(world->cobjlist),
 						&(world->defcobjlist));
 			}
 			parser->parse_enum = e_parse_scene;

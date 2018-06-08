@@ -129,7 +129,7 @@ void		grey(t_canvas *canvas)
 		j = -1;
 		while (++j < canvas->win_size.y)
 			((int *)canvas->surface->pixels)[i + j * canvas->win_size.x] =
-				scale_convert_color(cyanscale(get_intcolor(get_color(
+				scale_convert_color(greyscale(get_intcolor(get_color(
 									((int *)canvas->surface->pixels)[i +
 									j * canvas->win_size.x]))), 1).col;
 	}
@@ -146,7 +146,7 @@ void		cyan(t_canvas *canvas)
 		j = -1;
 		while (++j < canvas->win_size.y)
 			((int *)canvas->surface->pixels)[i + j * canvas->win_size.x] =
-				scale_convert_color(greyscale(get_intcolor(get_color(
+				scale_convert_color(cyanscale(get_intcolor(get_color(
 									((int *)canvas->surface->pixels)[i +
 									j * canvas->win_size.x]))), 1).col;
 	}
@@ -162,7 +162,7 @@ void		red(t_canvas *canvas)
 		j = -1;
 		while (++j < canvas->win_size.y)
 			((int *)canvas->surface->pixels)[i + j * canvas->win_size.x] =
-				scale_convert_color(greyscale(get_intcolor(get_color(
+				scale_convert_color(redscale(get_intcolor(get_color(
 									((int *)canvas->surface->pixels)[i +
 									j * canvas->win_size.x]))), 1).col;
 	}
@@ -174,7 +174,7 @@ void		draw_borders(t_canvas *canvas)
 	t_color	col;
 	int		i;
 	int		j;
-	
+
 	tmp = ft_memalloc(sizeof(int) * canvas->win_size.x * canvas->win_size.y);
 	tmp = ft_memcpy(tmp, (int *)canvas->surface->pixels,
 			sizeof(int) * canvas->win_size.x * canvas->win_size.y);

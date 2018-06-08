@@ -16,7 +16,7 @@ void	ft_process_parsing_object_start(t_parser *parser, t_world *world)
 {
 	t_object *object;
 
-	if (parser->parse_enum != e_parse_cobject 
+	if (parser->parse_enum != e_parse_cobject
 			|| !world->cobjlist->cobject->regular)
 	{
 		ft_dprintf
@@ -107,7 +107,7 @@ void	ft_process_parsing_def_cobject_start(t_parser *parser, t_world *world)
 		}
 		else
 		{
-			add_cobj_cpy(&(world->cobjlist), 
+			add_cobj_cpy(&(world->cobjlist),
 				get_defcobject(parser->attribute, world->defcobjlist));
 			world->selected_cobject = world->cobjlist->cobject;
 		}

@@ -89,7 +89,7 @@ t_color		scale_convert_color(t_intcolor icol, double t)
 	int		r;
 	int		g;
 	int		b;
-	
+
 	icol.r = icol.r * t;
 	icol.g = icol.g * t;
 	icol.b = icol.b * t;

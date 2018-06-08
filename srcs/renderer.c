@@ -130,10 +130,7 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		fog = fog > 1.0 ? 1.0 : fog;
 		castshadows(world, hit, shadows);
 		aux = (t_shadowsfree){.shadows = shadows, .nlights = world->nlights};
-		if (world->shader == 1)
 			illuminated_c = illuminate(world, hit, shadows, fast);
-		else
-			illuminated_c = illuminate_toon(world, hit, shadows, fast);
 		fogged_c = interpole_color(fog, illuminated_c, world->fog.color);
 		if (bounce < world->max_bounce && x.f_reflect > EPSILON && !fast)
 			reflect_c = ray_color(newray(translate_vec(hit->point,

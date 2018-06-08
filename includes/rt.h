@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//TDOO	reflection = 1 && bounces = 0 renders BLACK.AAAAAAAH
+//NVM	reflection = 1 && bounces = 0 renders BLACK.AAAAAAAH
 //DONE	fix <perturbation>asdf</perturbation> segfault
 //DONE	transparency shadows: canviar color i perdre llum PER CADA SRAY
 //		en teoria canviar shadows.c i lights.c nhi ha prou
@@ -24,6 +24,7 @@
 //DONE	nimin valors atribut (si reflection es 0 no cal calcular...)
 //DONE	perturbation (wave, random, spikes...)
 //DONE	negative object
+
 //done	antialiasing / other filters
 //DONE	fix sometimes cancel the render and go into antialiasing. cause is calling join_threads 2 times in a row and 2nd one returns 0 so assumes it rendered.
 //LDEDIER	controls chachis -> select object
@@ -97,7 +98,7 @@
 # define AMBIENT_LIGHT 0.17
 # define AMBIENT_LIGHT_COL get_color(0xFFFFFF)
 # define PHONG 30.0
-# define EPSILON 0.01
+# define EPSILON 0.0000001
 # define EPSILON2 0.000000001 //plus petit = plus de quartic plutot que de cubic
 # define EPSILON3 0.000001 //plus petit = moins de solution
 # define EPSILON4 0.00000001 // on considere ca comme zero complexe (surtout used dans quartic)
@@ -174,6 +175,7 @@ typedef struct			s_canvas
 	t_pixel				halved_win_size;
 	int					npixels;
 	double				ratio;
+	int					fast_ratio;
 }						t_canvas;
 
 typedef struct			s_affine
@@ -797,8 +799,7 @@ void					ft_parse_negative(t_parser *par, t_world *w, char *l);
 void					ft_parse_pert(t_parser *p, t_world *w, char *l);
 void					read_pert_type(t_parser *par, t_perturbations *pert);
 void					ft_parse_resolution(t_parser *p, t_world *w, char *l);
-void					ft_parse_fast_resolution(t_parser *p, t_world *w,
-		char *l);
+void					ft_parse_antialiasing(t_parser *p, t_world *w, char *l);
 void					ft_parse_filter(t_parser *p, t_world *w, char *l);
 void					ft_parse_shader(t_parser *p, t_world *w, char *l);
 void					ft_parse_ellipsoid_abc(t_parser *p, t_world *w,

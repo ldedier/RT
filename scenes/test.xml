@@ -1,6 +1,6 @@
 <scene>
 	<camera>
-		<positionXYZ>0 0 -2</positionXYZ>
+		<positionXYZ>0 -2 -2</positionXYZ>
 		<rotationXYZ>0 0 0</rotationXYZ>
 	</camera>
 	<objlist>
@@ -13,24 +13,24 @@
 		</cobject>
 		<cobject>
 			<object name="sphere">
-				<color>0xffffff</color>
-				<positionXYZ>0 0 0</positionXYZ>
+				<color>0xFF000</color>
+				<positionXYZ>0 -2 0</positionXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
-				<transparency>1</transparency>
 			</object>
 		</cobject>
 	</objlist>
 	<lightlist>
-		<light type="point">
-			<color>0xFFFFFF</color>
-			<positionXYZ>-2.8 -1.5 0</positionXYZ>
-			<rotationXYZ>0 0 0</rotationXYZ>
-			<angle>1.2</angle>
-			<intensity>0.7</intensity>
+		<light type="directional">
+			<color>0x0000FF</color>
+			<positionXYZ>-1.8 -4.5 0</positionXYZ>
+			<rotationXYZ>0 1 1</rotationXYZ>
+			<angle>0.74</angle>
+			<intensity>1</intensity>
 		</light>
 	</lightlist>
 	<ambientlight>
-		<intensity>0.17</intensity>
+		<intensity>0.2</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
+	<resolution>600 400</resolution>
 </scene>

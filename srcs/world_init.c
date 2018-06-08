@@ -391,8 +391,8 @@ int			ft_init_sdl(t_world *world)
 	{
 		SDL_DisplayMode dm;
 		SDL_GetCurrentDisplayMode(0, &dm);
-		world->canvas->win_size.x = dm.w - MENU_WIDTH;
-		world->canvas->win_size.y = dm.h - 4 * PROGRESS_BAR_HEIGHT;
+		world->canvas->win_size.x = 1600 - MENU_WIDTH;
+		world->canvas->win_size.y = 1200 - PROGRESS_BAR_HEIGHT;
 	}
 	div = fast_div(world->canvas);
 	world->canvas->fast_win_size.x = world->canvas->win_size.x / div.x / FAST_RATIO;
@@ -436,7 +436,7 @@ int			ft_init_sdl(t_world *world)
 		return (0);
 	if (!(world->canvas->win_surface = SDL_CreateRGBSurface(0,
 					world->canvas->win.w, world->canvas->win.h, 32, 0, 0, 0, 0)))
-		return (0);	
+		return (0);
 	printf("init sdl 3 / 4\n");
 	if (!(world->canvas->surface = SDL_CreateRGBSurface(0,
 					world->canvas->screen.w, world->canvas->screen.h, 32, 0, 0, 0, 0)))

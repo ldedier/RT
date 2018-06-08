@@ -121,9 +121,9 @@ void		paint_threaded(t_world *world)
 	printf("joining threads...\n");
 	if (!join_threads(world))
 	{
-		apply_convolution(world);
 		if (world->shader == 2)
 			draw_borders(world->canvas);
+		apply_convolution(world);
 		fill_canvas(world);
 	}
 }
