@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/07 07:58:31 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/08 06:20:44 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -457,7 +457,9 @@ void	ft_left_click_event(t_world *e, SDL_Event event)
 
 	hit = NULL;
 	pix.x = event.button.x;
-	pix.y = event.button.y;
+	pix.y = event.button.y - e->canvas->screen.y;
+	printf("DEBUG PIXEL\n");
+	render_pixel(e, pix, 0);
 	point = screen2world(pix, e, pixel);
 	line = newray(point, newvector(e->cam->o, point));
 	if ((hit = trace(line, e->cobjlist)))

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/06 19:30:34 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/08 05:41:44 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	ft_process_parsing_scale(t_parser *parser, t_world *world, char *line)
 		scale = &(world->cobjlist->cobject->s);
 	else
 	{
-		ft_dprintf(2, "line %d: current object can not have rotationXYZ tag\n",
+		ft_dprintf(2, "line %d: current object can not have scaleXYZ tag\n",
 				parser->nb_lines);
 		exit(1);
 	}
@@ -100,7 +100,7 @@ void	ft_parse_color(t_parser *parser, t_world *world, char *line)
 		color = &(world->fog.color);
 	else
 	{
-		ft_dprintf(2, "line %d: current object can not have rotationXYZ tag\n",
+		ft_dprintf(2, "line %d: current object can not have color tag\n",
 				parser->nb_lines);
 		exit(1);
 	}

@@ -6,11 +6,11 @@
 /*   By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 04:03:00 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/08 07:54:59 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//TDOO	reflection = 1 && bounces = 0 renders BLACK.AAAAAAAH
+//NVM	reflection = 1 && bounces = 0 renders BLACK.AAAAAAAH
 //DONE	fix <perturbation>asdf</perturbation> segfault
 //DONE	transparency shadows: canviar color i perdre llum PER CADA SRAY
 //		en teoria canviar shadows.c i lights.c nhi ha prou
@@ -68,7 +68,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-# define NTHREADS 1
+# define NTHREADS 4
 # define STACK 0
 # define POP 1
 # define MAX_DEGREE 4

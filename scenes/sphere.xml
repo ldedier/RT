@@ -6,42 +6,36 @@
 	<objlist>
 		<cobject>
 			<object name = "sphere">
-				<transparency>0.8</transparency>
 				<positionXYZ>-1.4 -1 0</positionXYZ>
 				<color>0x00ff00</color>
 			</object>
 		</cobject>
 		<cobject>
 			<object name = "sphere">
-				<transparency>0.8</transparency>
 				<positionXYZ>-0.5 -3 0</positionXYZ>
 				<color>0x0000ff</color>
 			</object>
 		</cobject>
 		<cobject>
 			<object name = "sphere">
-				<transparency>0.8</transparency>
 				<positionXYZ>0 -5 0</positionXYZ>
 				<color>0xff0000</color>
 			</object>
 		</cobject>
 		<cobject>
 			<object name = "sphere">
-				<transparency>0.8</transparency>
 				<positionXYZ>0.5 -7 0</positionXYZ>
 				<color>0xff00ff</color>
 			</object>
 		</cobject>
 		<cobject>
 			<object name = "sphere">
-				<transparency>0.8</transparency>
 				<positionXYZ>1 -9 0</positionXYZ>
 				<color>0xffff00</color>
 			</object>
 		</cobject>
 		<cobject>
 			<object name = "sphere">
-				<transparency>0.8</transparency>
 				<positionXYZ>1.5 -11 0</positionXYZ>
 				<color>0x00ffff</color>
 			</object>
@@ -56,6 +50,7 @@
 		<light type="directional">
 			<color>0xffffff</color>
 			<positionXYZ>0 1.57 0</positionXYZ>
+			<rotationXYZ>0 1 0</rotationXYZ>
 			<intensity>0.6</intensity>
 		</light>
 	</lightlist>

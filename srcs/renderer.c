@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 01:11:28 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/08 07:55:02 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,15 @@ static t_color		ebloui(t_world *world, t_line ray)
 		if(world->lights[i].type == 'd')
 			coeff = -ft_dot_product(ray.v, world->lights[i].v);
 		else
-			coeff = -ft_dot_product(ray.v, normalize(ft_point3d_cmp(ray.o, world->lights[i].o)));
-		coeff /= distance(ray.o, world->lights[i].o);
-		if (coeff > 0)
 		{
-			if (coeff < 0)
-				coeff /= distance(world->cam->o, world->lights[i].o);
-			sum += coeff;
+			coeff = -ft_dot_product(ray.v, normalize(ft_point3d_cmp(ray.o, world->lights[i].o)));
+			coeff /= distance(ray.o, world->lights[i].o);
+			if (coeff > 0)
+			{
+				if (coeff < 0)
+					coeff /= distance(world->cam->o, world->lights[i].o);
+				sum += coeff;
+			}
 		}
 		i++;
 	}
@@ -124,10 +126,7 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		fog = fog > 1.0 ? 1.0 : fog;
 		castshadows(world, hit, shadows);
 		aux = (t_shadowsfree){.shadows = shadows, .nlights = world->nlights};
-		if (world->shader == 1)
 			illuminated_c = illuminate(world, hit, shadows, fast);
-		else
-			illuminated_c = illuminate_toon(world, hit, shadows, fast);
 		fogged_c = interpole_color(fog, illuminated_c, world->fog.color);
 		if (bounce < world->max_bounce && x.f_reflect > EPSILON && !fast)
 			reflect_c = ray_color(newray(translate_vec(hit->point,
