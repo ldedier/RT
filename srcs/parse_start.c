@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:06 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/06 22:39:12 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 05:41:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_process_parsing_object_start(t_parser *parser, t_world *world)
 {
 	t_object *object;
 
-	if (parser->parse_enum != e_parse_cobject 
+	if (parser->parse_enum != e_parse_cobject
 			|| !world->cobjlist->cobject->regular)
 	{
 		ft_dprintf
@@ -107,7 +107,7 @@ void	ft_process_parsing_def_cobject_start(t_parser *parser, t_world *world)
 		}
 		else
 		{
-			add_cobj_cpy(&(world->cobjlist), 
+			add_cobj_cpy(&(world->cobjlist),
 				get_defcobject(parser->attribute, world->defcobjlist));
 			world->selected_cobject = world->cobjlist->cobject;
 		}
@@ -184,5 +184,5 @@ void	ft_process_parsing_cut_start(t_parser *parser, t_world *world)
 	}
 	ft_process_parsing_cut_attributes(parser, cut);
 	ft_lstadd(&(world->cobjlist->cobject->objlist->object->cuts),
-		ft_lstnew(cut, sizeof(t_cut)));
+		ft_lstnew_ptr(cut, sizeof(t_cut)));
 }

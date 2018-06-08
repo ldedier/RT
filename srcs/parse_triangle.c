@@ -27,8 +27,8 @@ void	ft_process_parsing_vertex_a(t_parser *parser, t_world *world, char *line)
 	read_double(&line, &(a->x));
 	read_double(&line, &(a->y));
 	read_double(&line, &(a->z));
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_process_parsing_vertex_b(t_parser *parser, t_world *world, char *line)
@@ -46,8 +46,8 @@ void	ft_process_parsing_vertex_b(t_parser *parser, t_world *world, char *line)
 	read_double(&line, &(b->x));
 	read_double(&line, &(b->y));
 	read_double(&line, &(b->z));
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_process_parsing_vertex_c(t_parser *parser, t_world *world, char *line)
@@ -66,6 +66,6 @@ void	ft_process_parsing_vertex_c(t_parser *parser, t_world *world, char *line)
 	read_double(&line, &(c->y));
 	read_double(&line, &(c->z));
 	
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }

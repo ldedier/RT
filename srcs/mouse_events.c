@@ -527,6 +527,8 @@ void	ft_left_click_event(t_world *e, SDL_Event event)
 	hit = NULL;
 	pix.x = event.button.x;
 	pix.y = event.button.y - e->canvas->screen.y;
+	printf("DEBUG PIXEL\n");//DELETE
+	render_pixel(e, pix, 0);
 	point = screen2world(pix, e, pixel);
 	line = newray(point, newvector(e->cam->o, point));
 	if ((hit = trace(line, e->cobjlist)))

@@ -27,9 +27,6 @@
 			<positionXYZ>0 0 0</positionXYZ>
 			<rotationXYZ>0 0 0</rotationXYZ>
 			<color>0xFFFFFF</color>
-			<object name="sphere">
-				<radius>0.2</radius>
-			</object>
 		</cobject>
 	</objlist>
 	<lightlist>

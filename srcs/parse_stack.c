@@ -6,13 +6,13 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 17:10:29 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/27 00:03:09 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 08:11:33 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void		ft_lol(char *line, char **tag, char **attribute, int *i)
+void		ft_lol(char *line, t_parser *parser, int *i)
 {
 	int		start;
 	int		length;
@@ -21,9 +21,9 @@ void		ft_lol(char *line, char **tag, char **attribute, int *i)
 	while (line[*i] && (line[*i] != ' ' && line[*i] != '>'))
 		*i += 1;
 	length = *i - start;
-	if (*tag != NULL)
-		free(*tag);
-	*tag = ft_strndup(&(line[start]), length);
+	if (parser->tag != NULL)
+		free(parser->tag);
+	parser->tag = ft_strndup(&(line[start]), length);
 	if (line[*i] == ' ')
 	{
 		while (line[*i] && line[*i] != '"')
@@ -33,13 +33,14 @@ void		ft_lol(char *line, char **tag, char **attribute, int *i)
 		while (line[*i] && line[*i] != '"')
 			*i += 1;
 		length = *i - start;
-		if (*attribute != NULL)
-			free(*attribute);
-		*attribute = ft_strndup(&(line[start]), length);
+		if (parser->attribute != NULL)
+			free(parser->attribute);
+		parser->attribute = ft_strndup(&(line[start]), length);
+		parser->got_attribute = 1;
 	}
 }
 
-int			ft_parse_tag(char **line, char **tag, char **attribute)
+int			ft_parse_tag(char **line, t_parser *parser)
 {
 	int		i;
 	char	*str;
@@ -59,10 +60,42 @@ int			ft_parse_tag(char **line, char **tag, char **attribute)
 			i++;
 			ret = POP;
 		}
-		ft_lol(*line, tag, attribute, &i);
+		ft_lol(*line, parser, &i);
 	}
 	*(line) += i + 1;
 	return (ret);
+}
+
+void		ft_print_stack(t_list *list)
+{
+	t_list *ptr;
+	char *p;
+	ptr = list;
+	printf("la STACK\n");
+	while (ptr)
+	{
+		p = (char *)ptr->content;
+		printf("%s\n", p);
+		ptr = ptr->next;
+	}
+	printf("\n\n");
+}
+
+void		ft_add_tag_stack(t_parser *parser)
+{
+	t_tag *xml_tag;
+
+	xml_tag = malloc(sizeof(t_tag));
+	xml_tag->tag = ft_strdup(parser->tag);
+	xml_tag->has_attribute = parser->got_attribute;
+
+	ft_lstadd(&(parser->tag_stack), ft_lstnew_ptr(xml_tag, sizeof(t_tag)));
+	if (parser->got_attribute)
+	{
+		ft_lstadd(&(parser->attribute_stack), 
+				ft_lstnew(parser->attribute, sizeof(char) * ft_strlen(parser->attribute) + 1));
+	}
+	parser->got_attribute = 0;
 }
 
 void		ft_process_tag_stack_stack(t_parser *parser)
@@ -73,38 +106,40 @@ void		ft_process_tag_stack_stack(t_parser *parser)
 			parser->got_scene = 1;
 		else
 		{
-			ft_dprintf(2,
+			ft_dprintf(2, 
 					"every config file must begin with a <scene> tag\n");
 			exit(1);
 		}
 	}
-	ft_lstadd(&(parser->tag_stack),
-			ft_lstnew(parser->tag, sizeof(char) * ft_strlen(parser->tag) + 1));
+	ft_add_tag_stack(parser);
 }
 
-void		ft_process_tag_stack(t_parser *parser)
+void		ft_process_tag_pop(t_parser *parser)
 {
-	char	*str;
+	t_tag	*xml_tag;
 
-	if (parser->op == POP)
+	xml_tag = (t_tag *)(ft_lstpop(&(parser->tag_stack)));
+	if (xml_tag == NULL)
 	{
-		str = (char *)(ft_lstpop(&(parser->tag_stack)));
-		if (str == NULL)
-		{
-			ft_dprintf(2, "line %d: no corresponding opening tag for %s\n",
-					parser->nb_lines, parser->tag);
-			exit(1);
-		}
-		else if (ft_strcmp(parser->tag, str))
-		{
-			ft_dprintf(2, "line %d: expected ending tag %s instead of %s\n",
-					parser->nb_lines, str, parser->tag);
-			exit(1);
-		}
-		free(str);
+		ft_dprintf(2, "line %d: no corresponding opening tag for %s\n",
+				parser->nb_lines, parser->tag);
+		exit(1);
 	}
-	else if (parser->op == STACK)
-		ft_process_tag_stack_stack(parser);
+	else if (ft_strcmp(parser->tag, xml_tag->tag))
+	{
+		ft_dprintf(2, "line %d: expected ending tag %s instead of %s\n",
+				parser->nb_lines, xml_tag->tag, parser->tag);
+		exit(1);
+	}
+	if (xml_tag->has_attribute)
+	{
+		free(ft_lstpop(&(parser->attribute_stack)));
+		if (parser->attribute != NULL)
+			free(parser->attribute);
+		parser->attribute = ft_strdup((char *)parser->attribute_stack->content);
+	}
+	free(xml_tag->tag);
+	free(xml_tag);
 }
 
 char	*ft_get_between_tag(char **line)

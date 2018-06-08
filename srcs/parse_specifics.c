@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 00:32:21 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 03:55:58 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,8 +189,25 @@ void	ft_parse_angle(t_parser *parser, t_world *world, char *line)
 		exit(1);
 	}
 	read_double(&line, angle);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
+}
+
+void	ft_parse_ebloui(t_parser *parser, t_world *world, char *line)
+{
+	int *ebloui;
+
+	if (parser->parse_enum == e_parse_light)
+		ebloui = &(world->lights[world->nlights - 1].ebloui);
+	else
+	{
+		ft_dprintf(2, "line %d: current object can not have ebloui tag\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	read_int(&line, ebloui);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
@@ -199,8 +216,8 @@ void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
 	
 	if (!parser->attribute)
 	{
-		ft_dprintf(2, "line %d: current object does not have radius tag",
-				parser->nb_lines);
+		ft_dprintf(2, "line %d: current object does not have radius tag\n",
+				parser->nb_lines); // TODO PARTOUT
 		exit(1);
 	}
 	else if (parser->parse_enum == e_parse_object &&
@@ -229,11 +246,11 @@ void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
 				.adn.radius);
 	else
 	{
-		ft_dprintf(2, "line %d: current object does not have radius tag",
+		ft_dprintf(2, "line %d: current object does not have radius tag\n",
 				parser->nb_lines);
 		exit(1);
 	}
 	read_double(&line, radius);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }

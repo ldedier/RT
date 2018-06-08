@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 20:09:40 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 01:45:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 05:22:52 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	ft_process_parsing_cut_xyz(t_parser *parser, t_world *world,
 	read_double(&line, &(cut_xyz->x));
 	read_double(&line, &(cut_xyz->y));
 	read_double(&line, &(cut_xyz->z));
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 int		ft_get_color(t_parser *parser, char *str)
@@ -62,7 +62,7 @@ int		ft_get_color(t_parser *parser, char *str)
 	{
 		ft_dprintf(2, "line %d: color \"%s\" illegal\n",parser->nb_lines, str);
 		exit(1);
-	}	
+	}
 }
 
 void	ft_process_parsing_cut_color(t_parser *parser, t_world *world,
@@ -81,8 +81,8 @@ void	ft_process_parsing_cut_color(t_parser *parser, t_world *world,
 	tmp = ft_get_between_tag(&line);
 	*color = ft_get_color(parser, tmp);
 	free(tmp);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_process_parsing_mod_color(t_parser *parser, t_world *world,
@@ -103,8 +103,8 @@ void	ft_process_parsing_mod_color(t_parser *parser, t_world *world,
 	tmp = ft_get_between_tag(&line);
 	*color = ft_get_color(parser, tmp);
 	free(tmp);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_attribute_inequality_func(int (**func)(double, double), char *desc,
@@ -147,8 +147,8 @@ void	ft_process_parsing_inequality(t_parser *parser, t_world *world,
 	tmp = ft_get_between_tag(&line);
 	ft_attribute_inequality_func(func, tmp, parser);
 	free(tmp);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_process_parsing_value(t_parser *parser, t_world *world,
@@ -167,8 +167,8 @@ void	ft_process_parsing_value(t_parser *parser, t_world *world,
 		exit(1);
 	}
 	read_double(&line, value);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_process_parsing_mod_value(t_parser *parser, t_world *world,
@@ -185,6 +185,6 @@ void	ft_process_parsing_mod_value(t_parser *parser, t_world *world,
 		exit(1);
 	}
 	read_double(&line, value);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }

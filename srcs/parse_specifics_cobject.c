@@ -27,8 +27,8 @@ void	ft_parse_nb_spheres(t_parser *parser, t_world *world, char *line)
 		exit(1);
 	}
 	read_int(&line, nb_spheres);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_spheres_radius(t_parser *parser, t_world *world, char *line)
@@ -47,8 +47,8 @@ void	ft_parse_spheres_radius(t_parser *parser, t_world *world, char *line)
 		exit(1);
 	}
 	read_double(&line, spheres_radius);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 void	ft_parse_length(t_parser *parser, t_world *world, char *line)
@@ -66,8 +66,8 @@ void	ft_parse_length(t_parser *parser, t_world *world, char *line)
 		exit(1);
 	}
 	read_int(&line, length);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 }
 
 
@@ -104,8 +104,8 @@ void	ft_parse_style(t_parser *parser, t_world *world, char *line)
 	str = ft_get_between_tag(&line);
 	populate_style_through_string(parser, str, style);
 	free(str);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 
 }
 
@@ -132,8 +132,7 @@ void	ft_parse_color_n(t_parser *parser, t_world *world, char *line, int n)
 		exit(1);
 	}
 	read_hex(&line, color);
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
-	ft_process_tag_stack(parser);
+	parser->op = ft_parse_tag(&line, parser);
+	ft_process_tag_pop(parser);
 
 }
-

@@ -116,4 +116,5 @@ void			ft_init_light(t_light *light)
 	light->c = get_color(0xFFFFFF);
 	light->intensity = 1;
 	light->angle = M_PI / 4;
+	light->ebloui = 0;
 }

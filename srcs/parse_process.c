@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/06 23:27:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 08:09:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 		char *line)
 {
+
 	if (!ft_strcmp(parser->tag, "resolution"))
 		ft_parse_resolution(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "perturbation"))
 		ft_parse_pert(parser, world, line);
-	else if (!ft_strcmp(parser->tag, "fast_resolution"))
-		ft_parse_fast_resolution(parser, world, line);
+	else if (!ft_strcmp(parser->tag, "antialiasing"))
+		ft_parse_antialiasing(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "ellipsoidABC"))
 		ft_parse_ellipsoid_abc(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "big_radius"))
@@ -69,8 +70,8 @@ static void	ft_process_parsing_stack_3(t_parser *parser, t_world *world,
 		ft_parse_stretch_x(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "texture_stretch_y"))
 		ft_parse_stretch_y(parser, world, line);
-	else if (!ft_strcmp(parser->tag, "mod_transp") || 
-				!ft_strcmp(parser->tag, "mod_refract") || 
+	else if (!ft_strcmp(parser->tag, "mod_transp") ||
+				!ft_strcmp(parser->tag, "mod_refract") ||
 					!ft_strcmp(parser->tag, "mod_reflect"))
 		ft_process_parsing_mod_start(parser, world);
 	else if (strcmp(parser->tag, "scene") &&
@@ -141,6 +142,8 @@ void		ft_process_parsing_stack(t_parser *parser, t_world *world,
 		parser->parse_enum = e_parse_fog;
 	else if (!ft_strcmp(parser->tag, "light"))
 		ft_process_parsing_light_start(parser, world);
+	else if (!ft_strcmp(parser->tag, "ebloui"))
+		ft_parse_ebloui(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "radius"))
 		ft_parse_radius(parser, world, line);
 	else if (!ft_strcmp(parser->tag, "angle"))
@@ -164,9 +167,12 @@ void		ft_transfer_mod_parser(t_parser *parser, t_world *world)
 
 void		ft_process_parsing(t_parser *parser, t_world *world, char *line)
 {
-	ft_process_tag_stack(parser);
+//	ft_process_tag_pop(parser);
 	if (parser->op == STACK)
+	{
+		ft_process_tag_stack_stack(parser);
 		ft_process_parsing_stack(parser, world, line);
+	}
 	else if (parser->op == POP)
 	{
 		if (!ft_strcmp(parser->tag, "cut"))
@@ -182,18 +188,18 @@ void		ft_process_parsing(t_parser *parser, t_world *world, char *line)
 		{
 			if (parser->parse_enum == e_parse_cobject)
 			{
-				if (parser->attribute != NULL && 
+				printf("ooooo%s\n", parser->attribute);
+				if (parser->attribute != NULL &&
 						world->cobjlist->cobject->name == NULL) // fin de cobject auto
 					ft_process_automatic(parser, world);
-				else if (world->cobjlist->cobject->name != NULL && 
+				else if (world->cobjlist->cobject->name != NULL &&
 					world->cobjlist->cobject->defining) //fin de define
-					ft_process_switch_list_cobject(&(world->cobjlist), 
+					ft_process_switch_list_cobject(&(world->cobjlist),
 						&(world->defcobjlist));
 			}
 			parser->parse_enum = e_parse_scene;
 		}
-		if (parser->attribute != NULL)
-			ft_strdel(&(parser->attribute));
+		ft_process_tag_pop(parser);
 	}
 	else
 	{
@@ -205,7 +211,7 @@ void		ft_process_parsing(t_parser *parser, t_world *world, char *line)
 int			parse_line_new(char *line, t_world *world, t_parser *parser)
 {
 	parser->nb_lines++;
-	parser->op = ft_parse_tag(&line, &(parser->tag), &(parser->attribute));
+	parser->op = ft_parse_tag(&line, parser);
 	ft_process_parsing(parser, world, line);
 	return (0);
 }
