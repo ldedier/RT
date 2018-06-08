@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:07 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 07:35:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 09:06:38 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ void	ft_add_triangles(char *source, t_world *world)
 		nb_faces++;
 	}
 	printf("fill faces ok!\n");
-	//free(triangle);
-	
+	free(triangle);
 }
 
 void	ft_parse_src(t_parser *parser, t_world *world, char *line)
