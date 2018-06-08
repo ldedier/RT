@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/08 07:26:57 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/08 21:26:55 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 		if (x >= (x0) && x<= (x0 + 10) && y >= (y0) && y <= (y0 + world->menu.scroll_objects.height))
 		{
 			world->menu.scroll_objects.active = 1;
-			world->menu.scroll_objects.step = y - 135 - world->menu.scroll_objects.pos;
+			world->menu.scroll_objects.step = y - 5 - 135 - world->menu.scroll_objects.pos;
 		}
 		else if (x >= (x0) && x<= (x0 + 10) && y >= (140) && y <= (140 + world->menu.scroll_objects.len - 10))
 		{
@@ -230,6 +230,15 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 			world->menu.scroll_objects.step = world->menu.scroll_objects.height / 2;
 			ft_mouse_motion(world, event);
 		}
+		// Stocker le nb de cobjects/objects visibles -> world->menu.nb_objects
+		// Garder dans 2 tableaux (chacun de taille 5)
+		// 	- les indices des cobjects/objets visibles
+		// 	- 0 ou 1 pour un cobject ou un object
+		// 	Boucler sur nb_objects, set x0 et x1 selon le type de l'object dans le 2nd tableau
+		// 	Trouver l'id du cobject/object click, le retrouver dans la liste avec un parcours et id++
+		// 	Ranger dans intersected_cobject / intersected_object un pointeur vers ce cobject/object
+		// 	Voir pour les variables (rangebar, ...) a changer du coup
+		// 	... caracteristics ...
 	}
 	else if (world->menu.type == MENU_LIGHTS)
 	{
@@ -238,7 +247,7 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 		if (x >= (x0) && x<= (x0 + 10) && y >= (y0) && y <= (y0 + world->menu.scroll_lights.height))
 		{
 			world->menu.scroll_lights.active = 1;
-			world->menu.scroll_lights.step = y - 135 - world->menu.scroll_lights.pos;
+			world->menu.scroll_lights.step = y - 5 - 135 - world->menu.scroll_lights.pos;
 		}
 		else if (x >= (x0) && x<= (x0 + 10) && y >= (140) && y <= (140 + world->menu.scroll_lights.len - 10))
 		{

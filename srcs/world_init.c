@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 08:16:41 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/08 21:27:03 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,11 +225,11 @@ int     		ft_objects_scrollbar_size(t_world *world, int len)
 	lst = world->cobjlist;
 	while (lst != NULL)
 	{
-		(world->menu.nobjects)++;
+		lst->cobject->id = (world->menu.nobjects)++;
 		lst2 = lst->cobject->objlist;
-		while(lst2 != NULL)
+		while (lst2 != NULL)
 		{
-			(world->menu.nobjects)++;
+			lst2->object->id = (world->menu.nobjects)++;
 			lst2 = lst2->next;
 		}
 		lst = lst->next;
@@ -357,7 +357,7 @@ void			set_positions(t_world *world)
 		world->menu.first_light.y = 145;
 		world->menu.nb_lights_rb = 5;
 
-		world->menu.lights_rb[0] = ft_new_rangebar(0, 2 * M_PI, ft_new_pixel(world->canvas->win.w + 40 + 25 + 145, 518), &(world->lights[world->menu.active_light].angle));
+		world->menu.lights_rb[0] = ft_new_rangebar(0, M_PI / 2, ft_new_pixel(world->canvas->win.w + 40 + 25 + 145, 518), &(world->lights[world->menu.active_light].angle));
 		world->menu.lights_rb[1] = ft_new_rangebar(0, 1, ft_new_pixel(world->canvas->win.w + 40 + 25 + 42, 580), &(world->lights[world->menu.active_light].intensity));
 		world->lights[world->menu.active_light].v = normalize(world->lights[world->menu.active_light].v);
 		world->menu.lights_rb[2] = ft_new_rangebar(0, 2, ft_new_pixel(world->canvas->win.w + 40 + 25 + 222, 630), &(world->lights[world->menu.active_light].v.x));

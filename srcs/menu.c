@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:29:20 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/08 07:56:44 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/08 21:26:58 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,12 +125,17 @@ void	ft_menu_objects(t_world *world)
 	SDL_FillRect(world->menu.surface, NULL, 0x666666);
 	ft_add_menu_surface(world);
 
+	// Ameliore le parcours
+	// Des qu'on affiche pas un object (pas dans x0-x1 y0-y1) et que nb_objects > 0 --> STOP
+	// Voir si d'autres ameliorations possibles[
+
 	t_cobjlist	*lst;
 	t_objlist	*lst2;
 	t_cobject	cobj;
 	t_object	obj;
-	world->menu.nb_objects = 0;
+	char		*str;
 	int i = 0;
+	world->menu.nb_objects = 0;
 	lst = world->cobjlist;
 	while (lst != NULL)
 	{
@@ -138,6 +143,8 @@ void	ft_menu_objects(t_world *world)
 		int y1 = y0 + 50;
 		if ((y0 >= 135 && y0 <= 400) || (y1 >= 135 && y1 <= 400))
 		{
+			cobj = *(lst->cobject);
+
 			(world->menu.nb_objects)++;
 			world->menu.rect.x = world->canvas->win.w + 55;
 			world->menu.rect.y = y0;
@@ -146,17 +153,30 @@ void	ft_menu_objects(t_world *world)
 			ft_new_menu_surface(world);
 			SDL_FillRect(world->menu.surface, NULL, 0xF8F8FF);
 			ft_add_menu_surface(world);
+
+			world->menu.color.r = 0;
+			world->menu.color.g = 0;
+			world->menu.color.b = 0;
+			world->menu.color.a = 0;
+			world->menu.rect.x = world->canvas->win.w + 50 + 30;
+			world->menu.rect.y = y0 + 15;
+			world->menu.rect.w = 85;
+			world->menu.rect.h = 25;
+			str = ft_strjoin("Cobj ", ft_itoa(cobj.id));
+			ft_add_text(world, 0, str);
+			free(str);
+
 		}
-		cobj = *(lst->cobject);
-		printf("COBJ %d\n", cobj.id);
 		lst2 = lst->cobject->objlist;
 		i++;
-		while(lst2 != NULL)
+		while (lst2 != NULL)
 		{
 			y0 = 145 + i * (50 + 15) - (world->menu.scroll_objects.pos * world->menu.fact_objects);
 			y1 = y0 + 50;
 			if ((y0 >= 135 && y0 <= 400) || (y1 >= 135 && y1 <= 400))
 			{
+				obj = *(lst2->object);
+
 				(world->menu.nb_objects)++;
 				world->menu.rect.x = world->canvas->win.w + 55 + 20;
 				world->menu.rect.y = y0;
@@ -165,14 +185,39 @@ void	ft_menu_objects(t_world *world)
 				ft_new_menu_surface(world);
 				SDL_FillRect(world->menu.surface, NULL, 0xF8F8FF);
 				ft_add_menu_surface(world);
+
+				world->menu.color.r = 0;
+				world->menu.color.g = 0;
+				world->menu.color.b = 0;
+				world->menu.color.a = 0;
+				world->menu.rect.x = world->canvas->win.w + 50 + 30 + 20;
+				world->menu.rect.y = y0 + 15;
+				world->menu.rect.w = 85;
+				world->menu.rect.h = 25;
+				str = ft_strjoin("Obj ", ft_itoa(obj.id));
+				ft_add_text(world, 0, str);
+				free(str);
+
 			}
-			obj = *(lst2->object);
-			printf("\tOBJ %d\n", obj.id);
 			lst2 = lst2->next;
 			i++;
 		}
 		lst = lst->next;
 	}
+	world->menu.rect.x = world->canvas->win.w + 55;
+	world->menu.rect.y = 80;
+	world->menu.rect.w = 360;
+	world->menu.rect.h = 55;
+	ft_new_menu_surface(world);
+	SDL_FillRect(world->menu.surface, NULL, 0xF8F8FF);
+	ft_add_menu_surface(world);
+	world->menu.rect.x = world->canvas->win.w + 55;
+	world->menu.rect.y = 400;
+	world->menu.rect.w = 360;
+	world->menu.rect.h = 65;
+	ft_new_menu_surface(world);
+	SDL_FillRect(world->menu.surface, NULL, 0xF8F8FF);
+	ft_add_menu_surface(world);
 	//<-- /BLOC_1 -->
 }
 

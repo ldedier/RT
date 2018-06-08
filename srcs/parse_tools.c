@@ -6,17 +6,11 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 07:59:03 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/08 20:22:52 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
-int				id(void)
-{
-	static int id = 0;
-	return (id++);
-}
 
 t_cobject		*ft_new_cobject(void)
 {
@@ -39,7 +33,6 @@ t_cobject		*ft_new_cobject(void)
 	cobject->regular = 1;
 	cobject->name = NULL;
 	cobject->defining = 0;
-	cobject->id = id();
 	return (cobject);
 }
 
@@ -78,7 +71,6 @@ t_object		*ft_new_object(t_cobject cobject)
 	object->mod_refract.enabled = 0;
 	object->mod_reflect.enabled = 0;
 	object->mod_transp.enabled = 0;
-	object->id = id();
 	return (object);
 }
 
