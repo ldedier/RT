@@ -16,15 +16,21 @@
 				<color>0xFF000</color>
 				<positionXYZ>0 -2 0</positionXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
-				<transparency>0.95</transparency>
 			</object>
 		</cobject>
 	</objlist>
 	<lightlist>
-		<light type="point">
+		<light type="directional">
 			<color>0xFFFFFF</color>
 			<positionXYZ>0 -3.5 0</positionXYZ>
-			<rotationXYZ>0 0 0</rotationXYZ>
+			<rotationXYZ>0 1 0</rotationXYZ>
+			<angle>1.2</angle>
+			<intensity>0.7</intensity>
+		</light>
+		<light type="directional">
+			<color>0xFFFFFF</color>
+			<positionXYZ>0 -3.5 0</positionXYZ>
+			<rotationXYZ>1 1 0</rotationXYZ>
 			<angle>1.2</angle>
 			<intensity>0.7</intensity>
 		</light>

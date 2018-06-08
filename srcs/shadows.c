@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 23:03:33 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 07:55:02 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/08 22:07:51 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,12 @@ void	castshadows(t_world *world, t_hit *hit, t_shadow **shadows)
 	{
 		shadows[i] = ft_memalloc(sizeof(t_shadow));
 		if (world->lights[i].type != 'd')
-		{
 			shadows[i]->sray.v = normalize(newvector(hit->point,
 						world->lights[i].o));
-			shadows[i]->sray.o = translate_vec(hit->point, hit->normal,
-					EPSILON * proj(hit->normal, hit->bounce));
-		}
 		else
 			shadows[i]->sray.v = normalize(scale(world->lights[i].v, -1));
+		shadows[i]->sray.o = translate_vec(hit->point, hit->normal,
+				EPSILON * proj(hit->normal, hit->bounce));
 		if (((shit = trace(shadows[i]->sray, world->cobjlist)) &&
 					((world->lights[i].type != 'd' &&
 					  magnitude(newvector(shadows[i]->sray.o, shit->point)) <
