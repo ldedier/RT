@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:36:26 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/09 06:35:14 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/09 08:10:01 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,11 @@ static void			freecanvas(t_canvas **canvas)
 
 int					freeworld(t_world **world, int ret)
 {
-//	printf("%lu\n",sizeof(t_object));
-//	while(1);
 	del_clst(&((*world)->cobjlist));
 	free((*world)->cam);
-	freecanvas(&((*world)->canvas));
-	free(*world);
-	*world = NULL;
+	while(1);
+/*	free(*world);
+	*world = NULL;*/
 	return (ret);
 }
 

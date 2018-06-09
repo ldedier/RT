@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 04:37:03 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/09 06:35:20 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/09 08:10:03 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int				main(int argc, char **args)
 {
 	t_world	*world;
 	int		err;
-:wq
 
 	world = NULL;
 	if (argc != 2)
