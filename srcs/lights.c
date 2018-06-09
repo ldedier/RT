@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 07:55:03 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/09 06:35:15 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static t_illum	getillum(t_world *world, t_hit *hit, t_shadow **shadows)
 		{
 			light = world->lights[i];
 			if (light.type != 'd')
-				light.intensity = 1.0 * (1.0 - world->fog.in) /
+				light.intensity = light.intensity * (1.0 - world->fog.in) /
 					sqrt(magnitude(newvector(hit->point, light.o)));
 			newillu = dotprod(hit->pert, normalize(shadows[i]->sray.v)) *
 				light.intensity;

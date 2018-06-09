@@ -14,8 +14,10 @@
 		<cobject>
 			<object name="sphere">
 				<color>0xFF000</color>
-				<positionXYZ>0 -2 0</positionXYZ>
+				<positionXYZ>0 -2 1</positionXYZ>
 				<rotationXYZ>0 0 0</rotationXYZ>
+				<transparency>0.8</transparency>
+				<refraction>1.05</refraction>
 			</object>
 		</cobject>
 	</objlist>

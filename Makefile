@@ -6,7 +6,7 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/08 08:06:16 by aherriau         ###   ########.fr        #
+#    Updated: 2018/06/08 23:52:14 by lcavalle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,6 @@ LIBSDL2TTF_INCLUDEDIR = ~/.brew/Cellar/sdl2_ttf/2.0.14/include/SDL2/
 
 SRCS_NO_PREFIX = camera_rotations.c\
 				 colors.c\
-				 input.c\
 				 debug.c\
 				 intersections.c\
 				 lights.c\

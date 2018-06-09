@@ -6,25 +6,33 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:36:26 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/07 07:58:46 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/09 06:35:14 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void			freecanvas(t_canvas *canvas)
+static void			freecanvas(t_canvas **canvas)
 {
-//	mlx_destroy_image(canvas->mlx, canvas->next_img);
-//	mlx_destroy_window(canvas->mlx, canvas->win);
-//	free(canvas->mlx);
-	free(canvas);
+	SDL_DestroyRenderer((*canvas)->renderer);
+	SDL_DestroyWindow((*canvas)->window);
+	SDL_DestroyTexture((*canvas)->texture);
+	SDL_FreeSurface((*canvas)->surface);
+	SDL_DestroyTexture((*canvas)->win_texture);
+	SDL_FreeSurface((*canvas)->win_surface);
+	free(*canvas);
+	*canvas = NULL;
 }
 
-static int			freeworld(t_world *world, int ret)
+int					freeworld(t_world **world, int ret)
 {
-	del_clst(&(world->cobjlist));
-	free(world->cam);
-	free(world);
+//	printf("%lu\n",sizeof(t_object));
+//	while(1);
+	del_clst(&((*world)->cobjlist));
+	free((*world)->cam);
+	freecanvas(&((*world)->canvas));
+	free(*world);
+	*world = NULL;
 	return (ret);
 }
 
@@ -37,12 +45,12 @@ int					new_world(char *file, t_world **world)
 		return (-3);
 	if (!(*world = malloc(sizeof(t_world))))
 	{
-		freecanvas(canvas);
+		freecanvas(&canvas);
 		return (-3);
 	}
 	if (!((*world)->cam = malloc(sizeof(t_camera))))
 	{
-		freecanvas(canvas);
+		freecanvas(&canvas);
 		free(*world);
 		return (-3);
 	}
@@ -50,12 +58,12 @@ int					new_world(char *file, t_world **world)
 	set_defaults(*world);
 	if ((rw_err = read_world(*world, file)))
 	{
-		freecanvas(canvas);
-		return (freeworld(*world, rw_err));
+		freecanvas(&canvas);
+		return (freeworld(world, rw_err));
 	}
 	if (ft_init_sdl(*world) == 0)
 	{
-		freecanvas(canvas);
+		freecanvas(&canvas);
 		return (-3);
 	}
 	set_positions(*world);

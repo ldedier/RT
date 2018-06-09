@@ -6,10 +6,11 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 22:07:49 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/09 06:35:10 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-//TODO fix shadow with directional light
+//DONE fix shadow with directional light
+//DONE fix light intensity?
 //TODO leaks
 //TODO	norm
 //NVM	reflection = 1 && bounces = 0 renders BLACK.AAAAAAAH
@@ -70,7 +71,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-# define NTHREADS 1
+# define NTHREADS 4
 # define STACK 0
 # define POP 1
 # define MAX_DEGREE 4
@@ -747,7 +748,6 @@ typedef struct  s_mmap
 void					ft_loop(t_world *world);
 int						draw_frame(void *param);
 int						key_press(int keycode, void *param);
-int						end(t_world *world);
 int						get_input(t_world *e);
 void					ft_keys_event(t_world *world, SDL_Event event, int down);
 void					ft_process(t_world *world);
@@ -779,6 +779,8 @@ t_cut					*ft_new_cut(void);
 t_mod					ft_new_mod(void);
 void					ft_init_light(t_light *light);
 void					init_video(t_world *world, t_video *video);
+int						freeworld(t_world **world, int ret);
+
 /*
  ** parser
  */
@@ -960,7 +962,6 @@ void					paint_threaded_fast(t_world *world);
 void					fill_canvas(t_world *world);
 int						join_threads(t_world *world);
 void					paint_threaded(t_world *world);
-void					paint_not_threaded(t_world *world);
 void					update_progress_bar(t_world *world);
 
 /*

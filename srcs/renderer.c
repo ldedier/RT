@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 00:33:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/09 06:35:18 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,6 @@ static t_color		freeret(t_color c, t_hit **hit, t_shadowsfree *aux)
 	}
 	return (c);
 }
-/*
-static float		distance(t_point3d a, t_point3d b)
-{
-	return (sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y) + (a.z - b.z) * (a.z - b.z)));
-*/
 
 static t_color		ebloui(t_world *world, t_line ray, double t, double *ratio)
 {
@@ -105,8 +100,6 @@ void				ft_init_aux_render(t_aux_render *x, t_hit *hit)
 	x->f_refract = ft_process_mod(color, hit->obj.refract, hit->obj.mod_refract);
 	x->f_reflect = ft_process_mod(color, hit->obj.reflect, hit->obj.mod_reflect);
 	x->f_transp = ft_process_mod(color, hit->obj.transp, hit->obj.mod_transp);
-	//	x->f_reflect = hit->obj.reflect;
-	//	x->f_refract = hit->obj.refract;
 }
 
 static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
@@ -130,7 +123,7 @@ static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 		fog = fog > 1.0 ? 1.0 : fog;
 		castshadows(world, hit, shadows);
 		aux = (t_shadowsfree){.shadows = shadows, .nlights = world->nlights};
-			illuminated_c = illuminate(world, hit, shadows, fast);
+		illuminated_c = illuminate(world, hit, shadows, fast);
 		fogged_c = interpole_color(fog, illuminated_c, world->fog.color);
 		if (bounce < world->max_bounce && x.f_reflect > EPSILON && !fast)
 			reflect_c = ray_color(newray(translate_vec(hit->point,

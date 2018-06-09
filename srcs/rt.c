@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 04:37:03 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 07:44:24 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/09 06:35:20 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,18 @@ int				main(int argc, char **args)
 {
 	t_world	*world;
 	int		err;
+:wq
 
-	//char *s = ft_get_name(".bmp");
 	world = NULL;
 	if (argc != 2)
 		return (display_usage(0));
 	if ((err = new_world(args[1], &world)))
 		return (display_usage(err));
 	print_clist(world->cobjlist);
-//	print_lights(world);
-//	print_camera(world->cam);
 	ft_compute_matrices_clist(world->cobjlist);
 	apply_rotation(world->cam);
-//	exit(1);
 	ft_loop(world);
-//	paint_threaded(world);
+	printf("oju oju yo mothafocka");fflush(stdout);
+	freeworld(&world, 0);
 	return (0);
 }

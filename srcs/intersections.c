@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 01:01:52 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/02 17:17:30 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/08 23:19:13 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -515,100 +515,6 @@ int					intersect_goursat(t_line line, t_object obj,
 	nbqsols = resolve_quartic(equa, qsols);
 	return (ft_transfer_real_roots(qsols, nbqsols, sols));
 }
-
-/*
-void				test()
-{
-	t_quadratic quad;
-	t_quartsol sol;
-
-	quad.a = 1;
-	quad.b = 3;
-	quad.c = -4;
-	sol = resolve_quadratic(quad);
-	ft_print_quartsol(sol);
-	exit(1);
-}
-
-void			test2()
-{
-	t_quartic quartic;
-	t_quartsol sol;
-	quartic.a = 0;
-	quartic.b = 1;
-	quartic.c = -6;
-	quartic.d = 11;
-	quartic.e = -6;
-	sol = resolve_quartic(quartic);
-	double res = get_closer_intersection_quartic(sol);
-	(void) res;
-	ft_print_quartsol(sol);
-	exit(1);
-}
-
-void			test3()
-{
-	t_cubic cub;
-	t_quartsol sol;
-
-	cub.a = 1;
-	cub.b = -6;
-	cub.c = 11;
-	cub.d = -6;
-	sol = resolve_cubic(cub);
-	ft_print_quartsol(sol);
-	exit(1);
-}
-
-void			test5()
-{
-	t_cubic cub;
-	t_quartsol sol;
-
-	cub.a = 0.0000000000012;
-	cub.b = 1.0000000339550;
-	cub.c = -5.0063991732061;
-	cub.d = 8.6915127712281;
-
-	ft_print_cubic(cub);
-	sol = resolve_cubic(cub);
-	ft_print_quartsol(sol);
-	exit(1);
-}
-
-void		test4()
-{
-	t_quartic quartic;
-	t_quartsol sol;
-	quartic.a = 0.0000000000001;
-	quartic.b = 0.0000000004919;
-	quartic.c = 1.0000001225418;
-	quartic.d = 1.0626067575294;
-	quartic.e = 0.2207295970682;
-	ft_print_quartic(quartic);
-	sol = resolve_quartic(quartic);
-	double res = get_closer_intersection_quartic(sol);
-	(void) res;
-	ft_print_quartsol(sol);
-	exit(1);
-}
-
-void			ultimate_test_cubic()
-{
-	t_cubic cub;
-	t_quartsol sol;
-
-	cub.a = -0.00000049765903675543;
-	cub.b = 1.07065052337394761572;
-	cub.c = -4490.96082606171603401890;
-	cub.d = 105479467.61827105283737182617;
-
-	ft_print_cubic(cub);
-	sol = resolve_cubic(cub);
-	ft_print_quartsol(sol);
-	exit(1);
-}
-*/
 
 void				ft_cut_as_strip(double sols[MAX_DEGREE], int nbsols, t_line line)
 {

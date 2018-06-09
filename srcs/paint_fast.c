@@ -69,15 +69,15 @@ void		paint_threaded_fast(t_world *world)
 	while (++i < NTHREADS)
 	{
 		if (!(tpar = malloc(sizeof(t_thr_par))))
-			exit(0);
+			exit(1);
 		tpar->world = world;
 		tpar->p_y = p_y;
 		if (pthread_create(&(ids[i]), NULL, render_thr_fast, (void*)tpar))
-			exit(0);
+			exit(1);
 		p_y += world->canvas->fast_win_size.y / NTHREADS;
 	}
 	while (--i >= 0)
 		if (pthread_join(ids[i], NULL))
-			exit(0);
+			exit(1);
 	update_progress_bar(world);
 }

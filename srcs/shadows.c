@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 23:03:33 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 22:07:51 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/09 05:34:34 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	get_shadow_illum(t_shadow *shadow, t_world *world, t_light light,
 
 	if ((hit = trace(shadow->sray, world->cobjlist)))
 	{
-		if (bounce < MAX_BOUNCE && hit->obj.transp > EPSILON)
+		if (bounce < world->max_bounce && hit->obj.transp > EPSILON)
 		{
 			shadow->il.in += (1 - hit->obj.transp) * (1 - shadow->il.in);
 			sray = shadow->sray;
@@ -51,6 +51,7 @@ static void	get_shadow_illum(t_shadow *shadow, t_world *world, t_light light,
 			shadow->il.color = clampwhite(scale_convert_color(shadow->icol, 1));
 		}
 	}
+	free(hit);
 }
 
 void	castshadows(t_world *world, t_hit *hit, t_shadow **shadows)

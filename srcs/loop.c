@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 05:57:03 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/09 00:16:51 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,12 @@ int		get_input(t_world *e)
 		   	ANIMATE_TIMING) || e->exporting_video)
 	{
 		e->ticks = SDL_GetTicks();
-		//if (e->cancel_render == 0)
-		//{
 		e->keys[mouse_move] = 0;
-		//join_threads(e);
 		if (e->keys[key_enter] == 1)
 		{
 			e->keys[key_enter] = 0;
 			e->cancel_render = 0;
 			paint_threaded(e);
-			//paint_not_threaded(e);
 		}
 		else
 		{
@@ -74,8 +70,6 @@ int		get_input(t_world *e)
 			if(e->exporting_video)
 				ft_add_frame_to_video(e);
 		}
-		//}
-		//SDL_Delay(12);
 	}
 	return (0);
 }
@@ -87,5 +81,4 @@ void	ft_loop(t_world *e)
 	paint_threaded_fast(e);
 	while (!get_input(e))
 		;
-	end(e);
 }
