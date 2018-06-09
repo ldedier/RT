@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 02:44:58 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 06:06:36 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/09 07:20:07 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	ft_add_frame_to_video(t_world *world)
 	pix = (int *)world->canvas->surface->pixels;
 	res.x = world->canvas->win_size.x / VIDEO_RES_RATIO;
 	res.y = world->canvas->win_size.y / VIDEO_RES_RATIO;
-	frame = malloc(sizeof(int) * res.x * res.y);
+	if (!(frame = malloc(sizeof(int) * res.x * res.y)))
+		ft_error("malloc error");
 	i = 0;
 	while (i < res.y)
 	{

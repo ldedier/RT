@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:07 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 07:35:46 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/09 08:19:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,26 @@ void	ft_print_triangle(t_object object)
 	ft_print_point3d(object.object_union.triangle.v3);
 }
 
+void	ft_free_obj_parser(t_obj_parser *parser)
+{
+	free(parser->faces);
+	free(parser->vertices);
+}
+
 void	ft_add_triangles(char *source, t_world *world)
 {
 	t_cobject *cobject;
 	t_object *triangle;
 	t_obj_parser parser;
 	int nb_faces;
-(void)source;
+
 	cobject = world->cobjlist->cobject;
 	parser = ft_parse_obj(source);
-	printf("parse obj ok\n");
 	triangle = ft_new_object(*cobject);
-	print_object(*triangle);
 	triangle->cobject = cobject;
-	printf("on a fait un triangle\n");
 	triangle->intersect_func = intersect_triangle;
-	printf("on lui donne sa fonc intersect\n");
 	triangle->normal_func = normal_triangle;
-	printf("on lui donne sa fonc normal\n");
 	nb_faces = 0;
-	printf("on va lui donner ses coords\n");
 	while (nb_faces < parser.nb_faces)
 	{
 		triangle->object_union.triangle.v1.x = parser.vertices[parser.faces[nb_faces].x].x;
@@ -56,9 +56,8 @@ void	ft_add_triangles(char *source, t_world *world)
 		add_obj_cpy(&cobject->objlist, triangle);
 		nb_faces++;
 	}
-	printf("fill faces ok!\n");
-	//free(triangle);
-	
+	free(triangle);
+	ft_free_obj_parser(&parser);
 }
 
 void	ft_parse_src(t_parser *parser, t_world *world, char *line)
@@ -69,12 +68,8 @@ void	ft_parse_src(t_parser *parser, t_world *world, char *line)
 			!ft_strcmp(parser->attribute, "obj"))
 	{
 		source = ft_get_between_tag(&line);
-		printf("ouai\n");
-		printf("%s\n", source);
 		ft_add_triangles(source, world);
-		printf("lol\n");
 		free(source);
-		printf("lul\n");
 	}
 	else
 	{

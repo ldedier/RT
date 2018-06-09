@@ -76,9 +76,9 @@ void	ft_process_parsing_scale(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	read_double(&line, &(scale->x));
-	read_double(&line, &(scale->y));
-	read_double(&line, &(scale->z));
+	read_cdouble(&line, &(scale->x), 1, 100000);
+	read_cdouble(&line, &(scale->y), 1, 100000);
+	read_cdouble(&line, &(scale->z), 1, 100000);
 	parser->op = ft_parse_tag(&line, parser);
 	ft_process_tag_pop(parser);
 }

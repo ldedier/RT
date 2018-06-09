@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:31:29 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/07 06:42:41 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/09 07:04:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -419,6 +419,7 @@ int			ft_export_scene(t_world *world)
 	ft_print_lights(world, fd);
 	ft_print_others(world, fd);
 	dprintf(fd,"</scene>\n");
+	free(name);
 	close(fd);
 	return (1);
 }

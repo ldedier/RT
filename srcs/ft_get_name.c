@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 16:14:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/06 08:56:13 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/09 07:01:45 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ char	*ft_get_name(char *extension)
 	i = 0;
 	while (!(str = ft_already_exists(s, extension, i)))
 		i++;
+	free(s);
 	return (str);
 }

@@ -47,6 +47,8 @@
 //NOPE	(?)start rendering detailed scene when not moving, cancel if move again
 //DONE separate normals and intersections calculating
 
+//TODO scale <1 !!!!??
+//
 //SEGFAULT IF MOVING SELECTED WITH NO ITEMS
 
 #ifndef RT_H
@@ -176,6 +178,7 @@ typedef struct			s_canvas
 	t_pixel				win_size;
 	t_pixel				fast_win_size;
 	t_pixel				halved_win_size;
+	int					*red_pixels;
 	int					npixels;
 	double				ratio;
 	int					fast_ratio;
@@ -664,6 +667,7 @@ typedef struct			s_world
 	t_bmp_parser		bmp_parser;
 	t_menu				menu;
 	int					max_bounce;
+	int					stereoscopic;
 }						t_world;
 
 typedef struct			s_thr_par
@@ -671,6 +675,7 @@ typedef struct			s_thr_par
 	t_world				*world;
 	int					p_y;
 	int					id;
+	int					*pixels;
 }						t_thr_par;
 
 typedef struct			s_shadow
@@ -792,6 +797,8 @@ int						parse_light(char *line, t_light *rlight);
 int						read_int(char **line, int *to);
 int						read_hex(char **line, int *to);
 int						read_double(char **line, double *to);
+int						read_cdouble(char **line, double *to,
+							double min, double max);
 int						parse_ambient(char *line, t_illum *rillum);
 int						parse_fog(char *line, t_illum *rillum);
 void					ft_process_parsing(t_parser *prsr, t_world *world,
@@ -913,6 +920,7 @@ t_color					interpole_color(double t, t_color c1, t_color c2);
 t_color					get_color(int color);
 t_color					add_colors(t_color c1, t_color c2);
 t_color					scale_color(t_color c, double t);
+double					getwhiteratio(t_color c, double bot, double top);
 
 /*
 **int colors (for filter calculations)
@@ -939,6 +947,8 @@ void					sharpen(t_canvas *canvas);
 void					emboss(t_canvas *canvas);
 void					sobel(t_canvas *canvas);
 void					grey(t_canvas *canvas);
+void					cyan(t_canvas *canvas, int *pixels);
+void					red(t_canvas *canvas, int *pixels);
 void					draw_borders(t_canvas *canvas);
 
 /*
@@ -946,7 +956,8 @@ void					draw_borders(t_canvas *canvas);
 */
 t_color					render_pixel(t_world *world, t_pixel pix, int fast);
 t_point3d				screen2world(t_pixel pix, t_world *world, t_pixel aa);
-void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
+void					paint_pixel(t_pixel p, t_color c, int *pixels, t_pixel
+		size);
 t_line					newray(t_point3d p, t_point3d vec);
 t_hit					*trace(t_line line, t_cobjlist *cobjlist);
 void					castshadows(t_world *w, t_hit *h, t_shadow **shadows);
@@ -960,6 +971,7 @@ t_color					illuminate_toon(t_world *world, t_hit *hit,
 */
 void					paint_threaded_fast(t_world *world);
 void					fill_canvas(t_world *world);
+void					merge_canvas(t_world *world);
 int						join_threads(t_world *world);
 void					paint_threaded(t_world *world);
 void					update_progress_bar(t_world *world);

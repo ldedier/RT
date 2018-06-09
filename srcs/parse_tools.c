@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 07:59:03 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/09 01:13:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_object		*ft_new_object(t_cobject cobject)
 	t_object *object;
 
 	if (!(object = ft_memalloc(sizeof(t_object))))
-		return (NULL);
+		ft_error("malloc error\n");
 	object->o = ft_new_vec3(0, 0, 0);
 	object->r = ft_new_vec3(0, 0, 0);
 	object->s = ft_new_vec3(1, 1, 1);

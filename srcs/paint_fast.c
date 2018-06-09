@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 08:53:58 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 08:19:09 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/09 03:12:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	render_big_pixel(t_world *world, t_pixel psize, t_pixel pscaled)
 	{
 		filler.y = pscaled.y - 1;
 		while (++filler.y < pscaled.y + psize.y)
-			paint_pixel(filler, col, world->canvas);
+			paint_pixel(filler, col, world->canvas->surface->pixels, world->canvas->win_size);
 	}
 }
 

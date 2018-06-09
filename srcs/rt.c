@@ -52,7 +52,6 @@ int				main(int argc, char **args)
 	ft_compute_matrices_clist(world->cobjlist);
 	apply_rotation(world->cam);
 	ft_loop(world);
-	printf("oju oju yo mothafocka");fflush(stdout);
 	freeworld(&world, 0);
 	return (0);
 }

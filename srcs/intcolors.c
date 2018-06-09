@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:50:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 01:28:28 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/09 05:10:56 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ t_intcolor	cyanscale(t_intcolor c)
 
 	cyan = (c.r + c.g + c.b) / 3;
 	c.r = 0;
-	c.g = cyan;
-	c.b = cyan;
+	c.g = ft_clamp(0, cyan, 255);
+	c.b = ft_clamp(0, cyan, 255);
 	return (c);
 }
 
@@ -39,7 +39,7 @@ t_intcolor	redscale(t_intcolor c)
 	double red;
 
 	red = (c.r + c.g + c.b) / 3;
-	c.r = red;
+	c.r = ft_clamp(0, red, 255);
 	c.g = 0;
 	c.b = 0;
 	return (c);

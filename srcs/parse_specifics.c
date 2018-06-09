@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:31:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 03:55:58 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/09 06:50:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ void	ft_parse_ebloui(t_parser *parser, t_world *world, char *line)
 void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
 {
 	double *radius;
-	
+
 	if (!parser->attribute)
 	{
 		ft_dprintf(2, "line %d: current object does not have radius tag\n",
@@ -250,7 +250,7 @@ void	ft_parse_radius(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	read_double(&line, radius);
+	read_cdouble(&line, radius, 0.0001, 100000000);
 	parser->op = ft_parse_tag(&line, parser);
 	ft_process_tag_pop(parser);
 }

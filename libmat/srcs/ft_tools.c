@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/27 21:52:02 by ldedier           #+#    #+#             */
-/*   Updated: 2018/04/07 21:45:15 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 19:51:38 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,10 @@ void	ft_print_mat4(t_mat4 mat)
 
 void	ft_print_point3d(t_point3d vec)
 {
-		printf("x:%.2f\ny:%.2f\nz:%.2f\n\n", vec.x, vec.y, vec.z);
+		printf("x:%.6f\ny:%.6f\nz:%.6f\n\n", vec.x, vec.y, vec.z);
+}
+
+void	ft_print_ivec3(t_ivec3	vec)
+{
+		printf("x:%d\ny:%d\nz:%d\n\n", vec.x, vec.y, vec.z);
 }

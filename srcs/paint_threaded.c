@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/09 08:10:05 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/09 08:30:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ static void	*render_thr(void *thpar)
 	t_pixel		p;
 	int			p_y;
 	int			selfid;
+	int			*pixels;
 
 	world = ((t_thr_par *)thpar)->world;
+	pixels = ((t_thr_par *)thpar)->pixels;
 	selfid = ((t_thr_par *)thpar)->id;
 	printf("##thread started: %i\n",selfid);
 	p.x = 0;
@@ -30,7 +32,8 @@ static void	*render_thr(void *thpar)
 		while (world->cancel_render == 0 &&
 				p.y < p_y + world->canvas->win_size.y / NTHREADS)
 		{
-			paint_pixel(p, render_pixel(world, p, 0), world->canvas);
+			paint_pixel(p, render_pixel(world, p, 0), pixels,
+					world->canvas->win_size);
 			world->progress++;
 			p.y++;
 		}
@@ -97,8 +100,9 @@ int			join_threads(t_world *world)
 	return (ret);
 }
 
-void		paint_threaded(t_world *world)
+void		ft_paint_stereoscopic(t_world *world)
 {
+
 	t_thr_par	*tpar;
 	int			p_y;
 	int			i;
@@ -111,6 +115,7 @@ void		paint_threaded(t_world *world)
 		if (!(tpar = malloc(sizeof(t_thr_par))))
 			exit(1);
 		tpar->world = world;
+		tpar->pixels = (int *)world->canvas->surface->pixels;
 		tpar->p_y = p_y;
 		tpar->id = i;
 		world->thr_state[i] = 1;
@@ -121,9 +126,67 @@ void		paint_threaded(t_world *world)
 	printf("joining threads...\n");
 	if (!join_threads(world))
 	{
-		if (world->shader == 2)
-			draw_borders(world->canvas);
-		apply_convolution(world);
-		fill_canvas(world);
+		i = -1;
+		p_y = 0;
+		world->cam->o = translate_vec(world->cam->o, world->cam->right, -0.1);
+		while (++i < NTHREADS)
+		{
+			if (!(tpar = malloc(sizeof(t_thr_par))))
+				exit(0);
+			tpar->world = world;
+			tpar->pixels = world->canvas->red_pixels;
+			tpar->p_y = p_y;
+			tpar->id = i;
+			world->thr_state[i] = 1;
+			if (pthread_create(&(world->threads[i]), NULL, render_thr, (void*)tpar))
+				exit(0);
+			p_y += world->canvas->win_size.y / NTHREADS;
+		}
+		printf("joining threads...\n");
+		if (!join_threads(world))
+		{
+			red(world->canvas, world->canvas->red_pixels);
+			cyan(world->canvas, (int *)world->canvas->surface->pixels);
+			merge_canvas(world);
+			fill_canvas(world);
+		}
+	}
+	world->cam->o = translate_vec(world->cam->o, world->cam->right, 0.1);
+}
+
+void		paint_threaded(t_world *world)
+{
+	t_thr_par	*tpar;
+	int			p_y;
+	int			i;
+
+	if (world->stereoscopic)
+		ft_paint_stereoscopic(world);
+	else
+	{
+		i = -1;
+		p_y = 0;
+		printf("%i\n",world->canvas->win_size.y);
+		while (++i < NTHREADS)
+		{
+			if (!(tpar = malloc(sizeof(t_thr_par))))
+				exit(0);
+			tpar->world = world;
+			tpar->pixels = (int *)world->canvas->surface->pixels;
+			tpar->p_y = p_y;
+			tpar->id = i;
+			world->thr_state[i] = 1;
+			if (pthread_create(&(world->threads[i]), NULL, render_thr, (void*)tpar))
+				exit(0);
+			p_y += world->canvas->win_size.y / NTHREADS;
+		}
+		printf("joining threads...\n");
+		if (!join_threads(world))
+		{
+			if (world->shader == 2)
+				draw_borders(world->canvas);
+			apply_convolution(world);
+			fill_canvas(world);
+		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 17:10:27 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 07:35:25 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/09 01:56:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static t_obj_func g_pf_arr[10] =
 	[enum_obj_vt] = ft_obj_hashtag,
 	[enum_obj_vn] = ft_obj_hashtag
 };
+
 /*
 void	ft_process_obj_parsing(t_obj_parser *parser, char *s)
 {
@@ -66,32 +67,29 @@ void	ft_process_obj_parsing(t_obj_parser *parser, char *s)
 
 void	ft_process_obj_parsing(t_obj_parser *parser, char *s)
 {
-	int i;
-
-	i = 0;
-	if (s[i] == 'v' && s[i + 1] == ' ')
-		g_pf_arr[enum_obj_v](&i, s, parser);
-	else if (s[i] == 'f')
-		g_pf_arr[enum_obj_f](&i, s, parser);
-	else if (s[i] == 'v' && s[i + 1] == 't')
-		g_pf_arr[enum_obj_vt](&i, s, parser);
-	else if (s[i] == 'v' && s[i + 1] == 'n')
-		g_pf_arr[enum_obj_vt](&i, s, parser);
-	else if (s[i] == '#')
-		g_pf_arr[enum_obj_hashtag](&i, s, parser);
-	else if (s[i] == 'o')
-		g_pf_arr[enum_obj_o](&i, s, parser);	
-	else if (s[i] == 'g')
-		g_pf_arr[enum_obj_g](&i, s, parser);
-	else if (s[i] == 's')
-		g_pf_arr[enum_obj_s](&i, s, parser);
-	else if (!ft_strncmp("mtllib", &(s[i]), 6))
-		g_pf_arr[enum_obj_mtllib](&i, s, parser);
-	else if (!ft_strncmp("usemtl", &(s[i]), 6))
-		g_pf_arr[enum_obj_usemtl](&i, s, parser);
+	if (!strcmp(s, "") || s[0] == '#')
+		g_pf_arr[enum_obj_hashtag](s, parser);
+	else if (!ft_strncmp("v ", s, 2))
+		g_pf_arr[enum_obj_v](s, parser);
+	else if (!ft_strncmp("f ", s, 2))
+		g_pf_arr[enum_obj_f](s, parser);
+	else if (!ft_strncmp("vt ", s, 3))
+		g_pf_arr[enum_obj_vt](s, parser);
+	else if (!ft_strncmp("vn ", s, 3))
+		g_pf_arr[enum_obj_vn](s, parser);
+	else if (!ft_strncmp("o ", s, 2))
+		g_pf_arr[enum_obj_o](s, parser);	
+	else if (!ft_strncmp("g ", s, 2))
+		g_pf_arr[enum_obj_g](s, parser);
+	else if (!ft_strncmp("s ", s, 2))
+		g_pf_arr[enum_obj_s](s, parser);
+	else if (!ft_strncmp("mtllib", s, 6))
+		g_pf_arr[enum_obj_mtllib](s, parser);
+	else if (!ft_strncmp("usemtl", s, 6))
+		g_pf_arr[enum_obj_usemtl](s, parser);
 	else
 	{
-		ft_printf("erreur de parsing d'obj: %s\n", &(s[i]));
+		ft_printf("erreur de parsing d'obj: %s\n", s);
 		exit(1);
 	}
 }
@@ -106,7 +104,7 @@ void	ft_print_faces_tmp(t_list *faces)
 	while (ptr != NULL)
 	{
 		ivec = (t_ivec3 *)(ptr->content);
-//		ft_print_ivec3(*ivec);
+		ft_print_ivec3(*ivec);
 		ptr = ptr->next;
 	}
 }
@@ -121,7 +119,7 @@ void	ft_print_vertices_tmp(t_list *vertices)
 	while (ptr != NULL)
 	{
 		vec = (t_point3d *)(ptr->content);
-//		ft_print_point3d(*vec);
+		ft_print_point3d(*vec);
 		ptr = ptr->next;
 	}
 }
@@ -133,7 +131,7 @@ void		ft_convert_to_array_vertices(t_obj_parser *parser)
 	t_list *ptr;
 	t_list *tmp;
 	ptr = parser->vertices_tmp;
-	parser->vertices = (t_point3d *)(malloc(sizeof(t_point3d) * parser->nb_vertices + 1));
+	parser->vertices = (t_point3d *)(malloc(sizeof(t_point3d) * (parser->nb_vertices + 1)));
 	i = 1;
 	while (i <= parser->nb_vertices)
 	{
@@ -187,7 +185,7 @@ void	ft_print_draw_array(t_obj_parser parser)
 	{
 		if (i % 3 == 0)
 			printf("\n");
-		printf("%.6f ", parser.draw_array[i]);
+//		printf("%.6f ", parser.draw_array[i]);
 		i++;
 	}
 }
@@ -198,17 +196,17 @@ void	ft_print_faces(t_obj_parser parser)
 
 	i = 0;
 	printf("faces:\n");
-	while(i < parser.nb_faces)
+	while (i < parser.nb_faces)
 	{
 //		ft_print_ivec3(parser.faces[i]);
 		i++;
 	}
 }
-
+/*
 int		ft_fill_draw_array(t_obj_parser *parser)
 {
 	int nb_faces;
-	if (!(parser->draw_array = (double *)(malloc(sizeof(double) * 9 * parser->nb_faces + 1))))
+	if (!(parser->draw_array = (double *)(malloc(sizeof(double) * (9 * parser->nb_faces + 1)))))
 		return (0);
 	nb_faces = 0;
 //	printf("%d\n", parser->nb_faces);
@@ -229,7 +227,7 @@ int		ft_fill_draw_array(t_obj_parser *parser)
 	}
 	return (1);
 }
-
+*/
 void	ft_parse_obj_gnl(char *filename, t_obj_parser *parser)
 {
 	int fd;
@@ -253,20 +251,19 @@ void	ft_parse_obj_gnl(char *filename, t_obj_parser *parser)
 t_obj_parser		ft_parse_obj(char *filename)
 {
 	t_obj_parser parser;
-	t_mmap map;
-
-	map = ft_map_file(filename);
-	parser.i = 0;
+	
 	parser.nb_faces = 0;
 	parser.nb_vertices = 0;
 	parser.vertices_tmp = NULL;
 	parser.faces_tmp = NULL;
-	parser.materials = NULL;
+	parser.vertices = NULL;
+	parser.faces = NULL;
+
 	ft_parse_obj_gnl(filename, &parser);
 //	ft_process_obj_parsing(&parser, (char *)map.ptr);	
 	printf("loooooooouuuuuuuu\n");
-	munmap(map.ptr, map.size);
-//ft_print_faces_tmp(parser.faces_tmp);
+//	munmap(map.ptr, map.size);
+//	ft_print_faces_tmp(parser.faces_tmp);
 //	printf("nb_faces: %d\n", parser.nb_faces);
 
 //	ft_print_vertices_tmp(parser.vertices_tmp);
