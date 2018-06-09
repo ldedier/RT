@@ -6,13 +6,13 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/08 08:06:16 by aherriau         ###   ########.fr        #
+#    Updated: 2018/06/09 07:49:02 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= rt
 
-CC		= gcc
+CC		= gcc -g
 
 PWD = \"$(shell pwd)\"
 
@@ -129,7 +129,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 menu.c\
 				 perlin.c
 
-INCLUDES_NO_PREFIX = rt.h objects.h export.h
+INCLUDES_NO_PREFIX = rt.h objects.h export.h obj.h
 
 SOURCES  = $(addprefix $(SRCDIR)/,      $(SRCS_NO_PREFIX))
 OBJECTS  = $(addprefix $(OBJDIR)/,      $(SRCS_NO_PREFIX:%.c=%.o))
@@ -141,8 +141,7 @@ INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 	  -I $(LIBSDL2TTF_INCLUDEDIR)
 
 CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror $(INC)
-
-LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat
+LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
 
 opti:
 	@make -j all

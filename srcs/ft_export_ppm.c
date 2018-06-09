@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 16:07:03 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 19:30:58 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/09 07:03:36 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int		ft_export_ppm(char *name, t_image image)
 		return (-1);
 	ft_process_export_ppm(buff, image.width, image.height, image.pix);
 	ft_dprintf(fd, "%s", buff);
+	free(buff);
+	free(name);
 	close(fd);
 	return (0);
 }

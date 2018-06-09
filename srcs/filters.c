@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:02:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 01:29:42 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/09 05:33:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void		grey(t_canvas *canvas)
 	}
 }
 
-void		cyan(t_canvas *canvas)
+void		cyan(t_canvas *canvas, int *pixels)
 {
 	int	i;
 	int	j;
@@ -145,13 +145,13 @@ void		cyan(t_canvas *canvas)
 	{
 		j = -1;
 		while (++j < canvas->win_size.y)
-			((int *)canvas->surface->pixels)[i + j * canvas->win_size.x] =
+			pixels[i + j * canvas->win_size.x] =
 				scale_convert_color(cyanscale(get_intcolor(get_color(
-									((int *)canvas->surface->pixels)[i +
+									pixels[i +
 									j * canvas->win_size.x]))), 1).col;
 	}
 }
-void		red(t_canvas *canvas)
+void		red(t_canvas *canvas, int *pixels)
 {
 	int	i;
 	int	j;
@@ -161,9 +161,9 @@ void		red(t_canvas *canvas)
 	{
 		j = -1;
 		while (++j < canvas->win_size.y)
-			((int *)canvas->surface->pixels)[i + j * canvas->win_size.x] =
+			pixels[i + j * canvas->win_size.x] =
 				scale_convert_color(redscale(get_intcolor(get_color(
-									((int *)canvas->surface->pixels)[i +
+									pixels[i +
 									j * canvas->win_size.x]))), 1).col;
 	}
 }

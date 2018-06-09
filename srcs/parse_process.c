@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:39 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 08:09:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 20:39:06 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ void		ft_process_parsing_stack(t_parser *parser, t_world *world,
 		ft_process_parsing_stack_2(parser, world, line);
 }
 
-
 void		ft_transfer_mod_parser(t_parser *parser, t_world *world)
 {
 	if (!ft_strcmp(parser->tag, "mod_transp"))
@@ -162,7 +161,10 @@ void		ft_transfer_mod_parser(t_parser *parser, t_world *world)
 	else if (!ft_strcmp(parser->tag, "mod_reflect"))
 		world->cobjlist->cobject->objlist->object->mod_reflect = parser->mod;
 	else
+	{
+		ft_dprintf(2, "line %d: modification unknown\n", parser->nb_lines);
 		exit(1);
+	}
 }
 
 void		ft_process_parsing(t_parser *parser, t_world *world, char *line)
@@ -188,7 +190,6 @@ void		ft_process_parsing(t_parser *parser, t_world *world, char *line)
 		{
 			if (parser->parse_enum == e_parse_cobject)
 			{
-				printf("ooooo%s\n", parser->attribute);
 				if (parser->attribute != NULL &&
 						world->cobjlist->cobject->name == NULL) // fin de cobject auto
 					ft_process_automatic(parser, world);

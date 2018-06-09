@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 22:25:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 22:59:31 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/09 07:55:20 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press)
 		{
 			if (press == 1)
 			{
-				if (e->can_export)
+				if (e->can_export && !e->exporting_video)
 				{
 					ft_export_rt(e, ".ppm");
 					e->can_export = 0;
@@ -102,7 +102,7 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press)
 			{
 				if (e->exporting_video)
 				{
-					ft_export_y4m(e->video);
+					ft_export_y4m(&(e->video));
 					e->exporting_video = 0;
 				}
 				else

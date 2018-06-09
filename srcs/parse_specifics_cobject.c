@@ -46,7 +46,7 @@ void	ft_parse_spheres_radius(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	read_double(&line, spheres_radius);
+	read_cdouble(&line, spheres_radius, 0.01, 100000000);
 	parser->op = ft_parse_tag(&line, parser);
 	ft_process_tag_pop(parser);
 }

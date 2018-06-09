@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:44:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/07 06:43:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/09 06:25:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_color		get_perlin_color(t_hit *hit)
 	int i;
 	noiseCoef = 0;
 	i = 1;
-	while(i < 5)
+	while (i < 5)
 	{
 		noiseCoef += (1.0f / i ) * fabs((perlin(i * 10 * hit->old_point.x, 
 						i * 10 * hit->old_point.y,

@@ -9,6 +9,7 @@
 			<rotationXYZ>0 0.5 0</rotationXYZ>
 			<object name="sphere">
 				<rotationXYZ>0 1.5707 0</rotationXYZ>
+				<texture>resources/textures/kirby.bmp</texture>
 				<radius>2</radius>
 				<color>0xFEA1CE</color>
 			</object>

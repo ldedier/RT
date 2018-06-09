@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 08:16:41 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/09 03:29:51 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -432,6 +432,7 @@ void			set_defaults(t_world *world)
 	world->can_export = 1;
 	world->animate = 0;
 	world->focus = 0;
+	world->stereoscopic = 0;
 	world->exporting_video = 0;
 	world->ticks = SDL_GetTicks();
 	world->aa_sq_size = AA_SQ_SIZE;
@@ -482,10 +483,13 @@ int			ft_init_sdl(t_world *world)
 {
 	t_pixel	div;
 
+	printf("on init sdl\n");
 	if (world->canvas->win_size.x == -1 && world->canvas->win_size.y == -1)
 	{
 		SDL_DisplayMode dm;
+	printf("on getcurrent display\n");
 		SDL_GetCurrentDisplayMode(0, &dm);
+	printf("on a getcurrent display\n");
 		if (dm.w >= 2560 && dm.h >= 1440)
 		{
 			world->canvas->win_size.x = 1600 - MENU_WIDTH;
@@ -509,7 +513,6 @@ int			ft_init_sdl(t_world *world)
 	world->canvas->npixels = world->canvas->win_size.x * world->canvas->win_size.y;
 	world->cam->pd = ZOOM / world->canvas->win_size.x;
 
-	printf("init sdl 1 / 2\n");
 	world->canvas->win.x = 0;
 	world->canvas->win.y = 0;
 	world->canvas->win.w = world->canvas->win_size.x;
@@ -523,15 +526,12 @@ int			ft_init_sdl(t_world *world)
 	//world->canvas->screen.x = (world->canvas->win.w / 2) - (world->canvas->screen.w / 2);
 	world->canvas->screen.x = 0;
 	world->canvas->screen.y = ((world->canvas->win.h - PROGRESS_BAR_HEIGHT) / 2) - (world->canvas->screen.h / 2);
-	printf("on try de create window\n");
 	if (!(world->canvas->window = SDL_CreateWindow("rt",
 					world->canvas->win.x, world->canvas->win.y,
 					world->canvas->win.w + MENU_WIDTH, world->canvas->win.h, 0)))
 		return (0);
-	printf("looool ca a marche on a la window\n");
 	if(!(world->canvas->renderer = SDL_CreateRenderer(world->canvas->window, -1, 0)))
 		return (0);
-	printf("init sdl 2 / 3\n");
 	if (SDL_RenderSetLogicalSize(world->canvas->renderer,
 				world->canvas->win.w + MENU_WIDTH, world->canvas->win.h) < 0)
 		return (0);
@@ -540,10 +540,11 @@ int			ft_init_sdl(t_world *world)
 	if (!(world->canvas->win_surface = SDL_CreateRGBSurface(0,
 					world->canvas->win.w, world->canvas->win.h, 32, 0, 0, 0, 0)))
 		return (0);
-	printf("init sdl 3 / 4\n");
 	if (!(world->canvas->surface = SDL_CreateRGBSurface(0,
 					world->canvas->screen.w, world->canvas->screen.h, 32, 0, 0, 0, 0)))
 		return (0);
-	printf("init sdl ok\n");
+	if (!(world->canvas->red_pixels = (int *)malloc(sizeof(int) * 
+		world->canvas->win_size.x * world->canvas->win_size.y)))
+		return (0);
 	return (1);
 }

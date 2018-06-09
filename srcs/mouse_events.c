@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/08 07:26:57 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/09 07:59:10 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -431,7 +431,7 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 		}
 		x0 = world->canvas->win.w + 20 + 75;
 		y0 = 750;
-		if (x >= (x0) && x <= (x0 + world->menu.photo.width) && y >= (y0) && y <= (y0 + world->menu.photo.height))
+		if (x >= (x0) && x <= (x0 + world->menu.photo.width) && y >= (y0) && y <= (y0 + world->menu.photo.height) && !world->exporting_video)
 			ft_export_rt(world, ".ppm");
 		x0 = world->canvas->win.w + 20 + 75 + 250;
 		y0 = 752;
@@ -444,7 +444,7 @@ void	ft_mouse_button_down_menu(t_world *world, SDL_Event event)
 			if (x >= (x0) && x <= (x0 + world->menu.stop.width) && y >= (y0) && y <= (y0 + world->menu.stop.height))
 			{
 				world->exporting_video = 0;
-				ft_export_y4m(world->video);
+				ft_export_y4m(&(world->video));
 				update_progress_bar(world);
 			}
 		}

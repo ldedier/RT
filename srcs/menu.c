@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:29:20 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/08 07:56:44 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/09 01:58:47 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void	ft_new_menu_surface(t_world *world)
 {
 	if (!(world->menu.surface = SDL_CreateRGBSurface(0,
 					world->menu.rect.w, world->menu.rect.h, 32, 0, 0, 0, 0)))
-		exit (1);
+		ft_error("could not create surface");
 }
 
 void	ft_add_menu_surface(t_world *world)
 {
 	if (!(world->menu.texture = SDL_CreateTextureFromSurface(world->
 					canvas->renderer, world->menu.surface)))
-		exit(1);
+		ft_error("could not create menu texture");
 	SDL_RenderCopy(world->canvas->renderer, world->menu.texture, NULL,
 			&(world->menu.rect));
 	SDL_DestroyTexture(world->menu.texture);
@@ -1168,8 +1168,6 @@ void	ft_menu_others(t_world *world)
 	//<-- /SAVE -->
 	//<-- /BLOC_2 -->
 }
-
-
 
 void	ft_display_menu(t_world *world)
 {

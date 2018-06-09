@@ -6,13 +6,13 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 07:55:03 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/09 04:29:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static double	getwhiteratio(t_color c, double bot, double top)
+double			getwhiteratio(t_color c, double bot, double top)
 {
 	double	min;
 	double	res;
