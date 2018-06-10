@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/20 07:00:47 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/01 22:52:32 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/10 01:02:50 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,6 @@ void		apply_rotation(t_camera *cam)
 	cam->rotation.y = cam->rotation.y < -M_PI_2 ? -M_PI_2 : cam->rotation.y;
 	rotate_hor(cam, cam->rotation.x);
 	rotate_ver(cam, cam->rotation.y);
-	/*
-	printf("camera: \n"
-			"---pos: (%f, %f, %f)\n"
-			"---rotation: (%f, %f, %f)\n"
-			"---up: (%f, %f, %f)\n"
-			"---look: (%f, %f, %f)\n"
-			"---right: (%f, %f, %f)\n-----------------\n",
-			cam->o.x, cam->o.y, cam->o.z,
-			cam->rotation.x, cam->rotation.y, cam->rotation.z,
-			cam->up.x, cam->up.y, cam->up.z,
-			cam->look.x, cam->look.y, cam->look.z,
-			cam->right.x, cam->right.y, cam->right.z);
-	fflush(stdout);
-	*/
 }
 
 void		rotate_hor(t_camera *cam, double angle)

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:28:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 03:13:31 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/10 01:10:11 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ void    ft_process(t_world *e)
 		e->selected_cobject->objlist->object->object_union.plane.texture_trans_x += 100;
 	}
 	if (e->keys[key_n])
-	{
-		printf("%f\n", e->selected_cobject->objlist->object->object_union.plane.texture_stretch_x);
 		e->selected_cobject->objlist->object->object_union.plane.texture_stretch_x += 0.1;
-	}
 	if (e->keys[key_m])
 		e->selected_cobject->objlist->object->object_union.plane.texture_stretch_x -= 0.1;
 
@@ -96,5 +93,4 @@ void    ft_process(t_world *e)
 	}
 	apply_rotation(e->cam);
 	ft_compute_matrices_clist(e->cobjlist);
-//	print_clist(e->cobjlist);
 }

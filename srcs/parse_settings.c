@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 03:14:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 00:45:44 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/10 00:59:23 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	ft_parse_filter(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	printf("attribute: %s| %i\n",parser->attribute, e_sharpen);fflush(stdout);
 	if (!ft_strcmp(parser->attribute, "blur"))
 		world->filters[e_gauss_blur] = 1;
 	else if (!ft_strcmp(parser->attribute, "sharpen"))

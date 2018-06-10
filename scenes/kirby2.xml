@@ -11,6 +11,7 @@
 				<rotationXYZ>0 1.5707 0</rotationXYZ>
 				<radius>2</radius>
 				<color>0xFEA1CE</color>
+				<texture>resources/textures/kirby.bmp</texture>
 			</object>
 			<object name="ellipsoid">
 				<positionXYZ>2 -0.15 -0.3</positionXYZ>

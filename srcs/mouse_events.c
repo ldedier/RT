@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/09 07:59:10 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/10 01:02:11 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -471,46 +471,19 @@ void	ft_pivot_camera(t_camera *cam, t_point3d tolook)
 	dist = sqrt(vec_dist.x * vec_dist.x + vec_dist.z * vec_dist.z);
 	cam->o.x = dist * cos(anglep) + tolook.x;
 	cam->o.z = dist * sin(anglep) + tolook.z;
-	printf("%f\n", dist);
 }
 
 void	ft_look_at(t_camera *cam, t_point3d tolook)
 {
 	t_point3d	vec_look_at;
+	double		angle_x;
+	double		angle_y;
+
 	cam->look = CAMERA_LOOK;
 	vec_look_at = normalize(ft_point3d_cmp(tolook, cam->o));
-//	double angle = atan2(ft_point3d_get_norm(
-//				ft_point3d_cross_product(ft_new_vec3(0, 0, 1), vec_look_at)),
-//			ft_dot_product(ft_new_vec3(0, 0, 1), vec_look_at));
-//	printf("angle: %f\n", angle);
-//i	printf("on veut regarder par AL\n");
-//	ft_print_point3d(vec_look_at);
-//	printf("alors qu'on regarde al:\n");
-//	ft_print_point3d(cam->look);
-//	printf("%f\n", atan2(look.x, look.z));
-//	printf("%f\n\n", atan2(vec_look_at.x, vec_look_at.z));
-
-	double angle_x = -atan2(vec_look_at.x, vec_look_at.z);
-//	if (angle_x < -M_PI_2)
-//	{
-//		angle_x += M_PI_2;
-////		exit(1);
-	//}
-//	rotate_hor(cam, angle_x);
-//	double angle_y = -atan2(vec_look_at.y, vec_look_at.z);
-	double angle_y = vec_look_at.y;
-//	if (angle_y < -M_PI_2)
-//	{
-//		angle_y +=  M_PI_2;
-//		exit(1);
-//	}
-//	printf("angle_x: %f\n", angle_x);
-//	printf("\n\n\nangle_y: %f\n\n\n", angle_y);
-//	printf("\n\n\n-atan(angle_y): %f\n\n\n", -atan(angle_y));
+	angle_x = -atan2(vec_look_at.x, vec_look_at.z);
+	angle_y = vec_look_at.y;
 	cam->rotation.x = angle_x;
-(void)angle_y;
-//	cam->rotation.y = -atan(angle_y) * 2.0;
-//	cam->look = normalize(ft_point3d_cmp(tolook, cam->o));
 }
 
 void	ft_left_click_event(t_world *e, SDL_Event event)
@@ -527,8 +500,6 @@ void	ft_left_click_event(t_world *e, SDL_Event event)
 	hit = NULL;
 	pix.x = event.button.x;
 	pix.y = event.button.y - e->canvas->screen.y;
-	printf("DEBUG PIXEL\n");//DELETE
-	render_pixel(e, pix, 0);
 	point = screen2world(pix, e, pixel);
 	line = newray(point, newvector(e->cam->o, point));
 	if ((hit = trace(line, e->cobjlist)))

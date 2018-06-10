@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/09 03:29:51 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/10 00:25:30 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -483,13 +483,10 @@ int			ft_init_sdl(t_world *world)
 {
 	t_pixel	div;
 
-	printf("on init sdl\n");
 	if (world->canvas->win_size.x == -1 && world->canvas->win_size.y == -1)
 	{
 		SDL_DisplayMode dm;
-	printf("on getcurrent display\n");
 		SDL_GetCurrentDisplayMode(0, &dm);
-	printf("on a getcurrent display\n");
 		if (dm.w >= 2560 && dm.h >= 1440)
 		{
 			world->canvas->win_size.x = 1600 - MENU_WIDTH;

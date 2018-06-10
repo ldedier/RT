@@ -6,13 +6,14 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/09 08:09:59 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/10 09:40:03 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //DONE fix shadow with directional light
 //DONE fix light intensity?
 //TODO leaks
 //TODO	norm
+//TODO	remove debug
 //NVM	reflection = 1 && bounces = 0 renders BLACK.AAAAAAAH
 //DONE	fix <perturbation>asdf</perturbation> segfault
 //DONE	transparency shadows: canviar color i perdre llum PER CADA SRAY
@@ -500,12 +501,6 @@ typedef struct			s_auxcone
 	t_point3d			sdcolo2d;
 	double				sqcos;
 	double				sqsin;
-	/*
-	   double				sqcos;
-	   double				dv;
-	   t_point3d			co;
-	   double				cov;
-	   */
 }						t_auxcone;
 
 typedef struct			s_cobjlist
@@ -514,6 +509,20 @@ typedef struct			s_cobjlist
 	t_cobject			*cobject;
 	struct s_cobjlist	*next;
 }						t_cobjlist;
+
+typedef struct			s_auxtracer
+{
+	t_line				transformed;
+	t_objlist			*objlist;
+	int					neg;
+	t_object			*other;
+}						t_auxtracer;
+
+typedef struct			s_auxtracer2
+{
+	t_auxtracer			auxtracer;
+	t_object			obj;
+}						t_auxtracer2;
 
 typedef struct			s_auxtorus
 {
@@ -963,8 +972,6 @@ t_hit					*trace(t_line line, t_cobjlist *cobjlist);
 void					castshadows(t_world *w, t_hit *h, t_shadow **shadows);
 t_color					illuminate(t_world *world, t_hit *hit,
 		t_shadow **shadows, int fast);
-t_color					illuminate_toon(t_world *world, t_hit *hit,
-		t_shadow **shadows, int fast);
 
 /*
 **paint window
@@ -1043,7 +1050,9 @@ void					ft_init_aux(t_auxquart_init *g, t_line line);
 */
 int						ft_evaluate_cut(t_cut cut, t_point3d pos, t_hit hit);
 double					get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
-		double min, t_line transformed, t_objlist *objlist, int neg, t_object *other);
+		double min, t_auxtracer aux);
+double					get_smallest_legal_pos_val_t(t_hit newhit, t_sols sols,
+		double min, t_line line);
 
 /*
 **negatives
@@ -1067,14 +1076,15 @@ int						inside_hyperboloid(t_hit h, t_object obj);
 /*
 **tools
 */
-void    set_funcs(t_object *obj,
+void    				set_funcs(t_object *obj,
 		int (*intersect_func)(t_line, t_object, double[MAX_DEGREE]),
 		int (*inside_func)(t_hit, t_object),
 		t_point3d (*normal_func)(t_object, t_point3d, t_line));
 int						equal_double(double a, double b);
 t_pixel					fast_div(const t_canvas *canvas);
-double	get_sum(t_color color);
-
+double					get_sum(t_color color);
+double					clamp_newillu(double ni, t_world *w, double shilin);
+t_hit					*retfree(int r, t_hit **hit);
 
 
 /*
@@ -1096,13 +1106,11 @@ double					perlin(double x, double y, double z);
 /*
 ** automatics
 */
-
 void					ft_process_automatic(t_parser *parser, t_world *world);
 
 /*
 ** defining
 */
-
 void					ft_process_switch_list_cobject(t_cobjlist ** cobjlist,
 		t_cobjlist ** defcobjlist);
 int						already_exists_defcobj(char *name, t_cobjlist *cobjlst);
@@ -1133,26 +1141,26 @@ void					apply_rotation(t_camera *cam);
 /*
 ** automatic render
 */
-
 void					ft_look_at(t_camera *cam, t_point3d tolook);
 void					ft_pivot_camera(t_camera *cam, t_point3d tolook);
 
 /*
 ** textures
 */
-
-int					texture_sphere(t_object obj, t_hit *hit, t_bmp_parser p);
-int					texture_cylinder(t_object obj, t_hit *hit, t_bmp_parser p);
-int					texture_plane(t_object obj, t_hit *hit, t_bmp_parser p);
-int					texture_cone(t_object obj, t_hit *hit, t_bmp_parser p);
-t_bmp_parser		ft_parse_bmp(char *src);
-int					get_object_color(t_hit *hit);
-int					get_object_color_normal(t_hit *hit);
+int						texture_sphere(t_object obj, t_hit *hit,
+		t_bmp_parser p);
+int						texture_cylinder(t_object obj, t_hit *hit,
+		t_bmp_parser p);
+int						texture_plane(t_object obj, t_hit *hit, t_bmp_parser p);
+int						texture_cone(t_object obj, t_hit *hit, t_bmp_parser p);
+t_bmp_parser			ft_parse_bmp(char *src);
+int						get_object_color(t_hit *hit);
+int						get_object_color_normal(t_hit *hit);
+t_point3d				get_normal(t_object obj, t_hit *hit, t_line line);
 
 /*
 ** matrices
 */
-
 void					ft_compute_matrix(t_object *object);
 void					ft_compute_matrices_clist(t_cobjlist *cobjects);
 t_line					ft_transform_line(t_object object, t_line t);
@@ -1162,19 +1170,16 @@ void					ft_transform_hit_back(t_hit *hit, t_line line);
 /*
 ** video
 */
-
 void				ft_add_frame_to_video(t_world *world);
 
 /*
 ** export
 */
-
 int					ft_export_rt(t_world *world, char *extension);
 
 /*
 ** bmp reader
 */
-
 int		ft_get_pixel(int x, int y, t_bmp_parser parser);
 
 /*

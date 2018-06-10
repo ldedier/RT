@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/09 08:30:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/10 01:28:02 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	*render_thr(void *thpar)
 	world = ((t_thr_par *)thpar)->world;
 	pixels = ((t_thr_par *)thpar)->pixels;
 	selfid = ((t_thr_par *)thpar)->id;
-	printf("##thread started: %i\n",selfid);
 	p.x = 0;
 	p_y = ((t_thr_par*)thpar)->p_y;
 	while (world->cancel_render == 0 && p.x < world->canvas->win_size.x)
@@ -79,10 +78,9 @@ int			join_threads(t_world *world)
 		if (world->thr_state[++i] == 2 ||
 				(world->thr_state[i] == 1 && cancel == 1))
 		{
-			printf("joining thread %i of %i\n",i , NTHREADS);
 			if (pthread_join(world->threads[i], NULL))
 			{
-				printf("cannot join thread %i!!!! exit...\n", i);
+				ft_dprintf(2, "cannot join thread %d! exit...\n", i);
 				exit(freeworld(&world, 1));
 			}
 			world->thr_state[i] = 0;
@@ -93,8 +91,7 @@ int			join_threads(t_world *world)
 			exit(freeworld(&world, 0));
 	}
 	if ((ret = (cancel == 1)) == 1)
-		printf("all threads cancelled\n");
-	printf("threads joined, progress: %i, ret: %i\n", world->progress, ret);
+		ft_printf("rendering cancelled\n");
 	world->progress = 0;
 	world->cancel_render = 0;
 	return (ret);
@@ -109,7 +106,6 @@ void		ft_paint_stereoscopic(t_world *world)
 
 	i = -1;
 	p_y = 0;
-	printf("%i\n",world->canvas->win_size.y);
 	while (++i < NTHREADS)
 	{
 		if (!(tpar = malloc(sizeof(t_thr_par))))
@@ -123,7 +119,6 @@ void		ft_paint_stereoscopic(t_world *world)
 			exit(1);
 		p_y += world->canvas->win_size.y / NTHREADS;
 	}
-	printf("joining threads...\n");
 	if (!join_threads(world))
 	{
 		i = -1;
@@ -139,10 +134,9 @@ void		ft_paint_stereoscopic(t_world *world)
 			tpar->id = i;
 			world->thr_state[i] = 1;
 			if (pthread_create(&(world->threads[i]), NULL, render_thr, (void*)tpar))
-				exit(0);
+				exit(1);
 			p_y += world->canvas->win_size.y / NTHREADS;
 		}
-		printf("joining threads...\n");
 		if (!join_threads(world))
 		{
 			red(world->canvas, world->canvas->red_pixels);
@@ -166,7 +160,6 @@ void		paint_threaded(t_world *world)
 	{
 		i = -1;
 		p_y = 0;
-		printf("%i\n",world->canvas->win_size.y);
 		while (++i < NTHREADS)
 		{
 			if (!(tpar = malloc(sizeof(t_thr_par))))
@@ -180,7 +173,6 @@ void		paint_threaded(t_world *world)
 				exit(0);
 			p_y += world->canvas->win_size.y / NTHREADS;
 		}
-		printf("joining threads...\n");
 		if (!join_threads(world))
 		{
 			if (world->shader == 2)

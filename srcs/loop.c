@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 02:47:18 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/09 00:16:51 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/10 01:28:04 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int		get_input(t_world *e)
 				 && event.type == SDL_KEYDOWN))
 		{
 			e->cancel_render = 1;
-			printf("cancel AND EXIT OR NOTHING\n");
 			join_threads(e);
 			return (1);
 		}
@@ -65,7 +64,6 @@ int		get_input(t_world *e)
 			ft_process(e);
 			e->cancel_render = 1;
 			e->progress = 0;
-			printf("INPUT PRESSED, CANCELING RENDERING\n");
 			paint_threaded_fast(e);
 			if(e->exporting_video)
 				ft_add_frame_to_video(e);

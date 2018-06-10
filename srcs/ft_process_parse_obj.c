@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 17:10:27 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/09 01:56:15 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/10 01:06:49 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,45 +25,6 @@ static t_obj_func g_pf_arr[10] =
 	[enum_obj_vt] = ft_obj_hashtag,
 	[enum_obj_vn] = ft_obj_hashtag
 };
-
-/*
-void	ft_process_obj_parsing(t_obj_parser *parser, char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == 'v' && s[i + 1] == ' ')
-			g_pf_arr[enum_obj_v](&i, s, parser);
-		else if (s[i] == 'f')
-			g_pf_arr[enum_obj_f](&i, s, parser);
-		else if (s[i] == 'v' && s[i + 1] == 't')
-			g_pf_arr[enum_obj_vt](&i, s, parser);
-		else if (s[i] == 'v' && s[i + 1] == 'n')
-			g_pf_arr[enum_obj_vt](&i, s, parser);
-		else if (s[i] == '#')
-			g_pf_arr[enum_obj_hashtag](&i, s, parser);
-		else if (s[i] == 'o')
-			g_pf_arr[enum_obj_o](&i, s, parser);	
-		else if (s[i] == 'g')
-			g_pf_arr[enum_obj_g](&i, s, parser);
-		else if (s[i] == 's')
-			g_pf_arr[enum_obj_s](&i, s, parser);
-		else if (!ft_strncmp("mtllib", &(s[i]), 6))
-			g_pf_arr[enum_obj_mtllib](&i, s, parser);
-		else if (!ft_strncmp("usemtl", &(s[i]), 6))
-			g_pf_arr[enum_obj_usemtl](&i, s, parser);
-		else
-		{
-			ft_printf("erreur de parsing d'obj: %s\n", &(s[i]));
-			exit(1);
-		}
-		while (s[i] == '\n')
-			i++;
-	}
-}
-*/
 
 void	ft_process_obj_parsing(t_obj_parser *parser, char *s)
 {

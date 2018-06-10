@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 17:10:29 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 08:11:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/10 00:58:52 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,11 @@ void		ft_print_stack(t_list *list)
 	t_list *ptr;
 	char *p;
 	ptr = list;
-	printf("la STACK\n");
 	while (ptr)
 	{
 		p = (char *)ptr->content;
-		printf("%s\n", p);
 		ptr = ptr->next;
 	}
-	printf("\n\n");
 }
 
 void		ft_add_tag_stack(t_parser *parser)

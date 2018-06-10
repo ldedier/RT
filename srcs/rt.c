@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 04:37:03 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/09 08:10:03 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/10 01:27:59 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,6 @@ static int		display_usage(int err)
 		ft_putendl("error at read file");
 	else if (err == -3)
 		ft_putendl("memory error");
-	else
-	{
-		ft_putstr("line ");
-		ft_putnbr(err);
-		ft_putstr(": wrong format. Correct format:\n"
-				"\tsphere:\t\ts [x] [y] [z] [rad] [color]\n"
-				"\tplane(n=normal):p [x] [y] [z] [n.x] [n.y] [n.z]) [color]\n"
-				"\tcone:\t\t\tc [x] [y] [z] [v.x] [v.y] [v.z] [angle] [color]\n"
-				"\tcylinder:\t\ty [x] [y] [z] [v.x] [v.y] [v.z] [rad] [color]\n"
-				"\tlight(max: ");
-		ft_putnbr(MAX_LIGHTS);
-		ft_putendl("):\t\tl [x] [y] [z] [intensity(0-1)] [color]");
-	}
 	return (0);
 }
 

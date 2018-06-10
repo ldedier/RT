@@ -6,7 +6,7 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/08 23:52:14 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/06/10 07:36:38 by lcavalle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 debug.c\
 				 intersections.c\
 				 lights.c\
+				 lights_tools.c\
 				 normals.c\
 				 normals2.c\
 				 normals3.c\
@@ -75,6 +76,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 rt.c\
 				 shadows.c\
 				 tracer.c\
+				 trace_tools.c\
+				 tracer_hitcheck.c\
 				 translations.c\
 				 vectors.c\
 				 vectors2.c\
@@ -93,7 +96,6 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_get_name.c\
 				 ft_export.c\
 				 ft_export_y4m.c\
-				 lights_toon.c \
 				 convolute.c\
 				 filters.c\
 				 intcolors.c\

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:36:26 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/09 08:28:41 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/10 02:55:13 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int					freeworld(t_world **world, int ret)
 	free((*world)->cam);
 /*	free(*world);
 	*world = NULL;*/
+	ft_printf("byee (-‘ _ ‘-)つ \n");
 	return (ret);
 }
 
