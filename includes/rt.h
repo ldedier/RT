@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 07:54:11 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/10 08:08:34 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-# define NTHREADS 1
+# define NTHREADS 4
 # define STACK 0
 # define POP 1
 # define MAX_DEGREE 4
 
 # define FAST_RATIO 1
 # define MENU_WIDTH 500
-# define MENU_HEIGHT 840
+# define MENU_HEIGHT 850
 # define PROGRESS_BAR_HEIGHT 16
 # define PERSPECTIVE 2
 # define ZOOM 1.f
@@ -422,6 +422,7 @@ typedef struct			s_object
 	t_color				c;
 	t_perturbations		pert;
 	t_list				*cuts;
+	double				scale;
 	double				shine;
 	double				reflect;
 	double				refract;
@@ -454,6 +455,7 @@ struct			s_cobject
 	t_point3d			s;
 	t_point3d			r;
 	t_color				c;
+	double				scale;
 	double				shine;
 	double				reflect;
 	double				refract;
@@ -628,8 +630,23 @@ typedef struct			s_menu
 
 	int					nobjects;
 	t_scrollbar			scroll_objects;
+	int					active_object;
 	int					nb_objects;
+	int					first_object;
+	t_pixel				objects[5];
 	float				fact_objects;
+	int					nb_objects_rb;
+	int					nb_objects_cp;
+	t_rangebar			objects_rb[8];
+	t_colorpicker		objects_cp[1];
+	t_bmp_parser		none;
+	t_bmp_parser		ripple;
+	t_bmp_parser		waves;
+	t_bmp_parser		noise;
+	t_bmp_parser		chess;
+	t_bmp_parser		perlin;
+	t_bmp_parser		marble;
+	t_bmp_parser		negative;
 }						t_menu;
 
 typedef struct			s_world
@@ -644,6 +661,7 @@ typedef struct			s_world
 	t_cobjlist			*cobjlist;
 	t_cobjlist			*defcobjlist;
 	t_cobject			*selected_cobject;
+	t_object			*selected_object;
 	t_illum				ambient;
 	t_illum				fog;
 	int					nlights;
@@ -1192,6 +1210,7 @@ void				ft_mouse_button_up(t_world *world, SDL_Event event);
 */
 void				ft_display_menu(t_world *world);
 t_pixel				ft_color_pos(t_world *world, t_color color);
+int					ft_set_selected_object(t_world *world, int id);
 
 /*
 ** error

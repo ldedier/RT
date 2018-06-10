@@ -8,12 +8,12 @@
 			<color>0xFF0000</color>
 			<src>resources/objs/42.obj</src>
 		</cobject>
-	<cobject>
-		<rotationXYZ>0 0 1.5707</rotationXYZ>
-		<positionXYZ>10 0 0</positionXYZ>
-		<object name="plane">
-		</object>
-	</cobject>
+		<cobject>
+			<rotationXYZ>0 0 1.5707</rotationXYZ>
+			<positionXYZ>10 0 0</positionXYZ>
+			<object name="plane">
+			</object>
+		</cobject>
 	</objlist>
 	<lightlist>
 		<light type="point">

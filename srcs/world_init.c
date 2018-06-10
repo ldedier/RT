@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:37:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 21:27:03 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/10 08:08:32 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,53 @@ t_pixel	ft_color_pos(t_world *world, t_color color)
 	return (pix);
 }
 
+int					ft_set_selected_object(t_world *world, int id)
+{
+	t_cobjlist  *lst;
+	t_objlist   *lst2;
+
+	lst = world->cobjlist;
+	while (lst != NULL)
+	{
+		if (lst->cobject->id == id)
+		{
+			world->selected_cobject = lst->cobject;
+			return (1);
+		}
+		lst2 = lst->cobject->objlist;
+		while (lst2 != NULL)
+		{
+			if (lst2->object->id == id)
+			{
+				world->selected_object = lst2->object;
+				return (1);
+			}
+			lst2 = lst2->next;
+		}
+		lst = lst->next;
+	}
+	return (0);
+}
+
+void			ft_init_objects(t_world *world)
+{
+	t_cobjlist  *lst;
+	t_objlist   *lst2;
+
+	lst = world->cobjlist;
+	while (lst != NULL)
+	{
+		lst->cobject->scale = 1;
+		lst2 = lst->cobject->objlist;
+		while (lst2 != NULL)
+		{
+			lst2->object->scale = 1;
+			lst2 = lst2->next;
+		}
+		lst = lst->next;
+	}
+}
+
 int     		ft_objects_scrollbar_size(t_world *world, int len)
 {
 	int     	h;
@@ -221,6 +268,7 @@ int     		ft_objects_scrollbar_size(t_world *world, int len)
 	t_cobjlist  *lst;
 	t_objlist   *lst2;
 
+	//ne pas additioner les objects d'un obj genre 42/teapot
 	world->menu.nobjects = 0;
 	lst = world->cobjlist;
 	while (lst != NULL)
@@ -345,11 +393,12 @@ void			set_positions(t_world *world)
 		i++;
 	}
 
-	world->menu.scroll_lights = ft_new_scrollbar(world, 265, 0);
 	ft_color_map(world);
 	world->menu.nb_others_cp = 2;
 	world->menu.others_cp[0] = ft_new_colorpicker(ft_new_pixel(world->canvas->win.w + 20 + 45 + 34, 250), ft_color_pos(world, world->ambient.color), &(world->ambient.color));
 	world->menu.others_cp[1] = ft_new_colorpicker(ft_new_pixel(world->canvas->win.w + 20 + 45 + 34 + 200, 250), ft_color_pos(world, world->fog.color), &(world->fog.color));
+
+	world->menu.scroll_lights = ft_new_scrollbar(world, 265, 0);
 	if (world->nlights > 0)
 	{
 		world->menu.active_light = 0;
@@ -359,7 +408,12 @@ void			set_positions(t_world *world)
 
 		world->menu.lights_rb[0] = ft_new_rangebar(0, M_PI / 2, ft_new_pixel(world->canvas->win.w + 40 + 25 + 145, 518), &(world->lights[world->menu.active_light].angle));
 		world->menu.lights_rb[1] = ft_new_rangebar(0, 1, ft_new_pixel(world->canvas->win.w + 40 + 25 + 42, 580), &(world->lights[world->menu.active_light].intensity));
-		world->lights[world->menu.active_light].v = normalize(world->lights[world->menu.active_light].v);
+		i = 0;
+		while (i < world->nlights)
+		{
+			world->lights[i].v = normalize(world->lights[i].v);
+			i++;
+		}
 		world->menu.lights_rb[2] = ft_new_rangebar(0, 2, ft_new_pixel(world->canvas->win.w + 40 + 25 + 222, 630), &(world->lights[world->menu.active_light].v.x));
 		world->menu.lights_rb[3] = ft_new_rangebar(0, 2, ft_new_pixel(world->canvas->win.w + 40 + 25 + 222, 665), &(world->lights[world->menu.active_light].v.y));
 		world->menu.lights_rb[4] = ft_new_rangebar(0, 2, ft_new_pixel(world->canvas->win.w + 40 + 25 + 222, 700), &(world->lights[world->menu.active_light].v.z));
@@ -393,12 +447,49 @@ void			set_positions(t_world *world)
 		k = ((float)n / 10) - 1;
 	float size = world->menu.scroll_lights.len / (float)(n * (50 + 15) + k * (50 + 15));
 	world->menu.fact_lights = 1 / size;
-
+	
+	
 	world->menu.scroll_objects = ft_new_scrollbar(world, 265, 1);
+	world->selected_cobject = NULL;
+	world->selected_object = NULL;
+	if (world->menu.nobjects > 0)
+	{
+		world->menu.active_object = 0;
+		ft_set_selected_object(world, 0);
+		world->menu.first_object = 145;
+		ft_init_objects(world);
+		world->menu.nb_objects_rb = 8;
+		world->menu.objects_rb[0] = ft_new_rangebar(1, 10, ft_new_pixel(world->canvas->win.w + 165, 370 + 1 * 55 + 87), &(world->selected_cobject->scale));
+		world->menu.objects_rb[1] = ft_new_rangebar(0, 10, ft_new_pixel(world->canvas->win.w + 165, 370 + 2 * 55 + 87), &(world->selected_cobject->shine));
+		world->menu.objects_rb[2] = ft_new_rangebar(0, 1, ft_new_pixel(world->canvas->win.w + 165, 370 + 3 * 55 + 87), &(world->selected_cobject->reflect));
+		world->menu.objects_rb[3] = ft_new_rangebar(1.0, 1.1, ft_new_pixel(world->canvas->win.w + 165, 370 + 4 * 55 + 87), &(world->selected_cobject->refract));
+		world->menu.objects_rb[4] = ft_new_rangebar(0, 1, ft_new_pixel(world->canvas->win.w + 165, 370 + 5 * 55 + 87), &(world->selected_cobject->transp));
+		world->menu.objects_rb[5] = ft_new_rangebar(0, 4, ft_new_pixel(world->canvas->win.w + 320, 678), &(world->selected_cobject->r.x));
+		world->menu.objects_rb[6] = ft_new_rangebar(0, 4, ft_new_pixel(world->canvas->win.w + 320, 678 + 30), &(world->selected_cobject->r.y));
+		world->menu.objects_rb[7] = ft_new_rangebar(0, 4, ft_new_pixel(world->canvas->win.w + 320, 678 + 60), &(world->selected_cobject->r.z));
+
+		world->menu.nb_objects_cp = 1;
+		world->menu.objects_cp[0] = ft_new_colorpicker(ft_new_pixel(world->canvas->win.w + 40 + 25 + 20 + 150 + 65 + 25, 135 + 265 + 20 + 60 + 25), ft_color_pos(world,
+					world->selected_cobject->c), &(world->selected_cobject->c));
+	}
+	else
+	{
+		world->menu.active_object = -1;
+		world->menu.first_object = -1;
+		world->menu.nb_objects_rb = 0;
+		world->menu.nb_objects_cp = 0;
+	}
 	if (world->menu.nobjects <= 4)
 		world->menu.nb_objects = world->menu.nobjects;
 	else
 		world->menu.nb_objects = 4;
+	i = 0;
+	while (i < 5)
+	{
+		world->menu.objects[i].x = -1;
+		world->menu.objects[i].y = -1;
+		i++;
+	}
 	n = world->menu.nobjects;
 	if (n == 5)
 		k = 2;
@@ -461,6 +552,14 @@ void			set_defaults(t_world *world)
 	world->menu.light_directional = ft_parse_bmp(PATH"/resources/textures/light-directional.bmp");
 	world->menu.ebloui = ft_parse_bmp(PATH"/resources/textures/ebloui.bmp");
 	world->menu.stereoscope = ft_parse_bmp(PATH"/resources/textures/stereoscope.bmp");
+	world->menu.none = ft_parse_bmp(PATH"/resources/textures/none.bmp");
+	world->menu.ripple = ft_parse_bmp(PATH"/resources/textures/ripple.bmp");
+	world->menu.waves = ft_parse_bmp(PATH"/resources/textures/waves.bmp");
+	world->menu.noise = ft_parse_bmp(PATH"/resources/textures/noise.bmp");
+	world->menu.chess = ft_parse_bmp(PATH"/resources/textures/chess.bmp");
+	world->menu.perlin = ft_parse_bmp(PATH"/resources/textures/perlin.bmp");
+	world->menu.marble = ft_parse_bmp(PATH"/resources/textures/marble.bmp");
+	world->menu.negative = ft_parse_bmp(PATH"/resources/textures/negative.bmp");
 }
 
 t_canvas		*new_canvas(void)

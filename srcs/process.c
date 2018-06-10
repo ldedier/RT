@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:28:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 03:13:31 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/10 08:08:39 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,64 +35,129 @@ void    ft_process(t_world *e)
 	if (e->keys[key_space])
 		e->cam->o = translate_vec(e->cam->o, e->cam->up, e->cam->speed);
 
-	if (e->keys[key_o])
+	if (e->selected_cobject && e->selected_cobject->id == e->menu.active_object)
 	{
-		e->selected_cobject->s.x += e->cam->speed;
-		e->selected_cobject->s.y += e->cam->speed;
-		e->selected_cobject->s.z += e->cam->speed;
-		e->selected_cobject->objlist->object->object_union.plane.texture_trans_x -= 100;
+		if (e->keys[key_o])
+		{
+			e->selected_cobject->s.x += e->cam->speed;
+			e->selected_cobject->s.y += e->cam->speed;
+			e->selected_cobject->s.z += e->cam->speed;
+			e->selected_cobject->objlist->object->object_union.plane.texture_trans_x -= 100;
+		}
+		if (e->keys[key_p])
+		{
+			e->selected_cobject->s.x -= e->cam->speed;
+			e->selected_cobject->s.y -= e->cam->speed;
+			e->selected_cobject->s.z -= e->cam->speed;
+			e->selected_cobject->objlist->object->object_union.plane.texture_trans_x += 100;
+		}
+		if (e->keys[key_n])
+		{
+			printf("%f\n", e->selected_cobject->objlist->object->object_union.plane.texture_stretch_x);
+			e->selected_cobject->objlist->object->object_union.plane.texture_stretch_x += 0.1;
+		}
+		if (e->keys[key_m])
+			e->selected_cobject->objlist->object->object_union.plane.texture_stretch_x -= 0.1;
+
+		if (e->keys[key_k])
+			e->selected_cobject->objlist->object->object_union.plane.texture_trans_y += 100;
+		if (e->keys[key_l])
+			e->selected_cobject->objlist->object->object_union.plane.texture_trans_y -= 100;
+
+		if (e->keys[key_7])
+			e->selected_cobject->o.y += e->cam->speed;
+		if (e->keys[key_8])
+			e->selected_cobject->o.y -= e->cam->speed;
+
+		if (e->keys[key_4])
+			e->selected_cobject->o.x += e->cam->speed;
+		if (e->keys[key_5])
+			e->selected_cobject->o.x -= e->cam->speed;
+
+		if (e->keys[key_1])
+			e->selected_cobject->o.z += e->cam->speed;
+		if (e->keys[key_2])
+			e->selected_cobject->o.z -= e->cam->speed;
+
+		if (e->keys[key_e])
+			e->selected_cobject->r.x += M_PI / 16;
+		if (e->keys[key_q])
+			e->selected_cobject->r.x -= M_PI / 16;
+		if (e->keys[key_c])
+			e->selected_cobject->r.y += M_PI / 16;
+		if (e->keys[key_z])
+			e->selected_cobject->r.y -= M_PI / 16;
+		if (e->keys[key_x])
+			e->selected_cobject->r.z += M_PI / 16;
+		if (e->keys[key_v])
+			e->selected_cobject->r.z -= M_PI / 16;
+		if (e->animate)
+		{
+			ft_pivot_camera(e->cam, e->selected_cobject->o);
+			ft_look_at(e->cam, e->selected_cobject->o);
+		}
 	}
-	if (e->keys[key_p])
+	else if (e->selected_object && e->selected_object->id == e->menu.active_object)
 	{
-		e->selected_cobject->s.x -= e->cam->speed;
-		e->selected_cobject->s.y -= e->cam->speed;
-		e->selected_cobject->s.z -= e->cam->speed;
-		e->selected_cobject->objlist->object->object_union.plane.texture_trans_x += 100;
-	}
-	if (e->keys[key_n])
-	{
-		printf("%f\n", e->selected_cobject->objlist->object->object_union.plane.texture_stretch_x);
-		e->selected_cobject->objlist->object->object_union.plane.texture_stretch_x += 0.1;
-	}
-	if (e->keys[key_m])
-		e->selected_cobject->objlist->object->object_union.plane.texture_stretch_x -= 0.1;
+		if (e->keys[key_o])
+		{
+			e->selected_object->s.x += e->cam->speed;
+			e->selected_object->s.y += e->cam->speed;
+			e->selected_object->s.z += e->cam->speed;
+			e->selected_object->object_union.plane.texture_trans_x -= 100;
+		}
+		if (e->keys[key_p])
+		{
+			e->selected_object->s.x -= e->cam->speed;
+			e->selected_object->s.y -= e->cam->speed;
+			e->selected_object->s.z -= e->cam->speed;
+			e->selected_object->object_union.plane.texture_trans_x += 100;
+		}
+		if (e->keys[key_n])
+		{
+			printf("%f\n", e->selected_object->object_union.plane.texture_stretch_x);
+			e->selected_object->object_union.plane.texture_stretch_x += 0.1;
+		}
+		if (e->keys[key_m])
+			e->selected_object->object_union.plane.texture_stretch_x -= 0.1;
 
-	if (e->keys[key_k])
-		e->selected_cobject->objlist->object->object_union.plane.texture_trans_y += 100;
-	if (e->keys[key_l])
-		e->selected_cobject->objlist->object->object_union.plane.texture_trans_y -= 100;
+		if (e->keys[key_k])
+			e->selected_object->object_union.plane.texture_trans_y += 100;
+		if (e->keys[key_l])
+			e->selected_object->object_union.plane.texture_trans_y -= 100;
 
-	if (e->keys[key_7])
-		e->selected_cobject->o.y += e->cam->speed;
-	if (e->keys[key_8])
-		e->selected_cobject->o.y -= e->cam->speed;
+		if (e->keys[key_7])
+			e->selected_object->o.y += e->cam->speed;
+		if (e->keys[key_8])
+			e->selected_object->o.y -= e->cam->speed;
 
-	if (e->keys[key_4])
-		e->selected_cobject->o.x += e->cam->speed;
-	if (e->keys[key_5])
-		e->selected_cobject->o.x -= e->cam->speed;
+		if (e->keys[key_4])
+			e->selected_object->o.x += e->cam->speed;
+		if (e->keys[key_5])
+			e->selected_object->o.x -= e->cam->speed;
 
-	if (e->keys[key_1])
-		e->selected_cobject->o.z += e->cam->speed;
-	if (e->keys[key_2])
-		e->selected_cobject->o.z -= e->cam->speed;
+		if (e->keys[key_1])
+			e->selected_object->o.z += e->cam->speed;
+		if (e->keys[key_2])
+			e->selected_object->o.z -= e->cam->speed;
 
-	if (e->keys[key_e])
-		e->selected_cobject->r.x += M_PI / 16;
-	if (e->keys[key_q])
-		e->selected_cobject->r.x -= M_PI / 16;
-	if (e->keys[key_c])
-		e->selected_cobject->r.y += M_PI / 16;
-	if (e->keys[key_z])
-		e->selected_cobject->r.y -= M_PI / 16;
-	if (e->keys[key_x])
-		e->selected_cobject->r.z += M_PI / 16;
-	if (e->keys[key_v])
-		e->selected_cobject->r.z -= M_PI / 16;
-	if (e->animate)
-	{
-		ft_pivot_camera(e->cam, e->selected_cobject->o);
-		ft_look_at(e->cam, e->selected_cobject->o);
+		if (e->keys[key_e])
+			e->selected_object->r.x += M_PI / 16;
+		if (e->keys[key_q])
+			e->selected_object->r.x -= M_PI / 16;
+		if (e->keys[key_c])
+			e->selected_object->r.y += M_PI / 16;
+		if (e->keys[key_z])
+			e->selected_object->r.y -= M_PI / 16;
+		if (e->keys[key_x])
+			e->selected_object->r.z += M_PI / 16;
+		if (e->keys[key_v])
+			e->selected_object->r.z -= M_PI / 16;
+		if (e->animate)
+		{
+			ft_pivot_camera(e->cam, e->selected_object->o);
+			ft_look_at(e->cam, e->selected_object->o);
+		}
 	}
 	apply_rotation(e->cam);
 	ft_compute_matrices_clist(e->cobjlist);
