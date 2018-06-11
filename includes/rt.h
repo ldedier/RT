@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/10 08:08:34 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/11 09:38:23 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 
 # define FAST_RATIO 1
 # define MENU_WIDTH 500
-# define MENU_HEIGHT 850
+# define MENU_HEIGHT 865
 # define PROGRESS_BAR_HEIGHT 16
 # define PERSPECTIVE 2
 # define ZOOM 1.f
@@ -587,7 +587,8 @@ typedef struct			s_menu
 	SDL_Rect			rect;
 	SDL_Surface			*surface;
 	SDL_Texture			*texture;
-	SDL_Color			color;
+	SDL_Color			black_color;
+	SDL_Color			white_color;
 	TTF_Font			*fonts[3];
 	int					active_rb;
 	int					active_grb;
@@ -669,7 +670,6 @@ typedef struct			s_world
 	int					exporting_video;
 	int					cancel_render;
 	int					can_export;
-	int					nb_export;
 	int					shader;
 	int					animate;
 	int					focus;
@@ -1139,6 +1139,7 @@ void					apply_rotation(t_camera *cam);
 
 void					ft_look_at(t_camera *cam, t_point3d tolook);
 void					ft_pivot_camera(t_camera *cam, t_point3d tolook);
+void					ft_left_click_event(t_world *e, SDL_Event event);
 
 /*
 ** textures
@@ -1204,13 +1205,108 @@ void				ft_print_triangle_caracteristics(t_object object, int fd);
 void				ft_mouse_motion(t_world *world, SDL_Event event);
 void				ft_mouse_button_down(t_world *world, SDL_Event event);
 void				ft_mouse_button_up(t_world *world, SDL_Event event);
+void				ft_mouse_motion_objects(t_world *world, SDL_Event event);
+void				ft_mouse_motion_objects_6(t_world *world, SDL_Event event);
+void				ft_mouse_motion_lights(t_world *world, SDL_Event event);
+void				ft_mouse_motion_others(t_world *world, SDL_Event event);
+void				ft_mouse_button_objects(t_world *world, SDL_Event event);
+void				ft_mouse_button_objects_6(t_world *world);
+void				ft_mouse_button_objects_7(t_world *world);
+void				ft_mouse_button_objects_8(t_world *world, SDL_Event event, int x, int y);
+void				ft_mouse_button_objects_11(t_world *world);
+void				ft_mouse_button_objects_12(t_world *world, int x, int y);
+void				ft_mouse_button_objects_16(t_world *world, int x, int y, int y0);
+void				ft_mouse_button_lights(t_world *world, SDL_Event event);
+void				ft_mouse_button_lights_6(t_world *world, SDL_Event event, int x, int y);
+void				ft_mouse_button_others(t_world *world, SDL_Event event);
+void				ft_mouse_button_others_6(t_world *world, SDL_Event event, int x, int y);
 
 /*
 ** Menu
 */
+TTF_Font			*ft_load_font(char *str, int quality);
+t_pixel				ft_new_pixel(int x, int y);
+t_rangebar			ft_new_rangebar(double min, double max, t_pixel pix, double *v);
+t_grangebar			ft_new_grangebar(double min, double max, t_pixel pix, int *v);
+t_colorpicker		ft_new_colorpicker(t_pixel pix, t_pixel pos, t_color *color);
+t_dropdown			ft_new_dropdown(t_pixel pos, t_pixel size);
+void				ft_color_map(t_world *world);
+void				ft_init_objects(t_world *world);
+t_scrollbar			ft_new_scrollbar(t_world *world, int len, int type);
+int					ft_objects_scrollbar_size(t_world *world, int len);
+void				ft_cobjlist_reverse(t_cobjlist **alst);
+void				ft_objlist_reverse(t_objlist **alst);
+void				set_positions_6(t_world *world);
+
 void				ft_display_menu(t_world *world);
-t_pixel				ft_color_pos(t_world *world, t_color color);
+void				ft_new_menu_surface(t_world *world);
+void				ft_add_menu_surface(t_world *world);
+void				ft_add_text(t_world *world, int font, char *text, SDL_Color color);
+void				ft_add_header_text(t_world *world);
+void				ft_color_hue(t_world *world);
+void				ft_switch_filter(t_world *world, int filter, int pos);
+void				ft_show_filters(t_world *world);
+void				ft_menu_objects(t_world *world);
+void				ft_menu_lights(t_world *world);
+void				ft_menu_others(t_world *world);
+void				ft_sort_menu_filters(t_world *world);
 int					ft_set_selected_object(t_world *world, int id);
+t_pixel				ft_color_pos(t_world *world, t_color color);
+void				ft_fill_menu_surface(t_world *world, t_bmp_parser bmp);
+void				ft_fill_menu_surface_2(t_world *world, t_bmp_parser bmp, int color);
+void				ft_fill_menu_surface_3(t_world *world, t_bmp_parser bmp, int color);
+
+void				ft_menu_others_bloc1_fog(t_world *world);
+void				ft_menu_others_bloc1_ambient_color_1(t_world *world);
+void				ft_menu_others_bloc1_ambient_color_2(t_world *world);
+void				ft_menu_others_bloc1_fog_color_1(t_world *world);
+void				ft_menu_others_bloc1_fog_color_2(t_world *world);
+void				ft_menu_others_bloc1_filters(t_world *world);
+void				ft_menu_others_bloc1_bounces(t_world *world);
+void				ft_menu_others_bloc1_antialiasing(t_world *world);
+void				ft_menu_others_bloc1_rangebars(t_world *world);
+void				ft_menu_others_bloc1_grangebars(t_world *world);
+void				ft_menu_others_bloc1_grangebars_2(t_world *world, int i, int nb_val, float step);
+void				ft_menu_others_bloc1_cartoon(t_world *world);
+void				ft_menu_others_bloc2_photo(t_world *world);
+void				ft_menu_others_bloc2_video(t_world *world);
+void				ft_menu_others_bloc2_save(t_world *world);
+
+void				ft_menu_lights_bloc1_scrollbar_2(t_world *world, int i, int *j, int y0);
+void				ft_menu_lights_bloc2_position_1(t_world *world);
+void				ft_menu_lights_bloc2_position_2(t_world *world);
+void				ft_menu_lights_bloc2_angle(t_world *world);
+void				ft_menu_lights_bloc2_ebloui(t_world *world);
+void				ft_menu_lights_bloc2_stereoscope(t_world *world);
+void				ft_menu_lights_bloc2_intensity_color_1(t_world *world);
+void				ft_menu_lights_bloc2_intensity_color_2(t_world *world);
+void				ft_menu_lights_bloc2_rotation(t_world *world);
+void				ft_menu_lights_bloc2_type(t_world *world);
+void				ft_menu_lights_bloc2_type_3(t_world *world, t_bmp_parser bmp);
+void				ft_menu_lights_bloc2_rangebars(t_world *world);
+
+void				ft_menu_objects_bloc2_position_1(t_world *world);
+void				ft_menu_objects_bloc2_position_2(t_world *world);
+void				ft_menu_objects_bloc2_position_3(t_world *world);
+void				ft_menu_objects_bloc2_scale(t_world *world);
+void				ft_menu_objects_bloc2_shine(t_world *world);
+void				ft_menu_objects_bloc2_reflection(t_world *world);
+void				ft_menu_objects_bloc2_refraction(t_world *world);
+void				ft_menu_objects_bloc2_transparency(t_world *world);
+void				ft_menu_objects_bloc2_color_1(t_world *world);
+void				ft_menu_objects_bloc2_color_2(t_world *world);
+void				ft_menu_objects_bloc2_rotation(t_world *world);
+void				ft_menu_objects_bloc2_perturbations(t_world *world);
+void				ft_menu_objects_bloc2_perturbations_5(t_world *world);
+void				ft_menu_objects_bloc2_perturbations_6(t_world *world);
+void				ft_menu_objects_bloc2_perturbations_7(t_world *world,t_bmp_parser bmp);
+void				ft_menu_objects_bloc2_perturbations_8(t_world *world, t_bmp_parser bmp);
+void				ft_menu_objects_bloc2_perturbations_9(t_world *world, t_bmp_parser bmp);
+void				ft_menu_objects_bloc2_negative(t_world *world);
+void				ft_menu_objects_bloc2_rangebars(t_world *world);
+void				ft_menu_objects_bloc1_scrollbar(t_world *world);
+
+
 
 /*
 ** error

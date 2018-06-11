@@ -6,7 +6,7 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/08 08:06:16 by aherriau         ###   ########.fr        #
+#    Updated: 2018/06/11 09:07:48 by aherriau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,8 +125,47 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 parse_plane_textures.c\
 				 ft_parse_bmp.c\
 				 ft_export_scene.c\
+				 init_sdl.c\
+				 init_menu.c\
+				 init_menu_2.c\
+				 init_menu_tools.c\
+				 init_menu_tools_2.c\
+				 init_menu_tools_3.c\
+				 init_menu_tools_4.c\
 				 mouse_events.c\
+				 mouse_events_2.c\
+				 mouse_motion_objects.c\
+				 mouse_motion_objects_2.c\
+				 mouse_motion_lights.c\
+				 mouse_motion_others.c\
+				 mouse_button_objects.c\
+				 mouse_button_objects_2.c\
+				 mouse_button_objects_3.c\
+				 mouse_button_objects_4.c\
+				 mouse_button_lights.c\
+				 mouse_button_lights_2.c\
+				 mouse_button_others.c\
+				 mouse_button_others_2.c\
 				 menu.c\
+				 menu_tools.c\
+				 menu_tools_2.c\
+				 menu_tools_3.c\
+				 menu_objects.c\
+				 menu_objects_2.c\
+				 menu_objects_3.c\
+				 menu_objects_4.c\
+				 menu_objects_5.c\
+				 menu_objects_6.c\
+				 menu_objects_7.c\
+				 menu_lights.c\
+				 menu_lights_2.c\
+				 menu_lights_3.c\
+				 menu_lights_4.c\
+				 menu_lights_5.c\
+				 menu_others.c\
+				 menu_others_2.c\
+				 menu_others_3.c\
+				 menu_others_4.c\
 				 perlin.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h
