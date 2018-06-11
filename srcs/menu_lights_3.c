@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 07:54:41 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 10:53:00 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/11 22:43:13 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_menu_lights_bloc2_stereoscope(t_world *world)
 	t_bmp_parser	bmp;
 
 	bmp = world->menu.stereoscope;
-	if (1)
+	if (world->stereoscopic == 1)
 	{
 		world->menu.rect.x = world->canvas->win.w + 362;
 		world->menu.rect.y = 492;

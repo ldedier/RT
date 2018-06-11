@@ -6,7 +6,7 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/11 09:06:18 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/06/11 22:35:58 by aherriau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -194,6 +194,7 @@ INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 
 CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror $(INC)
 LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
+		 -fsanitize=address
 
 opti:
 	@make -j all
