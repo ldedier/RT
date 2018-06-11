@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 17:09:42 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/02 07:06:51 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/09 07:27:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ t_image 		ft_new_image(int width, int height, int *pixels);
 int	 			ft_export_bmp(char *name, t_image image);
 int	 			ft_export_ppm(char *name, t_image image);
 int				ft_export(t_image image, char *extension);
-int				ft_export_y4m(t_video video);
+int				ft_export_y4m(t_video *video);
 #endif

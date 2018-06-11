@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 20:02:34 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/06 20:41:43 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/11 07:59:18 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ double		get_sum(t_color color)
 int			ft_evaluate_cut_color(t_cut cut, t_hit hit)
 {
 	t_color color;
+
 	hit.old_point = hit.point;
 	hit.unbumped_old_normal = hit.normal;
 	color = get_color(get_object_color(&hit));
@@ -40,10 +41,11 @@ int			ft_evaluate_cut(t_cut cut, t_point3d point, t_hit hit)
 	if (cut.color)
 		return (ft_evaluate_cut_color(cut, hit));
 	else if (!cut.circular)
-		return (cut.inequality(point.x * cut.cut_xyz.x + point.y * cut.cut_xyz.y +
-				point.z * cut.cut_xyz.z, cut.value));
+		return (cut.inequality(point.x * cut.cut_xyz.x + point.y *
+					cut.cut_xyz.y +
+					point.z * cut.cut_xyz.z, cut.value));
 	else
-		return (cut.inequality(point.x *  point.x * cut.cut_xyz.x +
+		return (cut.inequality(point.x * point.x * cut.cut_xyz.x +
 					point.y * point.y * cut.cut_xyz.y +
-						point.z * point.z * cut.cut_xyz.z, cut.value));
+					point.z * point.z * cut.cut_xyz.z, cut.value));
 }

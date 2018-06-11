@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:02:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/04 10:12:43 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/11 07:57:41 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	apply_filter(t_convolution conv)
 			curr_col = get_color(
 					conv.img[(conv.pix.x + fil.x - conv.filter_size / 2) +
 					((conv.pix.y + fil.y - conv.filter_size / 2) *
-					 conv.canvas->win_size.x)]);
+					conv.canvas->win_size.x)]);
 			auxcol = add_scale_intcolors(auxcol, get_intcolor(curr_col),
 					conv.filter[fil.x + fil.y * conv.filter_size]);
 		}
@@ -37,7 +37,7 @@ static void	apply_filter(t_convolution conv)
 		scale_convert_color(auxcol, (double)1 / conv.den).col;
 }
 
-void	convolute(t_canvas *canvas, double *filter, int filter_size,
+void		convolute(t_canvas *canvas, double *filter, int filter_size,
 		int den)
 {
 	t_convolution	conv;
@@ -47,7 +47,8 @@ void	convolute(t_canvas *canvas, double *filter, int filter_size,
 	conv.den = den;
 	conv.filter = filter;
 	conv.img = (int *)canvas->surface->pixels;
-	conv.aux = ft_memalloc(sizeof(int) * canvas->win_size.x * canvas->win_size.y);
+	conv.aux = ft_memalloc(sizeof(int) * canvas->win_size.x *
+			canvas->win_size.y);
 	conv.pix.x = -1 + filter_size / 2;
 	while (++conv.pix.x < canvas->win_size.x - filter_size / 2)
 	{
@@ -62,9 +63,9 @@ void	convolute(t_canvas *canvas, double *filter, int filter_size,
 	free(conv.aux);
 }
 
-void	apply_convolution(t_world *world)
+void		apply_convolution(t_world *world)
 {
-	printf("applying filters...\n");
+	ft_printf("Applying filters...\n");
 	if (world->filters[e_grey])
 		grey(world->canvas);
 	if (world->filters[e_emboss])
@@ -77,5 +78,5 @@ void	apply_convolution(t_world *world)
 		gauss_blur(world->canvas);
 	if (world->filters[e_motion_blur])
 		motion_blur(world->canvas);
-	printf("filters applied\n");
+	ft_printf("Filters applied.\n");
 }

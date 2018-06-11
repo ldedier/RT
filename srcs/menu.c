@@ -16,14 +16,14 @@ void	ft_new_menu_surface(t_world *world)
 {
 	if (!(world->menu.surface = SDL_CreateRGBSurface(0,
 					world->menu.rect.w, world->menu.rect.h, 32, 0, 0, 0, 0)))
-		exit(1);
+		ft_error("could not create surface");
 }
 
 void	ft_add_menu_surface(t_world *world)
 {
 	if (!(world->menu.texture = SDL_CreateTextureFromSurface(world->
 					canvas->renderer, world->menu.surface)))
-		exit(1);
+		ft_error("could not create menu texture");
 	SDL_RenderCopy(world->canvas->renderer, world->menu.texture, NULL,
 			&(world->menu.rect));
 	SDL_DestroyTexture(world->menu.texture);

@@ -30,6 +30,19 @@ int				read_double(char **line, double *to)
 	return (scss);
 }
 
+int				read_cdouble(char **line, double *to, double min, double max)
+{
+	int scss;
+
+	scss = 1;
+	*to = ft_patof(line, &scss);
+	if(*to < min || *to > max)
+	{
+		*to = (max - min) / 2;
+	}
+	return (scss);
+}
+
 int				read_int(char **line, int *to)
 {
 	int scss;

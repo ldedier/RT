@@ -25,7 +25,7 @@ void	ft_parse_stretch_x(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	read_double(&line, stretch_x);
+	read_cdouble(&line, stretch_x, 0.1, 100000);
 	if (*stretch_x < 0)
 	{
 		ft_dprintf(2, "line %d: stretch can not be negative\n",
@@ -49,7 +49,7 @@ void	ft_parse_stretch_y(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	read_double(&line, stretch_y);
+	read_cdouble(&line, stretch_y, 0.1, 100000);
 	if (*stretch_y < 0)
 	{
 		ft_dprintf(2, "line %d: stretch can not be negative\n",

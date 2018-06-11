@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:21:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 02:08:51 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 19:38:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,4 @@ void	ft_process_automatic(t_parser *parser, t_world *world)
 		ft_compute_automatic_sphere_torus(world->cobjlist->cobject);
 	else if (!ft_strcmp(parser->attribute, "adn"))
 		ft_compute_automatic_adn(world->cobjlist->cobject);
-	else
-	{
-		ft_dprintf(2, "line %d: no automatic cobject named %s\n", 
-				parser->nb_lines, parser->attribute);
-	}
 }

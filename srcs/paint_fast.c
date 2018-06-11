@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/02 08:53:58 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 08:19:09 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/11 05:15:41 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static void	render_big_pixel(t_world *world, t_pixel psize, t_pixel pscaled)
 	{
 		filler.y = pscaled.y - 1;
 		while (++filler.y < pscaled.y + psize.y)
-			paint_pixel(filler, col, world->canvas);
+			paint_pixel(filler, col, world->canvas->surface->pixels,
+					world->canvas->win_size);
 	}
 }
 
@@ -69,15 +70,15 @@ void		paint_threaded_fast(t_world *world)
 	while (++i < NTHREADS)
 	{
 		if (!(tpar = malloc(sizeof(t_thr_par))))
-			exit(0);
+			exit(1);
 		tpar->world = world;
 		tpar->p_y = p_y;
 		if (pthread_create(&(ids[i]), NULL, render_thr_fast, (void*)tpar))
-			exit(0);
+			exit(1);
 		p_y += world->canvas->fast_win_size.y / NTHREADS;
 	}
 	while (--i >= 0)
 		if (pthread_join(ids[i], NULL))
-			exit(0);
+			exit(1);
 	update_progress_bar(world);
 }

@@ -6,142 +6,76 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 01:43:36 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/11 08:10:38 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void	*render_thr(void *thpar)
+void		*render_thr(void *thpar)
 {
-	t_world		*world;
 	t_pixel		p;
-	int			p_y;
-	int			selfid;
+	t_thr_par	*tpar;
 
-	world = ((t_thr_par *)thpar)->world;
-	selfid = ((t_thr_par *)thpar)->id;
-	printf("##thread started: %i\n",selfid);
+	tpar = (t_thr_par *)thpar;
 	p.x = 0;
-	p_y = ((t_thr_par*)thpar)->p_y;
-	while (world->cancel_render == 0 && p.x < world->canvas->win_size.x)
+	while (tpar->world->cancel_render == 0 && p.x <
+			tpar->world->canvas->win_size.x)
 	{
-		p.y = p_y;
-		while (world->cancel_render == 0 &&
-				p.y < p_y + world->canvas->win_size.y / NTHREADS)
+		p.y = tpar->p_y;
+		while (tpar->world->cancel_render == 0 &&
+				p.y < tpar->p_y + tpar->world->canvas->win_size.y / NTHREADS)
 		{
-			paint_pixel(p, render_pixel(world, p, 0), world->canvas);
-			world->progress++;
+			paint_pixel(p, render_pixel(tpar->world, p, 0), tpar->pixels,
+					tpar->world->canvas->win_size);
+			tpar->world->progress++;
 			p.y++;
 		}
 		p.x++;
 	}
 	free(thpar);
-	world->thr_state[selfid] = 2;
+	tpar->world->thr_state[tpar->id] = 2;
 	return (NULL);
 }
 
-static int	working_count(t_world *world)
+void		start_thread(t_world *world, int p_y, int i, int *pixels)
 {
-	int i;
-	int	count;
+	t_thr_par	*tpar;
 
-	i = -1;
-	count = 0;
-	while (++i < NTHREADS)
-	{
-		if (world->thr_state[i] != 0)
-			count++;
-	}
-	return (count);
-}
-
-int			join_threads(t_world *world)
-{
-	int	i;
-	int	ret;
-	int	cancel;
-
-	i = -1;
-	cancel = 0;
-	while (working_count(world) > 0)
-	{
-		update_progress_bar(world);
-		if (world->cancel_render == 1)
-		{
-			i = -1;
-			world->cancel_render = 0;
-			cancel = 1;
-		}
-		if (world->thr_state[++i] == 2 ||
-				(world->thr_state[i] == 1 && cancel == 1))
-		{
-			printf("joining thread %i of %i\n",i , NTHREADS);
-			if (pthread_join(world->threads[i], NULL))
-			{
-				printf("cannot join thread %i!!!! exit...\n", i);
-				exit(0);
-			}
-			world->thr_state[i] = 0;
-		}
-		if (i == NTHREADS)
-			i = -1;
-		if (get_input(world))
-			end(world);
-	}
-	if ((ret = (cancel == 1)) == 1)
-		printf("all threads cancelled\n");
-	printf("threads joined, progress: %i, ret: %i\n", world->progress, ret);
-	world->progress = 0;
-	world->cancel_render = 0;
-	return (ret);
+	if (!(tpar = malloc(sizeof(t_thr_par))))
+		exit(0);
+	tpar->world = world;
+	tpar->pixels = pixels;
+	tpar->p_y = p_y;
+	tpar->id = i;
+	world->thr_state[i] = 1;
+	if (pthread_create(&(world->threads[i]), NULL, render_thr, (void*)tpar))
+		exit(0);
 }
 
 void		paint_threaded(t_world *world)
 {
-	t_thr_par	*tpar;
 	int			p_y;
 	int			i;
 
-	i = -1;
-	p_y = 0;
-	printf("%i\n",world->canvas->win_size.y);
-	while (++i < NTHREADS)
+	ft_putendl("Render image");
+	if (world->stereoscopic)
+		ft_paint_stereoscopic(world);
+	else
 	{
-		if (!(tpar = malloc(sizeof(t_thr_par))))
-			exit(0);
-		tpar->world = world;
-		tpar->p_y = p_y;
-		tpar->id = i;
-		world->thr_state[i] = 1;
-		if (pthread_create(&(world->threads[i]), NULL, render_thr, (void*)tpar))
-			exit(0);
-		p_y += world->canvas->win_size.y / NTHREADS;
-	}
-	printf("joining threads...\n");
-	if (!join_threads(world))
-	{
-		if (world->shader == 2)
-			draw_borders(world->canvas);
-		apply_convolution(world);
-		fill_canvas(world);
-	}
-}
-
-void	paint_not_threaded(t_world *world)
-{
-	t_pixel p;
-
-	p.y = 0;
-	while (world->cancel_render == 0 && p.y < world->canvas->win_size.y)
-	{
-		p.x = 0;
-		while (world->cancel_render == 0 &&  p.x < world->canvas->win_size.x)
+		i = -1;
+		p_y = 0;
+		while (++i < NTHREADS)
 		{
-			paint_pixel(p, render_pixel(world, p, 0), world->canvas);
-			p.x++;
+			start_thread(world, p_y, i, (int *)world->canvas->surface->pixels);
+			p_y += world->canvas->win_size.y / NTHREADS;
 		}
-		p.y++;
+		if (!join_threads(world))
+		{
+			if (world->shader == 2)
+				draw_borders(world->canvas);
+			apply_convolution(world);
+			fill_canvas(world);
+		}
 	}
-	fill_canvas(world);
 }

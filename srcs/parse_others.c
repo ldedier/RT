@@ -26,7 +26,7 @@ void	ft_parse_refraction(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	read_double(&line, refraction);
+	read_cdouble(&line, refraction, 0, 5);
 	parser->op = ft_parse_tag(&line, parser);
 	ft_process_tag_pop(parser);
 }
@@ -45,7 +45,7 @@ void	ft_parse_reflection(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	read_double(&line, reflection);
+	read_cdouble(&line, reflection, 0, 1);
 	parser->op = ft_parse_tag(&line, parser);
 	ft_process_tag_pop(parser);
 }
@@ -65,7 +65,7 @@ void	ft_parse_transparency(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	read_double(&line, transparency);
+	read_cdouble(&line, transparency, 0, 1);
 	parser->op = ft_parse_tag(&line, parser);
 	ft_process_tag_pop(parser);
 }
@@ -84,7 +84,7 @@ void	ft_parse_shine(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	read_double(&line, shine);
+	read_cdouble(&line, shine, 0, 1000000);
 	parser->op = ft_parse_tag(&line, parser);
 	ft_process_tag_pop(parser);
 }
@@ -105,7 +105,7 @@ void	ft_parse_intensity(t_parser *parser, t_world *world, char *line)
 				parser->nb_lines);
 		exit(1);
 	}
-	read_double(&line, intensity);
+	read_cdouble(&line, intensity, 0, 100000);
 	parser->op = ft_parse_tag(&line, parser);
 	ft_process_tag_pop(parser);
 }

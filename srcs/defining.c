@@ -6,14 +6,13 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 18:45:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/30 22:44:59 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/10 05:59:38 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "rt.h"
 
-t_cobject *get_defcobject(char *str, t_cobjlist *cobjlist)
+t_cobject	*get_defcobject(char *str, t_cobjlist *cobjlist)
 {
 	t_cobjlist *ptr;
 
@@ -27,7 +26,7 @@ t_cobject *get_defcobject(char *str, t_cobjlist *cobjlist)
 	return (NULL);
 }
 
-int		already_exists_defcobj(char *str, t_cobjlist *cobjlist)
+int			already_exists_defcobj(char *str, t_cobjlist *cobjlist)
 {
 	t_cobjlist *ptr;
 
@@ -41,7 +40,7 @@ int		already_exists_defcobj(char *str, t_cobjlist *cobjlist)
 	return (0);
 }
 
-void	ft_process_switch_list_cobject(t_cobjlist **cobjlist,
+void		ft_process_switch_list_cobject(t_cobjlist **cobjlist,
 		t_cobjlist **defcobjlist)
 {
 	t_cobjlist *tmp;

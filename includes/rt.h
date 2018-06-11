@@ -6,10 +6,14 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/11 09:38:23 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/11 09:13:20 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+//DONE fix shadow with directional light
+//DONE fix light intensity?
+//TODO leaks
+//TODO	norm
+//TODO	remove debug
 //NVM	reflection = 1 && bounces = 0 renders BLACK.AAAAAAAH
 //DONE	fix <perturbation>asdf</perturbation> segfault
 //DONE	transparency shadows: canviar color i perdre llum PER CADA SRAY
@@ -44,6 +48,8 @@
 //NOPE	(?)start rendering detailed scene when not moving, cancel if move again
 //DONE separate normals and intersections calculating
 
+//TODO scale <1 !!!!??
+//
 //SEGFAULT IF MOVING SELECTED WITH NO ITEMS
 
 #ifndef RT_H
@@ -173,6 +179,7 @@ typedef struct			s_canvas
 	t_pixel				win_size;
 	t_pixel				fast_win_size;
 	t_pixel				halved_win_size;
+	int					*red_pixels;
 	int					npixels;
 	double				ratio;
 	int					fast_ratio;
@@ -328,12 +335,41 @@ typedef struct			s_aux_render
 	double				f_transp;
 }						t_aux_render;
 
+typedef struct			s_illum
+{
+	double				in;
+	t_color				color;
+}						t_illum;
+
 typedef struct			s_intcolor
 {
 	float				r;
 	float				g;
 	float				b;
 }						t_intcolor;
+
+typedef struct			s_shadow
+{
+	t_line				sray;
+	t_illum				il;
+	t_intcolor			icol;
+}						t_shadow;
+
+typedef struct			s_shadowsfree
+{
+	t_shadow			**shadows;
+	int					nlights;
+}						t_shadowsfree;
+
+typedef struct			s_aux_ray_color
+{
+	t_aux_render		x;
+	t_illum				fog;
+	t_shadow			*shadows[MAX_LIGHTS];
+	t_shadowsfree		aux;
+	t_hit				*hit;
+	t_line				*ray;
+}						t_aux_ray_color;
 
 /*
  ** the scanhit function is what determines what the object is, as we
@@ -384,12 +420,6 @@ typedef struct			s_bmp_parser
 	int					bitmap_index;
 	short				bpp;
 }						t_bmp_parser;
-
-typedef struct			s_illum
-{
-	double				in;
-	t_color				color;
-}						t_illum;
 
 typedef struct			s_mod
 {
@@ -496,12 +526,6 @@ typedef struct			s_auxcone
 	t_point3d			sdcolo2d;
 	double				sqcos;
 	double				sqsin;
-	/*
-	   double				sqcos;
-	   double				dv;
-	   t_point3d			co;
-	   double				cov;
-	   */
 }						t_auxcone;
 
 typedef struct			s_cobjlist
@@ -510,6 +534,20 @@ typedef struct			s_cobjlist
 	t_cobject			*cobject;
 	struct s_cobjlist	*next;
 }						t_cobjlist;
+
+typedef struct			s_auxtracer
+{
+	t_line				transformed;
+	t_objlist			*objlist;
+	int					neg;
+	t_object			*other;
+}						t_auxtracer;
+
+typedef struct			s_auxtracer2
+{
+	t_auxtracer			auxtracer;
+	t_object			obj;
+}						t_auxtracer2;
 
 typedef struct			s_auxtorus
 {
@@ -679,6 +717,7 @@ typedef struct			s_world
 	t_bmp_parser		bmp_parser;
 	t_menu				menu;
 	int					max_bounce;
+	int					stereoscopic;
 }						t_world;
 
 typedef struct			s_thr_par
@@ -686,20 +725,8 @@ typedef struct			s_thr_par
 	t_world				*world;
 	int					p_y;
 	int					id;
+	int					*pixels;
 }						t_thr_par;
-
-typedef struct			s_shadow
-{
-	t_line				sray;
-	t_illum				il;
-	t_intcolor			icol;
-}						t_shadow;
-
-typedef struct			s_shadowsfree
-{
-	t_shadow			**shadows;
-	int					nlights;
-}						t_shadowsfree;
 
 typedef struct			s_convolution
 {
@@ -763,7 +790,6 @@ typedef struct  s_mmap
 void					ft_loop(t_world *world);
 int						draw_frame(void *param);
 int						key_press(int keycode, void *param);
-int						end(t_world *world);
 int						get_input(t_world *e);
 void					ft_keys_event(t_world *world, SDL_Event event, int down);
 void					ft_process(t_world *world);
@@ -795,6 +821,8 @@ t_cut					*ft_new_cut(void);
 t_mod					ft_new_mod(void);
 void					ft_init_light(t_light *light);
 void					init_video(t_world *world, t_video *video);
+int						freeworld(t_world **world, int ret);
+
 /*
  ** parser
  */
@@ -806,6 +834,8 @@ int						parse_light(char *line, t_light *rlight);
 int						read_int(char **line, int *to);
 int						read_hex(char **line, int *to);
 int						read_double(char **line, double *to);
+int						read_cdouble(char **line, double *to,
+							double min, double max);
 int						parse_ambient(char *line, t_illum *rillum);
 int						parse_fog(char *line, t_illum *rillum);
 void					ft_process_parsing(t_parser *prsr, t_world *world,
@@ -927,6 +957,7 @@ t_color					interpole_color(double t, t_color c1, t_color c2);
 t_color					get_color(int color);
 t_color					add_colors(t_color c1, t_color c2);
 t_color					scale_color(t_color c, double t);
+double					getwhiteratio(t_color c, double bot, double top);
 
 /*
 **int colors (for filter calculations)
@@ -953,30 +984,39 @@ void					sharpen(t_canvas *canvas);
 void					emboss(t_canvas *canvas);
 void					sobel(t_canvas *canvas);
 void					grey(t_canvas *canvas);
+void					cyan(t_canvas *canvas, int *pixels);
+void					red(t_canvas *canvas, int *pixels);
 void					draw_borders(t_canvas *canvas);
 
 /*
 **render
 */
 t_color					render_pixel(t_world *world, t_pixel pix, int fast);
+void					ft_init_aux_render(t_aux_render *x, t_hit *hit);
 t_point3d				screen2world(t_pixel pix, t_world *world, t_pixel aa);
-void					paint_pixel(t_pixel p, t_color c, t_canvas *canvas);
+void					paint_pixel(t_pixel p, t_color c, int *pixels, t_pixel
+		size);
 t_line					newray(t_point3d p, t_point3d vec);
+t_color					ray_color(t_line ray, t_world *world,
+		int bounce, int fast);
 t_hit					*trace(t_line line, t_cobjlist *cobjlist);
 void					castshadows(t_world *w, t_hit *h, t_shadow **shadows);
 t_color					illuminate(t_world *world, t_hit *hit,
 		t_shadow **shadows, int fast);
-t_color					illuminate_toon(t_world *world, t_hit *hit,
-		t_shadow **shadows, int fast);
+t_color					get_ebloui(t_world *world, t_line ray,
+		double t, double *ratio);
 
 /*
 **paint window
 */
 void					paint_threaded_fast(t_world *world);
-void					fill_canvas(t_world *world);
-int						join_threads(t_world *world);
 void					paint_threaded(t_world *world);
-void					paint_not_threaded(t_world *world);
+void					ft_paint_stereoscopic(t_world *world);
+void					start_thread(t_world *world, int p_y, int i, int *pxls);
+void					*render_thr(void *thpar);
+void					fill_canvas(t_world *world);
+void					merge_canvas(t_world *world);
+int						join_threads(t_world *world);
 void					update_progress_bar(t_world *world);
 
 /*
@@ -1010,6 +1050,23 @@ int						intersect_paraboloid(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
 int						intersect_mobius(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
+
+/*
+**intersections tools
+*/
+
+int						ft_is_zero(long double complex z);
+int						resolve_cubic(t_cubic equa,
+		double complex qsols[MAX_DEGREE]);
+int						resolve_quartic(t_quartic equa,
+		double complex qsols[MAX_DEGREE]);
+t_cubic					ft_quartic_as_cubic(t_quartic quartic);
+int						ft_transfer_real_roots(double complex qsols[MAX_DEGREE],
+		int nbqsols, double sols[MAX_DEGREE]);
+void					noquartics(double complex qsols[MAX_DEGREE]);
+t_affine				ft_quadratic_as_affine(t_quadratic quadratic);
+t_quadratic				ft_cubic_as_quadratic(t_cubic cubic);
+long complex double		ft_cbrt(long complex double z, int i);
 
 /*
 **normals
@@ -1046,7 +1103,9 @@ void					ft_init_aux(t_auxquart_init *g, t_line line);
 */
 int						ft_evaluate_cut(t_cut cut, t_point3d pos, t_hit hit);
 double					get_smallest_legal_pos_val(t_hit newhit, t_sols sols,
-		double min, t_line transformed, t_objlist *objlist, int neg, t_object *other);
+		double min, t_auxtracer aux);
+double					get_smallest_legal_pos_val_t(t_hit newhit, t_sols sols,
+		double min, t_line line);
 
 /*
 **negatives
@@ -1070,15 +1129,17 @@ int						inside_hyperboloid(t_hit h, t_object obj);
 /*
 **tools
 */
-void    set_funcs(t_object *obj,
+void    				set_funcs(t_object *obj,
 		int (*intersect_func)(t_line, t_object, double[MAX_DEGREE]),
 		int (*inside_func)(t_hit, t_object),
 		t_point3d (*normal_func)(t_object, t_point3d, t_line));
 int						equal_double(double a, double b);
 t_pixel					fast_div(const t_canvas *canvas);
-double	get_sum(t_color color);
-
-
+double					get_sum(t_color color);
+double					clamp_newillu(double ni, t_world *w, double shilin);
+t_hit					*retfree(int r, t_hit **hit);
+t_color					freeret_rend(t_color c, t_hit **hit,
+		t_shadowsfree *aux);
 
 /*
 **inequalities
@@ -1099,13 +1160,11 @@ double					perlin(double x, double y, double z);
 /*
 ** automatics
 */
-
 void					ft_process_automatic(t_parser *parser, t_world *world);
 
 /*
 ** defining
 */
-
 void					ft_process_switch_list_cobject(t_cobjlist ** cobjlist,
 		t_cobjlist ** defcobjlist);
 int						already_exists_defcobj(char *name, t_cobjlist *cobjlst);
@@ -1136,7 +1195,6 @@ void					apply_rotation(t_camera *cam);
 /*
 ** automatic render
 */
-
 void					ft_look_at(t_camera *cam, t_point3d tolook);
 void					ft_pivot_camera(t_camera *cam, t_point3d tolook);
 void					ft_left_click_event(t_world *e, SDL_Event event);
@@ -1144,19 +1202,20 @@ void					ft_left_click_event(t_world *e, SDL_Event event);
 /*
 ** textures
 */
-
-int					texture_sphere(t_object obj, t_hit *hit, t_bmp_parser p);
-int					texture_cylinder(t_object obj, t_hit *hit, t_bmp_parser p);
-int					texture_plane(t_object obj, t_hit *hit, t_bmp_parser p);
-int					texture_cone(t_object obj, t_hit *hit, t_bmp_parser p);
-t_bmp_parser		ft_parse_bmp(char *src);
-int					get_object_color(t_hit *hit);
-int					get_object_color_normal(t_hit *hit);
+int						texture_sphere(t_object obj, t_hit *hit,
+		t_bmp_parser p);
+int						texture_cylinder(t_object obj, t_hit *hit,
+		t_bmp_parser p);
+int						texture_plane(t_object obj, t_hit *hit, t_bmp_parser p);
+int						texture_cone(t_object obj, t_hit *hit, t_bmp_parser p);
+t_bmp_parser			ft_parse_bmp(char *src);
+int						get_object_color(t_hit *hit);
+int						get_object_color_normal(t_hit *hit);
+t_point3d				get_normal(t_object obj, t_hit *hit, t_line line);
 
 /*
 ** matrices
 */
-
 void					ft_compute_matrix(t_object *object);
 void					ft_compute_matrices_clist(t_cobjlist *cobjects);
 t_line					ft_transform_line(t_object object, t_line t);
@@ -1166,19 +1225,16 @@ void					ft_transform_hit_back(t_hit *hit, t_line line);
 /*
 ** video
 */
-
 void				ft_add_frame_to_video(t_world *world);
 
 /*
 ** export
 */
-
 int					ft_export_rt(t_world *world, char *extension);
 
 /*
 ** bmp reader
 */
-
 int		ft_get_pixel(int x, int y, t_bmp_parser parser);
 
 /*

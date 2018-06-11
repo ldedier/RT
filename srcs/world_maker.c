@@ -6,22 +6,31 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:36:26 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/11 06:12:05 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/11 10:15:17 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	freecanvas(t_canvas *canvas)
+static void			freecanvas(t_canvas **canvas)
 {
-	free(canvas);
+	SDL_DestroyRenderer((*canvas)->renderer);
+	SDL_DestroyWindow((*canvas)->window);
+	SDL_DestroyTexture((*canvas)->texture);
+	SDL_FreeSurface((*canvas)->surface);
+	SDL_DestroyTexture((*canvas)->win_texture);
+	SDL_FreeSurface((*canvas)->win_surface);
+	free(*canvas);
+	*canvas = NULL;
 }
 
-int		freeworld(t_world *world, int ret)
+int					freeworld(t_world **world, int ret)
 {
-	del_clst(&(world->cobjlist));
-	free(world->cam);
-	free(world);
+	del_clst(&((*world)->cobjlist));
+	free((*world)->cam);
+/*	free(*world);
+	*world = NULL;*/
+	ft_printf("byee (-‘ _ ‘-)つ \n");
 	return (ret);
 }
 
@@ -31,12 +40,12 @@ int		new_world_2(t_world **world, t_canvas *canvas, char *file)
 
 	if ((rw_err = read_world(*world, file)))
 	{
-		freecanvas(canvas);
-		return (freeworld(*world, rw_err));
+		freecanvas(&canvas);
+		return (freeworld(world, rw_err));
 	}
 	if (ft_init_sdl(*world) == 0)
 	{
-		freecanvas(canvas);
+		freecanvas(&canvas);
 		return (-3);
 	}
 	set_positions(*world);
@@ -51,12 +60,12 @@ int		new_world(char *file, t_world **world)
 		return (-3);
 	if (!(*world = malloc(sizeof(t_world))))
 	{
-		freecanvas(canvas);
+		freecanvas(&canvas);
 		return (-3);
 	}
 	if (!((*world)->cam = malloc(sizeof(t_camera))))
 	{
-		freecanvas(canvas);
+		freecanvas(&canvas);
 		free(*world);
 		return (-3);
 	}

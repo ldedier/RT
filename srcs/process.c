@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:28:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/10 08:08:39 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/11 10:35:26 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,15 @@ void    ft_process(t_world *e)
 		}
 		if (e->keys[key_p])
 		{
-			e->selected_cobject->s.x -= e->cam->speed;
-			e->selected_cobject->s.y -= e->cam->speed;
-			e->selected_cobject->s.z -= e->cam->speed;
-			e->selected_cobject->objlist->object->object_union.plane.texture_trans_x += 100;
+			if (e->selected_cobject->s.x - e->cam->speed > 1.f && 
+					e->selected_cobject->s.y - e->cam->speed > 1.f &&
+					e->selected_cobject->s.z - e->cam->speed > 1.f)
+			{
+				e->selected_cobject->s.x -= e->cam->speed;
+				e->selected_cobject->s.y -= e->cam->speed;
+				e->selected_cobject->s.z -= e->cam->speed;
+				e->selected_cobject->objlist->object->object_union.plane.texture_trans_x += 100;
+			}
 		}
 		if (e->keys[key_n])
 		{
@@ -161,5 +166,4 @@ void    ft_process(t_world *e)
 	}
 	apply_rotation(e->cam);
 	ft_compute_matrices_clist(e->cobjlist);
-//	print_clist(e->cobjlist);
 }

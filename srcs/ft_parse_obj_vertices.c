@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 18:47:24 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/27 19:53:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/08 23:54:37 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	ft_pow_coord(char const *s, int *i, double *coord)
 	}
 	if(s[start] == '-')
 		pow *= -1;
-	printf("%d\n", pow);
 	*coord = *coord * ft_pow(10 , pow);
 }
 
@@ -77,7 +76,7 @@ void	ft_obj_add_coord(int *i, char *s , double *coord)
 	int start;
 
 	*coord = 0;
-	while (!ft_isdigit(s[*i]) && s[*i] != '-')
+	while (!ft_isdigit(s[*i]) && s[*i] != '-' && s[*i])
 		*i += 1;
 	start = *i;
 	if (s[*i] == '+' || s[*i] == '-')
@@ -95,16 +94,21 @@ void	ft_obj_add_coord(int *i, char *s , double *coord)
 		*coord *= -1;
 }
 
-void	ft_obj_vertex(int *i, char *s, t_obj_parser *parser)
+void	ft_obj_vertex(char *s, t_obj_parser *parser)
 {
 	t_point3d *vertex;
 
-	vertex = (t_point3d *)(malloc(sizeof(t_point3d)));
-	ft_obj_add_coord(i, s, &(vertex->x));
-	ft_obj_add_coord(i, s, &(vertex->y));
-	ft_obj_add_coord(i, s, &(vertex->z));
-	while (s[*i] != '\0' && s[*i] != '\n')
-		*i += 1;
+	int i;
+	
+	i = 0;
+	if (!(vertex = (t_point3d *)(malloc(sizeof(t_point3d)))))
+	{
+		ft_dprintf(2, "malloc error\n");
+		exit(1);
+	}
+	ft_obj_add_coord(&i, s, &(vertex->x));
+	ft_obj_add_coord(&i, s, &(vertex->y));
+	ft_obj_add_coord(&i, s, &(vertex->z));
 	ft_lstpushback(&(parser->vertices_tmp), ft_lstnew_ptr(vertex, sizeof(t_point3d)));
 	parser->nb_vertices++;
 }

@@ -7,7 +7,7 @@
 		<cobject>
 			<object name = "sphere">
 				<positionXYZ>-1.4 -1 0</positionXYZ>
-				<color>0x00ff00</color>
+				<color>0x456789</color>
 			</object>
 		</cobject>
 		<cobject>

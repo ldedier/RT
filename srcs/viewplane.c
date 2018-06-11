@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/20 04:10:48 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/05 12:13:18 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/11 07:56:07 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_point3d	screen2world(t_pixel pix, t_world *world, t_pixel aa)
 	double		offset;
 
 	cam = world->cam;
-
 	aa_offset = cam->pd / world->aa_sq_size;
 	offset = aa_offset * aa.x + aa_offset / 2;
 	scale.x = -world->canvas->halved_win_size.x *

@@ -113,6 +113,7 @@ void	set_defaults(t_world *world)
 	world->can_export = 1;
 	world->animate = 0;
 	world->focus = 0;
+	world->stereoscopic = 0;
 	world->exporting_video = 0;
 	world->ticks = SDL_GetTicks();
 	world->aa_sq_size = AA_SQ_SIZE;

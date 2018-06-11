@@ -6,13 +6,13 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/11 09:07:48 by aherriau         ###   ########.fr        #
+#    Updated: 2018/06/11 09:06:18 by lcavalle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= rt
 
-CC		= gcc
+CC		= gcc -g
 
 PWD = \"$(shell pwd)\"
 
@@ -46,15 +46,25 @@ LIBSDL2TTF_INCLUDEDIR = ~/.brew/Cellar/sdl2_ttf/2.0.14/include/SDL2/
 
 SRCS_NO_PREFIX = camera_rotations.c\
 				 colors.c\
-				 input.c\
 				 debug.c\
 				 intersections.c\
+				 intersections2.c\
+				 intersections3.c\
+				 intersections4.c\
+				 intersections5.c\
+				 intersections6.c\
+				 intersections7.c\
 				 lights.c\
+				 lights_tools.c\
 				 normals.c\
 				 normals2.c\
 				 normals3.c\
 				 obj_list.c\
 				 paint_threaded.c\
+				 paint_fast.c \
+				 paint_canvas.c\
+				 paint_threaded_tools.c\
+				 paint_stereoscopic.c\
 				 parse_settings.c\
 				 parse_main.c\
 				 parse_obj.c\
@@ -71,11 +81,15 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 parse_stack.c\
 				 populate_world.c\
 				 renderer.c\
+				 renderer2.c\
+				 renderer_tools.c\
 				 viewplane.c\
 				 rotations.c\
 				 rt.c\
 				 shadows.c\
 				 tracer.c\
+				 trace_tools.c\
+				 tracer_hitcheck.c\
 				 translations.c\
 				 vectors.c\
 				 vectors2.c\
@@ -85,8 +99,6 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 process.c \
 				 world_init.c\
 				 compute_matrix.c \
-				 paint_fast.c \
-				 paint_canvas.c\
 				 compute_matrix.c\
 				 ft_export_ppm.c\
 				 ft_export_bmp.c\
@@ -94,10 +106,11 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_get_name.c\
 				 ft_export.c\
 				 ft_export_y4m.c\
-				 lights_toon.c \
 				 convolute.c\
 				 filters.c\
+				 filters2.c\
 				 intcolors.c\
+				 intcolors2.c\
 				 perturbations.c\
 				 errors.c\
 				 refraction.c\
@@ -168,7 +181,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 menu_others_4.c\
 				 perlin.c
 
-INCLUDES_NO_PREFIX = rt.h objects.h export.h
+INCLUDES_NO_PREFIX = rt.h objects.h export.h obj.h
 
 SOURCES  = $(addprefix $(SRCDIR)/,      $(SRCS_NO_PREFIX))
 OBJECTS  = $(addprefix $(OBJDIR)/,      $(SRCS_NO_PREFIX:%.c=%.o))
@@ -180,8 +193,7 @@ INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 	  -I $(LIBSDL2TTF_INCLUDEDIR)
 
 CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror $(INC)
-
-LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat
+LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
 
 opti:
 	@make -j all

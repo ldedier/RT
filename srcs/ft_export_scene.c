@@ -419,6 +419,7 @@ int			ft_export_scene(t_world *world)
 	ft_print_lights(world, fd);
 	ft_print_others(world, fd);
 	dprintf(fd,"</scene>\n");
+	free(name);
 	close(fd);
 	return (1);
 }

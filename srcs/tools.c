@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 19:27:30 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/07 06:31:36 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/10 00:37:55 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ t_pixel	fast_div(const t_canvas *canvas)
 		div.x++;
 	while (canvas->win_size.y % (div.y * FAST_RATIO * NTHREADS) != 0 && div.y < 121)
 		div.y++;
-	printf("div: %i, %i\n",div.x, div.y);fflush(stdout);
 	if (div.x >= 121 || div.y >= 121)
 	{
-		printf("incorrect resolution. cannot find divisors for fast render.\n");
+		ft_putendl("incorrect resolution."
+				"cannot find divisors for fast render.");
 		exit(1);
 	}
 	return (div);

@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 02:18:08 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 02:35:04 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/11 10:15:51 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_mouse_button_others_10(t_world *world, int x, int y)
 				y <= (751 + world->menu.stop.height))
 		{
 			world->exporting_video = 0;
-			ft_export_y4m(world->video);
+			ft_export_y4m(&(world->video));
 			update_progress_bar(world);
 		}
 	}
