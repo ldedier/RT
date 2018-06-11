@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 07:54:41 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 07:55:47 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/11 10:53:00 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	ft_menu_lights_bloc2_position_1(t_world *world)
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0x666666);
 	ft_add_menu_surface(world);
-	world->menu.rect.x = world->canvas->win.w + 72;
+	world->menu.rect.x = world->canvas->win.w + 82;
 	world->menu.rect.y = 450;
 	world->menu.rect.w = 85;
 	world->menu.rect.h = 22;

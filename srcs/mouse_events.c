@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/10 01:02:11 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/11 10:54:12 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 //Relier Ebloui + Stereoscope aux variables
 //Bons Noms pour Cobj / Obj (a mettre au parsing)
 //Ne pas afficher les objects des Cobj OBJ (42/teapot)
+
+//Au debut ne pas clamp les variables des rangebars, juste ne pas montrer les ticks de selection
+//et apres ok quand click sur la rangebar ou autres
 
 //Marche pas pour Objects:
 //	- Scale
