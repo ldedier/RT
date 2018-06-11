@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 16:14:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/10 01:05:23 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/11 08:31:25 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_get_name_iter(char *s, char *extension, int iter)
 	char *tmp2;
 
 	if (iter == 0)
-		return ft_strjoin(s, extension);
+		return (ft_strjoin(s, extension));
 	else
 	{
 		tmp2 = ft_itoa(iter);
@@ -27,7 +27,7 @@ char	*ft_get_name_iter(char *s, char *extension, int iter)
 		free(tmp2);
 		res = ft_strjoin_3(s, tmp, extension);
 		free(tmp);
-		return res;
+		return (res);
 	}
 }
 
@@ -59,11 +59,11 @@ void	ft_remove_backslash(char *str)
 
 char	*ft_get_name(char *extension)
 {
-	time_t t;
-	struct tm *tm;
-	char *s;
-	char *str;
-	int i;
+	time_t		t;
+	struct tm	*tm;
+	char		*s;
+	char		*str;
+	int			i;
 
 	t = time(NULL);
 	tm = localtime(&t);

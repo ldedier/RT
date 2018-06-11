@@ -1,5 +1,0 @@
-parse_tools.c:	light->o = ft_new_vec3(0, 0, 0);
-parse_tools.c:	light->v = ft_new_vec3(0, 1, 0);
-parse_tools.c:	light->c = get_color(0xFFFFFF);
-parse_tools.c:	light->intensity = 1;
-parse_tools.c:	light->angle = M_PI / 4;

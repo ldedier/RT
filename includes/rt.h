@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/10 09:40:03 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/11 09:13:20 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //DONE fix shadow with directional light
@@ -335,12 +335,41 @@ typedef struct			s_aux_render
 	double				f_transp;
 }						t_aux_render;
 
+typedef struct			s_illum
+{
+	double				in;
+	t_color				color;
+}						t_illum;
+
 typedef struct			s_intcolor
 {
 	float				r;
 	float				g;
 	float				b;
 }						t_intcolor;
+
+typedef struct			s_shadow
+{
+	t_line				sray;
+	t_illum				il;
+	t_intcolor			icol;
+}						t_shadow;
+
+typedef struct			s_shadowsfree
+{
+	t_shadow			**shadows;
+	int					nlights;
+}						t_shadowsfree;
+
+typedef struct			s_aux_ray_color
+{
+	t_aux_render		x;
+	t_illum				fog;
+	t_shadow			*shadows[MAX_LIGHTS];
+	t_shadowsfree		aux;
+	t_hit				*hit;
+	t_line				*ray;
+}						t_aux_ray_color;
 
 /*
  ** the scanhit function is what determines what the object is, as we
@@ -391,12 +420,6 @@ typedef struct			s_bmp_parser
 	int					bitmap_index;
 	short				bpp;
 }						t_bmp_parser;
-
-typedef struct			s_illum
-{
-	double				in;
-	t_color				color;
-}						t_illum;
 
 typedef struct			s_mod
 {
@@ -687,19 +710,6 @@ typedef struct			s_thr_par
 	int					*pixels;
 }						t_thr_par;
 
-typedef struct			s_shadow
-{
-	t_line				sray;
-	t_illum				il;
-	t_intcolor			icol;
-}						t_shadow;
-
-typedef struct			s_shadowsfree
-{
-	t_shadow			**shadows;
-	int					nlights;
-}						t_shadowsfree;
-
 typedef struct			s_convolution
 {
 	t_canvas			*canvas;
@@ -964,23 +974,31 @@ void					draw_borders(t_canvas *canvas);
 **render
 */
 t_color					render_pixel(t_world *world, t_pixel pix, int fast);
+void					ft_init_aux_render(t_aux_render *x, t_hit *hit);
 t_point3d				screen2world(t_pixel pix, t_world *world, t_pixel aa);
 void					paint_pixel(t_pixel p, t_color c, int *pixels, t_pixel
 		size);
 t_line					newray(t_point3d p, t_point3d vec);
+t_color					ray_color(t_line ray, t_world *world,
+		int bounce, int fast);
 t_hit					*trace(t_line line, t_cobjlist *cobjlist);
 void					castshadows(t_world *w, t_hit *h, t_shadow **shadows);
 t_color					illuminate(t_world *world, t_hit *hit,
 		t_shadow **shadows, int fast);
+t_color					get_ebloui(t_world *world, t_line ray,
+		double t, double *ratio);
 
 /*
 **paint window
 */
 void					paint_threaded_fast(t_world *world);
+void					paint_threaded(t_world *world);
+void					ft_paint_stereoscopic(t_world *world);
+void					start_thread(t_world *world, int p_y, int i, int *pxls);
+void					*render_thr(void *thpar);
 void					fill_canvas(t_world *world);
 void					merge_canvas(t_world *world);
 int						join_threads(t_world *world);
-void					paint_threaded(t_world *world);
 void					update_progress_bar(t_world *world);
 
 /*
@@ -1014,6 +1032,23 @@ int						intersect_paraboloid(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
 int						intersect_mobius(t_line line, t_object obj,
 		double sols[MAX_DEGREE]);
+
+/*
+**intersections tools
+*/
+
+int						ft_is_zero(long double complex z);
+int						resolve_cubic(t_cubic equa,
+		double complex qsols[MAX_DEGREE]);
+int						resolve_quartic(t_quartic equa,
+		double complex qsols[MAX_DEGREE]);
+t_cubic					ft_quartic_as_cubic(t_quartic quartic);
+int						ft_transfer_real_roots(double complex qsols[MAX_DEGREE],
+		int nbqsols, double sols[MAX_DEGREE]);
+void					noquartics(double complex qsols[MAX_DEGREE]);
+t_affine				ft_quadratic_as_affine(t_quadratic quadratic);
+t_quadratic				ft_cubic_as_quadratic(t_cubic cubic);
+long complex double		ft_cbrt(long complex double z, int i);
 
 /*
 **normals
@@ -1085,7 +1120,8 @@ t_pixel					fast_div(const t_canvas *canvas);
 double					get_sum(t_color color);
 double					clamp_newillu(double ni, t_world *w, double shilin);
 t_hit					*retfree(int r, t_hit **hit);
-
+t_color					freeret_rend(t_color c, t_hit **hit,
+		t_shadowsfree *aux);
 
 /*
 **inequalities

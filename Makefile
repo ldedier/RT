@@ -6,7 +6,7 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/10 07:36:38 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/06/11 09:06:18 by lcavalle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,12 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 colors.c\
 				 debug.c\
 				 intersections.c\
+				 intersections2.c\
+				 intersections3.c\
+				 intersections4.c\
+				 intersections5.c\
+				 intersections6.c\
+				 intersections7.c\
 				 lights.c\
 				 lights_tools.c\
 				 normals.c\
@@ -55,6 +61,10 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 normals3.c\
 				 obj_list.c\
 				 paint_threaded.c\
+				 paint_fast.c \
+				 paint_canvas.c\
+				 paint_threaded_tools.c\
+				 paint_stereoscopic.c\
 				 parse_settings.c\
 				 parse_main.c\
 				 parse_obj.c\
@@ -71,6 +81,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 parse_stack.c\
 				 populate_world.c\
 				 renderer.c\
+				 renderer2.c\
+				 renderer_tools.c\
 				 viewplane.c\
 				 rotations.c\
 				 rt.c\
@@ -87,8 +99,6 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 process.c \
 				 world_init.c\
 				 compute_matrix.c \
-				 paint_fast.c \
-				 paint_canvas.c\
 				 compute_matrix.c\
 				 ft_export_ppm.c\
 				 ft_export_bmp.c\
@@ -98,7 +108,9 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 ft_export_y4m.c\
 				 convolute.c\
 				 filters.c\
+				 filters2.c\
 				 intcolors.c\
+				 intcolors2.c\
 				 perturbations.c\
 				 errors.c\
 				 refraction.c\

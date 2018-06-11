@@ -6,48 +6,27 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/09 08:10:06 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/11 03:36:35 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-t_line		newray(t_point3d p, t_point3d vec)
-{
-	t_line	line;
 
-	line.o = p;
-	if (PERSPECTIVE == 1)
-		line.v = (t_point3d){.x = 0, .y = 0, .z = 1};
-	else if (PERSPECTIVE == 2)
-		line.v = normalize(vec);
-	return (line);
+static double		ebloui_coeff(t_line ray, t_light light)
+{
+	if (light.type == 'd')
+		return (-ft_dot_product(ray.v, light.v));
+	else
+		return (-ft_dot_product(ray.v,
+					normalize(ft_point3d_cmp(ray.o, light.o))));
 }
 
-static t_color		freeret(t_color c, t_hit **hit, t_shadowsfree *aux)
-{
-	int	i;
-
-	if (*hit)
-	{
-		free(*hit);
-		*hit = NULL;
-		i = -1;
-		if (aux)
-		{
-			while (++i < aux->nlights)
-				if (aux->shadows[i])
-					free(aux->shadows[i]);
-		}
-	}
-	return (c);
-}
-
-static t_color		ebloui(t_world *world, t_line ray, double t, double *ratio)
+t_color				get_ebloui(t_world *world, t_line ray, double t, double *ratio)
 {
 	int		i;
-	float	coeff;
-	float	sum;
+	double	coeff;
+	double	sum;
 	double dist;
 
 	sum = 0.0f;
@@ -59,10 +38,7 @@ static t_color		ebloui(t_world *world, t_line ray, double t, double *ratio)
 			i++;
 			continue;
 		}
-		if (world->lights[i].type == 'd')
-			coeff = -ft_dot_product(ray.v, world->lights[i].v);
-		else
-			coeff = -ft_dot_product(ray.v, normalize(ft_point3d_cmp(ray.o, world->lights[i].o)));
+		coeff = ebloui_coeff(ray, world->lights[i]);
 		dist = magnitude(ft_point3d_cmp(ray.o, world->lights[i].o));
 		coeff /= (dist * dist);
 		if (coeff > 0 && (dist < t || t == -1))
@@ -74,123 +50,52 @@ static t_color		ebloui(t_world *world, t_line ray, double t, double *ratio)
 	return (interpole_color(sum, world->fog.color, get_color(0xffffff)));
 }
 
-double				ft_process_mod(t_color color, double old, t_mod mod)
+static t_color		render_fast(t_world *world, t_pixel pix)
 {
-	int take_old;
+	t_pixel		aapix;
+	t_line		line;
+	t_point3d	point;
 
-	if (!mod.enabled)
-		return old;
-	else
-	{
-		if (mod.color == 0xff0000)
-			take_old = (mod.inequality((color.r / get_sum(color)), mod.value));
-		else if (mod.color == 0x00ff00)
-			take_old = (mod.inequality((color.g / get_sum(color)), mod.value));
-		else
-			take_old = (mod.inequality((color.b / get_sum(color)), mod.value));
-		return (take_old ? mod.mod_value : old);
-	}
+	aapix.x = 0;
+	aapix.y = 0;
+	point = screen2world(pix, world, aapix);
+	line = newray(point, newvector(world->cam->o, point));
+	line.x = pix.x;
+	line.y = pix.y;
+	return(ray_color(line, world, 0, 1));
 }
 
-void				ft_init_aux_render(t_aux_render *x, t_hit *hit)
+static t_color		render_slow(t_world *world, t_pixel pix)
 {
-	t_color color;
+	t_pixel		aapix;
+	t_line		line;
+	t_intcolor	ret;
+	t_point3d	point;
 
-	color = get_color(get_object_color(hit));
-	x->f_refract = ft_process_mod(color, hit->obj.refract, hit->obj.mod_refract);
-	x->f_reflect = ft_process_mod(color, hit->obj.reflect, hit->obj.mod_reflect);
-	x->f_transp = ft_process_mod(color, hit->obj.transp, hit->obj.mod_transp);
-}
-
-static t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
-{
-	t_hit			*hit;
-	t_shadow		*shadows[MAX_LIGHTS];
-	t_shadowsfree	aux;
-	t_color			reflect_c;
-	t_color			refract_c;
-	t_color			fogged_c;
-	t_color			illuminated_c;
-	t_color			ebloui_c;
-	double fog;
-	double			ebloui_ratio;
-	t_aux_render 	x;
-
-	if ((hit = trace(ray, world->cobjlist)))
+	aapix.x = -1;
+	ret = new_intcolor();
+	while (++aapix.x < world->aa_sq_size)
 	{
-		ft_init_aux_render(&x, hit);
-		fog = magnitude(newvector(hit->point, world->cam->o)) * world->fog.in;
-		fog = fog > 1.0 ? 1.0 : fog;
-		castshadows(world, hit, shadows);
-		aux = (t_shadowsfree){.shadows = shadows, .nlights = world->nlights};
-		illuminated_c = illuminate(world, hit, shadows, fast);
-		fogged_c = interpole_color(fog, illuminated_c, world->fog.color);
-		if (bounce < world->max_bounce && x.f_reflect > EPSILON && !fast)
-			reflect_c = ray_color(newray(translate_vec(hit->point,
-							hit->pertbounce, EPSILON2), hit->pertbounce),
-					world, bounce + 1, 0);
-		else
-			reflect_c = pert_color(hit);
-		if (bounce < world->max_bounce && x.f_transp > EPSILON && !fast)
+		aapix.y = -1;
+		while (++aapix.y < world->aa_sq_size)
 		{
-			if (fabs(x.f_refract - 1) > EPSILON)
-				refract_c = ray_color(newray(translate_vec(hit->point,
-								ray.v, EPSILON), refraction(hit, &ray, x.f_refract)),
-						world, bounce + 1, 0);
-			else
-				refract_c = ray_color(newray(translate_vec(hit->point,
-								ray.v, EPSILON), ray.v),
-						world, bounce, 0);
+			point = screen2world(pix, world, aapix);
+			line = newray(point, newvector(world->cam->o, point));
+			line.x = pix.x;
+			line.y = pix.y;
+			ret = add_scale_intcolors(ret,
+					get_intcolor(ray_color(line, world, 0, 0)),
+					1.f / world->aa_sq_size / world->aa_sq_size);
 		}
-		else
-			refract_c = pert_color(hit);
-
-		ebloui_c = ebloui(world, ray, hit->t, &ebloui_ratio);
-		return (freeret(interpole_color(x.f_transp,
-						interpole_color(x.f_reflect,
-							interpole_color(ebloui_ratio , fogged_c, WHITE_COLOR),
-								reflect_c), refract_c), &hit, &aux));
-
 	}
-	ebloui_c = ebloui(world, ray, -1, &ebloui_ratio);
-	return (freeret(ebloui_c, &hit, NULL));
+	return (scale_convert_color(ret, 1));
 }
 
 t_color				render_pixel(t_world *world, t_pixel pix, int fast)
 {
-	t_point3d	point;
-	t_intcolor	ret;
-	t_line		line;
-	t_pixel		aapix;
 
-	ret = new_intcolor();
 	if (!fast)
-	{
-		aapix.x = -1;
-		while (++aapix.x < world->aa_sq_size)
-		{
-			aapix.y = -1;
-			while (++aapix.y < world->aa_sq_size)
-			{
-				point = screen2world(pix, world, aapix);
-				line = newray(point, newvector(world->cam->o, point));
-				line.x = pix.x;
-				line.y = pix.y;
-				ret = add_scale_intcolors(ret,
-						get_intcolor(ray_color(line, world, 0, fast)),
-						1.f / world->aa_sq_size / world->aa_sq_size);
-			}
-		}
-	}
+		return (render_slow(world, pix));
 	else
-	{
-		aapix.x = 0;
-		aapix.y = 0;
-		point = screen2world(pix, world, aapix);
-		line = newray(point, newvector(world->cam->o, point));
-		line.x = pix.x;
-		line.y = pix.y;
-		return (ray_color(line, world, 0, fast));
-	}
-	return (scale_convert_color(ret, 1));
+		return (render_fast(world, pix));
 }

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 18:03:58 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/09 07:02:22 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/11 08:13:36 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_image		ft_populate_image(t_world *world)
 {
-	return ft_new_image(world->canvas->win_size.x,
-			world->canvas->win_size.y, world->canvas->surface->pixels);
+	return (ft_new_image(world->canvas->win_size.x,
+			world->canvas->win_size.y, world->canvas->surface->pixels));
 }
 
 int			ft_export(t_image image, char *extension)
@@ -34,10 +34,10 @@ int			ft_export(t_image image, char *extension)
 	}
 }
 
-int			ft_export_rt(t_world *world, char * extension)
+int			ft_export_rt(t_world *world, char *extension)
 {
 	t_image	image;
 
 	image = ft_populate_image(world);
-	return ft_export(image, extension);
+	return (ft_export(image, extension));
 }

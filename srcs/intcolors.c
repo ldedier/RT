@@ -6,44 +6,11 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:50:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/09 05:10:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/11 08:34:05 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
-t_intcolor	greyscale(t_intcolor c)
-{
-	double	grey;
-
-	grey = (c.r + c.g + c.b) / 3;
-	c.r = grey;
-	c.g = grey;
-	c.b = grey;
-	return (c);
-}
-
-t_intcolor	cyanscale(t_intcolor c)
-{
-	double	cyan;
-
-	cyan = (c.r + c.g + c.b) / 3;
-	c.r = 0;
-	c.g = ft_clamp(0, cyan, 255);
-	c.b = ft_clamp(0, cyan, 255);
-	return (c);
-}
-
-t_intcolor	redscale(t_intcolor c)
-{
-	double red;
-
-	red = (c.r + c.g + c.b) / 3;
-	c.r = ft_clamp(0, red, 255);
-	c.g = 0;
-	c.b = 0;
-	return (c);
-}
 
 t_intcolor	new_intcolor(void)
 {
@@ -55,7 +22,8 @@ t_intcolor	new_intcolor(void)
 	return (ret);
 }
 
-t_intcolor	add_scale_intcolors(t_intcolor icol1, t_intcolor icol2, double scale)
+t_intcolor	add_scale_intcolors(t_intcolor icol1, t_intcolor icol2,
+		double scale)
 {
 	icol1.r += icol2.r * scale;
 	icol1.g += icol2.g * scale;

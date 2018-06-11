@@ -6,154 +6,59 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/10 01:28:02 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/11 08:10:38 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void	*render_thr(void *thpar)
+void		*render_thr(void *thpar)
 {
-	t_world		*world;
 	t_pixel		p;
-	int			p_y;
-	int			selfid;
-	int			*pixels;
+	t_thr_par	*tpar;
 
-	world = ((t_thr_par *)thpar)->world;
-	pixels = ((t_thr_par *)thpar)->pixels;
-	selfid = ((t_thr_par *)thpar)->id;
+	tpar = (t_thr_par *)thpar;
 	p.x = 0;
-	p_y = ((t_thr_par*)thpar)->p_y;
-	while (world->cancel_render == 0 && p.x < world->canvas->win_size.x)
+	while (tpar->world->cancel_render == 0 && p.x <
+			tpar->world->canvas->win_size.x)
 	{
-		p.y = p_y;
-		while (world->cancel_render == 0 &&
-				p.y < p_y + world->canvas->win_size.y / NTHREADS)
+		p.y = tpar->p_y;
+		while (tpar->world->cancel_render == 0 &&
+				p.y < tpar->p_y + tpar->world->canvas->win_size.y / NTHREADS)
 		{
-			paint_pixel(p, render_pixel(world, p, 0), pixels,
-					world->canvas->win_size);
-			world->progress++;
+			paint_pixel(p, render_pixel(tpar->world, p, 0), tpar->pixels,
+					tpar->world->canvas->win_size);
+			tpar->world->progress++;
 			p.y++;
 		}
 		p.x++;
 	}
 	free(thpar);
-	world->thr_state[selfid] = 2;
+	tpar->world->thr_state[tpar->id] = 2;
 	return (NULL);
 }
 
-static int	working_count(t_world *world)
+void		start_thread(t_world *world, int p_y, int i, int *pixels)
 {
-	int i;
-	int	count;
-
-	i = -1;
-	count = 0;
-	while (++i < NTHREADS)
-	{
-		if (world->thr_state[i] != 0)
-			count++;
-	}
-	return (count);
-}
-
-int			join_threads(t_world *world)
-{
-	int	i;
-	int	ret;
-	int	cancel;
-
-	i = -1;
-	cancel = 0;
-	while (working_count(world) > 0)
-	{
-		update_progress_bar(world);
-		if (world->cancel_render == 1)
-		{
-			i = -1;
-			world->cancel_render = 0;
-			cancel = 1;
-		}
-		if (world->thr_state[++i] == 2 ||
-				(world->thr_state[i] == 1 && cancel == 1))
-		{
-			if (pthread_join(world->threads[i], NULL))
-			{
-				ft_dprintf(2, "cannot join thread %d! exit...\n", i);
-				exit(freeworld(&world, 1));
-			}
-			world->thr_state[i] = 0;
-		}
-		if (i == NTHREADS)
-			i = -1;
-		if (get_input(world))
-			exit(freeworld(&world, 0));
-	}
-	if ((ret = (cancel == 1)) == 1)
-		ft_printf("rendering cancelled\n");
-	world->progress = 0;
-	world->cancel_render = 0;
-	return (ret);
-}
-
-void		ft_paint_stereoscopic(t_world *world)
-{
-
 	t_thr_par	*tpar;
-	int			p_y;
-	int			i;
 
-	i = -1;
-	p_y = 0;
-	while (++i < NTHREADS)
-	{
-		if (!(tpar = malloc(sizeof(t_thr_par))))
-			exit(1);
-		tpar->world = world;
-		tpar->pixels = (int *)world->canvas->surface->pixels;
-		tpar->p_y = p_y;
-		tpar->id = i;
-		world->thr_state[i] = 1;
-		if (pthread_create(&(world->threads[i]), NULL, render_thr, (void*)tpar))
-			exit(1);
-		p_y += world->canvas->win_size.y / NTHREADS;
-	}
-	if (!join_threads(world))
-	{
-		i = -1;
-		p_y = 0;
-		world->cam->o = translate_vec(world->cam->o, world->cam->right, -0.1);
-		while (++i < NTHREADS)
-		{
-			if (!(tpar = malloc(sizeof(t_thr_par))))
-				exit(0);
-			tpar->world = world;
-			tpar->pixels = world->canvas->red_pixels;
-			tpar->p_y = p_y;
-			tpar->id = i;
-			world->thr_state[i] = 1;
-			if (pthread_create(&(world->threads[i]), NULL, render_thr, (void*)tpar))
-				exit(1);
-			p_y += world->canvas->win_size.y / NTHREADS;
-		}
-		if (!join_threads(world))
-		{
-			red(world->canvas, world->canvas->red_pixels);
-			cyan(world->canvas, (int *)world->canvas->surface->pixels);
-			merge_canvas(world);
-			fill_canvas(world);
-		}
-	}
-	world->cam->o = translate_vec(world->cam->o, world->cam->right, 0.1);
+	if (!(tpar = malloc(sizeof(t_thr_par))))
+		exit(0);
+	tpar->world = world;
+	tpar->pixels = pixels;
+	tpar->p_y = p_y;
+	tpar->id = i;
+	world->thr_state[i] = 1;
+	if (pthread_create(&(world->threads[i]), NULL, render_thr, (void*)tpar))
+		exit(0);
 }
 
 void		paint_threaded(t_world *world)
 {
-	t_thr_par	*tpar;
 	int			p_y;
 	int			i;
 
+	ft_putendl("Render image");
 	if (world->stereoscopic)
 		ft_paint_stereoscopic(world);
 	else
@@ -162,15 +67,7 @@ void		paint_threaded(t_world *world)
 		p_y = 0;
 		while (++i < NTHREADS)
 		{
-			if (!(tpar = malloc(sizeof(t_thr_par))))
-				exit(0);
-			tpar->world = world;
-			tpar->pixels = (int *)world->canvas->surface->pixels;
-			tpar->p_y = p_y;
-			tpar->id = i;
-			world->thr_state[i] = 1;
-			if (pthread_create(&(world->threads[i]), NULL, render_thr, (void*)tpar))
-				exit(0);
+			start_thread(world, p_y, i, (int *)world->canvas->surface->pixels);
 			p_y += world->canvas->win_size.y / NTHREADS;
 		}
 		if (!join_threads(world))
