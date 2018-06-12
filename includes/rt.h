@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 08:26:17 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 09:54:49 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //DONE fix shadow with directional light
@@ -1315,6 +1315,28 @@ void				ft_print_piriform_caracteristics(t_object object, int fd);
 void				ft_print_hyperboloid_caracteristics(t_object object, int fd);
 void				ft_print_paraboloid_caracteristics(t_object object, int fd);
 void				ft_print_triangle_caracteristics(t_object object, int fd);
+void				ft_print_cobjs_2(t_cobject cobj, char *shape, int fd);
+void				ft_print_cobjs(t_cobjlist *lst, int fd);
+void				ft_print_cobjlist(t_world *world, int fd);
+void				ft_print_defines(t_world *world, int fd);
+void				ft_print_cobject(t_cobject cobj, int fd);
+char				*ft_get_cobject_name(t_cobject cobj, int *type);
+void				ft_print_adn(t_cobject cobj, int fd);
+void				ft_print_sphere_torus(t_cobject cobj, int fd);
+void				ft_print_cobjs_3(t_cobjlist *lst, t_cobject cobj, int fd);
+char				*ft_get_object_name_2(t_object obj);
+char				*ft_get_object_name(t_object obj);
+void				ft_print_obj_perturbation(t_object obj, int fd);
+void				ft_print_object(t_object obj, int fd);
+void				ft_print_cobj_perturbation(t_cobject cobj, int fd);
+void				ft_print_cut(t_cut cut, int fd);
+void				ft_print_object_cuts(t_object obj, int fd);
+void				ft_print_filter(t_world *world, int fd);
+void				ft_print_light(t_world *world, int fd, char *type, int i);
+void				ft_print_lights(t_world *world, int fd);
+void				ft_print_others_2(t_world *world, int fd);
+void				ft_print_others(t_world *world, int fd);
+void				ft_print_camera(t_world *world, int fd);
 
 /*
 ** Mouse events

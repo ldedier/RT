@@ -6,7 +6,7 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/12 06:58:44 by ldedier          ###   ########.fr        #
+#    Updated: 2018/06/12 09:54:46 by aherriau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -142,6 +142,13 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 parse_plane_textures.c\
 				 ft_parse_bmp.c\
 				 ft_export_scene.c\
+				 ft_export_scene_2.c\
+				 ft_export_scene_3.c\
+				 ft_export_scene_4.c\
+				 ft_export_scene_5.c\
+				 ft_export_scene_6.c\
+				 ft_export_scene_7.c\
+				 ft_export_scene_8.c\
 				 init_sdl.c\
 				 init_menu.c\
 				 init_menu_2.c\
