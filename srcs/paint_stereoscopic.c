@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 05:58:28 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/11 23:07:16 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 05:17:38 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static void	finish_stereoscopic(t_world *world)
 	i = -1;
 	p_y = 0;
 	world->cam->o = translate_vec(world->cam->o, world->cam->right, -0.1);
-		printf("%p, %p\n",world->canvas->surface->pixels, world->canvas->red_pixels);
 	while (++i < NTHREADS)
 	{
 		start_thread(world, p_y, i, (int *)world->canvas->red_pixels);

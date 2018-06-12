@@ -6,13 +6,13 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/02 19:27:30 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/12 04:21:47 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 05:24:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-t_pixel	fast_div(const t_canvas *canvas)
+t_pixel		fast_div(const t_canvas *canvas)
 {
 	t_pixel	div;
 
@@ -33,22 +33,23 @@ t_pixel	fast_div(const t_canvas *canvas)
 	return (div);
 }
 
-double fade(double t)
+double		fade(double t)
 {
-	return t * t * t * (t * (t * 6 - 15) + 10);
+	return (t * t * t * (t * (t * 6 - 15) + 10));
 }
 
-double lerp(double t, double a, double b)
+double		lerp(double t, double a, double b)
 {
 	return (a + t * (b - a));
 }
 
-int	equal_double(double a, double b)
+int			equal_double(double a, double b)
 {
 	return (a < b + EPSILON && a > b - EPSILON);
 }
 
-double	get_world_distance(t_object obj, t_point3d hitpoint, t_line world_line)
+double		get_world_distance(t_object obj, t_point3d hitpoint,
+		t_line world_line)
 {
 	return (magnitude(newvector(world_line.o,
 					ft_point3d_mat4_mult(hitpoint, obj.transform_pos))));
