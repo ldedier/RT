@@ -6,25 +6,31 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 07:57:11 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 07:57:41 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 00:54:17 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	ft_menu_lights_bloc2_rangebars_2(t_world *world, int i)
+void	ft_menu_lights_bloc2_rangebars_2(t_world *world, int i, int pos)
 {
-	world->menu.rect.y = world->menu.lights_rb[i].pix.y - 3;
-	world->menu.rect.w = 8;
-	world->menu.rect.h = 12;
-	ft_new_menu_surface(world);
-	SDL_FillRect(world->menu.surface, NULL, 0x222222);
-	ft_add_menu_surface(world);
+	if (pos >= world->menu.lights_rb[i].pix.x &&
+			pos<= (world->menu.lights_rb[i].pix.x + 100))
+	{
+		world->menu.rect.x = pos;
+		world->menu.rect.y = world->menu.lights_rb[i].pix.y - 3;
+		world->menu.rect.w = 8;
+		world->menu.rect.h = 12;
+		ft_new_menu_surface(world);
+		SDL_FillRect(world->menu.surface, NULL, 0x222222);
+		ft_add_menu_surface(world);
+	}
 }
 
 void	ft_menu_lights_bloc2_rangebars(t_world *world)
 {
 	int		i;
+	int		pos;
 
 	i = 0;
 	while (i < world->menu.nb_lights_rb)
@@ -37,14 +43,14 @@ void	ft_menu_lights_bloc2_rangebars(t_world *world)
 		SDL_FillRect(world->menu.surface, NULL, 0x888888);
 		ft_add_menu_surface(world);
 		if (i <= 1)
-			world->menu.rect.x = world->menu.lights_rb[i].pix.x
+			pos = world->menu.lights_rb[i].pix.x
 				+ ((*(world->menu.lights_rb[i].value) * 100)
 						/ world->menu.lights_rb[i].max);
 		else
-			world->menu.rect.x = world->menu.lights_rb[i].pix.x
+			pos = world->menu.lights_rb[i].pix.x
 				+ (((*(world->menu.lights_rb[i].value) + 1) * 100)
 						/ world->menu.lights_rb[i].max);
-		ft_menu_lights_bloc2_rangebars_2(world, i);
+		ft_menu_lights_bloc2_rangebars_2(world, i, pos);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 07:54:41 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 22:43:13 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/11 23:29:51 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_menu_lights_bloc2_ebloui(t_world *world)
 	t_bmp_parser	bmp;
 
 	bmp = world->menu.ebloui;
-	if (1)
+	if (world->lights[world->menu.active_light].ebloui == 1)
 	{
 		world->menu.rect.x = world->canvas->win.w + 362;
 		world->menu.rect.y = 432;

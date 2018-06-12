@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/01 03:28:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/11 10:35:26 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 01:52:32 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,47 @@ void    ft_process(t_world *e)
 			e->selected_cobject->o.z -= e->cam->speed;
 
 		if (e->keys[key_e])
-			e->selected_cobject->r.x += M_PI / 16;
+		{
+			double angle = fmod(e->selected_cobject->r.x + M_PI / 16, 2 * M_PI);
+			if (angle < 0.0f)
+				angle += 2 * M_PI;
+			e->selected_cobject->r.x = angle;
+		}
 		if (e->keys[key_q])
-			e->selected_cobject->r.x -= M_PI / 16;
+		{
+			double angle = fmod(e->selected_cobject->r.x - M_PI / 16, 2 * M_PI);
+			if (angle < 0.0f)
+				angle += 2 * M_PI;
+			e->selected_cobject->r.x = angle;
+		}
 		if (e->keys[key_c])
-			e->selected_cobject->r.y += M_PI / 16;
+		{
+			double angle = fmod(e->selected_cobject->r.y + M_PI / 16, 2 * M_PI);
+			if (angle < 0.0f)
+				angle += 2 * M_PI;
+			e->selected_cobject->r.y = angle;
+		}
 		if (e->keys[key_z])
-			e->selected_cobject->r.y -= M_PI / 16;
+		{
+			double angle = fmod(e->selected_cobject->r.y - M_PI / 16, 2 * M_PI);
+			if (angle < 0.0f)
+				angle += 2 * M_PI;
+			e->selected_cobject->r.y = angle;
+		}
 		if (e->keys[key_x])
-			e->selected_cobject->r.z += M_PI / 16;
+		{
+			double angle = fmod(e->selected_cobject->r.z + M_PI / 16, 2 * M_PI);
+			if (angle < 0.0f)
+				angle += 2 * M_PI;
+			e->selected_cobject->r.z = angle;
+		}
 		if (e->keys[key_v])
-			e->selected_cobject->r.z -= M_PI / 16;
+		{
+			double angle = fmod(e->selected_cobject->r.z - M_PI / 16, 2 * M_PI);
+			if (angle < 0.0f)
+				angle += 2 * M_PI;
+			e->selected_cobject->r.z = angle;
+		}
 		if (e->animate)
 		{
 			ft_pivot_camera(e->cam, e->selected_cobject->o);
@@ -113,10 +143,15 @@ void    ft_process(t_world *e)
 		}
 		if (e->keys[key_p])
 		{
-			e->selected_object->s.x -= e->cam->speed;
-			e->selected_object->s.y -= e->cam->speed;
-			e->selected_object->s.z -= e->cam->speed;
-			e->selected_object->object_union.plane.texture_trans_x += 100;
+			if (e->selected_object->s.x - e->cam->speed > 1.f && 
+					e->selected_object->s.y - e->cam->speed > 1.f &&
+					e->selected_object->s.z - e->cam->speed > 1.f)
+			{
+				e->selected_object->s.x -= e->cam->speed;
+				e->selected_object->s.y -= e->cam->speed;
+				e->selected_object->s.z -= e->cam->speed;
+				e->selected_object->object_union.plane.texture_trans_x += 100;
+			}
 		}
 		if (e->keys[key_n])
 		{
@@ -147,17 +182,47 @@ void    ft_process(t_world *e)
 			e->selected_object->o.z -= e->cam->speed;
 
 		if (e->keys[key_e])
-			e->selected_object->r.x += M_PI / 16;
+		{
+			double angle = fmod(e->selected_object->r.x + M_PI / 16, 2 * M_PI);
+			if (angle < 0.0f)
+				angle += 2 * M_PI;
+			e->selected_object->r.x = angle;
+		}
 		if (e->keys[key_q])
-			e->selected_object->r.x -= M_PI / 16;
+		{
+			double angle = fmod(e->selected_object->r.x - M_PI / 16, 2 * M_PI);
+			if (angle < 0.0f)
+				angle += 2 * M_PI;
+			e->selected_object->r.x = angle;
+		}
 		if (e->keys[key_c])
-			e->selected_object->r.y += M_PI / 16;
+		{
+			double angle = fmod(e->selected_object->r.y + M_PI / 16, 2 * M_PI);
+			if (angle < 0.0f)
+				angle += 2 * M_PI;
+			e->selected_object->r.y = angle;
+		}
 		if (e->keys[key_z])
-			e->selected_object->r.y -= M_PI / 16;
+		{
+			double angle = fmod(e->selected_object->r.y - M_PI / 16, 2 * M_PI);
+			if (angle < 0.0f)
+				angle += 2 * M_PI;
+			e->selected_object->r.y = angle;
+		}
 		if (e->keys[key_x])
-			e->selected_object->r.z += M_PI / 16;
+		{
+			double angle = fmod(e->selected_object->r.z + M_PI / 16, 2 * M_PI);
+			if (angle < 0.0f)
+				angle += 2 * M_PI;
+			e->selected_object->r.z = angle;
+		}
 		if (e->keys[key_v])
-			e->selected_object->r.z -= M_PI / 16;
+		{
+			double angle = fmod(e->selected_object->r.z - M_PI / 16, 2 * M_PI);
+			if (angle < 0.0f)
+				angle += 2 * M_PI;
+			e->selected_object->r.z = angle;
+		}
 		if (e->animate)
 		{
 			ft_pivot_camera(e->cam, e->selected_object->o);

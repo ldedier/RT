@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 00:37:56 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 01:06:29 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 01:54:48 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,21 @@ void	ft_left_click_event(t_world *e, SDL_Event event)
 	line = newray(point, newvector(e->cam->o, point));
 	if ((hit = trace(line, e->cobjlist)))
 	{
-		e->selected_cobject = hit->obj.cobject;
-		e->menu.active_object = e->selected_cobject->id;
+		if (e->keys[key_shift] == 1)
+		{
+			e->selected_object = &(hit->obj);
+			e->menu.active_object = e->selected_object->id;
+		}
+		else
+		{
+			e->selected_cobject = hit->obj.cobject;
+			e->menu.active_object = e->selected_cobject->id;
+		}
 		ft_set_selected_object(e, e->menu.active_object);
-		// 	Voir pour les variables (rangebar, ...) a changer du coup
+		if (e->selected_cobject->id == e->menu.active_object)
+			ft_mouse_button_objects_6(e);
+		else
+			ft_mouse_button_objects_7(e);
 		update_progress_bar(e);
 
 		//ft_look_at(e->cam, hit->obj.cobject->o);

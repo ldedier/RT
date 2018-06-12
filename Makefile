@@ -6,7 +6,7 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/11 22:35:58 by aherriau         ###   ########.fr        #
+#    Updated: 2018/06/12 00:18:40 by aherriau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -179,6 +179,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 menu_others_2.c\
 				 menu_others_3.c\
 				 menu_others_4.c\
+				 menu_others_5.c\
 				 perlin.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h obj.h

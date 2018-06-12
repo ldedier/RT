@@ -6,13 +6,13 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 02:49:47 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 22:43:10 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/11 23:29:46 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	ft_mouse_button_lights_9(t_world *world, int x, int y)
+void	ft_mouse_button_lights_10(t_world *world, int x, int y)
 {
 	int		x0;
 	int		y0;
@@ -29,8 +29,29 @@ void	ft_mouse_button_lights_9(t_world *world, int x, int y)
 		join_threads(world);
 		paint_threaded_fast(world);
 		update_progress_bar(world);
+	}
+}
+
+void	ft_mouse_button_lights_9(t_world *world, int x, int y)
+{
+	int		x0;
+	int		y0;
+
+	x0 = world->canvas->win.w + 365;
+	y0 = 435;
+	if (x >= (x0) && x <= (x0 + 75) && y >= (y0) && y <= (y0 + 51))
+	{
+		if (world->lights[world->menu.active_light].ebloui == 1)
+			world->lights[world->menu.active_light].ebloui = 0;
+		else
+			world->lights[world->menu.active_light].ebloui = 1;
+		world->cancel_render = 1;
+		join_threads(world);
+		paint_threaded_fast(world);
+		update_progress_bar(world);
 		return ;
 	}
+	ft_mouse_button_lights_10(world, x, y);
 }
 
 void	ft_mouse_button_lights_8(t_world *world, int x, int y, int y0)
