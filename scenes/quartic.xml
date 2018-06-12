@@ -1,6 +1,6 @@
 <scene>
 	<camera>
-		<positionXYZ>3 0.7 -10</positionXYZ>
+		<positionXYZ>3 0.7 -30</positionXYZ>
 		<rotationXYZ>0 0 0</rotationXYZ>
 	</camera>
 	<objlist>
@@ -13,29 +13,46 @@
 		</cobject>
 		<cobject>
 			<object name="torus">
-				<cut type="relative">
-					<cutXYZ>1 2 0</cutXYZ>
-					<inequality>more than</inequality>
-					<value>3</value>
-				</cut>
 			</object>
 		</cobject>
 		<cobject>
-		<positionXYZ>10 0 0</positionXYZ>
-			<object name="torus">
+		<positionXYZ>7 0 0</positionXYZ>
+			<object name="goursat">
 				<color>0x0000FF</color>
-				<cut type="relative">
-					<cutXYZ>2 4 0</cutXYZ>
-					<inequality>more than</inequality>
-					<value>6</value>
-				</cut>
+			</object>
+		</cobject>
+		<cobject>
+		<positionXYZ>14 -1.5 0</positionXYZ>
+			<scaleXYZ>3 3 3</scaleXYZ>
+			<object name="piriform">
+				<color>0x00FF00</color>
+			</object>
+		</cobject>
+		<cobject>
+		<rotationXYZ>0 0 1.5707</rotationXYZ>
+		<positionXYZ>-5 0 0</positionXYZ>
+			<scaleXYZ>2 2 2</scaleXYZ>
+			<object name="lemniscate">
+				<color>0x00FFFF</color>
+			</object>
+		</cobject>
+		<cobject>
+		<positionXYZ>-10 0 0</positionXYZ>
+		<object name="roman">
+			<scaleXYZ>3 3 3</scaleXYZ>
+				<color>0xFFFF00</color>
 			</object>
 		</cobject>
 	</objlist>
 	<lightlist>
 		<light type="point">
 			<color>0xFFFFFF</color>
-			<positionXYZ>0 -2 0</positionXYZ>
+			<positionXYZ>0 -2 -5</positionXYZ>
+			<intensity>1</intensity>
+		</light>
+		<light type="point">
+			<color>0xFFFFFF</color>
+			<positionXYZ>5 -2 5</positionXYZ>
 			<intensity>1</intensity>
 		</light>
 	</lightlist>

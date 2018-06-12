@@ -24,7 +24,7 @@
 			</object>
 			<object name="sphere">
 				<positionXYZ>0 2 0</positionXYZ>
-				<normal_map>/dev/null</normal_map>
+				<normal_texture>rt</normal_texture>
 				<color>0xFFA0BF</color>
 				<cut type="relative">
 					<cutXYZ>1 0 0</cutXYZ>
