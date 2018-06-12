@@ -6,13 +6,14 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 00:41:16 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/11 04:48:54 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 04:13:05 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void		ray_color_init(t_aux_ray_color *arc, t_world *world, t_hit *hit,
+static void			ray_color_init(t_aux_ray_color *arc, t_world *world,
+		t_hit *hit,
 		int fast)
 {
 	t_color	illuminated_c;
@@ -30,7 +31,7 @@ static void		ray_color_init(t_aux_ray_color *arc, t_world *world, t_hit *hit,
 	arc->hit = hit;
 }
 
-static t_color	get_reflect(t_world *world, const t_aux_ray_color *arc,
+static t_color		get_reflect(t_world *world, const t_aux_ray_color *arc,
 		int bounce, int fast)
 {
 	if (bounce < world->max_bounce && arc->x.f_reflect > EPSILON && !fast)
@@ -41,7 +42,7 @@ static t_color	get_reflect(t_world *world, const t_aux_ray_color *arc,
 		return (pert_color(arc->hit));
 }
 
-static t_color	get_refract(t_world *world, const t_aux_ray_color *arc,
+static t_color		get_refract(t_world *world, const t_aux_ray_color *arc,
 		int bounce, int fast)
 {
 	if (bounce < world->max_bounce && arc->x.f_transp > EPSILON && !fast)
@@ -60,7 +61,7 @@ static t_color	get_refract(t_world *world, const t_aux_ray_color *arc,
 		return (pert_color(arc->hit));
 }
 
-t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
+t_color				ray_color(t_line ray, t_world *world, int bounce, int fast)
 {
 	t_hit			*hit;
 	t_aux_ray_color	aux_rc;
@@ -80,7 +81,6 @@ t_color		ray_color(t_line ray, t_world *world, int bounce, int fast)
 							interpole_color(ebloui.in,
 								aux_rc.fog.color, WHITE_COLOR),
 							reflect_c), refract_c), &hit, &(aux_rc.aux)));
-
 	}
 	ebloui.color = get_ebloui(world, ray, -1, &(ebloui.in));
 	return (freeret_rend(ebloui.color, &hit, NULL));

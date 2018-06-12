@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:07 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/11 19:26:34 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 04:25:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,17 @@ void	ft_parse_src(t_parser *parser, t_world *world, char *line)
 
 	(void)world;
 	if (parser->parse_enum == e_parse_cobject &&
-			!ft_strcmp(parser->attribute, "obj"))
+			!ft_strcmp(parser->attribute, "obj") && 
+			!world->cobjlist->cobject->populated)
 	{
+		world->cobjlist->cobject->populated = 1;
 		source = ft_get_between_tag(&line);
 		ft_add_triangles(source, world);
 		free(source);
 	}
 	else
 	{
-		ft_dprintf(2, "line %d: only obj cobject can have a \"src\" tag\n",
+		ft_dprintf(2, "line %d: only obj cobject can have one \"src\" tag \n",
 				parser->nb_lines, parser->tag);
 		exit(1);
 	}

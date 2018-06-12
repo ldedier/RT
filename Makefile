@@ -6,7 +6,7 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/12 02:33:00 by ldedier          ###   ########.fr        #
+#    Updated: 2018/06/12 03:40:59 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -136,6 +136,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 tracer2.c\
 				 insides.c\
 				 automatic.c\
+				 automatic2.c\
 				 defining.c\
 				 insides2.c\
 				 video.c\

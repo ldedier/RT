@@ -6,12 +6,11 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 20:03:07 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/11 03:36:35 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 04:11:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
 
 static double		ebloui_coeff(t_line ray, t_light light)
 {
@@ -22,12 +21,13 @@ static double		ebloui_coeff(t_line ray, t_light light)
 					normalize(ft_point3d_cmp(ray.o, light.o))));
 }
 
-t_color				get_ebloui(t_world *world, t_line ray, double t, double *ratio)
+t_color				get_ebloui(t_world *world, t_line ray,
+		double t, double *ratio)
 {
 	int		i;
 	double	coeff;
 	double	sum;
-	double dist;
+	double	dist;
 
 	sum = 0.0f;
 	i = 0;
@@ -62,7 +62,7 @@ static t_color		render_fast(t_world *world, t_pixel pix)
 	line = newray(point, newvector(world->cam->o, point));
 	line.x = pix.x;
 	line.y = pix.y;
-	return(ray_color(line, world, 0, 1));
+	return (ray_color(line, world, 0, 1));
 }
 
 static t_color		render_slow(t_world *world, t_pixel pix)
@@ -93,7 +93,6 @@ static t_color		render_slow(t_world *world, t_pixel pix)
 
 t_color				render_pixel(t_world *world, t_pixel pix, int fast)
 {
-
 	if (!fast)
 		return (render_slow(world, pix));
 	else

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 02:33:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 04:07:26 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //DONE fix shadow with directional light
@@ -801,6 +801,20 @@ typedef struct	s_aux_compute
 	t_mat4 rotate_inv_cobj;
 }					t_aux_compute;
 
+typedef struct	s_aux_triangle
+{
+	t_point3d		edge1;
+	t_point3d		edge2;
+	t_point3d		normal;
+	double			f;
+	double			u;
+	double			v;
+	double			a;
+	t_point3d		q;
+	t_point3d		s;
+}					t_aux_triangle;
+
+
 /*
  ** input
  */
@@ -1187,6 +1201,7 @@ double					perlin(double x, double y, double z);
 ** automatics
 */
 void					ft_process_automatic(t_parser *parser, t_world *world);
+void					ft_compute_automatic_adn(t_cobject *cobject);
 
 /*
 ** defining

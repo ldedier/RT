@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:44:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/26 06:59:08 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 03:50:30 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@ t_point3d	normal_sphere(t_object sphere, t_point3d hitpoint, t_line line)
 
 t_point3d	normal_cone(t_object cone, t_point3d hitpoint, t_line line)
 {
-	/*	t_point3d	aux;
-		t_point3d	hitplane;
-		t_point3d	normal;
-
-		aux = newvector(cone.o, hitpoint);
-		hitplane = crossprod(aux, cone.r);
-		normal = crossprod(aux, hitplane);
-		if (dotprod(cone.r, aux) < 0.0)
-		normal = scale(normal, -1.0);
-		return (normalize(normal));*/
 	t_point3d	normal;
 
 	(void)line;
@@ -62,9 +52,9 @@ t_point3d	normal_cylinder(t_object cyl, t_point3d hitpoint, t_line line)
 	return (normal);
 }
 
-t_point3d		normal_ellipsoid(t_object obj, t_point3d point, t_line line)
+t_point3d	normal_ellipsoid(t_object obj, t_point3d point, t_line line)
 {
-	t_point3d normal;
+	t_point3d	normal;
 	t_point3d	abc;
 
 	(void)line;
