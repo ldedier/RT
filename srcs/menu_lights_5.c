@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 07:57:11 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/12 00:54:17 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 05:29:50 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_menu_lights_bloc2_rangebars_2(t_world *world, int i, int pos)
 {
 	if (pos >= world->menu.lights_rb[i].pix.x &&
-			pos<= (world->menu.lights_rb[i].pix.x + 100))
+			pos <= (world->menu.lights_rb[i].pix.x + 100))
 	{
 		world->menu.rect.x = pos;
 		world->menu.rect.y = world->menu.lights_rb[i].pix.y - 3;

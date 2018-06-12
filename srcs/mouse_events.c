@@ -6,18 +6,11 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/12 02:26:37 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 03:40:51 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
-//Bons Noms pour Cobj / Obj (a mettre au parsing)
-//Ne pas afficher les objects des Cobj OBJ (42/teapot)
-
-//Reprendre l'exporter de scene
-//	- on peut avoir plusieurs filtres
-//	- ...
 
 void	ft_mouse_motion(t_world *world, SDL_Event event)
 {

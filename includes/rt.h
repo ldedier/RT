@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 02:33:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 05:32:39 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //DONE fix shadow with directional light
@@ -1387,8 +1387,11 @@ void				ft_menu_objects_bloc2_perturbations_9(t_world *world, t_bmp_parser bmp);
 void				ft_menu_objects_bloc2_negative(t_world *world);
 void				ft_menu_objects_bloc2_rangebars(t_world *world);
 void				ft_menu_objects_bloc1_scrollbar(t_world *world);
-
-
+void				ft_menu_objects_bloc1_scrollbar_6(t_world *world, t_cobject cobj, int y0);
+void				ft_menu_objects_bloc1_scrollbar_7(t_world *world, t_cobjlist *lst, int *i, int *j);
+void				ft_menu_objects_bloc1_scrollbar_11(t_world *world, t_object obj, int y0);
+void				ft_menu_objects_bloc1_scrollbar_12(t_world *world, t_object obj, int y0);
+void				ft_menu_objects_bloc1_scrollbar_13(t_world *world, t_object obj, int y0);
 
 /*
 ** error

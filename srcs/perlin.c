@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 03:33:10 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 04:17:44 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 02:36:21 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ double grad(int hash, double x, double y, double z)
 
 double perlin(double x, double y, double z)
 {
-
+	static int fff = 0;
 	int p[512];
 	int permutation[] = { 151,160,137,91,90,15,
 	131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
@@ -62,7 +62,9 @@ double perlin(double x, double y, double z)
 	double u = fade(x),                                // COMPUTE FADE CURVES
 		   v = fade(y),                                // FOR EACH OF X,Y,Z.
 		   w = fade(z);
-	int A = p[X  ]+Y, AA = p[A]+Z, AB = p[A+1]+Z,      // HASH COORDINATES OF
+	if (fff++ == 0)
+	printf("%f, %d\n",x, X);fflush(stdout);
+	int A = p[X] + Y, AA = p[A]+Z, AB = p[A+1]+Z,      // HASH COORDINATES OF
 		B = p[X+1]+Y, BA = p[B]+Z, BB = p[B+1]+Z;      // THE 8 CUBE CORNERS,
 
 	return lerp(w, lerp(v, lerp(u, grad(p[AA  ], x  , y  , z   ),  // AND ADD
