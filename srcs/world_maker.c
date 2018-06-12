@@ -6,13 +6,13 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:36:26 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/11 19:18:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 04:57:07 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void			freecanvas(t_canvas **canvas)
+static void	freecanvas(t_canvas **canvas)
 {
 	SDL_DestroyRenderer((*canvas)->renderer);
 	SDL_DestroyWindow((*canvas)->window);
@@ -24,23 +24,20 @@ static void			freecanvas(t_canvas **canvas)
 	*canvas = NULL;
 }
 
-int					freeworld(t_world **world, int ret)
+int			freeworld(t_world **world, int ret)
 {
 	del_clst(&((*world)->cobjlist));
 	free((*world)->cam);
-/*	free(*world);
-	*world = NULL;*/
 	ft_printf("byee (-‘ _ ‘-)つ \n");
 	return (ret);
 }
 
-int		new_world_2(t_world **world, t_canvas *canvas, char *file)
+int			new_world_2(t_world **world, t_canvas *canvas, char *file)
 {
 	int			rw_err;
 
 	if ((rw_err = read_world(*world, file)))
 	{
-//		freecanvas(&canvas);
 		return (freeworld(world, rw_err));
 	}
 	if (ft_init_sdl(*world) == 0)
@@ -52,7 +49,7 @@ int		new_world_2(t_world **world, t_canvas *canvas, char *file)
 	return (0);
 }
 
-int		new_world(char *file, t_world **world)
+int			new_world(char *file, t_world **world)
 {
 	t_canvas	*canvas;
 
