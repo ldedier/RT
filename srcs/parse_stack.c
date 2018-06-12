@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 17:10:29 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/10 00:58:52 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/11 22:21:50 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,18 +66,6 @@ int			ft_parse_tag(char **line, t_parser *parser)
 	return (ret);
 }
 
-void		ft_print_stack(t_list *list)
-{
-	t_list *ptr;
-	char *p;
-	ptr = list;
-	while (ptr)
-	{
-		p = (char *)ptr->content;
-		ptr = ptr->next;
-	}
-}
-
 void		ft_add_tag_stack(t_parser *parser)
 {
 	t_tag *xml_tag;
@@ -85,12 +73,12 @@ void		ft_add_tag_stack(t_parser *parser)
 	xml_tag = malloc(sizeof(t_tag));
 	xml_tag->tag = ft_strdup(parser->tag);
 	xml_tag->has_attribute = parser->got_attribute;
-
 	ft_lstadd(&(parser->tag_stack), ft_lstnew_ptr(xml_tag, sizeof(t_tag)));
 	if (parser->got_attribute)
 	{
-		ft_lstadd(&(parser->attribute_stack), 
-				ft_lstnew(parser->attribute, sizeof(char) * ft_strlen(parser->attribute) + 1));
+		ft_lstadd(&(parser->attribute_stack),
+				ft_lstnew(parser->attribute, sizeof(char) *
+					ft_strlen(parser->attribute) + 1));
 	}
 	parser->got_attribute = 0;
 }
@@ -103,8 +91,8 @@ void		ft_process_tag_stack_stack(t_parser *parser)
 			parser->got_scene = 1;
 		else
 		{
-			ft_dprintf(2, 
-					"every config file must begin with a <scene> tag\n");
+			ft_dprintf(
+					2, "every config file must begin with a <scene> tag\n");
 			exit(1);
 		}
 	}
@@ -137,19 +125,4 @@ void		ft_process_tag_pop(t_parser *parser)
 	}
 	free(xml_tag->tag);
 	free(xml_tag);
-}
-
-char	*ft_get_between_tag(char **line)
-{
-	int i;
-	
-	char *str;
-	str = *line;
-
-	i = 0;
-	while (str[i] && str[i] != '<')
-		i++;
-	str = ft_strndup(*line, i);
-	(*line) += i;
-	return (str);
 }

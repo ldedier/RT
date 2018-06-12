@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 01:16:54 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/07 06:34:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/11 19:28:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	read_pert_type(t_parser *parser, t_perturbations *pert)
 		*pert = e_marble;
 	else
 	{
-		ft_dprintf
-			(2, "line %d: perturbation %s does not exist",parser->nb_lines,
-			  	parser->attribute);
+		ft_dprintf(
+				2, "line %d: perturbation %s does not exist", parser->nb_lines,
+					parser->attribute);
 		exit(1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 18:47:24 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 23:54:37 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 00:55:42 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ void	ft_pow_coord(char const *s, int *i, double *coord)
 		pow = pow * 10 + s[*i] - '0';
 		*i += 1;
 	}
-	if(s[start] == '-')
+	if (s[start] == '-')
 		pow *= -1;
-	*coord = *coord * ft_pow(10 , pow);
+	*coord = *coord * ft_pow(10, pow);
 }
 
-void	ft_obj_add_coord(int *i, char *s , double *coord)
+void	ft_obj_add_coord(int *i, char *s, double *coord)
 {
 	int start;
 
@@ -96,10 +96,9 @@ void	ft_obj_add_coord(int *i, char *s , double *coord)
 
 void	ft_obj_vertex(char *s, t_obj_parser *parser)
 {
-	t_point3d *vertex;
+	t_point3d	*vertex;
+	int			i;
 
-	int i;
-	
 	i = 0;
 	if (!(vertex = (t_point3d *)(malloc(sizeof(t_point3d)))))
 	{
@@ -109,6 +108,7 @@ void	ft_obj_vertex(char *s, t_obj_parser *parser)
 	ft_obj_add_coord(&i, s, &(vertex->x));
 	ft_obj_add_coord(&i, s, &(vertex->y));
 	ft_obj_add_coord(&i, s, &(vertex->z));
-	ft_lstpushback(&(parser->vertices_tmp), ft_lstnew_ptr(vertex, sizeof(t_point3d)));
+	ft_lstpushback(&(parser->vertices_tmp),
+		ft_lstnew_ptr(vertex, sizeof(t_point3d)));
 	parser->nb_vertices++;
 }

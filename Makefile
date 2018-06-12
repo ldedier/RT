@@ -6,7 +6,7 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/11 09:06:18 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/06/12 00:41:03 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,12 +72,19 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 parse_perts.c\
 				 parse_others.c\
 				 parse_specifics.c\
+				 parse_radangle.c\
+				 parse_specific_func.c\
 				 parse_specifics2.c\
 				 parse_specifics_cobject.c\
+				 parse_specifics_cobject2.c\
 				 parse_start.c\
+				 parse_others_start.c\
 				 parse_tools.c\
+				 parse_tools2.c\
 				 parse_read_tools.c\
 				 parse_process.c\
+				 parse_process_tools.c\
+				 parse_process2.c\
 				 parse_stack.c\
 				 populate_world.c\
 				 renderer.c\
@@ -119,6 +126,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 cuts.c\
 				 inequality.c\
 				 parse_cut.c\
+				 parse_mod.c\
 				 triangle.c\
 				 parse_triangle.c\
 				 ft_process_parse_obj.c\
@@ -179,7 +187,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 menu_others_2.c\
 				 menu_others_3.c\
 				 menu_others_4.c\
-				 perlin.c
+				 perlin.c\
+				 set_functions.c
 
 INCLUDES_NO_PREFIX = rt.h objects.h export.h obj.h
 

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 02:02:31 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 02:11:19 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/11 19:31:04 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ void	ft_parse_stretch_x(t_parser *parser, t_world *world, char *line)
 	double *stretch_x;
 
 	if ((parser->parse_enum == e_parse_object) &&
-			 (!ft_strcmp("plane", parser->attribute)))
-		stretch_x = &(world->cobjlist->cobject->objlist->object->object_union.plane.texture_stretch_x);
+			(!ft_strcmp("plane", parser->attribute)))
+		stretch_x = &(world->cobjlist->cobject->objlist->object->
+				object_union.plane.texture_stretch_x);
 	else
 	{
 		ft_dprintf(2, "line %d: current object can not have a stretch tag\n",
@@ -41,12 +42,13 @@ void	ft_parse_stretch_y(t_parser *parser, t_world *world, char *line)
 	double *stretch_y;
 
 	if ((parser->parse_enum == e_parse_object) &&
-			 (!ft_strcmp("plane", parser->attribute)))
-		stretch_y = &(world->cobjlist->cobject->objlist->object->object_union.plane.texture_stretch_y);
+			(!ft_strcmp("plane", parser->attribute)))
+		stretch_y = &(world->cobjlist->cobject->objlist->object->object_union.
+				plane.texture_stretch_y);
 	else
 	{
 		ft_dprintf(2, "line %d: current object can not have a stretch tag\n",
-				parser->nb_lines);
+			parser->nb_lines);
 		exit(1);
 	}
 	read_cdouble(&line, stretch_y, 0.1, 100000);
@@ -65,8 +67,9 @@ void	ft_parse_trans_x(t_parser *parser, t_world *world, char *line)
 	int *trans_x;
 
 	if ((parser->parse_enum == e_parse_object) &&
-			 (!ft_strcmp("plane", parser->attribute)))
-		trans_x = &(world->cobjlist->cobject->objlist->object->object_union.plane.texture_trans_x);
+			(!ft_strcmp("plane", parser->attribute)))
+		trans_x = &(world->cobjlist->cobject->objlist->object->object_union.
+				plane.texture_trans_x);
 	else
 	{
 		ft_dprintf(2, "line %d: current object can not have a stretch tag\n",
@@ -83,12 +86,13 @@ void	ft_parse_trans_y(t_parser *parser, t_world *world, char *line)
 	int *trans_y;
 
 	if ((parser->parse_enum == e_parse_object) &&
-			 (!ft_strcmp("plane", parser->attribute)))
-		trans_y = &(world->cobjlist->cobject->objlist->object->object_union.plane.texture_trans_y);
+			(!ft_strcmp("plane", parser->attribute)))
+		trans_y = &(world->cobjlist->cobject->objlist->object->object_union.
+				plane.texture_trans_y);
 	else
 	{
 		ft_dprintf(2, "line %d: current object can not have a stretch tag\n",
-				parser->nb_lines);
+			parser->nb_lines);
 		exit(1);
 	}
 	read_int(&line, trans_y);

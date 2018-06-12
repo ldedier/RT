@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 20:09:40 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 05:22:52 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/11 19:02:54 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	ft_process_parsing_cut_xyz(t_parser *parser, t_world *world,
 	t_point3d	*cut_xyz;
 
 	if (parser->parse_enum == e_parse_cut)
-		cut_xyz = &(((t_cut *)(world->cobjlist->cobject->objlist->object->cuts->content))->cut_xyz);
+		cut_xyz = &(((t_cut *)(world->cobjlist->cobject->objlist->object->cuts
+						->content))->cut_xyz);
 	else
 	{
 		ft_dprintf(2, "line %d: current object can not have a cutXYZ tag\n",
@@ -50,65 +51,8 @@ void	ft_process_parsing_cut_xyz(t_parser *parser, t_world *world,
 	ft_process_tag_pop(parser);
 }
 
-int		ft_get_color(t_parser *parser, char *str)
-{
-	if (!ft_strcmp("red", str))
-		return (0xff0000);
-	else if (!ft_strcmp("blue", str))
-		return (0x0000ff);
-	else if (!ft_strcmp("green", str))
-		return (0x00ff00);
-	else
-	{
-		ft_dprintf(2, "line %d: color \"%s\" illegal\n",parser->nb_lines, str);
-		exit(1);
-	}
-}
-
-void	ft_process_parsing_cut_color(t_parser *parser, t_world *world,
-		char *line)
-{
-	int	*color;
-	char *tmp;
-	if (parser->parse_enum == e_parse_cut)
-		color = &(((t_cut *)(world->cobjlist->cobject->objlist->object->cuts->content))->color);
-	else
-	{
-		ft_dprintf(2, "line %d: current object can not have a cut_color tag\n",
-				parser->nb_lines);
-		exit(1);
-	}
-	tmp = ft_get_between_tag(&line);
-	*color = ft_get_color(parser, tmp);
-	free(tmp);
-	parser->op = ft_parse_tag(&line, parser);
-	ft_process_tag_pop(parser);
-}
-
-void	ft_process_parsing_mod_color(t_parser *parser, t_world *world,
-		char *line)
-{
-	int	*color;
-	char *tmp;
-
-	(void)world;
-	if (parser->parse_enum == e_parse_mod)
-		color = &(parser->mod.color);
-	else
-	{
-		ft_dprintf(2, "line %d: current object can not have a mod_color tag\n",
-				parser->nb_lines);
-		exit(1);
-	}
-	tmp = ft_get_between_tag(&line);
-	*color = ft_get_color(parser, tmp);
-	free(tmp);
-	parser->op = ft_parse_tag(&line, parser);
-	ft_process_tag_pop(parser);
-}
-
 void	ft_attribute_inequality_func(int (**func)(double, double), char *desc,
-		t_parser * parser)
+		t_parser *parser)
 {
 	if (!ft_strcmp(desc, "less than"))
 		*func = less_than;
@@ -118,7 +62,7 @@ void	ft_attribute_inequality_func(int (**func)(double, double), char *desc,
 		*func = less_than_or_equal;
 	else if (!ft_strcmp(desc, "more than or equal"))
 		*func = bigger_than_or_equal;
-	else if(!ft_strcmp(desc, "equal"))
+	else if (!ft_strcmp(desc, "equal"))
 		*func = equal;
 	else
 	{
@@ -135,7 +79,8 @@ void	ft_process_parsing_inequality(t_parser *parser, t_world *world,
 	char	*tmp;
 
 	if (parser->parse_enum == e_parse_cut)
-		func = &(((t_cut *)(world->cobjlist->cobject->objlist->object->cuts->content))->inequality);
+		func = &(((t_cut *)(world->cobjlist->cobject->objlist->object->cuts->
+						content))->inequality);
 	else if (parser->parse_enum == e_parse_mod)
 		func = &(parser->mod.inequality);
 	else
@@ -157,30 +102,13 @@ void	ft_process_parsing_value(t_parser *parser, t_world *world,
 	double	*value;
 
 	if (parser->parse_enum == e_parse_cut)
-		value = &(((t_cut *)(world->cobjlist->cobject->objlist->object->cuts->content))->value);
+		value = &(((t_cut *)(world->cobjlist->cobject->objlist->object->
+						cuts->content))->value);
 	else if (parser->parse_enum == e_parse_mod)
 		value = &(parser->mod.value);
 	else
 	{
 		ft_dprintf(2, "line %d: current object can not have a value tag\n",
-				parser->nb_lines);
-		exit(1);
-	}
-	read_double(&line, value);
-	parser->op = ft_parse_tag(&line, parser);
-	ft_process_tag_pop(parser);
-}
-
-void	ft_process_parsing_mod_value(t_parser *parser, t_world *world,
-		char *line)
-{
-	double	*value;
-	(void) world;
-	if (parser->parse_enum == e_parse_mod)
-		value = &(parser->mod.mod_value);
-	else
-	{
-		ft_dprintf(2, "line %d: current object can not have a mod value tag\n",
 				parser->nb_lines);
 		exit(1);
 	}

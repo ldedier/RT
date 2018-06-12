@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 05:44:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/09 06:14:21 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/11 20:19:26 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	ft_parse_texture(t_parser *parser, t_world *world, char *line)
 
 	if ((parser->parse_enum == e_parse_object) &&
 			((!ft_strcmp("sphere", parser->attribute)) ||
-			 (!ft_strcmp("cylinder", parser->attribute)) ||
-			 (!ft_strcmp("cone", parser->attribute)) ||
-			 (!ft_strcmp("plane", parser->attribute))))
+			(!ft_strcmp("cylinder", parser->attribute)) ||
+			(!ft_strcmp("cone", parser->attribute)) ||
+			(!ft_strcmp("plane", parser->attribute))))
 	{
 		tmp = ft_get_between_tag(&line);
 		if (world->cobjlist->cobject->objlist->object->parser.pixels != NULL)
@@ -58,10 +58,12 @@ void	ft_parse_normal_texture(t_parser *parser, t_world *world, char *line)
 			((!ft_strcmp("sphere", parser->attribute))))
 	{
 		tmp = ft_get_between_tag(&line);
-		if (world->cobjlist->cobject->objlist->object->parser_normal.pixels != NULL)
-			ft_free_bmp_parser(&(world->cobjlist->cobject->objlist->object->parser_normal));
-
-		world->cobjlist->cobject->objlist->object->parser_normal = ft_parse_bmp(tmp);
+		if (world->cobjlist->cobject->objlist->object->parser_normal.pixels !=
+				NULL)
+			ft_free_bmp_parser(&(world->cobjlist->cobject->objlist->
+						object->parser_normal));
+		world->cobjlist->cobject->objlist->object->parser_normal =
+			ft_parse_bmp(tmp);
 		free(tmp);
 	}
 	else

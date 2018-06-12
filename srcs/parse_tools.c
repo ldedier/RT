@@ -6,15 +6,15 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/09 01:13:48 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 01:40:40 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-t_cobject		*ft_new_cobject(void)
+t_cobject			*ft_new_cobject(void)
 {
-	t_cobject *cobject;
+	t_cobject		*cobject;
 
 	if (!(cobject = ft_memalloc(sizeof(t_cobject))))
 		return (NULL);
@@ -33,12 +33,13 @@ t_cobject		*ft_new_cobject(void)
 	cobject->regular = 1;
 	cobject->name = NULL;
 	cobject->defining = 0;
+	cobject->populated = 0;
 	return (cobject);
 }
 
-t_bmp_parser	new_bmp_parser(void)
+t_bmp_parser		new_bmp_parser(void)
 {
-	t_bmp_parser parser;
+	t_bmp_parser	parser;
 
 	parser.pixels = NULL;
 	parser.width = -1;
@@ -48,9 +49,9 @@ t_bmp_parser	new_bmp_parser(void)
 	return (parser);
 }
 
-t_object		*ft_new_object(t_cobject cobject)
+t_object			*ft_new_object(t_cobject cobject)
 {
-	t_object *object;
+	t_object		*object;
 
 	if (!(object = ft_memalloc(sizeof(t_object))))
 		ft_error("malloc error\n");
@@ -63,7 +64,6 @@ t_object		*ft_new_object(t_cobject cobject)
 	object->refract = cobject.refract;
 	object->reflect = cobject.reflect;
 	object->shine = cobject.shine;
-//	object->cuts = ft_lstdup(NULL);
 	object->cuts = NULL;
 	object->parser = new_bmp_parser();
 	object->parser_normal = new_bmp_parser();
@@ -71,12 +71,13 @@ t_object		*ft_new_object(t_cobject cobject)
 	object->mod_refract.enabled = 0;
 	object->mod_reflect.enabled = 0;
 	object->mod_transp.enabled = 0;
+	object->descriptor = NULL;
 	return (object);
 }
 
-t_cut		*ft_new_cut(void)
+t_cut				*ft_new_cut(void)
 {
-	t_cut *cut;
+	t_cut			*cut;
 
 	if (!(cut = ft_memalloc(sizeof(t_cut))))
 		return (NULL);
@@ -89,19 +90,7 @@ t_cut		*ft_new_cut(void)
 	return (cut);
 }
 
-t_mod		ft_new_mod(void)
-{
-	t_mod res;
-
-	res.enabled = 1;
-	res.color = 0;
-	res.inequality = bigger_than;
-	res.value = 0.5;
-	res.mod_value = 0.5;
-	return (res);
-}
-
-void			ft_init_light(t_light *light)
+void				ft_init_light(t_light *light)
 {
 	light->o = ft_new_vec3(0, 0, 0);
 	light->v = ft_new_vec3(0, 1, 0);

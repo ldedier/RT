@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 00:36:26 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/11 10:15:17 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/11 19:18:57 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		new_world_2(t_world **world, t_canvas *canvas, char *file)
 
 	if ((rw_err = read_world(*world, file)))
 	{
-		freecanvas(&canvas);
+//		freecanvas(&canvas);
 		return (freeworld(world, rw_err));
 	}
 	if (ft_init_sdl(*world) == 0)

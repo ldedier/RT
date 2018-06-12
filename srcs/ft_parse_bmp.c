@@ -6,11 +6,30 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 15:48:32 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/07 23:59:30 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 01:36:41 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+void			ft_process_parse_bmp(char *filename, t_bmp_parser *parser,
+		t_mmap map, int *size)
+{
+	if ((ft_strlen((char *)map.ptr) < 2) || map.ptr[0] != 'B' ||
+			map.ptr[1] != 'M')
+	{
+		parser->pixels = NULL;
+		munmap(map.ptr, map.size);
+		ft_dprintf(2, "file %s is not a BMP file\n", filename);
+		exit(1);
+	}
+	parser->width = *(int *)&(map.ptr[18]);
+	parser->height = *(int *)&(map.ptr[22]);
+	parser->bpp = *(short *)&(map.ptr[28]);
+	parser->bitmap_index = *(int *)&(map.ptr[10]);
+	*size = parser->width * parser->height * (parser->bpp / 8);
+	parser->pixels = malloc(sizeof(unsigned char) * (*size) + 1);
+}
 
 t_bmp_parser	ft_parse_bmp(char *filename)
 {
@@ -19,23 +38,8 @@ t_bmp_parser	ft_parse_bmp(char *filename)
 	int				size;
 	int				i;
 
-	i = 0;
 	map = ft_map_file(filename);
-	if ((ft_strlen((char *)map.ptr) < 2) || map.ptr[0] != 'B' ||
-			map.ptr[1] != 'M')
-	{
-		parser.pixels = NULL;
-		munmap(map.ptr, map.size);
-		return (parser);
-	}
-	parser.width = *(int *)&(map.ptr[18]);
-	parser.height = *(int *)&(map.ptr[22]);
-	parser.bpp = *(short *)&(map.ptr[28]);
-	parser.bitmap_index = *(int *)&(map.ptr[10]);
-
-	size = parser.width * parser.height * (parser.bpp / 8);
-	parser.pixels = malloc(sizeof(unsigned char) * size + 1);
-
+	ft_process_parse_bmp(filename, &parser, map, &size);
 	i = 0;
 	while (i < size)
 	{
@@ -43,7 +47,7 @@ t_bmp_parser	ft_parse_bmp(char *filename)
 		parser.pixels[i + 1] = map.ptr[i + parser.bitmap_index + 1];
 		parser.pixels[i + 2] = map.ptr[i + parser.bitmap_index + 2];
 		parser.pixels[i + 3] = map.ptr[i + parser.bitmap_index + 3];
-		i+= parser.bpp / 8;
+		i += parser.bpp / 8;
 	}
 	munmap(map.ptr, map.size);
 	return (parser);

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:48:56 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 05:43:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/11 19:19:26 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,9 @@ void			ft_check_parser(t_parser parser)
 	}
 }
 
-void			ft_free_parser(t_parser *parser)
+void			ft_free_lists(t_list **ptr, t_list *tmp, int *i,
+		t_parser *parser)
 {
-	int		i;
-	t_list	**ptr;
-	t_list	*tmp;
-
-	i = 0;
-	if (parser->attribute != NULL)
-		free(parser->attribute);
-	if (parser->tag != NULL)
-		free(parser->tag);
 	ptr = &(parser->tag_stack);
 	while (*ptr)
 	{
@@ -54,7 +46,7 @@ void			ft_free_parser(t_parser *parser)
 		free(tmp->content);
 		free(tmp);
 		*ptr = (*ptr)->next;
-		i++;
+		*i += 1;
 	}
 	ptr = &(parser->attribute_stack);
 	while (*ptr)
@@ -64,11 +56,27 @@ void			ft_free_parser(t_parser *parser)
 		free(tmp);
 		*ptr = (*ptr)->next;
 	}
-	if (i)
+	if (*i)
 	{
 		ft_dprintf(2, "some opening tags are not closed\n");
 		exit(1);
 	}
+}
+
+void			ft_free_parser(t_parser *parser)
+{
+	int		i;
+	t_list	**ptr;
+	t_list	*tmp;
+
+	if (parser->attribute != NULL)
+		free(parser->attribute);
+	if (parser->tag != NULL)
+		free(parser->tag);
+	i = 0;
+	tmp = NULL;
+	ptr = NULL;
+	ft_free_lists(ptr, tmp, &i, parser);
 	ft_check_parser(*parser);
 }
 

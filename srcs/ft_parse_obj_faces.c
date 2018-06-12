@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 18:45:42 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/09 00:06:47 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 00:56:53 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_obj_hashtag(char *s, t_obj_parser *parser)
 	(void)s;
 }
 
-void	ft_obj_add_index(int *i, char *s , int *index)
+void	ft_obj_add_index(int *i, char *s, int *index)
 {
 	*index = 0;
 	while (!ft_isdigit(s[*i]) && s[*i] != '\0')
@@ -30,7 +30,7 @@ void	ft_obj_add_index(int *i, char *s , int *index)
 	}
 }
 
-int	ft_obj_add_index_fourth(int *i, char *s , int *index)
+int		ft_obj_add_index_fourth(int *i, char *s, int *index)
 {
 	*index = 0;
 	while (!ft_isdigit(s[*i]) && s[*i] != '\0')
@@ -47,15 +47,14 @@ int	ft_obj_add_index_fourth(int *i, char *s , int *index)
 
 void	ft_obj_face(char *s, t_obj_parser *parser)
 {
-	t_ivec3 face;
-	int z_tmp;
-	int i;
+	t_ivec3	face;
+	int		z_tmp;
+	int		i;
 
 	i = 0;
 	ft_obj_add_index(&i, s, &(face.x));
 	ft_obj_add_index(&i, s, &(face.y));
 	ft_obj_add_index(&i, s, &(face.z));
-
 	ft_lstpushback(&(parser->faces_tmp), ft_lstnew(&face, sizeof(t_ivec3)));
 	parser->nb_faces++;
 	z_tmp = face.z;

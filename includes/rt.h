@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/11 09:13:20 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 02:05:30 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //DONE fix shadow with directional light
@@ -465,6 +465,7 @@ typedef struct			s_object
 	t_mod				mod_transp;
 	t_cobject			*cobject;
 	int					id;
+	char				*descriptor;
 }						t_object;
 
 typedef struct			s_objlist
@@ -496,8 +497,10 @@ struct			s_cobject
 	int					negative;
 	int					regular;
 	char				*name;
+	char				*descriptor;
 	int					defining;
 	int					id;
+	int					populated;
 };
 
 struct			s_hit
@@ -784,6 +787,20 @@ typedef struct  s_mmap
 	size_t          size;
 }				t_mmap;
 
+typedef struct	s_aux_compute
+{
+	t_mat4 rotate;
+	t_mat4 scale;
+	t_mat4 translate;
+	t_mat4 rotate_inv;
+	t_mat4 scale_inv;
+	t_mat4 translate_inv;
+	t_mat4 local_translate;
+	t_mat4 local_translate_inv;
+	t_mat4 rotate_cobj;
+	t_mat4 rotate_inv_cobj;
+}					t_aux_compute;
+
 /*
  ** input
  */
@@ -904,11 +921,15 @@ void					ft_process_parsing_cut_xyz(t_parser *p, t_world *w,
 		char *l);
 void					ft_process_parsing_inequality(t_parser *p,t_world *w,
 		char *l);
-void					ft_process_parsing_value(t_parser *p,t_world *w,
+void					ft_process_parsing_value(t_parser *p, t_world *w,
 		char *l);
 void					ft_process_parsing_cut_color(t_parser *p,t_world *w,
 		char *l);
 void					ft_process_parsing_mod_color(t_parser *p,t_world *w,
+		char *l);
+void					ft_process_parsing_inequality(t_parser *p,t_world *w,
+		char *l);
+void					ft_process_parsing_value(t_parser *p,t_world *w,
 		char *l);
 void					ft_process_parsing_mod_value(t_parser *p,t_world *w,
 		char *l);
@@ -917,6 +938,8 @@ void					ft_process_parsing_vertex_a(t_parser *p,t_world *w,
 void					ft_process_parsing_vertex_b(t_parser *p,t_world *w,
 		char *l);
 void					ft_process_parsing_vertex_c(t_parser *p,t_world *w,
+		char *l);
+void					ft_process_parsing_stack_2(t_parser *p,t_world *w,
 		char *l);
 void					ft_process_parsing_mod_start(t_parser *p, t_world *w);
 void					ft_parse_nb_spheres(t_parser *p, t_world *w, char *l);
@@ -934,7 +957,10 @@ void					ft_parse_trans_y(t_parser *p, t_world *w, char *l);
 void					ft_parse_stretch_x(t_parser *p, t_world *w, char *l);
 void					ft_parse_stretch_y(t_parser *p, t_world *w, char *l);
 int						parse_light(char *line, t_light *rlight);
+void					ft_give_object_name(t_object *object, char *name);
+void					ft_transfer_mod_parser(t_parser *parser, t_world *w);
 
+void    set_func(t_object *obj, void (*print_caracteristics)(t_object, int));
 /*
  **vectors
  */

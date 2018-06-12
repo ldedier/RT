@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/22 03:22:31 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/05/22 03:33:25 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/11 22:01:57 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int				read_cdouble(char **line, double *to, double min, double max)
 
 	scss = 1;
 	*to = ft_patof(line, &scss);
-	if(*to < min || *to > max)
+	if (*to < min || *to > max)
 	{
 		*to = (max - min) / 2;
 	}
@@ -54,4 +54,18 @@ int				read_int(char **line, int *to)
 	if (!(ft_isspace(**line)) || **line != '<')
 		scss = 0;
 	return (scss);
+}
+
+char			*ft_get_between_tag(char **line)
+{
+	int			i;
+	char		*str;
+
+	str = *line;
+	i = 0;
+	while (str[i] && str[i] != '<')
+		i++;
+	str = ft_strndup(*line, i);
+	(*line) += i;
+	return (str);
 }

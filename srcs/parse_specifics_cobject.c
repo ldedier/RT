@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/29 16:11:33 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 00:45:51 by ldedier          ###   ########.fr       */
+/*   Created: 2018/06/11 22:20:50 by ldedier           #+#    #+#             */
+/*   Updated: 2018/06/11 22:20:58 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	ft_parse_length(t_parser *parser, t_world *world, char *line)
 	ft_process_tag_pop(parser);
 }
 
-
 void	populate_style_through_string(t_parser *parser, char *str,
 		t_style *style)
 {
@@ -88,8 +87,8 @@ void	populate_style_through_string(t_parser *parser, char *str,
 
 void	ft_parse_style(t_parser *parser, t_world *world, char *line)
 {
-	char *str;
-	t_style *style;
+	char		*str;
+	t_style		*style;
 
 	if (parser->parse_enum == e_parse_cobject && parser->attribute &&
 			!ft_strcmp("adn", parser->attribute))
@@ -106,33 +105,4 @@ void	ft_parse_style(t_parser *parser, t_world *world, char *line)
 	free(str);
 	parser->op = ft_parse_tag(&line, parser);
 	ft_process_tag_pop(parser);
-
-}
-
-void	ft_parse_color_n(t_parser *parser, t_world *world, char *line, int n)
-{
-	int *color;
-
-	if (parser->parse_enum == e_parse_cobject && parser->attribute &&
-			!ft_strcmp("adn", parser->attribute)&& n == 1)
-		color = &(world->cobjlist->cobject\
-				->cobject_union.adn.color1);
-	else if (parser->parse_enum == e_parse_cobject && parser->attribute &&
-			!ft_strcmp("adn", parser->attribute) && n == 2)
-		color = &(world->cobjlist->cobject\
-				->cobject_union.adn.color2);
-	else if (parser->parse_enum == e_parse_cobject && parser->attribute &&
-			!ft_strcmp("adn", parser->attribute) && n == 3)
-		color = &(world->cobjlist->cobject\
-				->cobject_union.adn.color3);
-	else
-	{
-		ft_dprintf(2, "line %d: current object can not have a style tag\n",
-				parser->nb_lines);
-		exit(1);
-	}
-	read_hex(&line, color);
-	parser->op = ft_parse_tag(&line, parser);
-	ft_process_tag_pop(parser);
-
 }
