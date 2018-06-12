@@ -1,0 +1,413 @@
+Norme: ./srcs/shadows.c.backup
+Warning: Not a valid file
+Norme: ./srcs/automatic.c
+Norme: ./srcs/camera_rotations.c
+Norme: ./srcs/colors.c
+Norme: ./srcs/cuts.c
+Norme: ./srcs/compute_matrix.c
+Norme: ./srcs/convolute.c
+Norme: ./srcs/defining.c
+Norme: ./srcs/automatic2.c
+Norme: ./srcs/errors.c
+Norme: ./srcs/ft_export.c
+Norme: ./srcs/ft_export_bmp.c
+Norme: ./srcs/debug.c
+Error: 7 functions in the file
+Error (line 43): bad spacing after print_camera
+Error (line 59): multiple empty lines
+Error (line 60): bad spacing before print_clist
+Error (line 98): function print_object has 28 lines
+Norme: ./srcs/filters.c
+Norme: ./srcs/filters2.c
+Norme: ./srcs/ft_export_ppm.c
+Norme: ./srcs/ft_new_image.c
+Norme: ./srcs/ft_get_name.c
+Norme: ./srcs/ft_export_y4m.c
+Norme: ./srcs/ft_parse_bmp.c
+Norme: ./srcs/ft_parse_obj_faces.c
+Norme: ./srcs/ft_parse_obj_vertices.c
+Norme: ./srcs/ft_process_parse_obj.c
+Norme: ./srcs/init_menu_2.c
+Norme: ./srcs/init_menu_tools.c
+Norme: ./srcs/init_menu.c
+Norme: ./srcs/init_menu_tools_3.c
+Norme: ./srcs/init_menu_tools_4.c
+Error (line 22): C++ comment
+Norme: ./srcs/init_menu_tools_2.c
+Norme: ./srcs/init_sdl.c
+Norme: ./srcs/insides2.c
+Norme: ./srcs/intcolors.c
+Norme: ./srcs/intcolors2.c
+Norme: ./srcs/intersections.c
+Norme: ./srcs/intersections2.c
+Warning: /Users/ldedier/Projects/RT/srcs/intersections2.c may not compile or is invalid for some reasons.
+Norme: ./srcs/intersections3.c
+Warning: /Users/ldedier/Projects/RT/srcs/intersections3.c may not compile or is invalid for some reasons.
+Norme: ./srcs/intersections4.c
+Warning: /Users/ldedier/Projects/RT/srcs/intersections4.c may not compile or is invalid for some reasons.
+Norme: ./srcs/ft_export_scene.c
+Error: 26 functions in the file
+Error (line 17, col 11): bad character after ,
+Error (line 18, col 11): bad character after ,
+Error (line 19, col 11): bad character after ,
+Error (line 20, col 11): bad character after ,
+Error (line 21, col 11): bad character after ,
+Error (line 22, col 11): bad character after ,
+Error (line 24, col 11): bad character after ,
+Error (line 25, col 11): bad character after ,
+Error (line 31, col 12): bad character after ,
+Error (line 33, col 12): bad character after ,
+Error (line 35, col 12): bad character after ,
+Error (line 37, col 12): bad character after ,
+Error (line 39, col 12): bad character after ,
+Error (line 44, col 11): bad character after ,
+Error (line 45, col 11): bad character after ,
+Error (line 46, col 11): bad character after ,
+Error (line 47, col 11): bad character after ,
+Error (line 48, col 11): bad character after ,
+Error (line 49, col 11): bad character after ,
+Error (line 50, col 11): bad character after ,
+Error (line 51, col 11): bad character after ,
+Error (line 52): Empty line
+Error (line 53, col 11): bad character after ,
+Error (line 54, col 11): bad character after ,
+Error (line 55, col 11): bad character after ,
+Error (line 56, col 11): bad character after ,
+Error (line 57, col 11): bad character after ,
+Error (line 58, col 11): bad character after ,
+Error (line 59, col 11): bad character after ,
+Error (line 60, col 11): bad character after ,
+Error (line 61): Empty line
+Error (line 63): Empty line
+Error (line 65, col 12): bad character after ,
+Error (line 67, col 12): bad character after ,
+Error (line 72, col 11): bad character after ,
+Error (line 73, col 11): bad character after ,
+Error (line 74, col 11): bad character after ,
+Error (line 76, col 11): bad character after ,
+Error (line 77, col 11): bad character after ,
+Error (line 78, col 11): bad character after ,
+Error (line 80, col 11): bad character after ,
+Error (line 81, col 11): bad character after ,
+Error (line 82, col 11): bad character after ,
+Error (line 83, col 11): bad character after ,
+Error (line 84, col 11): bad character after ,
+Error (line 85, col 11): bad character after ,
+Error (line 86, col 11): bad character after ,
+Error (line 87, col 11): bad character after ,
+Error (line 88, col 11): bad character after ,
+Error (line 89, col 11): bad character after ,
+Error (line 90, col 11): bad character after ,
+Error (line 100, col 12): bad character after ,
+Error (line 115, col 12): bad character after ,
+Error (line 121, col 11): bad character after ,
+Error (line 127, col 11): bad character after ,
+Error (line 129, col 11): bad character after ,
+Error (line 131, col 11): bad character after ,
+Error (line 133, col 11): bad character after ,
+Error (line 139, col 11): bad character after ,
+Error (line 145, col 11): bad character after ,
+Error (line 151, col 11): bad character after ,
+Error (line 153, col 11): bad character after ,
+Error (line 160, col 11): bad character after ,
+Error (line 162, col 11): bad character after ,
+Error (line 168, col 11): bad character after ,
+Error (line 192, col 11): bad character after ,
+Error (line 204, col 11): bad character after ,
+Error (line 207, col 11): bad character after ,
+Error (line 210, col 11): bad character after ,
+Error (line 217, col 11): bad character after ,
+Error (line 218, col 11): bad character after ,
+Error (line 219, col 11): bad character after ,
+Error (line 220): Empty line
+Error (line 222, col 12): bad character after ,
+Error (line 224, col 12): bad character after ,
+Error (line 226, col 12): bad character after ,
+Error (line 228, col 12): bad character after ,
+Error (line 230, col 12): bad character after ,
+Error (line 231): Empty line
+Error (line 232, col 11): bad character after ,
+Error (line 233, col 11): bad character after ,
+Error (line 234, col 11): bad character after ,
+Error (line 255, col 12): bad character after ,
+Error (line 257, col 12): bad character after ,
+Error (line 262): function ft_get_object_name has 27 lines
+Error (line 313, col 11): bad character after ,
+Error (line 321, col 11): bad character after ,
+Error (line 322, col 11): bad character after ,
+Error (line 323, col 11): bad character after ,
+Error (line 324, col 11): bad character after ,
+Error (line 325, col 11): bad character after ,
+Error (line 326, col 11): bad character after ,
+Error (line 327, col 11): bad character after ,
+Error (line 328, col 11): bad character after ,
+Error (line 329, col 11): bad character after ,
+Error (line 330, col 11): bad character after ,
+Error (line 331, col 11): bad character after ,
+Error (line 332, col 11): bad character after ,
+Error (line 333, col 11): bad character after ,
+Error (line 334, col 11): bad character after ,
+Error (line 335, col 11): bad character after ,
+Error (line 336): C++ comment
+Error (line 340, col 11): bad character after ,
+Error (line 363, col 11): bad character after ,
+Error (line 368, col 11): bad character after ,
+Error (line 369, col 11): bad character after ,
+Error (line 370, col 11): bad character after ,
+Error (line 371, col 11): bad character after ,
+Error (line 372, col 11): bad character after ,
+Error (line 373, col 11): bad character after ,
+Error (line 374, col 11): bad character after ,
+Error (line 375, col 11): bad character after ,
+Error (line 376, col 11): bad character after ,
+Error (line 377, col 11): bad character after ,
+Error (line 378, col 11): bad character after ,
+Error (line 379, col 11): bad character after ,
+Error (line 380, col 11): bad character after ,
+Error (line 381, col 11): bad character after ,
+Error (line 382, col 11): bad character after ,
+Error (line 383, col 11): bad character after ,
+Error (line 384, col 11): bad character after ,
+Error (line 386): C++ comment
+Error (line 389): function ft_export_scene has 34 lines
+Error (line 399, col 11): bad character after ,
+Error (line 404, col 12): bad character after ,
+Error (line 409, col 3): missing space after while
+Error (line 414, col 13): bad character after ,
+Error (line 417, col 12): bad character after ,
+Error (line 421, col 11): bad character after ,
+Norme: ./srcs/intersections6.c
+Warning: /Users/ldedier/Projects/RT/srcs/intersections6.c may not compile or is invalid for some reasons.
+Norme: ./srcs/intersections7.c
+Warning: /Users/ldedier/Projects/RT/srcs/intersections7.c may not compile or is invalid for some reasons.
+Norme: ./srcs/inequality.c
+Norme: ./srcs/insides.c
+Norme: ./srcs/intersections5.c
+Warning: /Users/ldedier/Projects/RT/srcs/intersections5.c may not compile or is invalid for some reasons.
+Norme: ./srcs/lights_tools.c
+Norme: ./srcs/lights.c
+Norme: ./srcs/map_file.c
+Norme: ./srcs/loop.c
+Error: global scope bad aligned
+Error (line 26): function get_input has 45 lines
+Error (line 44): must begin only by tabulations
+Error (line 52): must begin only by tabulations
+Error (line 68, col 3): missing space after if
+Norme: ./srcs/menu.c
+Norme: ./srcs/menu_lights.c
+Norme: ./srcs/menu_lights_2.c
+Norme: ./srcs/key_events.c
+Error (line 15): function ft_keys_event has 112 lines
+Norme: ./srcs/menu_lights_5.c
+Error (line 18, col 6): missing space around <=
+Norme: ./srcs/menu_objects.c
+Norme: ./srcs/menu_lights_3.c
+Norme: ./srcs/menu_lights_4.c
+Norme: ./srcs/menu_objects_2.c
+Norme: ./srcs/menu_objects_4.c
+Norme: ./srcs/menu_objects_3.c
+Norme: ./srcs/menu_objects_5.c
+Norme: ./srcs/menu_objects_6.c
+Norme: ./srcs/menu_others.c
+Norme: ./srcs/menu_others_3.c
+Norme: ./srcs/menu_others_4.c
+Norme: ./srcs/menu_others_5.c
+Norme: ./srcs/menu_others_2.c
+Norme: ./srcs/menu_tools_2.c
+Norme: ./srcs/menu_tools.c
+Norme: ./srcs/mouse_button_lights_2.c
+Norme: ./srcs/mouse_button_lights.c
+Norme: ./srcs/mouse_button_objects.c
+Norme: ./srcs/mouse_button_objects_2.c
+Norme: ./srcs/mouse_button_objects_4.c
+Norme: ./srcs/mouse_button_objects_3.c
+Norme: ./srcs/mouse_button_others_2.c
+Norme: ./srcs/mouse_events.c
+Error (line 15): C++ comment
+Error (line 16): C++ comment
+Error (line 18): C++ comment
+Error (line 19): C++ comment
+Error (line 20): C++ comment
+Norme: ./srcs/mouse_events_2.c
+Error (line 15): declarations in ft_pivot_camera are bad aligned
+Error (line 15): declarations must be followed by one empty line in ft_pivot_camera
+Error (line 19, col 8): anglep is instanciated during declaration
+Error (line 28): declarations in ft_look_at are bad aligned
+Error (line 28): function ft_look_at has 35 lines
+Error (line 28): declarations in ft_look_at must be at the top of the function
+Error (line 28): declarations must be followed by one empty line in ft_look_at
+Error (line 33): C++ comment
+Error (line 34): C++ comment
+Error (line 35): C++ comment
+Error (line 36): C++ comment
+Error (line 37): C++ comment
+Error (line 38): C++ comment
+Error (line 39): C++ comment
+Error (line 40): C++ comment
+Error (line 41): C++ comment
+Error (line 42): C++ comment
+Error (line 44, col 8): angle_x is instanciated during declaration
+Error (line 45): C++ comment
+Error (line 46): C++ comment
+Error (line 47): C++ comment
+Error (line 48): C++ comment
+Error (line 49): C++ comment
+Error (line 50): C++ comment
+Error (line 51): C++ comment
+Error (line 52, col 8): angle_y is instanciated during declaration
+Error (line 53): C++ comment
+Error (line 54): C++ comment
+Error (line 55): C++ comment
+Error (line 56): C++ comment
+Error (line 57): C++ comment
+Error (line 58): C++ comment
+Error (line 59): C++ comment
+Error (line 60): C++ comment
+Error (line 62): bad indentation
+Error (line 63): C++ comment
+Error (line 64): C++ comment
+Error (line 65, col 0): no empty line before block
+Error (line 67): declarations in ft_left_click_event are bad aligned
+Error (line 67): function ft_left_click_event has 37 lines
+Error (line 77): Empty line
+Error (line 81): C++ comment
+Error (line 103): Empty line
+Error (line 104): C++ comment
+Norme: ./srcs/mouse_motion_lights.c
+Norme: ./srcs/menu_objects_7.c
+Error (line 15): function ft_menu_objects_bloc1_scrollbar has 212 lines
+Error (line 15): declarations in ft_menu_objects_bloc1_scrollbar must be at the top of the function
+Error (line 15): declarations must be followed by one empty line in ft_menu_objects_bloc1_scrollbar
+Error (line 15, col 0): ft_menu_objects_bloc1_scrollbar has 12 variables
+Error (line 27): spaces at the end of line
+Error (line 67): line has 90 characters
+Error (line 79): line has 90 characters
+Error (line 125): C++ comment
+Error (line 135): line has 104 characters
+Error (line 167): line has 98 characters
+Error (line 179): line has 98 characters
+Norme: ./srcs/mouse_motion_objects_2.c
+Norme: ./srcs/mouse_motion_objects.c
+Norme: ./srcs/menu_tools_3.c
+Norme: ./srcs/normals.c
+Norme: ./srcs/normals3.c
+Norme: ./srcs/normals2.c
+Norme: ./srcs/obj_list_del.c
+Norme: ./srcs/obj_list.c
+Norme: ./srcs/paint_canvas.c
+Norme: ./srcs/paint_stereoscopic.c
+Norme: ./srcs/mouse_button_others.c
+Norme: ./srcs/paint_threaded.c
+Norme: ./srcs/paint_threaded_tools.c
+Norme: ./srcs/parse_main.c
+Norme: ./srcs/parse_cut.c
+Norme: ./srcs/parse_mod.c
+Norme: ./srcs/mouse_motion_others.c
+Norme: ./srcs/parse_obj.c
+Norme: ./srcs/paint_fast.c
+Norme: ./srcs/parse_others.c
+Norme: ./srcs/parse_others_start.c
+Norme: ./srcs/parse_perts.c
+Norme: ./srcs/parse_plane_textures.c
+Norme: ./srcs/parse_process_tools.c
+Norme: ./srcs/parse_process.c
+Norme: ./srcs/parse_read_tools.c
+Norme: ./srcs/parse_orsc.c
+Norme: ./srcs/parse_settings.c
+Norme: ./srcs/parse_radangle.c
+Norme: ./srcs/parse_specifics.c
+Norme: ./srcs/parse_specific_func.c
+Norme: ./srcs/parse_process2.c
+Norme: ./srcs/parse_specifics_cobject2.c
+Norme: ./srcs/parse_specifics2.c
+Norme: ./srcs/parse_specifics_cobject.c
+Norme: ./srcs/parse_start.c
+Norme: ./srcs/parse_tools2.c
+Norme: ./srcs/parse_texture.c
+Norme: ./srcs/parse_stack.c
+Norme: ./srcs/parse_tools.c
+Norme: ./srcs/parse_triangle.c
+Norme: ./srcs/populate_world.c
+Error (line 20): C++ comment
+Error (line 33): C++ comment
+Error (line 46): C++ comment
+Error (line 59): C++ comment
+Norme: ./srcs/quartics_intersect.c
+Warning: /Users/ldedier/Projects/RT/srcs/quartics_intersect.c may not compile or is invalid for some reasons.
+Norme: ./srcs/perturbations.c
+Norme: ./srcs/refraction.c
+Norme: ./srcs/quartics_intersect2.c
+Norme: ./srcs/renderer.c
+Norme: ./srcs/perlin.c
+Norme: ./srcs/renderer_tools.c
+Error: global scope bad aligned
+Error (line 15): multiple empty lines
+Error (line 16): bad spacing before ft_process_mod
+Error (line 21, col 9): missing parentheses in return statement
+Error (line 58): must begin only by tabulations
+Norme: ./srcs/rotations.c
+Norme: ./srcs/set_functions.c
+Warning: /Users/ldedier/Projects/RT/srcs/set_functions.c may not compile or is invalid for some reasons.
+Norme: ./srcs/renderer2.c
+Norme: ./srcs/textures.c
+Norme: ./srcs/tools.c
+Error: global scope bad aligned
+Error (line 36): Space before function name
+Error (line 38, col 8): missing parentheses in return statement
+Error (line 41): Space before function name
+Norme: ./srcs/shadows.c
+Norme: ./srcs/trace_tools.c
+Norme: ./srcs/tracer.c
+Norme: ./srcs/tracer_hitcheck.c
+Norme: ./srcs/translations.c
+Norme: ./srcs/triangle.c
+Norme: ./srcs/vectors.c
+Norme: ./srcs/vectors2.c
+Norme: ./srcs/video.c
+Norme: ./srcs/viewplane.c
+Norme: ./srcs/process.c
+Error (line 15): Space before function name
+Error (line 15): Space before function name
+Error (line 15): Space before function name
+Error (line 15): Space before function name
+Error (line 15): function ft_process has 217 lines
+Error (line 15): declarations in ft_process must be at the top of the function
+Error (line 15): declarations must be followed by one empty line in ft_process
+Error (line 15, col 0): ft_process has 12 variables
+Error (line 15, col 4): bad spacing
+Error (line 45): line has 93 characters
+Error (line 49): spaces at the end of line
+Error (line 56): line has 97 characters
+Error (line 61): line has 104 characters
+Error (line 62): line has 95 characters
+Error (line 65): line has 95 characters
+Error (line 68): line has 93 characters
+Error (line 70): line has 93 characters
+Error (line 89, col 10): angle is instanciated during declaration
+Error (line 96, col 10): angle is instanciated during declaration
+Error (line 103, col 10): angle is instanciated during declaration
+Error (line 110, col 10): angle is instanciated during declaration
+Error (line 117, col 10): angle is instanciated during declaration
+Error (line 124, col 10): angle is instanciated during declaration
+Error (line 135): line has 84 characters
+Error (line 146): spaces at the end of line
+Error (line 158): line has 86 characters
+Error (line 186, col 10): angle is instanciated during declaration
+Error (line 193, col 10): angle is instanciated during declaration
+Error (line 200, col 10): angle is instanciated during declaration
+Error (line 207, col 10): angle is instanciated during declaration
+Error (line 214, col 10): angle is instanciated during declaration
+Error (line 221, col 10): angle is instanciated during declaration
+Norme: ./srcs/rt.c
+Error (line 28): declarations must be followed by one empty line in main
+Error (line 33): multiple empty lines
+Error (line 33): Empty line
+Error (line 39): C++ comment
+Norme: ./srcs/world_maker.c
+Error: global scope bad aligned
+Error (line 31): comment not well formatted
+Error (line 31): comment not well placed
+Error (line 43): C++ comment
+Norme: ./srcs/tracer2.c
+Norme: ./srcs/world_init.c
+Error (line 94): function set_defaults has 26 lines

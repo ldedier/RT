@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:07 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 04:25:15 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 05:17:57 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_parse_src(t_parser *parser, t_world *world, char *line)
 
 	(void)world;
 	if (parser->parse_enum == e_parse_cobject &&
-			!ft_strcmp(parser->attribute, "obj") && 
+			!ft_strcmp(parser->attribute, "obj") &&
 			!world->cobjlist->cobject->populated)
 	{
 		world->cobjlist->cobject->populated = 1;

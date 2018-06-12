@@ -6,7 +6,7 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/12 01:24:55 by lcavalle         ###   ########.fr        #
+#    Updated: 2018/06/12 05:22:18 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 normals2.c\
 				 normals3.c\
 				 obj_list.c\
+				 obj_list_del.c\
 				 paint_threaded.c\
 				 paint_fast.c \
 				 paint_canvas.c\
@@ -80,7 +81,6 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 parse_process_tools.c\
 				 parse_process2.c\
 				 parse_stack.c\
-				 populate_world.c\
 				 renderer.c\
 				 renderer2.c\
 				 renderer_tools.c\
