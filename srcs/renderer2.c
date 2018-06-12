@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 00:41:16 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/12 04:13:05 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 09:58:03 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void			ray_color_init(t_aux_ray_color *arc, t_world *world,
 static t_color		get_reflect(t_world *world, const t_aux_ray_color *arc,
 		int bounce, int fast)
 {
-	if (bounce < world->max_bounce && arc->x.f_reflect > EPSILON && !fast)
+	(void)fast;
+	if (bounce < world->max_bounce && arc->x.f_reflect > EPSILON)
 		return (ray_color(newray(translate_vec(arc->hit->point,
 						arc->hit->pertbounce, EPSILON2), arc->hit->pertbounce),
 				world, bounce + 1, 0));
@@ -45,7 +46,8 @@ static t_color		get_reflect(t_world *world, const t_aux_ray_color *arc,
 static t_color		get_refract(t_world *world, const t_aux_ray_color *arc,
 		int bounce, int fast)
 {
-	if (bounce < world->max_bounce && arc->x.f_transp > EPSILON && !fast)
+	(void)fast;
+	if (bounce < world->max_bounce && arc->x.f_transp > EPSILON)
 	{
 		if (fabs(arc->x.f_refract - 1) > EPSILON)
 			return (ray_color(newray(translate_vec(arc->hit->point,

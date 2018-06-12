@@ -62,7 +62,7 @@
 		<cobject>
 			<positionXYZ>0 0 8</positionXYZ>
 			<transparency>0.7</transparency>
-			<refraction>1.1</refraction>
+			<refraction>1.05</refraction>
 			<object name="sphere">
 				<radius>2</radius>
 				<color>0x0000FF</color>
