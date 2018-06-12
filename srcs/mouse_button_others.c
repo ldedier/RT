@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 01:19:23 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 02:34:35 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/11 23:46:23 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	ft_mouse_button_others_5(t_world *world, SDL_Event event, int x, int y)
 
 int		ft_mouse_button_others_4(t_world *world, int i, int tmp)
 {
+	int		j;
+
 	if (i == (e_nfilters + 1))
 	{
 		world->menu.filter_active = 0;
@@ -50,7 +52,9 @@ int		ft_mouse_button_others_4(t_world *world, int i, int tmp)
 	world->menu.filters_list[i] = tmp;
 	ft_sort_menu_filters(world);
 	world->menu.filter_active = 0;
-	world->filters[tmp] = 0;
+	j = 0;
+	while (j < (e_nfilters + 1))
+		world->filters[j++] = 0;
 	world->filters[world->menu.filters_list[0]] = 1;
 	if (i > 0)
 	{

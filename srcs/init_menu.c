@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 05:30:42 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 05:32:23 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 00:35:40 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	set_positions_5(t_world *world)
 
 void	set_positions_4(t_world *world)
 {
-	int			i;
-
 	world->menu.active_light = 0;
 	world->menu.first_light.x = 0;
 	world->menu.first_light.y = 145;
@@ -44,12 +42,6 @@ void	set_positions_4(t_world *world)
 	world->menu.lights_rb[1] = ft_new_rangebar(0, 1,
 			ft_new_pixel(world->canvas->win.w + 107, 580),
 			&(world->lights[world->menu.active_light].intensity));
-	i = 0;
-	while (i < world->nlights)
-	{
-		world->lights[i].v = normalize(world->lights[i].v);
-		i++;
-	}
 }
 
 void	set_positions_3(t_world *world)

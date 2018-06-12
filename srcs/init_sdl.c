@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 04:36:22 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 04:52:53 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/11 23:23:13 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ int			ft_init_sdl_3(t_world *world)
 		return (0);
 	if (!(world->canvas->surface = SDL_CreateRGBSurface(0,
 			world->canvas->screen.w, world->canvas->screen.h, 32, 0, 0, 0, 0)))
+		return (0);
+	if (!(world->canvas->red_pixels = (int *)malloc(sizeof(int)
+					* world->canvas->win_size.x * world->canvas->win_size.y)))
 		return (0);
 	return (1);
 }

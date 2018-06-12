@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 01:10:41 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 04:32:25 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 01:29:02 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,26 @@ void	ft_mouse_motion_objects_4(t_world *world, float value, int i)
 {
 	if (value >= world->menu.objects_rb[i].min
 			&& value <= world->menu.objects_rb[i].max)
-		*(world->menu.objects_rb[i].value) = value - 2;
+		*(world->menu.objects_rb[i].value) = value;
 	else
 	{
 		if (value < world->menu.objects_rb[i].min)
 			*(world->menu.objects_rb[i].value) =
-				world->menu.objects_rb[i].min - 2;
+				world->menu.objects_rb[i].min;
 		if (value > world->menu.objects_rb[i].max)
 			*(world->menu.objects_rb[i].value) =
-				world->menu.objects_rb[i].max - 2;
+				world->menu.objects_rb[i].max;
 	}
+	ft_compute_matrices_clist(world->cobjlist);
 }
 
 void	ft_mouse_motion_objects_3(t_world *world)
 {
 	if (world->selected_cobject->id == world->menu.active_object)
 	{
-		world->selected_cobject->s.x += world->cam->speed;
-		world->selected_cobject->s.y += world->cam->speed;
-		world->selected_cobject->s.z += world->cam->speed;
+		world->selected_cobject->s.x = world->selected_cobject->scale;
+		world->selected_cobject->s.y = world->selected_cobject->scale;
+		world->selected_cobject->s.z = world->selected_cobject->scale;
 	}
 	else
 	{
@@ -70,6 +71,7 @@ void	ft_mouse_motion_objects_3(t_world *world)
 		world->selected_object->s.y = world->selected_object->scale;
 		world->selected_object->s.z = world->selected_object->scale;
 	}
+	ft_compute_matrices_clist(world->cobjlist);
 }
 
 void	ft_mouse_motion_objects_2(t_world *world, float value, int i)

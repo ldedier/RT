@@ -6,39 +6,27 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 07:05:04 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 07:09:43 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 00:24:05 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	ft_menu_others_bloc1_grangebars(t_world *world)
+void	ft_menu_others_bloc1_rangebars_2(t_world *world, int i, int pos)
 {
-	int		i;
-	int		nb_val;
-	float	step;
-
-	i = 0;
-	while (i < world->menu.nb_others_grb)
-	{
-		world->menu.rect.x = world->menu.others_grb[i].pix.x;
-		world->menu.rect.y = world->menu.others_grb[i].pix.y;
-		world->menu.rect.w = 108;
-		world->menu.rect.h = 6;
-		ft_new_menu_surface(world);
-		SDL_FillRect(world->menu.surface, NULL, 0x888888);
-		ft_add_menu_surface(world);
-		nb_val = world->menu.others_grb[i].max
-			- world->menu.others_grb[i].min + 1;
-		step = 108 / (float)(nb_val - 1);
-		ft_menu_others_bloc1_grangebars_2(world, i, nb_val, step);
-		i++;
-	}
+	world->menu.rect.x = pos;
+	world->menu.rect.y = world->menu.others_rb[i].pix.y - 3;
+	world->menu.rect.w = 8;
+	world->menu.rect.h = 12;
+	ft_new_menu_surface(world);
+	SDL_FillRect(world->menu.surface, NULL, 0x222222);
+	ft_add_menu_surface(world);
 }
 
 void	ft_menu_others_bloc1_rangebars(t_world *world)
 {
 	int		i;
+	int		pos;
 
 	i = 0;
 	while (i < world->menu.nb_others_rb)
@@ -50,15 +38,12 @@ void	ft_menu_others_bloc1_rangebars(t_world *world)
 		ft_new_menu_surface(world);
 		SDL_FillRect(world->menu.surface, NULL, 0x888888);
 		ft_add_menu_surface(world);
-		world->menu.rect.x = world->menu.others_rb[i].pix.x
+		pos = world->menu.others_rb[i].pix.x
 			+ ((*(world->menu.others_rb[i].value) * 100)
 					/ world->menu.others_rb[i].max);
-		world->menu.rect.y = world->menu.others_rb[i].pix.y - 3;
-		world->menu.rect.w = 8;
-		world->menu.rect.h = 12;
-		ft_new_menu_surface(world);
-		SDL_FillRect(world->menu.surface, NULL, 0x222222);
-		ft_add_menu_surface(world);
+		if (pos >= world->menu.others_rb[i].pix.x &&
+				pos <= (world->menu.others_rb[i].pix.x + 100))
+			ft_menu_others_bloc1_rangebars_2(world, i, pos);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 07:54:41 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 07:55:47 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/11 23:29:51 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_menu_lights_bloc2_stereoscope(t_world *world)
 	t_bmp_parser	bmp;
 
 	bmp = world->menu.stereoscope;
-	if (1)
+	if (world->stereoscopic == 1)
 	{
 		world->menu.rect.x = world->canvas->win.w + 362;
 		world->menu.rect.y = 492;
@@ -41,7 +41,7 @@ void	ft_menu_lights_bloc2_ebloui(t_world *world)
 	t_bmp_parser	bmp;
 
 	bmp = world->menu.ebloui;
-	if (1)
+	if (world->lights[world->menu.active_light].ebloui == 1)
 	{
 		world->menu.rect.x = world->canvas->win.w + 362;
 		world->menu.rect.y = 432;
@@ -126,7 +126,7 @@ void	ft_menu_lights_bloc2_position_1(t_world *world)
 	ft_new_menu_surface(world);
 	SDL_FillRect(world->menu.surface, NULL, 0x666666);
 	ft_add_menu_surface(world);
-	world->menu.rect.x = world->canvas->win.w + 72;
+	world->menu.rect.x = world->canvas->win.w + 82;
 	world->menu.rect.y = 450;
 	world->menu.rect.w = 85;
 	world->menu.rect.h = 22;

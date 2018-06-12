@@ -6,38 +6,18 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 21:28:01 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/10 01:02:11 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 02:26:37 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-//Relier Ebloui + Stereoscope aux variables
 //Bons Noms pour Cobj / Obj (a mettre au parsing)
 //Ne pas afficher les objects des Cobj OBJ (42/teapot)
 
-//Marche pas pour Objects:
-//	- Scale
-//	- Shine
-//	- Refraction
-//	- Rotation
-//Verifier les valeurs avant (parsing) pour pas 'Out of bounds'
-//Faire des modulos pour rotation ? Idem pour lights ?
-
-//Verifier pour Lights:
-//	- Angle
-//	- Intensite
-//	- Rotation
-
-//Appeler la meme fonction dans left_click quand tout marche (mouse_events_2.c)
-
 //Reprendre l'exporter de scene
-
-//Normer:
-//	- world_objects_7.c
-//	- ft_export_scene.c
-//	- ft_mouse_events_2.c
-//	- ft_init_menu_tools_4.c
+//	- on peut avoir plusieurs filtres
+//	- ...
 
 void	ft_mouse_motion(t_world *world, SDL_Event event)
 {

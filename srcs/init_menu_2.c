@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 05:32:34 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 06:03:23 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 01:26:23 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	set_positions_10(t_world *world)
 void	set_positions_9(t_world *world)
 {
 	world->menu.objects_rb[6] =
-		ft_new_rangebar(0, 4, ft_new_pixel(world->canvas->win.w + 320,
+		ft_new_rangebar(0, 2 * M_PI, ft_new_pixel(world->canvas->win.w + 320,
 					678 + 30), &(world->selected_cobject->r.y));
 	world->menu.objects_rb[7] =
-		ft_new_rangebar(0, 4, ft_new_pixel(world->canvas->win.w + 320,
+		ft_new_rangebar(0, 2 * M_PI, ft_new_pixel(world->canvas->win.w + 320,
 					678 + 60), &(world->selected_cobject->r.z));
 	world->menu.nb_objects_cp = 1;
 	world->menu.objects_cp[0] =
@@ -55,19 +55,19 @@ void	set_positions_8(t_world *world)
 		ft_new_rangebar(1, 10, ft_new_pixel(world->canvas->win.w + 165,
 					370 + 1 * 55 + 87), &(world->selected_cobject->scale));
 	world->menu.objects_rb[1] =
-		ft_new_rangebar(0, 10, ft_new_pixel(world->canvas->win.w + 165,
+		ft_new_rangebar(0, 100, ft_new_pixel(world->canvas->win.w + 165,
 					370 + 2 * 55 + 87), &(world->selected_cobject->shine));
 	world->menu.objects_rb[2] =
 		ft_new_rangebar(0, 1, ft_new_pixel(world->canvas->win.w + 165,
 					370 + 3 * 55 + 87), &(world->selected_cobject->reflect));
 	world->menu.objects_rb[3] =
-		ft_new_rangebar(1.0, 1.1, ft_new_pixel(world->canvas->win.w + 165,
+		ft_new_rangebar(0, 5, ft_new_pixel(world->canvas->win.w + 165,
 					370 + 4 * 55 + 87), &(world->selected_cobject->refract));
 	world->menu.objects_rb[4] =
 		ft_new_rangebar(0, 1, ft_new_pixel(world->canvas->win.w + 165,
 					370 + 5 * 55 + 87), &(world->selected_cobject->transp));
 	world->menu.objects_rb[5] =
-		ft_new_rangebar(0, 4, ft_new_pixel(world->canvas->win.w + 320,
+		ft_new_rangebar(0, 2 * M_PI, ft_new_pixel(world->canvas->win.w + 320,
 					678), &(world->selected_cobject->r.x));
 	set_positions_9(world);
 }

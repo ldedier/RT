@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/03 22:25:54 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/09 07:55:20 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 00:05:39 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	ft_keys_event(t_world *e, SDL_Event event, int press)
 			e->keys[key_enter] = press;
 		else if (event.key.keysym.sym == SDLK_LSHIFT)
 		{
+			e->keys[key_shift] = press;
 			if (press == 1)
 				e->cam->speed = 1;
 			else

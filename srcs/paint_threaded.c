@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/26 09:19:18 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/11 08:10:38 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/11 22:54:23 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void		*render_thr(void *thpar)
 		}
 		p.x++;
 	}
-	free(thpar);
 	tpar->world->thr_state[tpar->id] = 2;
+	free(thpar);
 	return (NULL);
 }
 
