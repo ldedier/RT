@@ -6,7 +6,7 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/12 03:40:59 by ldedier          ###   ########.fr        #
+#    Updated: 2018/06/12 01:24:55 by lcavalle         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,6 @@ OK_COLOR = \x1b[32;01m
 EOC = \033[0m
 
 DEBUG ?= 0
-
-ifeq ($(DEBUG), 1)
-	CFLAGS += -g -DDEBUG -fsanitize=address
-else
-	CFLAGS += -Ofast
-endif
 
 SRCDIR   = srcs
 OBJDIR   = objs
@@ -204,6 +198,13 @@ INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 	  -I $(LIBSDL2TTF_INCLUDEDIR)
 
 CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror $(INC)
+
+ifeq ($(DEBUG), 1)
+	CFLAGS += -g -DDEBUG -fsanitize=address
+else
+	CFLAGS += -Ofast
+endif
+
 LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
 		 -fsanitize=address
 

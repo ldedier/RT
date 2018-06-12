@@ -19,7 +19,7 @@
 		<cobject>
 			<positionXYZ>0 5 10</positionXYZ>
 			<rotationXYZ>0 0 0</rotationXYZ>
-			<color> 0x00FFFF </color>
+			<color> 0x00 </color>
 			<object name="plane">
 				<perturbation name="perlin"></perturbation>
 			</object>

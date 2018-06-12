@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:44:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/12 02:27:02 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 04:49:27 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,27 +41,31 @@ t_color		get_perlin_color(t_hit *hit)
 {
 	double	noisecoef;
 	int		i;
-	static int lol = 0;
+	t_color	ret;
+	t_color	inv;
 
 	noisecoef = 0;
 	i = 1;
 	while (i < 5)
 	{
-		if(lol++ == 0)
-			printf("%f\n", hit->old_point.x);
 		noisecoef += (1.0f / i) * fabs((perlin(i * 10 * hit->old_point.x,
 						i * 10 * hit->old_point.y,
 						i * 10 * hit->old_point.z)));
 		i++;
 	}
+	ret = get_color(get_object_color(hit));
+	inv = scale_convert_color(add_scale_intcolors(get_intcolor(WHITE_COLOR),
+				get_intcolor(ret), -1), 1);
 	return (interpole_color(ft_fclamp(0, noisecoef, 1),
-			BLACK_COLOR, WHITE_COLOR));
+				ret, inv));
 }
 
 t_color		get_marbre_color(t_hit *hit)
 {
 	double	noisecoef;
 	int		i;
+	t_color	ret;
+	t_color	inv;
 
 	noisecoef = 0;
 	i = 1;
@@ -74,8 +78,11 @@ t_color		get_marbre_color(t_hit *hit)
 	}
 	noisecoef = 0.5f * sin((hit->old_point.x + hit->old_point.y) *
 			5 + noisecoef) + 0.5f;
+	ret = get_color(get_object_color(hit));
+	inv = scale_convert_color(add_scale_intcolors(get_intcolor(WHITE_COLOR),
+				get_intcolor(ret), -1), 1);
 	return (interpole_color(ft_fclamp(0, noisecoef, 1),
-				WHITE_COLOR, BLACK_COLOR));
+				ret, inv));
 }
 
 t_color		pert_color(t_hit *hit)
