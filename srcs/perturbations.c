@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:44:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/12 04:49:27 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 10:26:07 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ t_color		get_perlin_color(t_hit *hit)
 		i++;
 	}
 	ret = get_color(get_object_color(hit));
-	inv = scale_convert_color(add_scale_intcolors(get_intcolor(WHITE_COLOR),
-				get_intcolor(ret), -1), 1);
+	inv = scale_convert_color(add_scale_intcolors(get_intcolor(
+					get_color(0xFFFFFF)), get_intcolor(ret), -1), 1);
 	return (interpole_color(ft_fclamp(0, noisecoef, 1),
 				ret, inv));
 }
@@ -79,8 +79,8 @@ t_color		get_marbre_color(t_hit *hit)
 	noisecoef = 0.5f * sin((hit->old_point.x + hit->old_point.y) *
 			5 + noisecoef) + 0.5f;
 	ret = get_color(get_object_color(hit));
-	inv = scale_convert_color(add_scale_intcolors(get_intcolor(WHITE_COLOR),
-				get_intcolor(ret), -1), 1);
+	inv = scale_convert_color(add_scale_intcolors(get_intcolor(
+					get_color(0xffffff)), get_intcolor(ret), -1), 1);
 	return (interpole_color(ft_fclamp(0, noisecoef, 1),
 				ret, inv));
 }
@@ -95,8 +95,8 @@ t_color		pert_color(t_hit *hit)
 	if (hit->obj.pert == e_marble)
 		return (get_marbre_color(hit));
 	ret = get_color(get_object_color(hit));
-	inv = scale_convert_color(add_scale_intcolors(get_intcolor(WHITE_COLOR),
-				get_intcolor(ret), -1), 1);
+	inv = scale_convert_color(add_scale_intcolors(get_intcolor(
+					get_color(0xffffff)), get_intcolor(ret), -1), 1);
 	if (hit->obj.pert == e_chess &&
 			(((sin(hit->old_point.x) > 0 ? 1 : -1) *
 			(sin(hit->old_point.z) > 0 ? 1 : -1)) > 0))

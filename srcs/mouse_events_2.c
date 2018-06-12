@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 00:37:56 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/12 01:54:48 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 10:19:30 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_pivot_camera(t_camera *cam, t_point3d tolook)
 void	ft_look_at(t_camera *cam, t_point3d tolook)
 {
 	t_point3d	vec_look_at;
-	cam->look = CAMERA_LOOK;
+	cam->look = (t_point3d){.x = 0, .y = 0, .z = 1};
 	vec_look_at = normalize(ft_point3d_cmp(tolook, cam->o));
 //	double angle = atan2(ft_point3d_get_norm(
 //				ft_point3d_cross_product(ft_new_vec3(0, 0, 1), vec_look_at)),

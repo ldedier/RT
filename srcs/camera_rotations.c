@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/20 07:00:47 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/10 01:02:50 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 10:19:29 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		rotate_ver(t_camera *cam, double angle)
 
 void		camera_reset(t_camera *cam)
 {
-	cam->up = CAMERA_UP;
-	cam->look = CAMERA_LOOK;
+	cam->up = (t_point3d){.x = 0, .y = -1, .z = 0};
+	cam->look = (t_point3d){.x = 0, .y = 0, .z = 1};
 	cam->right = normalize(crossprod(cam->look, cam->up));
 }

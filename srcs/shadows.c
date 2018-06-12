@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/21 23:03:33 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/10 04:23:48 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 08:29:15 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ static void		get_shadow_illum(t_shadow *shadow, t_world *world,
 	if ((hit = trace(shadow->sray, world->cobjlist)))
 	{
 		if (bounce < world->max_bounce && hit->obj.transp > EPSILON &&
+				(light.type == 'd' ||
 				magnitude(newvector(shadow->sray.o, hit->point)) <
-				magnitude(newvector(shadow->sray.o, light.o)))
+				magnitude(newvector(shadow->sray.o, light.o))))
 		{
 			shadow->il.in += (1 - hit->obj.transp) * (1 - shadow->il.in);
 			sray = shadow->sray;

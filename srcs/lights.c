@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/15 15:37:59 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/10 06:05:47 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 10:21:39 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_illum	getillum(t_world *world, t_hit *hit, t_shadow **shadows)
 
 	i = -1;
 	illu.in = world->ambient.in;
-	illu.color = interpole_color(illu.in, BLACK_COLOR, world->ambient.color);
+	illu.color = interpole_color(illu.in, get_color(0x0), world->ambient.color);
 	while (++i < world->nlights)
 	{
 		if (shadows[i])
@@ -100,7 +100,7 @@ t_color			illuminate(t_world *world, t_hit *hit, t_shadow **shadows,
 
 	plaincol = pert_color(hit);
 	illu = getillum(world, hit, shadows);
-	transp_scaled = interpole_color(sqrt(hit->obj.transp), BLACK_COLOR,
+	transp_scaled = interpole_color(sqrt(hit->obj.transp), get_color(0x0),
 			pert_color(hit));
 	lightcol = interpole_color(illu.in, transp_scaled, interpole_color(
 				getwhiteratio(illu.color, 0.3, 1), illu.color, plaincol));

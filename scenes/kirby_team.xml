@@ -1,0 +1,162 @@
+<scene>
+	<camera>
+		<positionXYZ>-2.5 0 -10</positionXYZ>
+		<rotationXYZ>0 0 0</rotationXYZ>
+	</camera>
+	<objlist>
+		<cobject>
+			<positionXYZ>0 0 10</positionXYZ>
+			<rotationXYZ>0 0.25 0</rotationXYZ>
+			<object name="sphere">
+				<rotationXYZ>0 1.5707 0</rotationXYZ>
+				<radius>2</radius>
+				<shine>200</shine>
+				<color>0xFEA1CE</color>
+				<texture>resources/textures/lcavalle.bmp</texture>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>2 -0.15 -0.3</positionXYZ>
+				<rotationXYZ>1.5707 0 1.5707</rotationXYZ>
+				<ellipsoidABC>0.58 0.7 0.62</ellipsoidABC>
+				<color>0xF8B3B6</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>-2 -0.5 -0.7</positionXYZ>
+				<rotationXYZ>-0.45 0 0</rotationXYZ>
+				<ellipsoidABC>0.65 0.65 0.8</ellipsoidABC>
+				<color>0xF8B3B6</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>1 2 0</positionXYZ>
+				<rotationXYZ>0.7 -0.1 1.5707</rotationXYZ>
+				<ellipsoidABC>0.5 0.75 1.5</ellipsoidABC>
+				<color>0xCF2446</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>-1 2 0.4</positionXYZ>
+				<rotationXYZ>0.7 0.2 1.5707</rotationXYZ>
+				<ellipsoidABC>0.5 0.75 1.5</ellipsoidABC>
+				<color>0xCF2446</color>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>-5 0 10</positionXYZ>
+			<rotationXYZ>0 -0.25 0</rotationXYZ>
+			<object name="sphere">
+				<rotationXYZ>0 1.5707 0</rotationXYZ>
+				<radius>2</radius>
+				<shine>200</shine>
+				<color>0xFEA1CE</color>
+				<texture>resources/textures/aherriau.bmp</texture>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>2 -0.15 -0.3</positionXYZ>
+				<rotationXYZ>1.5707 0 1.5707</rotationXYZ>
+				<ellipsoidABC>0.58 0.7 0.62</ellipsoidABC>
+				<color>0xF8B3B6</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>-2 -0.5 -0.7</positionXYZ>
+				<rotationXYZ>-0.45 0 0</rotationXYZ>
+				<ellipsoidABC>0.65 0.65 0.8</ellipsoidABC>
+				<color>0xF8B3B6</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>1 2 0</positionXYZ>
+				<rotationXYZ>0.7 -0.1 1.5707</rotationXYZ>
+				<ellipsoidABC>0.5 0.75 1.5</ellipsoidABC>
+				<color>0xCF2446</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>-1 2 0.4</positionXYZ>
+				<rotationXYZ>0.7 0.2 1.5707</rotationXYZ>
+				<ellipsoidABC>0.5 0.75 1.5</ellipsoidABC>
+				<color>0xCF2446</color>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>5 0 10</positionXYZ>
+			<rotationXYZ>0 0.5 0</rotationXYZ>
+			<object name="sphere">
+				<rotationXYZ>0 1.5707 0</rotationXYZ>
+				<radius>2</radius>
+				<shine>200</shine>
+				<color>0xFEA1CE</color>
+				<texture>resources/textures/ldedier.bmp</texture>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>2 -0.15 -0.3</positionXYZ>
+				<rotationXYZ>1.5707 0 1.5707</rotationXYZ>
+				<ellipsoidABC>0.58 0.7 0.62</ellipsoidABC>
+				<color>0xF8B3B6</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>-2 -0.5 -0.7</positionXYZ>
+				<rotationXYZ>-0.45 0 0</rotationXYZ>
+				<ellipsoidABC>0.65 0.65 0.8</ellipsoidABC>
+				<color>0xF8B3B6</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>1 2 0</positionXYZ>
+				<rotationXYZ>0.7 -0.1 1.5707</rotationXYZ>
+				<ellipsoidABC>0.5 0.75 1.5</ellipsoidABC>
+				<color>0xCF2446</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>-1 2 0.4</positionXYZ>
+				<rotationXYZ>0.7 0.2 1.5707</rotationXYZ>
+				<ellipsoidABC>0.5 0.75 1.5</ellipsoidABC>
+				<color>0xCF2446</color>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>-10 0 10</positionXYZ>
+			<rotationXYZ>0 -0.5 0</rotationXYZ>
+			<object name="sphere">
+				<rotationXYZ>0 1.5707 0</rotationXYZ>
+				<radius>2</radius>
+				<shine>200</shine>
+				<color>0xFEA1CE</color>
+				<texture>resources/textures/jfortin.bmp</texture>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>2 -0.15 -0.3</positionXYZ>
+				<rotationXYZ>1.5707 0 1.5707</rotationXYZ>
+				<ellipsoidABC>0.58 0.7 0.62</ellipsoidABC>
+				<color>0xF8B3B6</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>-2 -0.5 -0.7</positionXYZ>
+				<rotationXYZ>-0.45 0 0</rotationXYZ>
+				<ellipsoidABC>0.65 0.65 0.8</ellipsoidABC>
+				<color>0xF8B3B6</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>1 2 0</positionXYZ>
+				<rotationXYZ>0.7 -0.1 1.5707</rotationXYZ>
+				<ellipsoidABC>0.5 0.75 1.5</ellipsoidABC>
+				<color>0xCF2446</color>
+			</object>
+			<object name="ellipsoid">
+				<positionXYZ>-1 2 0.4</positionXYZ>
+				<rotationXYZ>0.7 0.2 1.5707</rotationXYZ>
+				<ellipsoidABC>0.5 0.75 1.5</ellipsoidABC>
+				<color>0xCF2446</color>
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+		<light type="directional">
+			<positionXYZ>0 -10 0</positionXYZ>
+			<rotationXYZ>0.3 1 1</rotationXYZ>
+			<angle>1.2</angle>
+			<intensity>0.7</intensity>
+		</light>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.17</intensity>
+		<color>0xFFFFFF</color>
+	</ambientlight>
+	<shader type="normal"></shader>
+	<resolution>1280 720</resolution>
+</scene>

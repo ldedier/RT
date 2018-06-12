@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 12:06:33 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/08 04:03:08 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 10:12:08 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ int	inside_sphere(t_hit h, t_object obj)
 
 int	inside_cone(t_hit h, t_object obj)
 {
+	t_point3d	axis_x;
+
+	axis_x = (t_point3d) {.x = 1, .y = 0, .z = 0};
 	h.point = ft_point3d_mat4_mult(h.point, h.obj.transform_pos);
 	h.point = ft_point3d_mat4_mult(h.point, obj.transform_pos_inv);
-	if (acos(dotprod(normalize(h.point), AXIS_X)) <
+	if (acos(dotprod(normalize(h.point), axis_x)) <
 			obj.object_union.cone.angle ||
-			acos(dotprod(scale(normalize(h.point), -1), AXIS_X)) <
+			acos(dotprod(scale(normalize(h.point), -1), axis_x)) <
 			obj.object_union.cone.angle)
 		return (1);
 	return (0);
@@ -46,9 +49,12 @@ int	inside_cylinder(t_hit h, t_object obj)
 
 int	inside_plane(t_hit h, t_object obj)
 {
+	t_point3d	axis_y;
+
+	axis_y = (t_point3d) {.x = 0, .y = 1, .z = 0};
 	h.point = ft_point3d_mat4_mult(h.point, h.obj.transform_pos);
 	h.point = ft_point3d_mat4_mult(h.point, obj.transform_pos_inv);
-	if (dotprod(normalize(h.point), AXIS_Y) > 0)
+	if (dotprod(normalize(h.point), axis_y) > 0)
 		return (1);
 	return (0);
 }

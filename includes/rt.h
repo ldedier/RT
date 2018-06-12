@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 06:00:48 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 10:22:04 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //DONE fix shadow with directional light
@@ -92,17 +92,8 @@
 #define MENU_LIGHTS		2
 #define MENU_OTHERS		3
 
-# define AXIS_X (t_point3d){.x=1.0,.y=0.0,.z=0.0}
-# define AXIS_Y (t_point3d){.x=0.0,.y=1.0,.z=0.0}
-# define AXIS_Z (t_point3d){.x=0.0,.y=0.0,.z=1.0}
-
-# define CAMERA_POS (t_point3d){.x=0.0,.y=-0.0,.z=-2.0}
-# define CAMERA_LOOK (t_point3d){.x=-0.0,.y=0.0,.z=1.0}
-# define CAMERA_UP (t_point3d){.x=-0.0,.y=-1.0,.z=0.0}
-
 # define MAX_LIGHTS 10
 # define AMBIENT_LIGHT 0.17
-# define AMBIENT_LIGHT_COL get_color(0xFFFFFF)
 # define PHONG 30.0
 # define EPSILON 0.0000001
 # define EPSILON2 0.000000001 //plus petit = plus de quartic plutot que de cubic
@@ -112,11 +103,6 @@
 # define MAX_BOUNCE 4
 # define AA_SQ_SIZE 1
 # define VIDEO_RES_RATIO 10
-
-# define POINT_ZERO (t_point3d){.x=0.0,.y=0.0,.z=0.0}
-# define BLACK_COLOR (t_color){.r=0,.g=0,.b=0,.col=0x0}
-# define WHITE_COLOR (t_color){.r=255,.g=255,.b=255,.col=0XFFFFFF}
-# define BACKGROUND_COLOR get_color(0x222222)
 
 typedef struct	s_hit t_hit;
 typedef struct	s_cobject t_cobject;
