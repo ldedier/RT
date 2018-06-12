@@ -116,6 +116,30 @@
 				</cut>
 			</object>
 		</cobject>
+		<cobject>
+			<positionXYZ>4 -5 0</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<object name="goursat">
+				<color>0xff0000</color>
+				<cut type="absolute">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>less than</inequality>
+					<value>4</value>
+				</cut>
+			</object>
+		</cobject>
+			<cobject>
+			<positionXYZ>-4 -5 0</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<object name="ellipsoid">
+				<color>0xff0000</color>
+				<cut type="relative">
+					<cutXYZ>100 100 0</cutXYZ>
+					<inequality>less than</inequality>
+					<value>0</value>
+				</cut>
+			</object>
+		</cobject>
 	</objlist>
 	<lightlist>
 		<light type="point">
