@@ -6,20 +6,14 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/23 01:16:54 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/11 19:28:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 08:24:11 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	read_pert_type(t_parser *parser, t_perturbations *pert)
+void	ft_assign_pert(t_parser *parser, t_perturbations *pert)
 {
-	if (!parser->attribute)
-	{
-		ft_dprintf(2, "line %d: perturbation requires an attribute\n",
-				parser->nb_lines);
-		exit(1);
-	}
 	if (!ft_strcmp(parser->attribute, "waves"))
 		*pert = e_waves;
 	else if (!ft_strcmp(parser->attribute, "ripple"))
@@ -32,6 +26,8 @@ void	read_pert_type(t_parser *parser, t_perturbations *pert)
 		*pert = e_perlin;
 	else if (!ft_strcmp(parser->attribute, "marble"))
 		*pert = e_marble;
+	else if (!ft_strcmp(parser->attribute, "none"))
+		*pert = e_none;
 	else
 	{
 		ft_dprintf(
@@ -39,4 +35,15 @@ void	read_pert_type(t_parser *parser, t_perturbations *pert)
 					parser->attribute);
 		exit(1);
 	}
+}
+
+void	read_pert_type(t_parser *parser, t_perturbations *pert)
+{
+	if (!parser->attribute)
+	{
+		ft_dprintf(2, "line %d: perturbation requires an attribute\n",
+				parser->nb_lines);
+		exit(1);
+	}
+	ft_assign_pert(parser, pert);
 }

@@ -15,14 +15,12 @@
 		<cobject>
 			<object name="plane">
 				<color>0x222222</color>
-				<reflection>0</reflection>
 				<positionXYZ>0 5 0</positionXYZ>
 			</object>
 		</cobject>
 		<cobject>
 			<object name="plane">
 				<color>0x0000FF</color>
-				<reflection>0</reflection>
 				<positionXYZ>0 0 14</positionXYZ>
 				<rotationXYZ>1.5707 0 0</rotationXYZ>
 			</object>
@@ -30,13 +28,11 @@
 		<cobject>
 			<positionXYZ>5 4 8</positionXYZ>
 			<color>0x00FF00</color>
-			<reflection>0</reflection>
 			<object name="sphere">
 			</object>
 		</cobject>
 		<cobject>
 			<positionXYZ>-5 4 8</positionXYZ>
-			<reflection>0</reflection>
 			<color> 0xFF0000 </color>
 			<object name="sphere">
 			</object>

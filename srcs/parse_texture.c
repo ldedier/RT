@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 05:44:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/11 20:19:26 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 06:12:29 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	ft_free_bmp_parser(t_bmp_parser *parser)
 {
 	free(parser->pixels);
+	free(parser->filename);
 	parser->pixels = NULL;
 	parser->width = -1;
 	parser->height = -1;

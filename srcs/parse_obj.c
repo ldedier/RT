@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:07 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 05:17:57 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 08:27:45 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	ft_parse_src(t_parser *parser, t_world *world, char *line)
 	{
 		world->cobjlist->cobject->populated = 1;
 		source = ft_get_between_tag(&line);
+		world->cobjlist->cobject->filename = source;
 		ft_add_triangles(source, world);
-		free(source);
 	}
 	else
 	{
