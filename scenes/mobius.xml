@@ -6,7 +6,7 @@
 	<objlist>
 		<cobject>
 			<positionXYZ>0 0 0</positionXYZ>
-			<rotationXYZ>0.196350 -1.570796  15.904313</rotationXYZ>
+			<rotationXYZ>0.196350 -1.570796 15.904313</rotationXYZ>
 			<reflection>0</reflection>
 			<color>0x0000FF</color>
 			<object name="mobius">
@@ -17,6 +17,7 @@
 		<light type="point">
 			<color>0xFFFFFF</color>
 			<positionXYZ>0 0 -10</positionXYZ>
+			<intensity>100</intensity>
 		</light>
 	</lightlist>
 	<ambientlight>

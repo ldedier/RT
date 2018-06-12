@@ -31,4 +31,5 @@
 		<intensity>0.3</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
+	<resolution>1600 1200</resolution>
 </scene>
