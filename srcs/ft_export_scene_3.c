@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/12 09:42:45 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/12 09:50:15 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 10:15:00 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void	ft_print_object(t_object obj, int fd)
 	dprintf(fd, "\t\t\t\t<reflection>%f</reflection>\n", obj.reflect);
 	dprintf(fd, "\t\t\t\t<refraction>%f</refraction>\n", obj.refract);
 	dprintf(fd, "\t\t\t\t<transparency>%f</transparency>\n", obj.transp);
-	dprintf(fd, "\t\t\t\t<negative>%d</negative>\n", obj.negative);
+	if (obj.negative == 1)
+		dprintf(fd, "\t\t\t\t<negative>%d</negative>\n", obj.negative);
 	obj.print_caracteristics(obj, fd);
 	ft_print_obj_perturbation(obj, fd);
 	ft_print_object_cuts(obj, fd);
