@@ -6,19 +6,18 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 23:30:21 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/11 00:40:04 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 05:54:23 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-
-double				ft_process_mod(t_color color, double old, t_mod mod)
+double		ft_process_mod(t_color color, double old, t_mod mod)
 {
 	int take_old;
 
 	if (!mod.enabled)
-		return old;
+		return (old);
 	else
 	{
 		if (mod.color == 0xff0000)
@@ -31,7 +30,7 @@ double				ft_process_mod(t_color color, double old, t_mod mod)
 	}
 }
 
-void				ft_init_aux_render(t_aux_render *x, t_hit *hit)
+void		ft_init_aux_render(t_aux_render *x, t_hit *hit)
 {
 	t_color color;
 
@@ -55,7 +54,7 @@ t_line		newray(t_point3d p, t_point3d vec)
 	return (line);
 }
 
- t_color		freeret_rend(t_color c, t_hit **hit, t_shadowsfree *aux)
+t_color		freeret_rend(t_color c, t_hit **hit, t_shadowsfree *aux)
 {
 	int	i;
 

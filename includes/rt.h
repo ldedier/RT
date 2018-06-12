@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 05:37:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 06:00:48 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //DONE fix shadow with directional light
@@ -840,6 +840,8 @@ int						key_press(int keycode, void *param);
 int						get_input(t_world *e);
 void					ft_keys_event(t_world *world, SDL_Event event, int down);
 void					ft_process(t_world *world);
+void					ft_process_cobject(t_world *e);
+void					ft_process_object(t_world *e);
 void					ft_mouse_motion(t_world *world, SDL_Event event);
 void					ft_mouse_down(t_world *world, SDL_Event event);
 

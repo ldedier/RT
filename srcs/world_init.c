@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 04:50:37 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 22:43:18 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 06:45:34 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	set_defaults_2(t_world *world)
 {
 	int	i;
 
+	world->stereoscopic = 0;
+	world->exporting_video = 0;
 	i = -1;
 	while (++i < NTHREADS)
 		world->thr_state[i] = 0;
@@ -113,8 +115,6 @@ void	set_defaults(t_world *world)
 	world->can_export = 1;
 	world->animate = 0;
 	world->focus = 0;
-	world->stereoscopic = 0;
-	world->exporting_video = 0;
 	world->ticks = SDL_GetTicks();
 	world->aa_sq_size = AA_SQ_SIZE;
 	set_defaults_2(world);
