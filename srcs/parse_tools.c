@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:50:13 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 01:40:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 08:26:44 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_cobject			*ft_new_cobject(void)
 	cobject->name = NULL;
 	cobject->defining = 0;
 	cobject->populated = 0;
+	cobject->filename = NULL;
 	return (cobject);
 }
 
@@ -42,6 +43,7 @@ t_bmp_parser		new_bmp_parser(void)
 	t_bmp_parser	parser;
 
 	parser.pixels = NULL;
+	parser.filename = NULL;
 	parser.width = -1;
 	parser.height = -1;
 	parser.bitmap_index = -1;

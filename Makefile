@@ -6,7 +6,7 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/12 05:37:21 by ldedier          ###   ########.fr        #
+#    Updated: 2018/06/12 06:58:44 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,6 +97,7 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 world_maker.c\
 				 loop.c\
 				 key_events.c\
+				 key_events2.c\
 				 process.c \
 				 world_init.c\
 				 compute_matrix.c \
@@ -207,8 +208,7 @@ else
 	CFLAGS += -Ofast
 endif
 
-LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
-		 -fsanitize=address
+LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat
 
 opti:
 	@make -j all

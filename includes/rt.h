@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 05:37:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 08:26:17 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //DONE fix shadow with directional light
@@ -435,6 +435,7 @@ typedef struct			s_bmp_parser
 	int					height;
 	int					bitmap_index;
 	short				bpp;
+	char				*filename;
 }						t_bmp_parser;
 
 typedef struct			s_mod
@@ -517,6 +518,7 @@ struct			s_cobject
 	int					defining;
 	int					id;
 	int					populated;
+	char				*filename;
 };
 
 struct			s_hit
@@ -1336,6 +1338,7 @@ void				ft_mouse_button_lights_6(t_world *world, SDL_Event event, int x, int y);
 void				ft_mouse_button_others(t_world *world, SDL_Event event);
 void				ft_mouse_button_others_6(t_world *world, SDL_Event event, int x, int y);
 
+void				ft_key_event6(t_world *w, SDL_Event e, int press);
 /*
 ** Menu
 */

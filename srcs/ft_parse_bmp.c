@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 15:48:32 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 01:36:41 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 06:17:39 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ t_bmp_parser	ft_parse_bmp(char *filename)
 		i += parser.bpp / 8;
 	}
 	munmap(map.ptr, map.size);
+	if (!((parser.filename = ft_strdup(filename))))
+		ft_error("malloc error");
 	return (parser);
 }
