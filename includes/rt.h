@@ -6,12 +6,12 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/11 09:13:20 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 04:19:56 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 //DONE fix shadow with directional light
 //DONE fix light intensity?
-//TODO leaks
+//DONE leaks
 //TODO	norm
 //TODO	remove debug
 //NVM	reflection = 1 && bounces = 0 renders BLACK.AAAAAAAH
@@ -36,7 +36,7 @@
 //DONE	antialiasing multiple rays per pixel (then get the mean)
 //DONE/NOPE	motion blur
 //DONE	cartoon shading.
-//TODO	gooch shading -> borders bons pel cartoon?
+//NOPE	gooch shading -> borders bons pel cartoon?
 //DONE	low resolution when moving camera
 //DONE	paint_threaded only when a key is pressed, and not always
 //DONE	paint threaded on enter press.
@@ -48,7 +48,7 @@
 //NOPE	(?)start rendering detailed scene when not moving, cancel if move again
 //DONE separate normals and intersections calculating
 
-//TODO scale <1 !!!!??
+//DONE scale <1 !!!!??
 //
 //SEGFAULT IF MOVING SELECTED WITH NO ITEMS
 
@@ -164,6 +164,22 @@ typedef struct			s_pixel
 	int					x;
 	int					y;
 }						t_pixel;
+
+typedef struct			s_auxperlin
+{
+	int					x;
+	int					y;
+	int					z;
+	int					a;
+	int					b;
+	int					aa;
+	int					ab;
+	int					ba;
+	int					bb;
+	double				fx;
+	double				fy;
+	double				fz;
+}						t_auxperlin;
 
 typedef struct			s_canvas
 {
@@ -1129,6 +1145,8 @@ int						inside_hyperboloid(t_hit h, t_object obj);
 /*
 **tools
 */
+double					fade(double t);
+double					lerp(double t, double a, double b);
 void    				set_funcs(t_object *obj,
 		int (*intersect_func)(t_line, t_object, double[MAX_DEGREE]),
 		int (*inside_func)(t_hit, t_object),

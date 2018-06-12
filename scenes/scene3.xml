@@ -23,17 +23,17 @@
 		<light type="point">
 			<color>0x00FFFF</color>
 			<positionXYZ>2 -3 2</positionXYZ>
-			<intensity>1</intensity>
+			<intensity>3</intensity>
 		</light>
 		<light type="point">
 			<color>0xFF00FF</color>
 			<positionXYZ>5 -5 3</positionXYZ>
-			<intensity>10</intensity>
+			<intensity>3</intensity>
 		</light>
 		<light type="point">
 			<color>0xFF0000</color>
 			<positionXYZ>9 -7 6</positionXYZ>
-			<intensity>10</intensity>
+			<intensity>3</intensity>
 		</light>
 	</lightlist>
 	<ambientlight>

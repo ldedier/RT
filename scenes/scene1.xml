@@ -6,8 +6,6 @@
 	<objlist>
 		<cobject>
 			<object name="cone">
-				<transparency>1</transparency>
-				<reflection>0</reflection>
 				<angle>0.2</angle>
 				<color>0xFFFF00</color>
 				<positionXYZ>3 4 10</positionXYZ>
