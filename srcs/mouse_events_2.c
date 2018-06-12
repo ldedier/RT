@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 00:37:56 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/12 10:32:18 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 14:35:02 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,5 @@ void	ft_left_click_event(t_world *e, SDL_Event event)
 	line = newray(point, newvector(e->cam->o, point));
 	if ((hit = trace(line, e->cobjlist)))
 		ft_process_hit_left_click(e, hit);
+	free(hit);
 }
