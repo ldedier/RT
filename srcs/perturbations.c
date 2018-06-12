@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 19:44:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/12 04:02:06 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 04:42:05 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ t_color		get_perlin_color(t_hit *hit)
 				get_intcolor(ret), -1), 1);
 	return (interpole_color(ft_fclamp(0, noisecoef, 1),
 				ret, inv));
-//	return (interpole_color(ft_fclamp(0, noisecoef, 1),
-//			BLACK_COLOR, WHITE_COLOR));
 }
 
 t_color		get_marbre_color(t_hit *hit)
