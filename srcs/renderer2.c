@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 00:41:16 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/12 09:58:03 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 10:31:48 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_color				ray_color(t_line ray, t_world *world, int bounce, int fast)
 		return (freeret_rend(interpole_color(aux_rc.x.f_transp,
 						interpole_color(aux_rc.x.f_reflect,
 							interpole_color(ebloui.in,
-								aux_rc.fog.color, WHITE_COLOR),
+								aux_rc.fog.color, get_color(0xffffff)),
 							reflect_c), refract_c), &hit, &(aux_rc.aux)));
 	}
 	ebloui.color = get_ebloui(world, ray, -1, &(ebloui.in));

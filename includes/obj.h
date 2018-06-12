@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/24 17:50:55 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/08 22:19:56 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 11:21:49 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ typedef struct		s_obj_parser
 
 typedef	void		(*t_obj_func)(char *, t_obj_parser *);
 
-t_obj_parser	ft_parse_obj(char *filename);
-void			ft_obj_face(char *s, t_obj_parser *parser);
-void			ft_obj_vertex(char *s, t_obj_parser *parser);
-void			ft_obj_hashtag(char *s, t_obj_parser *parser);
-void			ft_print_draw_array(t_obj_parser parser);
+t_obj_parser		ft_parse_obj(char *filename);
+void				ft_obj_face(char *s, t_obj_parser *parser);
+void				ft_obj_vertex(char *s, t_obj_parser *parser);
+void				ft_obj_hashtag(char *s, t_obj_parser *parser);
+void				ft_print_draw_array(t_obj_parser parser);
 #endif

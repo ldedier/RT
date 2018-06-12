@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:15:35 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 05:33:33 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 10:51:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	ft_add_precision_base(t_pf *pf, int base)
 
 void	ft_add_precision_o(t_pf *pf)
 {
-	int nb_diff;
-	int res;
-	unsigned int tmp;
+	int				nb_diff;
+	int				res;
+	unsigned int	tmp;
 
 	tmp = pf->var.integer;
 	res = 1 + pf->flags.display_style;
@@ -59,7 +59,7 @@ void	ft_add_precision_base_u(t_pf *pf, int base)
 	int				nb_diff;
 	int				res;
 	unsigned int	nb;
-	
+
 	nb = pf->var.integer;
 	res = 1;
 	while (nb / base != 0)

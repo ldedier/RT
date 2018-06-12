@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/05 21:35:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 05:32:51 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 10:44:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		ft_pf_d(t_pf *pf, va_list va, char c)
 {
 	int no_padding_bytes;
+
 	(void)c;
 	get_casted_value(pf, va);
 	no_padding_bytes = ft_pf_len_d(*pf);

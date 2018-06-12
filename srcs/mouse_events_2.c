@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 00:37:56 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/12 06:04:04 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 10:32:18 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_look_at(t_camera *cam, t_point3d tolook)
 	t_point3d	vec_look_at;
 	double		angle_x;
 
-	cam->look = CAMERA_LOOK;
+	cam->look = (t_point3d){.x = 0, .y = 0, .z = 1};
 	vec_look_at = normalize(ft_point3d_cmp(tolook, cam->o));
 	angle_x = -atan2(vec_look_at.x, vec_look_at.z);
 	cam->rotation.x = angle_x;

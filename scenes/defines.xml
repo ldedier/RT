@@ -181,7 +181,7 @@
 		<light type="point">
 			<color>0xFFFFFF</color>
 			<positionXYZ>-10 -0 -20</positionXYZ>
-			<intensity>100</intensity>
+			<intensity>2</intensity>
 		</light>
 	</lightlist>
 	<ambientlight>

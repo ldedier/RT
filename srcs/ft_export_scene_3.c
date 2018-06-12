@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/12 09:42:45 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/12 10:15:00 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 10:38:21 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,7 @@ void	ft_print_object(t_object obj, int fd)
 	char	*shape;
 
 	shape = ft_get_object_name(obj);
-	dprintf(fd, "\t\t\t<object name=\"%s\">\n", shape);
-	dprintf(fd, "\t\t\t\t<positionXYZ>");
+	dprintf(fd, "\t\t\t<object name=\"%s\">\n\t\t\t\t<positionXYZ>", shape);
 	dprintf(fd, "%f %f %f</positionXYZ>\n", obj.o.x, obj.o.y, obj.o.z);
 	dprintf(fd, "\t\t\t\t<rotationXYZ>");
 	dprintf(fd, "%f %f %f</rotationXYZ>\n", obj.r.x, obj.r.y, obj.r.z);

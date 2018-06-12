@@ -6,14 +6,14 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/05 21:04:53 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/04 02:07:12 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 11:22:46 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_OBJECTS_H
 # define FT_OBJECTS_H
 
-#include "libmat.h"
+# include "libmat.h"
 
 typedef struct		s_box
 {
@@ -48,6 +48,7 @@ typedef struct		s_ellipsoid
 
 typedef struct		s_paraboloid
 {
+	int				lol;
 }					t_paraboloid;
 
 typedef struct		s_hyperboloid

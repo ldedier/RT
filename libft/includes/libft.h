@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/06 18:21:30 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/08 17:26:30 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 10:43:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <limits.h>
 
 # define MAX_INT 	2147483647
+
 typedef struct		s_list
 {
 	void			*content;
@@ -121,6 +122,6 @@ unsigned int		ft_patoi_hex(char **str, int *scss);
 int					ft_isspace(int c);
 int					ft_onesign(int n);
 void				ft_print_line(char *str);
-char 				*ft_strjoin_3(char const *s1, char const *s2,
+char				*ft_strjoin_3(char const *s1, char const *s2,
 					char const *s3);
 #endif

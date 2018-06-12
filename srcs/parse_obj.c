@@ -6,18 +6,11 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 03:49:07 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 08:27:45 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 11:13:23 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
-
-void	ft_print_triangle(t_object object)
-{
-	ft_print_point3d(object.object_union.triangle.v1);
-	ft_print_point3d(object.object_union.triangle.v2);
-	ft_print_point3d(object.object_union.triangle.v3);
-}
 
 void	ft_free_obj_parser(t_obj_parser *parser)
 {

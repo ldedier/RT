@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/07 01:13:42 by ldedier           #+#    #+#             */
-/*   Updated: 2018/05/31 18:37:40 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 10:49:02 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,7 @@ void				ft_gtvar_ushort_int(t_pf *pf, va_list va);
 
 void				ft_puthex_max(uintmax_t n, int maj, t_pf *pf);
 void				ft_putoctal_max(uintmax_t n, t_pf *pf);
-char				*ft_get_buffer(const void *s, size_t n, int *disp, t_pf *pf);
+char				*ft_get_buffer(const void *s, size_t n, int *disp, t_pf *p);
 void				ft_empty_buffer(t_pf *pf);
 void				ft_no_number(t_pf *pf);
 void				get_casted_value(t_pf *pf, va_list va);
@@ -209,5 +209,6 @@ int					ft_wstrlen(int *data);
 int					ft_wstrlen_prec(int *data, int precision);
 int					ft_has_forbidden_values(t_pf pf);
 int					ft_may_error_next_conv(const char *format, int i);
-int					ft_process_percent(const char *ft, int *i, t_pf *f, va_list v);
+int					ft_process_percent(const char *f,
+					int *i, t_pf *fg, va_list v);
 #endif

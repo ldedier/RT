@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 04:50:37 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/11 22:43:18 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 10:25:54 by lcavalle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	set_defaults_2(t_world *world)
 {
 	int	i;
 
+	world->stereoscopic = 0;
+	world->exporting_video = 0;
 	i = -1;
 	while (++i < NTHREADS)
 		world->thr_state[i] = 0;
@@ -93,28 +95,26 @@ void	set_defaults_2(t_world *world)
 
 void	set_defaults(t_world *world)
 {
-	world->cam->o = CAMERA_POS;
-	world->cam->look = normalize(CAMERA_LOOK);
-	world->cam->up = normalize(CAMERA_UP);
+	world->cam->o = (t_point3d){.x = 0, .y = 0, .z = -2};
+	world->cam->look = (t_point3d){.x = 0, .y = 0, .z = 1};
+	world->cam->up = (t_point3d){.x = 0, .y = -1, .z = 0};
 	world->cam->right = normalize(crossprod(world->cam->look, world->cam->up));
 	world->cam->fd = CAMERA_FD;
-	world->cam->rotation = POINT_ZERO;
+	world->cam->rotation = (t_point3d){.x = 0, .y = 0, .z = 0};
 	world->shader = 1;
 	world->nlights = 0;
 	world->cobjlist = NULL;
 	world->defcobjlist = NULL;
 	world->ambient.in = AMBIENT_LIGHT;
-	world->ambient.color = AMBIENT_LIGHT_COL;
+	world->ambient.color = get_color(0xFFFFFF);
 	world->fog.in = 0.0;
-	world->fog.color = BACKGROUND_COLOR;
+	world->fog.color = get_color(0x222222);
 	world->cam->speed = SPEED;
 	world->progress = 0;
 	world->cancel_render = 0;
 	world->can_export = 1;
 	world->animate = 0;
 	world->focus = 0;
-	world->stereoscopic = 0;
-	world->exporting_video = 0;
 	world->ticks = SDL_GetTicks();
 	world->aa_sq_size = AA_SQ_SIZE;
 	set_defaults_2(world);
