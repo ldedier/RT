@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:31:29 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/12 09:08:33 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 09:15:06 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -353,10 +353,10 @@ static void	ft_print_object(t_object obj, int fd)
 	obj.print_caracteristics(obj, fd);
 	ft_print_obj_perturbation(obj, fd);
 	ft_print_object_cuts(obj, fd);
-	if (0)
-		dprintf(fd,"\t\t\t\t<texture>%s</texture>\n", obj.texture);
-	if (0)
-		dprintf(fd,"\t\t\t\t<normal_texture>%s</normal_texture>\n", obj.ntexture);
+//	if (0)
+//		dprintf(fd,"\t\t\t\t<texture>%s</texture>\n", obj.texture);
+//	if (0)
+//		dprintf(fd,"\t\t\t\t<normal_texture>%s</normal_texture>\n", obj.ntexture);
 	dprintf(fd,"\t\t\t</object>\n");
 }
 
