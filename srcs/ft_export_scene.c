@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 16:31:29 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/10 08:08:45 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 09:08:33 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,43 +28,17 @@ static void	ft_print_camera(t_world *world, int fd)
 static void	ft_print_filter(t_world *world, int fd)
 {
 	if (world->filters[0] == 1)
-		dprintf(fd,"\t<filter type=\"gauss blur\"></filter>\n");
-	else if (world->filters[1] == 1)
+		dprintf(fd,"\t<filter type=\"blur\"></filter>\n");
+	if (world->filters[1] == 1)
 		dprintf(fd,"\t<filter type=\"sharpen\"></filter>\n");
-	else if (world->filters[2] == 1)
+	if (world->filters[2] == 1)
 		dprintf(fd,"\t<filter type=\"sobel\"></filter>\n");
-	else if (world->filters[3] == 1)
+	if (world->filters[3] == 1)
 		dprintf(fd,"\t<filter type=\"emboss\"></filter>\n");
-	else if (world->filters[4] == 1)
+	if (world->filters[4] == 1)
 		dprintf(fd,"\t<filter type=\"grey\"></filter>\n");
-}
-
-static void	ft_print_others(t_world *world, int fd)
-{
-	dprintf(fd,"\t<ambientlight>\n");
-	dprintf(fd,"\t\t<intensity>");
-	dprintf(fd,"%f", world->ambient.in);
-	dprintf(fd,"</intensity>\n");
-	dprintf(fd,"\t\t<color>");
-	dprintf(fd,"0x%X", world->ambient.color.col);
-	dprintf(fd,"</color>\n");
-	dprintf(fd,"\t</ambientlight>\n");
-
-	dprintf(fd,"\t<fog>\n");
-	dprintf(fd,"\t\t<intensity>");
-	dprintf(fd,"%f", world->fog.in);
-	dprintf(fd,"</intensity>\n");
-	dprintf(fd,"\t\t<color>");
-	dprintf(fd,"0x%X", world->fog.color.col);
-	dprintf(fd,"</color>\n");
-	dprintf(fd,"\t</fog>\n");
-
-	ft_print_filter(world, fd);
-
-	if (world->shader == 1)
-		dprintf(fd,"\t<shader type=\"normal\"></shader>\n");
-	else if (world->shader == 2)
-		dprintf(fd,"\t<shader type=\"cartoon\"></shader>\n");
+	if (world->filters[5] == 1)
+		dprintf(fd,"\t<filter type=\"motion_blur\"></filter>\n");
 }
 
 static void	ft_print_light(t_world *world, int fd, char *type, int i)
@@ -87,6 +61,9 @@ static void	ft_print_light(t_world *world, int fd, char *type, int i)
 	dprintf(fd,"\t\t\t<angle>");
 	dprintf(fd,"%f", world->lights[i].angle);
 	dprintf(fd,"</angle>\n");
+	dprintf(fd,"\t\t\t<ebloui>");
+	dprintf(fd,"%d", world->lights[i].ebloui);
+	dprintf(fd,"</ebloui>\n");
 	dprintf(fd,"\t\t</light>\n");
 }
 
@@ -114,6 +91,43 @@ static void	ft_print_lights(t_world *world, int fd)
 		}
 		dprintf(fd,"\t</lightlist>\n");
 	}
+}
+
+static void	ft_print_others(t_world *world, int fd)
+{
+	ft_print_lights(world, fd);
+	dprintf(fd,"\t<ambientlight>\n");
+	dprintf(fd,"\t\t<intensity>");
+	dprintf(fd,"%f", world->ambient.in);
+	dprintf(fd,"</intensity>\n");
+	dprintf(fd,"\t\t<color>");
+	dprintf(fd,"0x%X", world->ambient.color.col);
+	dprintf(fd,"</color>\n");
+	dprintf(fd,"\t</ambientlight>\n");
+
+	dprintf(fd,"\t<fog>\n");
+	dprintf(fd,"\t\t<intensity>");
+	dprintf(fd,"%f", world->fog.in);
+	dprintf(fd,"</intensity>\n");
+	dprintf(fd,"\t\t<color>");
+	dprintf(fd,"0x%X", world->fog.color.col);
+	dprintf(fd,"</color>\n");
+	dprintf(fd,"\t</fog>\n");
+
+	ft_print_filter(world, fd);
+
+	dprintf(fd,"\t<antialiasing>");
+	dprintf(fd,"%d", world->aa_sq_size);
+	dprintf(fd,"</antialiasing>\n");
+
+	if (world->shader == 1)
+		dprintf(fd,"\t<shader type=\"normal\"></shader>\n");
+	else if (world->shader == 2)
+		dprintf(fd,"\t<shader type=\"cartoon\"></shader>\n");
+
+	dprintf(fd,"\t<resolution>");
+	dprintf(fd,"%d %d", world->canvas->win_size.x, world->canvas->win_size.y);
+	dprintf(fd,"</resolution>\n");
 }
 
 void		ft_print_sphere_caracteristics(t_object obj, int fd)
@@ -281,6 +295,8 @@ static char	*ft_get_object_name(t_object obj)
 		return ("roman");
 	if (obj.intersect_func == intersect_piriform)
 		return ("piriform");
+	if (obj.intersect_func == intersect_mobius)
+		return ("mobius");
 	if (obj.intersect_func == intersect_hyperboloid)
 		return ("hyperboloid");
 	if (obj.intersect_func == intersect_paraboloid)
@@ -315,7 +331,7 @@ static void	ft_print_obj_perturbation(t_object obj, int fd)
 
 static void	ft_print_object(t_object obj, int fd)
 {
-	char		*shape;
+	char	*shape;
 
 	shape = ft_get_object_name(obj);
 	dprintf(fd,"\t\t\t<object name=\"%s\">\n", shape);
@@ -333,10 +349,14 @@ static void	ft_print_object(t_object obj, int fd)
 	dprintf(fd,"\t\t\t\t<reflection>%f</reflection>\n", obj.reflect);
 	dprintf(fd,"\t\t\t\t<refraction>%f</refraction>\n", obj.refract);
 	dprintf(fd,"\t\t\t\t<transparency>%f</transparency>\n", obj.transp);
-	//dprintf(fd,"\t\t\t\t<negative>%d</negative>\n", obj.negative);
+	dprintf(fd,"\t\t\t\t<negative>%d</negative>\n", obj.negative);
 	obj.print_caracteristics(obj, fd);
 	ft_print_obj_perturbation(obj, fd);
 	ft_print_object_cuts(obj, fd);
+	if (0)
+		dprintf(fd,"\t\t\t\t<texture>%s</texture>\n", obj.texture);
+	if (0)
+		dprintf(fd,"\t\t\t\t<normal_texture>%s</normal_texture>\n", obj.ntexture);
 	dprintf(fd,"\t\t\t</object>\n");
 }
 
@@ -365,7 +385,6 @@ static void	ft_print_cobj_perturbation(t_cobject cobj, int fd)
 
 static void	ft_print_cobject(t_cobject cobj, int fd)
 {
-	dprintf(fd,"\t\t<cobject>\n");
 	dprintf(fd,"\t\t\t<positionXYZ>");
 	dprintf(fd,"%f %f %f", cobj.o.x, cobj.o.y, cobj.o.z);
 	dprintf(fd,"</positionXYZ>\n");
@@ -383,28 +402,79 @@ static void	ft_print_cobject(t_cobject cobj, int fd)
 	dprintf(fd,"\t\t\t<refraction>%f</refraction>\n", cobj.refract);
 	dprintf(fd,"\t\t\t<transparency>%f</transparency>\n", cobj.transp);
 	ft_print_cobj_perturbation(cobj, fd);
-	//dprintf(fd,"\t\t\t<negative>%d</negative>\n", cobj.negative);
 }
 
-int			ft_export_scene(t_world *world)
+static char	*ft_get_cobject_name(t_cobject cobj, int *type)
 {
-	int			fd;
-	char		*name;
-	t_cobjlist	*lst;
-	t_objlist	*lst2;
-
-	name = ft_get_name(".xml");
-	if ((fd = open(name, O_RDWR | O_CREAT, 0644)) == -1)
-		return (-1);
-	dprintf(fd,"<scene>\n");
-	ft_print_camera(world, fd);
-	lst = world->cobjlist;
-	if (lst != NULL)
+	if (cobj.name != NULL)
 	{
-		dprintf(fd,"\t<objlist>\n");
-		while (lst != NULL)
+		*type = 0;
+		return (cobj.name);
+	}
+	if (cobj.descriptor != NULL)
+	{
+		*type = 1;
+		return (cobj.descriptor);
+	}
+	*type = 2;
+	return (NULL);
+}
+
+static void	ft_print_adn(t_cobject cobj, int fd)
+{
+	dprintf(fd,"\t\t\t<length>%d</length>\n", cobj.cobject_union.adn.length);
+	dprintf(fd,"\t\t\t<radius>%f</radius>\n", cobj.cobject_union.adn.radius);
+	dprintf(fd,"\t\t\t<color1>0x%X</color1>\n", cobj.cobject_union.adn.color1);
+	dprintf(fd,"\t\t\t<color2>0x%X</color2>\n", cobj.cobject_union.adn.color2);
+	dprintf(fd,"\t\t\t<color3>0x%X</color3>\n", cobj.cobject_union.adn.color3);
+	if (cobj.cobject_union.adn.style == e_plain)
+		dprintf(fd,"\t\t\t<style>plain</style>\n");
+	else
+		dprintf(fd,"\t\t\t<style>irregular</style>\n");
+}
+
+static void	ft_print_sphere_torus(t_cobject cobj, int fd)
+{
+	dprintf(fd,"\t\t\t<nb_spheres>%d</nb_spheres>\n", cobj.cobject_union.sphere_torus.nb_spheres);
+	dprintf(fd,"\t\t\t<radius>%f</radius>\n", cobj.cobject_union.sphere_torus.radius);
+	dprintf(fd,"\t\t\t<spheres_radius>%f</spheres_radius>\n", cobj.cobject_union.sphere_torus.spheres_radius);
+}
+
+static void	ft_print_cobjs(t_cobjlist *lst, int fd)
+{
+	t_cobject	cobj;
+	t_objlist	*lst2;
+	char		*shape;
+	int			type;
+
+	cobj = *(lst->cobject);
+	type = -1;
+	shape = ft_get_cobject_name(cobj, &type);
+	if (type == 0)
+	{
+		dprintf(fd,"\t\t<def_cobject name=\"%s\">\n", shape);
+		ft_print_cobject(cobj, fd);
+		dprintf(fd,"\t\t</def_cobject>\n");
+	}
+	else
+	{
+		if (type == 1)
 		{
-			ft_print_cobject(*(lst->cobject), fd);
+			dprintf(fd,"\t\t<cobject type=\"%s\">\n", shape);
+			ft_print_cobject(cobj, fd);
+			if (ft_strcmp(shape, "obj") == 0)
+				;
+				//dprintf(fd,"\t\t\t<src>0x%f</src>\n", cobj.filename);
+			else if (ft_strcmp(shape, "adn") == 0)
+				ft_print_adn(cobj, fd);
+			else
+				ft_print_sphere_torus(cobj, fd);
+			dprintf(fd,"\t\t</cobject>\n");
+		}
+		else
+		{
+			dprintf(fd,"\t\t<cobject>\n");
+			ft_print_cobject(cobj, fd);
 			lst2 = lst->cobject->objlist;
 			while(lst2 != NULL)
 			{
@@ -412,11 +482,62 @@ int			ft_export_scene(t_world *world)
 				lst2 = lst2->next;
 			}
 			dprintf(fd,"\t\t</cobject>\n");
+		}
+	}
+}
+
+static void	ft_print_cobjlist(t_world *world, int fd)
+{
+	t_cobjlist	*lst;
+
+	lst = world->cobjlist;
+	if (lst != NULL)
+	{
+		dprintf(fd,"\t<objlist>\n");
+		while (lst != NULL)
+		{
+			ft_print_cobjs(lst, fd);
 			lst = lst->next;
 		}
 		dprintf(fd,"\t</objlist>\n");
 	}
-	ft_print_lights(world, fd);
+}
+
+static void	ft_print_defines(t_world *world, int fd)
+{
+	t_cobjlist	*lst;
+	t_objlist	*lst2;
+	t_cobject	cobj;
+
+	lst = world->defcobjlist;
+	while (lst != NULL)
+	{
+		cobj = *(lst->cobject);
+		dprintf(fd,"\t\t<define name=\"%s\">\n", cobj.name);
+		ft_print_cobject(cobj, fd);
+		lst2 = lst->cobject->objlist;
+		while(lst2 != NULL)
+		{
+			ft_print_object(*(lst2->object), fd);
+			lst2 = lst2->next;
+		}
+		dprintf(fd,"\t\t</define>\n");
+		lst = lst->next;
+	}
+}
+
+int			ft_export_scene(t_world *world)
+{
+	int			fd;
+	char		*name;
+
+	name = ft_get_name(".xml");
+	if ((fd = open(name, O_RDWR | O_CREAT, 0644)) == -1)
+		return (-1);
+	dprintf(fd,"<scene>\n");
+	ft_print_camera(world, fd);
+	ft_print_defines(world, fd);
+	ft_print_cobjlist(world, fd);
 	ft_print_others(world, fd);
 	dprintf(fd,"</scene>\n");
 	free(name);

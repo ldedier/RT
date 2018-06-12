@@ -44,7 +44,6 @@
 		<intensity>0.47</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
-	<filter type="grey"></filter>
-	<filter type="emboss"></filter>
+	<filter type="motion_blur"></filter>
 	<shader type="normal"></shader>
 </scene>
