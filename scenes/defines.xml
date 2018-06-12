@@ -158,24 +158,6 @@
 		<def_cobject name="snowman">
 			<positionXYZ>10 0 15</positionXYZ>
 		</def_cobject>
-		<def_cobject name="snowman">
-			<positionXYZ>0 0 20</positionXYZ>
-		</def_cobject>
-		<def_cobject name="snowman">
-			<positionXYZ>5 0 20</positionXYZ>
-		</def_cobject>
-		<def_cobject name="snowman">
-			<positionXYZ>10 0 20</positionXYZ>
-		</def_cobject>
-		<def_cobject name="snowman">
-			<positionXYZ>0 0 25</positionXYZ>
-		</def_cobject>
-		<def_cobject name="snowman">
-			<positionXYZ>5 0 25</positionXYZ>
-		</def_cobject>
-		<def_cobject name="snowman">
-			<positionXYZ>10 0 25</positionXYZ>
-		</def_cobject>
 	</objlist>
 	<lightlist>
 		<light type="point">

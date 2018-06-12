@@ -1,6 +1,6 @@
 <scene>
 	<camera>
-		<positionXYZ>0 0 -400</positionXYZ>
+		<positionXYZ>10 0 -400</positionXYZ>
 		<rotationXYZ>0 0 0</rotationXYZ>
 	</camera>
 	<objlist>
