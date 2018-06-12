@@ -6,7 +6,7 @@
 #    By: jfortin <jfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/06 18:20:16 by ldedier           #+#    #+#              #
-#    Updated: 2018/06/12 05:22:18 by ldedier          ###   ########.fr        #
+#    Updated: 2018/06/12 05:37:21 by ldedier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -173,6 +173,8 @@ SRCS_NO_PREFIX = camera_rotations.c\
 				 menu_objects_5.c\
 				 menu_objects_6.c\
 				 menu_objects_7.c\
+				 menu_objects_8.c\
+				 menu_objects_9.c\
 				 menu_lights.c\
 				 menu_lights_2.c\
 				 menu_lights_3.c\
