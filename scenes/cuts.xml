@@ -1,0 +1,153 @@
+<scene>
+	<camera>
+		<positionXYZ>0 2 -20</positionXYZ>
+		<rotationXYZ>0 0 0</rotationXYZ>
+	</camera>
+	<objlist>
+		<cobject>
+			<positionXYZ>0 2 0</positionXYZ>
+			<object name="sphere">
+				<color>0xFFA0BF</color>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>0</value>
+				</cut>
+				<radius>1</radius>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>-7 2 0</positionXYZ>
+			<object name="sphere">
+				<color>0xFFA0BF</color>
+				<cut type="relative">
+					<cutXYZ>0 1 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>0</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>0</value>
+				</cut>
+				<radius>1</radius>
+			</object>
+		</cobject>
+		<cobject>
+				<positionXYZ>2 2 0</positionXYZ>
+			<object name="sphere">
+				<color>0xFF0077</color>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>0.2</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>less than</inequality>
+					<value>-0.2</value>
+				</cut>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>-3 2 0</positionXYZ>
+			<rotationXYZ>1.5707 0 0</rotationXYZ>
+			<object name="plane">
+				<cut type="circular">
+					<cutXYZ>1 0 1</cutXYZ>
+					<inequality>more than</inequality>
+					<value>1</value>
+				</cut>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>-10 2 0</positionXYZ>
+			<rotationXYZ>1.5707 0 0</rotationXYZ>
+			<object name="cylinder">
+				<cut type="relative">
+					<cutXYZ>0 0 1</cutXYZ>
+					<inequality>more than</inequality>
+					<value>0</value>
+				</cut>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>6 0.5 0</positionXYZ>
+			<rotationXYZ>0 0 1.5707</rotationXYZ>
+			<object name="cone">
+				<angle>0.22</angle>
+				<color>0xFFBBAA</color>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>2</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>-1 0 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>0</value>
+				</cut>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>4 2 0</positionXYZ>
+			<rotationXYZ>1.57 0 0</rotationXYZ>
+			<object name="plane">
+				<color>0xff0000</color>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>less than</inequality>
+					<value>-1</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>more than</inequality>
+					<value>1</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>0 0 1</cutXYZ>
+					<inequality>more than</inequality>
+					<value>1</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>0 0 1</cutXYZ>
+					<inequality>less than</inequality>
+					<value>-1</value>
+				</cut>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>4 -5 0</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<object name="goursat">
+				<color>0xff0000</color>
+				<cut type="absolute">
+					<cutXYZ>1 0 0</cutXYZ>
+					<inequality>less than</inequality>
+					<value>4</value>
+				</cut>
+			</object>
+		</cobject>
+			<cobject>
+			<positionXYZ>-4 -5 0</positionXYZ>
+			<rotationXYZ>0 0 0</rotationXYZ>
+			<object name="ellipsoid">
+				<color>0xff0000</color>
+				<cut type="relative">
+					<cutXYZ>100 100 0</cutXYZ>
+					<inequality>less than</inequality>
+					<value>0</value>
+				</cut>
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+		<light type="point">
+			<positionXYZ>5 -10 -15</positionXYZ>
+		</light>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.485</intensity>
+		<color>0xFFFFFF</color>
+	</ambientlight>
+</scene>

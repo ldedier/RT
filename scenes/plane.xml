@@ -1,0 +1,35 @@
+<scene>
+	<camera>
+		<positionXYZ>-20 -10 -30</positionXYZ>
+		<rotationXYZ>-0.5 -0.5 0</rotationXYZ>
+	</camera>
+	<objlist>
+		<cobject type="obj">
+			<color>0x557777</color>
+			<src>resources/objs/plane.obj</src>
+		</cobject>
+		<cobject>
+			<object type="plane">
+				<rotationXYZ>1.57 0 0</rotationXYZ>
+				<positionXYZ>0 0 100</positionXYZ>
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+		<light type="point">
+			<color>0xFF0000</color>
+			<positionXYZ>-5 -20 0</positionXYZ>
+			<intensity>1.5</intensity>
+		</light>
+		<light type="point">
+			<color>0xFFFFFF</color>
+			<positionXYZ>0 -20 -20</positionXYZ>
+			<intensity>2.5</intensity>
+		</light>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.3</intensity>
+		<color>0xFFFFFF</color>
+	</ambientlight>
+	<resolution>1600 1200</resolution>
+</scene>
