@@ -16,13 +16,16 @@ int		ft_get_pixel(int x, int y, t_bmp_parser parser)
 {
 	int		nb;
 	char	color[4];
+	int		finalcolor;
 
 	nb = (x * (parser.bpp / 8)) + (y * (parser.bpp / 8) * parser.width);
 	color[0] = parser.pixels[nb];
 	color[1] = parser.pixels[nb + 1];
 	color[2] = parser.pixels[nb + 2];
 	color[3] = 0;
-	return (*(int *)color);
+	finalcolor = color[0] * 0xFF000000 + color[1] * 0xFF0000 +
+		color[2] * 0xFF00;
+	return (finalcolor);
 }
 
 int		texture_sphere(t_object obj, t_hit *hit, t_bmp_parser parser)

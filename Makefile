@@ -34,9 +34,9 @@ LIBMATDIR = libmat
 LIBMAT_INCLUDEDIR = includes
 LIBMAT = $(LIBMATDIR)/libmat.a
 
-LIBSDL2DIR = ~/.brew/lib
-LIBSDL2_INCLUDEDIR = ~/.brew/Cellar/sdl2/2.0.8/include/SDL2/
-LIBSDL2TTF_INCLUDEDIR = ~/.brew/Cellar/sdl2_ttf/2.0.14/include/SDL2/
+LIBSDL2DIR = /usr/x86_64-linux-gnu/lib
+LIBSDL2_INCLUDEDIR = /usr/include/SDL2/ 
+LIBSDL2TTF_INCLUDEDIR =  /usr/include/SDL2/
 
 SRCS_NO_PREFIX = camera_rotations.c\
 				 colors.c\
@@ -216,7 +216,7 @@ else
 	CFLAGS += -Ofast
 endif
 
-LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat
+LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat -pthread
 
 opti:
 	@make -j all
@@ -230,7 +230,7 @@ debug:
 	@make -j all DEBUG=1
 
 $(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT) $(LIBMAT)
-	$(CC) -o $@ $^ $(LFLAGS) -L $(LIBSDL2DIR) -lsdl2 -lsdl2_ttf
+	$(CC) -o $@ $^ $(LFLAGS) -L $(LIBSDL2DIR) -lSDL2 -lSDL2_ttf -lm
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
