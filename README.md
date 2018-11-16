@@ -6,3 +6,6 @@ working branch for MAC systems is https://github.com/lcavalleria/42-raytracer/tr
 current branch is for windows with ubuntu from ms store, and Xming, althrough with some glitches.
 apt-get install sdl2-dev 
                 sdl2-ttf-dev
+
+
+(wip)
