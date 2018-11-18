@@ -7,19 +7,33 @@ working branch for MAC systems is https://github.com/lcavalleria/42-raytracer/tr
 get in the cloned folder and run
 ```bash
 make
+./rt [file]
 ```
 everything should work
 
 ## windows
-branch for windows is master last commit.\n
-needs ubuntu from microsoft store and Xming.\n
-has some glitches nothing too bad
+branch for windows is master last commit.
+
+install ubuntu for windows 10 in microsoft store
+
+install xming
+
+open ubuntu terminal and run
 
 ```bash
 apt-get install sdl2-dev
 apt-get install sdl2-ttf-dev
    ```             
-then run make
+then clone the repo in ubuntu, get in, and run
+```bash
+make
+./rt [file]
+```
+
+
+
+files are in scenes folder
+
 
 (wip)
 esfera low res
