@@ -98,9 +98,9 @@ Objects color and normal vectors can be altered depending on the hitpoint positi
 <br/>
 
 <p align="center">
-<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/waves.png" width="320"/>
-<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/ripple.png" width="320"/>
-<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/noise.png" width="320"/>
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/waves.png" width="300"/>
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/ripple.png" width="300"/>
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/noise.png" width="300"/>
 </p>
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/chess.png" width="320"/>
