@@ -11,7 +11,9 @@ make
 everything should work
 
 ## windows
-current branch is for windows with ubuntu from ms store, and Xming, althrough with some glitches.
+branch for windows is master last commit.
+needs ubuntu from microsoft store and Xming.
+has some glitches nothing too bad
 
 ```bash
 apt-get install sdl2-dev
