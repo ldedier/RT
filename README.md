@@ -11,6 +11,4 @@ then run make
 
 (wip)
 
-<video controls>
-<source src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/demonstration.mp4" type="video/mp4">
-</video>
+![](name-of-giphy.gifhttps://github.com/lcavalleria/42-raytracer/blob/master/captures/kirbydemo.gif)
