@@ -11,8 +11,8 @@ make
 everything should work
 
 ## windows
-branch for windows is master last commit.
-needs ubuntu from microsoft store and Xming.
+branch for windows is master last commit.\n
+needs ubuntu from microsoft store and Xming.\n
 has some glitches nothing too bad
 
 ```bash
