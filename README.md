@@ -43,6 +43,7 @@ when we execute the raytracer, we will see this. the low res image is so to be a
 </p>
 Once we hit enter we will see the image properly rendered.
 
+
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/sphere.png" width="640"/>
 </p>
