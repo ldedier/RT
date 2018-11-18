@@ -10,3 +10,7 @@ apt-get install sdl2-dev
 then run make
 
 (wip)
+
+<video width="320" controls>
+<source src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/demonstration.mp4" type="video/mp4">
+</video>
