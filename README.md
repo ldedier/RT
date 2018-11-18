@@ -11,4 +11,4 @@ then run make
 
 (wip)
 
-<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/kirbydemo.gif" width="640" text-align="center"/>
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/kirbydemo.gif" width="640"/>
