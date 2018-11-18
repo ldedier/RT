@@ -6,10 +6,10 @@ just run make and everything should be ok.
 
 current branch is for windows with ubuntu from ms store, and Xming, althrough with some glitches.
 
+```bash
 apt-get install sdl2-dev
-
                 sdl2-ttf-dev
-                
+   ```             
 then run make
 
 (wip)
