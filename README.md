@@ -11,4 +11,4 @@ then run make
 
 (wip)
 
-![](https://github.com/lcavalleria/42-raytracer/blob/master/captures/kirbydemo.gif)
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/kirbydemo.gif"/>
