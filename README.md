@@ -10,5 +10,6 @@ apt-get install sdl2-dev
 then run make
 
 (wip)
-
-<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/kirbydemo.gif" width="640" align="center"/>
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/kirbydemo.gif" width="640"/>
+</p>
