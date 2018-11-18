@@ -104,16 +104,14 @@ Objects color and normal vectors can be altered depending on the hitpoint positi
 <td><p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/ripple.png" width="320"/>
    </p></td>
-<p align="center">
+<td><p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/noise.png" width="320"/>
-</p>
+   </p></td>
+   </table>
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/chess.png" width="320"/>
-</p>
-<p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/perlin.png" width="320"/>
 </p>
-</table>
 note that the colors perturbations will depend on the object's color at a specific point, even if it comes form a texture.
 
 ----------------------------------------------------
