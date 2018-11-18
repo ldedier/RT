@@ -1,6 +1,7 @@
 # 42-raytracer
 raytracer project from 42.
 
+# mac
 working branch for MAC systems is https://github.com/lcavalleria/42-raytracer/tree/1a20c627327aacacd12cbc15b3bca7b84630d853
 
 get in the cloned folder and run
@@ -9,7 +10,7 @@ make
 ```
 everything should work
 
-
+# windows
 current branch is for windows with ubuntu from ms store, and Xming, althrough with some glitches.
 
 ```bash
@@ -43,10 +44,6 @@ fog
 antialiasing
 filters
 cartoon
-
-<p align="center">
-<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/kirbydemo.gif" width="640"/>
-</p>
 
 
 <p align="center">
