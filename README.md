@@ -109,7 +109,8 @@ Objects color and normal vectors can be altered depending on the hitpoint positi
 </p>
 note that the colors perturbations will depend on the object's color at a specific point, even if it comes form a texture.
 
-------------------------wip---------------------------
+------------------------------------------------------
+WIP WIP WIP
 cuts
 negatius
 textures
