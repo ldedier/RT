@@ -35,14 +35,13 @@ make
 files are in scenes folder
 
 ## features
-(wip)
 when we execute the raytracer, we will see this. the low res image is so to be able to control the scene in real time.
 
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/low%20res%20sphere.png" width="640"/>
 </p>
 Once we hit enter we will see the image properly rendered.
-<br/>
+<br/><br/><br/>
 
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/sphere.png" width="640"/>
