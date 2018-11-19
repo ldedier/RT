@@ -40,62 +40,62 @@ when we execute the raytracer, we will see this. the low res image is so to be a
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/low%20res%20sphere.png" width="640"/>
 </p>
+<br/>
 Once we hit enter we will see the image properly rendered.
-<br/><br/><br/>
 
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/sphere.png" width="640"/>
 </p>
-So far we have only seen the sphere, but there is more shapes we can render.
 <br/>
+So far we have only seen the sphere, but there is more shapes we can render.
 
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/quadratics.png" width="640"/>
 </p>
-We can also render more complex shapes with 4 possible intersection points.
 <br/>
+We can also render more complex shapes with 4 possible intersection points.
 
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/quartics.png" width="640"/>
 </p>
-And we can parse a .obj file and render it as triangles.
 <br/>
+And we can parse a .obj file and render it as triangles.
 
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/mesh.png" width="640"/>
 </p>
-There is an option to generate objects in the scene from a pattern.
 <br/>
+There is an option to generate objects in the scene from a pattern.
 
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/adn.png" width="640"/>
 </p>
-Or we can clone groups of custom objects.
 <br/>
+Or we can clone groups of custom objects.
 
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/defines.png" width="640"/>
 </p>
-The lights can have any color and they will interact properly with the world and with each other.
 <br/>
+The lights can have any color and they will interact properly with the world and with each other.
 
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/colored%20lights.png" width="640"/>
 </p>
-Objects can have a transparency and a refraction index.
 <br/>
+Objects can have a transparency and a refraction index.
 
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/refraction.png" width="640"/>
 </p>
-They can also have a reflection index (0, no reflection to 1, perfect mirror).
 <br/>
+They can also have a reflection index (0, no reflection to 1, perfect mirror).
 
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/reflection.png" width="640"/>
 </p>
-Objects color and normal vectors can be altered depending on the hitpoint position.
 <br/>
+Objects color and normal vectors can be altered depending on the hitpoint position.
 
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/waves.png" width="320"/>
@@ -120,15 +120,13 @@ Or we can add negative shapes to an object, which will not render the parts insi
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/negatives.png" width="640"/>
 </p>
 of course, reflections and refractions still apply to objects with negatives.
-
-<br/>
 <br/>
 Texture can be applied to objects.
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/textures.png" width="640"/>
 </p>
-And they can be set to act as a transparency/reflection/refraction modifier using a certain color as a code (blue for example).
 <br/>
+And they can be set to act as a transparency/reflection/refraction modifier using a certain color as a code (blue for example).
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/worldglass.png" width="640"/>
 </p>
@@ -138,11 +136,11 @@ Or they can be set to not render anything. In the following image, it is not ren
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/texturecut.png" width="640"/>
 </p>
 <br/>
+
 The light that goes through textures of transparent objects will project colored light properly just like with plain color.
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/texture_transp.png" width="640"/>
 </p>
-
 <br/>
 Textures don't only have to be for colors, they can also be used for normal vectors (aka bump mapping).
 <p align="center">
