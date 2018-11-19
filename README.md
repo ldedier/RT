@@ -149,7 +149,6 @@ Textures don't only have to be for colors, they can also be used for normal vect
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/bumpmapping.png" width="640"/>
 </p>
 this is not an object with negatives, it's a simple sphere. in fact, if we get closer, we will see that where there is no light, it looks completely plain as expected.
-we can "cut" objects to stop rendering them after an axis, relative or absolute. the objects will appear hollow.
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/bumpclose.png" width="640"/>
 </p>
