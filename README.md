@@ -110,7 +110,6 @@ Objects color and normal vectors can be altered depending on the hitpoint positi
 Note that the colors perturbations will depend on the object's color at a specific point, even if it comes form a texture.
 
 <br/>
-
 We can "cut" objects to stop rendering them after an axis, relative or absolute. the objects will appear hollow.
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/cuts.png" width="640"/>
@@ -124,16 +123,15 @@ of course, reflections and refractions still apply to objects with negatives.
 <br/>
 Texture can be applied to objects.
 <p align="center">
-<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/texture.png" width="640"/>
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/textures.png" width="640"/>
 </p>
 And they can be set to act as a transparency/reflection/refraction modifier for a certain color.
 <br/>
-Or they can be set to simply not render anything. In the following image, it is not rendering the sea as transparent, it's simply not rendering it at all.
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/worldglass.png" width="640"/>
 </p>
 <br/>
-we can "cut" objects to stop rendering them after an axis, relative or absolute. the objects will appear hollow.
+Or they can be set to simply not render anything. In the following image, it is not rendering the sea as transparent, it's simply not rendering it at all.
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/texturecut.png" width="640"/>
 </p>
