@@ -120,6 +120,8 @@ Or we can add negative shapes to an object, which will not render the parts insi
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/negatives.png" width="640"/>
 </p>
 of course, reflections and refractions still apply to objects with negatives.
+
+<br/>
 <br/>
 Texture can be applied to objects.
 <p align="center">
