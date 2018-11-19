@@ -195,4 +195,18 @@ And this is what editing a scene in real time looks like.
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/kirbydemo.gif" width="640"/>
 </p>
 <br/>
-The hotkeys for editing scene are: left click to select a group of items, shift + left click to select a specific item for a group(or use the interface list of objects), "w""a""s""d" to move the camera like a fps game, "space" to move up, "ctrl" to go down, arrow keys to change the looking direction of the camera, "shift" to do whatever action faster, "7""8", "4""5", "1""2" in the numpad to move the object on the different axis, "o", "p" to scale an object, "z""x""c""v" to rotate on different axcis (relative to the object, so rotating in one axis gives acces to the 3d axis)
+
+### Hotkeys
+left click to select a group of items, shift + left click to select a specific item from a group(or use the interface list of objects)
+
+"w""a""s""d" to move the camera like a fps game, "space" to move up, "ctrl" to go down
+
+arrow keys to change the looking direction of the camera
+
+"shift" to do whatever action faster
+
+"7""8", "4""5", "1""2" in the numpad to move the object on the different axis
+
+"o", "p" to scale an object
+
+"z""x""c""v" to rotate on different axcis (relative to the object, so rotating in one axis gives acces to the 3d axis)
