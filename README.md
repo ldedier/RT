@@ -125,20 +125,20 @@ Texture can be applied to objects.
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/textures.png" width="640"/>
 </p>
-And they can be set to act as a transparency/reflection/refraction modifier for a certain color.
+And they can be set to act as a transparency/reflection/refraction modifier using a certain color as a code (blue for example).
 <br/>
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/worldglass.png" width="640"/>
 </p>
 <br/>
-Or they can be set to simply not render anything. In the following image, it is not rendering the sea as transparent, it's simply not rendering it at all.
+Or they can be set to not render anything. In the following image, it is not rendering the sea as transparent, it's simply not rendering it at all.
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/texturecut.png" width="640"/>
 </p>
 <br/>
 The light that goes through textures of transparent objects will project colored light properly just like with plain color.
 <p align="center">
-<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/texture_transp.png" width="4640"/>
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/texture_transp.png" width="640"/>
 </p>
 
 <br/>
@@ -151,16 +151,49 @@ we can "cut" objects to stop rendering them after an axis, relative or absolute.
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/bumpclose.png" width="640"/>
 </p>
-------------------------------------------------------
+<br/>
 
-WIP WIP WIP
+There is an option to render fog.
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/fog.png" width="640"/>
+</p>
+<br/>
 
-fog
-antialiasing
-filters
-cartoon
+We can set the antialiasing for better quality. it will render a square of nxn pixels for each pixel and get the mean color.
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/noantialiasing.png" width="420"/>
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/antialiasing.png" width="420"/>   
+</p>
+<br/>
 
+There is some filters we can apply to the final image: Gauss blur, motion blur, emboss, sharpen edges, sobel, greyscale.
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/gaussblur.png" width="420"/>
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/motionblur.png" width="420"/>   
+</p>
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/emboss.png" width="420"/>
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/sharpen.png" width="420"/>   
+</p><p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/grey.png" width="420"/>
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/sobel.png" width="420"/>   
+</p>
+<br/>
+And there is an option to render with cartoon shaders instead of realistic. It will paint the edges black using the sobel filter.
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/cartoon.png" width="640"/>
+</p>
+<br/>
 
+This is an example of a scene that uses some of the features at the same time.
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/example.png" width="640"/>
+</p>
+<br/>
+
+And this is what editing a scene in real time looks like.
 <p align="center">
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/kirbydemo.gif" width="640"/>
 </p>
+<br/>
+The hotkeys for editing scene are: left click to select a group of items, shift + left click to select a specific item for a group(or use the interface list of objects), "w""a""s""d" to move the camera like a fps game, "space" to move up, "ctrl" to go down, arrow keys to change the looking direction of the camera, "shift" to do whatever action faster, "7""8", "4""5", "1""2" in the numpad to move the object on the different axis, "o", "p" to scale an object, "z""x""c""v" to rotate on different axcis (relative to the object, so rotating in one axis gives acces to the 3d axis)
