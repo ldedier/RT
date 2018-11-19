@@ -108,15 +108,53 @@ Objects color and normal vectors can be altered depending on the hitpoint positi
 <img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/perlin.png" width="420"/>
 </p>
 note that the colors perturbations will depend on the object's color at a specific point, even if it comes form a texture.
+<br/>
+We can "cut" objects to stop rendering them after an axis, relative or absolute. the objects will appear hollow.
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/cuts.png" width="420"/>
+</p>
+<br/>
+Or we can add negative shapes to an object, which will not render the parts inside this negatve object, and will make the object look full.
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/negatives.png" width="420"/>
+</p>
+of course, reflections and refractions still apply to objects with negatives.
+<br/>
+Texture can be applied to objects.
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/texture.png" width="420"/>
+</p>
+And they can be set to act as a transparency/reflection/refraction modifier for a certain color.
+<br/>
+we can "cut" objects to stop rendering them after an axis, relative or absolute. the objects will appear hollow.
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/worldglass.png" width="420"/>
+</p>
+<br/>
+we can "cut" objects to stop rendering them after an axis, relative or absolute. the objects will appear hollow.
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/texturecut.png" width="420"/>
+</p>
+<br/>
+The light that goes through textures of transparent objects will project colored light properly just like with plain color.
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/texture_transp.png" width="420"/>
+</p>
 
+<br/>
+Textures don't only have to be for colors, they can also be used for normal vectors (aka bump mapping).
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/bumpmapping.png" width="420"/>
+</p>
+this is not an object with negatives, it's a simple sphere. in fact, if we get closer, we will see that where there is no light, it looks completely plain as expected.
+we can "cut" objects to stop rendering them after an axis, relative or absolute. the objects will appear hollow.
+<p align="center">
+<img src="https://github.com/lcavalleria/42-raytracer/blob/master/captures/bumpclose.png" width="420"/>
+</p>
 ------------------------------------------------------
+
 WIP WIP WIP
-cuts
-negatius
-textures
-textures chachis
-disco
-bump mapping
+
 fog
 antialiasing
 filters
