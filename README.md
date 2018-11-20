@@ -2,7 +2,7 @@
 raytracer project from 42.
 
 ### mac
-working branch for MAC systems is https://github.com/lcavalleria/42-raytracer/tree/1a20c627327aacacd12cbc15b3bca7b84630d853
+working branch for MAC systems is https://github.com/lcavalleria/42-raytracer/tree/mac
 
 get in the cloned folder and run
 ```bash
