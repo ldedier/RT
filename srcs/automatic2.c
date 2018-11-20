@@ -71,14 +71,18 @@ void		ft_process_fill_adn(t_cobject *adn, t_object *cylinder,
 void		ft_compute_automatic_adn(t_cobject *adn)
 {
 	int			i;
+	double		angle;
 	t_object	*sphere;
 	t_object	*cylinder;
+	double		padding;
 
 	i = 0;
+	angle = 0;
 	sphere = ft_new_object(*adn);
 	sphere->cobject = adn;
 	set_funcs(sphere, intersect_sphere, inside_sphere, normal_sphere);
 	sphere->object_union.sphere.radius = adn->cobject_union.adn.radius / 4.0;
+	padding = adn->cobject_union.adn.radius / 2.0;
 	cylinder = ft_new_object(*adn);
 	set_funcs(cylinder, intersect_cylinder, inside_sphere, normal_cylinder);
 	cylinder->object_union.cylinder.radius =

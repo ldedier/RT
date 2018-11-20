@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/23 17:10:27 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 01:33:47 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 18:12:19 by jfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ void			ft_convert_to_array_vertices(t_obj_parser *parser)
 	t_list	*tmp;
 
 	ptr = parser->vertices_tmp;
-	parser->vertices = (t_point3d *)(malloc(sizeof(t_point3d) *
-		(parser->nb_vertices + 1)));
+	if (!(parser->vertices = (t_point3d *)(malloc(sizeof(t_point3d) *
+		(parser->nb_vertices + 1)))))
+		ft_error("error malloc");
 	i = 1;
 	while (i <= parser->nb_vertices)
 	{
@@ -69,7 +70,9 @@ void			ft_convert_to_array_faces(t_obj_parser *parser)
 	t_list		*tmp;
 
 	ptr = parser->faces_tmp;
-	parser->faces = (t_ivec3 *)(malloc(sizeof(t_ivec3) * parser->nb_faces));
+	if (!(parser->faces = (t_ivec3 *)(malloc(sizeof(t_ivec3) *
+				parser->nb_faces))))
+		ft_error("error malloc");
 	i = 0;
 	while (i < parser->nb_faces)
 	{

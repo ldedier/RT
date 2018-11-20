@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 22:42:29 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/12 05:14:49 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 18:14:10 by jfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void		add_obj_cpy(t_objlist **lst, t_object *object)
 		perror("cant malloc new node");
 		exit(errno);
 	}
-	new_obj = malloc(sizeof(t_object));
+	if (!(new_obj = malloc(sizeof(t_object))))
+		ft_error("error malloc");
 	new->object = ft_memcpy(new_obj, object, sizeof(t_object));
 	new->next = *lst;
 	*lst = new;
@@ -81,7 +82,8 @@ void		add_cobj_cpy(t_cobjlist **lst, t_cobject *cobject)
 		perror("cant malloc new node");
 		exit(errno);
 	}
-	new_cobj = malloc(sizeof(t_cobject));
+	if (!(new_cobj = malloc(sizeof(t_cobject))))
+		ft_error("error malloc");
 	new->cobject = ft_memcpy(new_cobj, cobject, sizeof(t_cobject));
 	new->cobject->objlist = objlist_cpy(cobject->objlist);
 	new->next = *lst;

@@ -24,7 +24,6 @@ t_pixel		fast_div(const t_canvas *canvas)
 	while (canvas->win_size.y % (div.y * FAST_RATIO * NTHREADS) != 0 &&
 			div.y < 121)
 		div.y++;
-	printf("resolution: %i, %i\n",canvas->win_size.x, canvas->win_size.y);
 	if (div.x >= 121 || div.y >= 121)
 	{
 		ft_putendl("incorrect resolution."

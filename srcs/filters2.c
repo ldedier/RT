@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 08:06:39 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/11 08:08:02 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 18:06:37 by jfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void		sobel(t_canvas *canvas)
 {
 	double	*filter;
 
-	filter = ft_memalloc(sizeof(double) * 9);
+	if (!(filter = ft_memalloc(sizeof(double) * 9)))
+		ft_error("error malloc");
 	filter[0] = 0;
 	filter[1] = 4;
 	filter[2] = 0;
@@ -67,7 +68,9 @@ void		draw_borders(t_canvas *canvas)
 	int		i;
 	int		j;
 
-	tmp = ft_memalloc(sizeof(int) * canvas->win_size.x * canvas->win_size.y);
+	if (!(tmp = ft_memalloc(sizeof(int) * canvas->win_size.x\
+					* canvas->win_size.y)))
+		ft_error("error malloc");
 	tmp = ft_memcpy(tmp, (int *)canvas->surface->pixels,
 			sizeof(int) * canvas->win_size.x * canvas->win_size.y);
 	sobel(canvas);

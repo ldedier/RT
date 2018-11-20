@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/15 17:10:29 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/11 22:21:50 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 18:15:00 by jfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void		ft_add_tag_stack(t_parser *parser)
 {
 	t_tag *xml_tag;
 
-	xml_tag = malloc(sizeof(t_tag));
+	if (!(xml_tag = malloc(sizeof(t_tag))))
+		ft_error("error malloc");
 	xml_tag->tag = ft_strdup(parser->tag);
 	xml_tag->has_attribute = parser->got_attribute;
 	ft_lstadd(&(parser->tag_stack), ft_lstnew_ptr(xml_tag, sizeof(t_tag)));

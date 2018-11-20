@@ -6,7 +6,7 @@
 /*   By: aherriau <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/11 05:32:34 by aherriau          #+#    #+#             */
-/*   Updated: 2018/06/12 01:26:23 by aherriau         ###   ########.fr       */
+/*   Updated: 2018/06/12 17:21:13 by aherriau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	set_positions_8(t_world *world)
 		ft_new_rangebar(1, 10, ft_new_pixel(world->canvas->win.w + 165,
 					370 + 1 * 55 + 87), &(world->selected_cobject->scale));
 	world->menu.objects_rb[1] =
-		ft_new_rangebar(0, 100, ft_new_pixel(world->canvas->win.w + 165,
+		ft_new_rangebar(0, 1000, ft_new_pixel(world->canvas->win.w + 165,
 					370 + 2 * 55 + 87), &(world->selected_cobject->shine));
 	world->menu.objects_rb[2] =
 		ft_new_rangebar(0, 1, ft_new_pixel(world->canvas->win.w + 165,

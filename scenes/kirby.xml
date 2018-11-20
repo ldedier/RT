@@ -53,5 +53,4 @@
 		<color>0xFFFFFF</color>
 	</ambientlight>
 	<shader type="normal"></shader>
-	<resolution> 600 400 </resolution>
 </scene>

@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/17 03:02:53 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/11 08:07:06 by lcavalle         ###   ########.fr       */
+/*   Updated: 2018/06/12 18:03:12 by jfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void		motion_blur(t_canvas *canvas)
 {
 	double	*filter;
 
-	filter = ft_memalloc(sizeof(double) * 25);
+	if (!(filter = ft_memalloc(sizeof(double) * 25)))
+		ft_error("error malloc");
 	filter[0] = 0.222222;
 	filter[1] = 0.277778;
 	filter[2] = 0.222222;
@@ -55,7 +56,8 @@ void		gauss_blur(t_canvas *canvas)
 {
 	double	*filter;
 
-	filter = ft_memalloc(sizeof(double) * 9);
+	if (!(filter = ft_memalloc(sizeof(double) * 9)))
+		ft_error("error malloc");
 	filter[0] = 1;
 	filter[1] = 2;
 	filter[2] = 1;
@@ -73,7 +75,8 @@ void		sharpen(t_canvas *canvas)
 {
 	double	*filter;
 
-	filter = ft_memalloc(sizeof(double) * 9);
+	if (!(filter = ft_memalloc(sizeof(double) * 9)))
+		ft_error("error malloc");
 	filter[0] = 0;
 	filter[1] = -1;
 	filter[2] = 0;
@@ -91,7 +94,8 @@ void		emboss(t_canvas *canvas)
 {
 	double	*filter;
 
-	filter = ft_memalloc(sizeof(double) * 9);
+	if (!(filter = ft_memalloc(sizeof(double) * 9)))
+		ft_error("error malloc");
 	filter[0] = -2;
 	filter[1] = -1;
 	filter[2] = 0;

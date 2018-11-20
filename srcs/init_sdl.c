@@ -22,7 +22,7 @@ t_canvas	*new_canvas(void)
 	canvas->win_size.y = -1;
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		return (NULL);
-	if (TTF_Init() != 0)
+	if (TTF_Init() < 0)
 		return (NULL);
 	return (canvas);
 }
@@ -95,8 +95,8 @@ int			ft_init_sdl(t_world *world)
 		}
 		else
 		{
-			world->canvas->win_size.x = 1200 - MENU_WIDTH;
-			world->canvas->win_size.y = 600 - PROGRESS_BAR_HEIGHT - 44;
+			world->canvas->win_size.x = dm.w - MENU_WIDTH;
+			world->canvas->win_size.y = dm.h - PROGRESS_BAR_HEIGHT - 44;
 		}
 	}
 	ft_init_sdl_2(world);

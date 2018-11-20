@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/22 15:48:32 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 06:17:39 by ldedier          ###   ########.fr       */
+/*   Updated: 2018/06/12 18:08:41 by jfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void			ft_process_parse_bmp(char *filename, t_bmp_parser *parser,
 	parser->bpp = *(short *)&(map.ptr[28]);
 	parser->bitmap_index = *(int *)&(map.ptr[10]);
 	*size = parser->width * parser->height * (parser->bpp / 8);
-	parser->pixels = malloc(sizeof(unsigned char) * (*size) + 1);
+	if (!(parser->pixels = malloc(sizeof(unsigned char) * (*size) + 1)))
+		ft_error("error malloc");
 }
 
 t_bmp_parser	ft_parse_bmp(char *filename)
