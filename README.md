@@ -23,12 +23,10 @@ install xming
 go in the raytracer folder from the ubuntu terminal and run
 
 ```bash
-apt-get install sdl2-dev
-apt-get install sdl2-ttf-dev
-
-
-
+apt-get install libsdl2-dev
+apt-get install libsdl2-ttf-dev
 make
+export DISPLAY=:0
 ./rt [file]
 ```
 
