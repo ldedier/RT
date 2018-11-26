@@ -6,6 +6,8 @@ working branch for MAC systems is https://github.com/lcavalleria/42-raytracer/tr
 
 get in the cloned folder and run
 ```bash
+brew install sdl2
+brew install sdl2_ttf
 make
 ./rt [file]
 ```
