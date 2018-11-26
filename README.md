@@ -4,7 +4,7 @@ raytracer project from 42.
 ### mac
 working branch for MAC systems is https://github.com/lcavalleria/42-raytracer/tree/mac
 
-get in the cloned folder and run
+get in the raytracer folder and run
 ```bash
 brew install sdl2
 brew install sdl2_ttf
@@ -20,14 +20,14 @@ install ubuntu for windows 10 in microsoft store
 
 install xming
 
-open ubuntu terminal and run
+go in the raytracer folder from the ubuntu terminal and run
 
 ```bash
 apt-get install sdl2-dev
 apt-get install sdl2-ttf-dev
-   ```             
-then clone the repo in ubuntu, get in, and run
-```bash
+
+
+
 make
 ./rt [file]
 ```
