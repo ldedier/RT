@@ -34,27 +34,7 @@
 				<positionXYZ>0 50 0 </positionXYZ>
 			</object>
 		</define>
-		<define name="lol">
-				<color>0x00FFFF</color>
-			<object name="plane">
-				<rotationXYZ>1.5707 0 0</rotationXYZ>
-				<positionXYZ>200 0 50</positionXYZ>
-			</object>
-			<object name="plane">
-				<color>0x00AAFF</color>
-				<positionXYZ>1 0 0 </positionXYZ>
-			</object>
-		</define>
-		<def_cobject name="lol">
-			<positionXYZ>0 0 0</positionXYZ>
-		</def_cobject>
-		<def_cobject name="lol">
-			<positionXYZ>0 0 0</positionXYZ>
-		</def_cobject>
 		<def_cobject name="box">
-			<positionXYZ>0 0 0</positionXYZ>
-		</def_cobject>
-		<def_cobject name="lol">
 			<positionXYZ>0 0 0</positionXYZ>
 		</def_cobject>
 		<cobject>

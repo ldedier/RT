@@ -14,7 +14,7 @@ NAME	= rt
 
 CC		= gcc -g
 
-PWD = \"$(shell pwd)\"
+PWD = $(shell pwd)
 
 OK_COLOR = \x1b[32;01m
 EOC = \033[0m
@@ -33,10 +33,6 @@ LIBFT = $(LIBFTDIR)/libft.a
 LIBMATDIR = libmat
 LIBMAT_INCLUDEDIR = includes
 LIBMAT = $(LIBMATDIR)/libmat.a
-
-LIBSDL2DIR = ~/.brew/lib
-LIBSDL2_INCLUDEDIR = ~/.brew/Cellar/sdl2/2.0.8/include/SDL2/
-LIBSDL2TTF_INCLUDEDIR = ~/.brew/Cellar/sdl2_ttf/2.0.14/include/SDL2/
 
 SRCS_NO_PREFIX = camera_rotations.c\
 				 colors.c\
@@ -203,12 +199,22 @@ SOURCES  = $(addprefix $(SRCDIR)/,      $(SRCS_NO_PREFIX))
 OBJECTS  = $(addprefix $(OBJDIR)/,      $(SRCS_NO_PREFIX:%.c=%.o))
 INCLUDES = $(addprefix $(INCLUDESDIR)/, $(INCLUDES_NO_PREFIX))
 
+FRAMEWORKSDIR = $(PWD)/frameworks
+
 INC = -I $(INCLUDESDIR) -I $(LIBFTDIR)/$(LIBFT_INCLUDEDIR)\
 	  -I $(LIBMATDIR)/$(LIBMAT_INCLUDEDIR)\
-	  -I $(LIBSDL2_INCLUDEDIR)\
-	  -I $(LIBSDL2TTF_INCLUDEDIR)
+	  -I $(FRAMEWORKSDIR)/SDL2
 
-CFLAGS = -DPATH=$(PWD) -Wall -Wextra -Werror $(INC)
+LFLAGS =	-L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat\
+			-Wl,-rpath $(FRAMEWORKSDIR)
+
+SDL2_FRAMEWORKS =	-framework SDL2\
+					-framework SDL2_ttf\
+					-framework SDL2_image\
+					-framework SDL2_mixer\
+					-framework SDL2_net
+
+CFLAGS = -DPATH=\"$(PWD)\" -Wall -Wextra -Werror $(INC)
 
 ifeq ($(DEBUG), 1)
 	CFLAGS += -g -DDEBUG -fsanitize=address
@@ -216,10 +222,8 @@ else
 	CFLAGS += -Ofast
 endif
 
-LFLAGS = -L $(LIBFTDIR) -lft -L $(LIBMATDIR) -lmat
-
 opti:
-	@make -j all
+	@make -j 8 all
 
 all:
 	@make -C $(LIBFTDIR) all
@@ -230,12 +234,12 @@ debug:
 	@make -j all DEBUG=1
 
 $(BINDIR)/$(NAME): $(OBJECTS) $(LIBFT) $(LIBMAT)
-	$(CC) -o $@ $^ $(LFLAGS) -L $(LIBSDL2DIR) -lsdl2 -lsdl2_ttf
+	@$(CC) -o $@ $^ -F $(FRAMEWORKSDIR) $(SDL2_FRAMEWORKS) $(LFLAGS) $(CFLAGS)
 	@echo "$(OK_COLOR)$(NAME) linked with success !$(EOC)"
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)
-	$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) -c $< -o $@ -F $(FRAMEWORKSDIR) $(CFLAGS)
 
 clean:
 	@make clean -C $(LIBFTDIR)

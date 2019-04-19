@@ -1,0 +1,68 @@
+<scene>
+	<resolution>1280 720</resolution>
+	<camera>
+		<positionXYZ>0 0 0</positionXYZ>
+		<rotationXYZ>0 0 0</rotationXYZ>
+	</camera>
+	<objlist>
+		<cobject>
+			<reflection>0</reflection>
+			<positionXYZ>0 0.5 14</positionXYZ>
+			<object name="torus">
+				<big_radius>1</big_radius>
+				<small_radius>0.1</small_radius>
+				<color>0xFFFF00</color>
+				<rotationXYZ> 1.5707 0  0</rotationXYZ>
+				<positionXYZ>0 -1.7 0</positionXYZ>
+			</object>
+			<object name="sphere">
+				<texture>resources/textures/george.bmp</texture>
+				<radius>1.5</radius>
+			</object>
+		</cobject>
+		<cobject>
+			<reflection>0.5</reflection>
+			<object name="plane">
+				<positionXYZ>-3 0 0</positionXYZ>
+				<rotationXYZ>0 0 1.5707</rotationXYZ>
+				<texture>resources/textures/egmet.bmp</texture>
+			</object>
+			<object name="plane">
+				<positionXYZ>0 0 20</positionXYZ>
+				<rotationXYZ>1.5707 0 0</rotationXYZ>
+				<texture>resources/textures/egmet.bmp</texture>
+			</object>
+			<object name="plane">
+				<positionXYZ>3 0 0</positionXYZ>
+				<rotationXYZ>0 0 1.5707</rotationXYZ>
+				<texture>resources/textures/egmet.bmp</texture>
+			</object>
+			<object name="plane">
+				<positionXYZ>0 0 -20</positionXYZ>
+				<rotationXYZ>1.5707 0 0</rotationXYZ>
+				<texture>resources/textures/egmet.bmp</texture>
+			</object>
+			<object name="plane">
+				<positionXYZ>0 3 0</positionXYZ>
+				<rotationXYZ>0 1.5707 0</rotationXYZ>
+				<texture>resources/textures/egmet.bmp</texture>
+			</object>
+			<object name="plane">
+				<positionXYZ>0 -3 0</positionXYZ>
+				<rotationXYZ>0 1.5707 0</rotationXYZ>
+				<texture>resources/textures/egmet.bmp</texture>
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+		<light type="point">
+			<color>0xFFFFFF</color>
+			<positionXYZ>0 0 0</positionXYZ>
+			<intensity>1</intensity>
+		</light>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.3</intensity>
+		<color>0xFFFFFF</color>
+	</ambientlight>
+</scene>
