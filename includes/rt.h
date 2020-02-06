@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 07:33:59 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 15:17:07 by lcavalle         ###   ########.fr       */
+/*   Updated: 2020/02/06 13:41:15 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-# define NTHREADS 1
+# define NTHREADS 4
 # define STACK 0
 # define POP 1
 # define MAX_DEGREE 4

@@ -4,13 +4,13 @@
 		<rotationXYZ>-0.015340 -0.095107 0.000000</rotationXYZ>
 	</camera>
 	<objlist>
-			<cobject>
+		<cobject>
 			<positionXYZ>9.000000 1.320000 -11.000000</positionXYZ>
 			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
 			<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
 			<color>0xFFFFFF</color>
 			<shine>30.000000</shine>
-			<reflection>0.1500000</reflection>
+			<reflection>0.150000</reflection>
 			<refraction>1.000000</refraction>
 			<transparency>0.000000</transparency>
 			<perturbation name="none"></perturbation>
@@ -20,6 +20,7 @@
 				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
 				<color>0xFFFFFF</color>
 				<shine>30.000000</shine>
+				<reflection>0.150000</reflection>
 				<refraction>0.000000</refraction>
 				<transparency>0.000000</transparency>
 				<texture_stretch_x>1.000000</texture_stretch_x>
@@ -28,14 +29,9 @@
 				<texture_trans_y>0</texture_trans_y>
 				<perturbation name="none"></perturbation>
 				<cut type="relative">
-					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
-					<inequality>less than</inequality>
-					<value>-2.000000</value>
-				</cut>
-				<cut type="relative">
-					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
+					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
 					<inequality>more than</inequality>
-					<value>2.000000</value>
+					<value>1.000000</value>
 				</cut>
 				<cut type="relative">
 					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
@@ -43,9 +39,14 @@
 					<value>-1.000000</value>
 				</cut>
 				<cut type="relative">
-					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
+					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
 					<inequality>more than</inequality>
-					<value>1.000000</value>
+					<value>2.000000</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
+					<inequality>less than</inequality>
+					<value>-2.000000</value>
 				</cut>
 			</object>
 			<object name="plane">
@@ -54,6 +55,7 @@
 				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
 				<color>0xFFFFFF</color>
 				<shine>30.000000</shine>
+				<reflection>0.150000</reflection>
 				<refraction>0.000000</refraction>
 				<transparency>0.000000</transparency>
 				<texture_stretch_x>1.000000</texture_stretch_x>
@@ -62,14 +64,9 @@
 				<texture_trans_y>0</texture_trans_y>
 				<perturbation name="none"></perturbation>
 				<cut type="relative">
-					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
-					<inequality>less than</inequality>
-					<value>-2.000000</value>
-				</cut>
-				<cut type="relative">
-					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
+					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
 					<inequality>more than</inequality>
-					<value>2.000000</value>
+					<value>1.000000</value>
 				</cut>
 				<cut type="relative">
 					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
@@ -77,9 +74,14 @@
 					<value>-1.000000</value>
 				</cut>
 				<cut type="relative">
-					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
+					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
 					<inequality>more than</inequality>
-					<value>1.000000</value>
+					<value>2.000000</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
+					<inequality>less than</inequality>
+					<value>-2.000000</value>
 				</cut>
 			</object>
 			<object name="plane">
@@ -88,6 +90,7 @@
 				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
 				<color>0xFFFFFF</color>
 				<shine>30.000000</shine>
+				<reflection>0.150000</reflection>
 				<refraction>0.000000</refraction>
 				<transparency>0.000000</transparency>
 				<texture_stretch_x>1.000000</texture_stretch_x>
@@ -96,14 +99,9 @@
 				<texture_trans_y>0</texture_trans_y>
 				<perturbation name="none"></perturbation>
 				<cut type="relative">
-					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
-					<inequality>less than</inequality>
-					<value>-0.800000</value>
-				</cut>
-				<cut type="relative">
-					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
+					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
 					<inequality>more than</inequality>
-					<value>0.000000</value>
+					<value>1.000000</value>
 				</cut>
 				<cut type="relative">
 					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
@@ -111,9 +109,14 @@
 					<value>-1.000000</value>
 				</cut>
 				<cut type="relative">
-					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
+					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
 					<inequality>more than</inequality>
-					<value>1.000000</value>
+					<value>0.000000</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
+					<inequality>less than</inequality>
+					<value>-0.800000</value>
 				</cut>
 			</object>
 			<object name="plane">
@@ -122,6 +125,7 @@
 				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
 				<color>0xFFFFFF</color>
 				<shine>30.000000</shine>
+				<reflection>0.150000</reflection>
 				<refraction>0.000000</refraction>
 				<transparency>0.000000</transparency>
 				<texture_stretch_x>1.000000</texture_stretch_x>
@@ -130,14 +134,9 @@
 				<texture_trans_y>0</texture_trans_y>
 				<perturbation name="none"></perturbation>
 				<cut type="relative">
-					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
-					<inequality>less than</inequality>
-					<value>-2.000000</value>
-				</cut>
-				<cut type="relative">
-					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
+					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
 					<inequality>more than</inequality>
-					<value>2.000000</value>
+					<value>0.000000</value>
 				</cut>
 				<cut type="relative">
 					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
@@ -145,9 +144,14 @@
 					<value>-0.800000</value>
 				</cut>
 				<cut type="relative">
-					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
+					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
 					<inequality>more than</inequality>
-					<value>0.000000</value>
+					<value>2.000000</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
+					<inequality>less than</inequality>
+					<value>-2.000000</value>
 				</cut>
 			</object>
 			<object name="plane">
@@ -156,6 +160,7 @@
 				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
 				<color>0xFFFFFF</color>
 				<shine>30.000000</shine>
+				<reflection>0.150000</reflection>
 				<refraction>0.000000</refraction>
 				<transparency>0.000000</transparency>
 				<texture_stretch_x>0.150000</texture_stretch_x>
@@ -164,14 +169,9 @@
 				<texture_trans_y>210</texture_trans_y>
 				<perturbation name="none"></perturbation>
 				<cut type="relative">
-					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
-					<inequality>less than</inequality>
-					<value>-2.000000</value>
-				</cut>
-				<cut type="relative">
-					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
+					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
 					<inequality>more than</inequality>
-					<value>2.000000</value>
+					<value>0.000000</value>
 				</cut>
 				<cut type="relative">
 					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
@@ -179,15 +179,20 @@
 					<value>-0.800000</value>
 				</cut>
 				<cut type="relative">
-					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
+					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
 					<inequality>more than</inequality>
-					<value>0.000000</value>
+					<value>2.000000</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
+					<inequality>less than</inequality>
+					<value>-2.000000</value>
 				</cut>
 				<texture>resources/textures/ok4.bmp</texture>
 			</object>
 		</cobject>
 		<cobject>
-			<positionXYZ>0.000000 1.0000000 0.000000</positionXYZ>
+			<positionXYZ>0.000000 1.000000 0.000000</positionXYZ>
 			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
 			<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
 			<color>0xFFFFFF</color>
@@ -280,9 +285,9 @@
 				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
 				<color>0xFFFFFF</color>
 				<shine>30.000000</shine>
-				<reflection>0.000000</reflection>
-				<refraction>1.000000</refraction>
-				<transparency>0.000000</transparency>
+				<reflection>0.490000</reflection>
+				<refraction>2.600000</refraction>
+				<transparency>0.160000</transparency>
 				<small_radius>1.000000</small_radius>
 				<big_radius>2.000000</big_radius>
 				<perturbation name="none"></perturbation>
@@ -401,31 +406,109 @@
 			</object>
 		</cobject>
 		<cobject>
-			<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
-			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+			<positionXYZ>-13.600000 0.000000 0.000000</positionXYZ>
+			<rotationXYZ>1.570797 0.000000 1.767050</rotationXYZ>
 			<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
 			<color>0xFFFFFF</color>
 			<shine>30.000000</shine>
 			<reflection>0.000000</reflection>
 			<refraction>1.000000</refraction>
 			<transparency>0.000000</transparency>
-			<perturbation name="none"></perturbation>
+			<perturbation name="perlin"></perturbation>
 			<object name="sphere">
-				<positionXYZ>-13.600000 -1.50000 -1.5000000</positionXYZ>
-				<rotationXYZ>0.740000 1.400000 0.000000</rotationXYZ>
+				<positionXYZ>0.000000 0.000000 -1.000000</positionXYZ>
+				<rotationXYZ>0.000000 1.400000 0.000000</rotationXYZ>
 				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
 				<color>0xFF7300</color>
 				<shine>30.000000</shine>
 				<reflection>0.000000</reflection>
 				<refraction>1.000000</refraction>
 				<transparency>0.000000</transparency>
+				<negative>1</negative>
 				<radius>1.000000</radius>
 				<perturbation name="none"></perturbation>
+			</object>
+			<object name="sphere">
+				<positionXYZ>0.000000 0.000000 1.000000</positionXYZ>
+				<rotationXYZ>0.000000 1.400000 0.000000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFF7300</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
 				<negative>1</negative>
+				<radius>1.000000</radius>
+				<perturbation name="none"></perturbation>
+			</object>
+			<object name="sphere">
+				<positionXYZ>0.000000 1.500000 0.000000</positionXYZ>
+				<rotationXYZ>0.000000 1.400000 0.000000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFF7300</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<negative>1</negative>
+				<radius>1.000000</radius>
+				<perturbation name="none"></perturbation>
+			</object>
+			<object name="sphere">
+				<positionXYZ>0.000000 -1.500000 0.000000</positionXYZ>
+				<rotationXYZ>0.000000 1.400000 0.000000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFF7300</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<negative>1</negative>
+				<radius>1.000000</radius>
+				<perturbation name="none"></perturbation>
+			</object>
+			<object name="cylinder">
+				<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
+				<rotationXYZ>0.000000 1.400000 0.000000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFF7300</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<negative>1</negative>
+				<radius>0.200000</radius>
+				<perturbation name="none"></perturbation>
+			</object>
+			<object name="cylinder">
+				<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
+				<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFF7300</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<negative>1</negative>
+				<radius>0.200000</radius>
+				<perturbation name="none"></perturbation>
+			</object>
+			<object name="cylinder">
+				<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
+				<rotationXYZ>0.000000 0.000000 1.400000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFF7300</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<negative>1</negative>
+				<radius>0.200000</radius>
+				<perturbation name="none"></perturbation>
 			</object>
 			<object name="ellipsoid">
-				<positionXYZ>-13.600000 0.000000 0.000000</positionXYZ>
-				<rotationXYZ>0.740000 1.400000 0.000000</rotationXYZ>
+				<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
+				<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
 				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
 				<color>0xFF7300</color>
 				<shine>30.000000</shine>
@@ -434,7 +517,7 @@
 				<transparency>0.000000</transparency>
 				<radius>1.000000</radius>
 				<ellipsoidABC>1.000000 2.000000 2.000000</ellipsoidABC>
-				<perturbation name="none"></perturbation>
+				<perturbation name="noise"></perturbation>
 			</object>
 		</cobject>
 	</objlist>
@@ -457,7 +540,7 @@
 		</light>
 	</lightlist>
 	<ambientlight>
-		<intensity>0.450000</intensity>
+		<intensity>0.380000</intensity>
 		<color>0xFFFFFF</color>
 	</ambientlight>
 	<fog>
