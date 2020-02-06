@@ -35,7 +35,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 
-# define NTHREADS 4
+# define NTHREADS 1
 # define STACK 0
 # define POP 1
 # define MAX_DEGREE 4

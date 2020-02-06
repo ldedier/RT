@@ -16,22 +16,32 @@ static void		process_scale(t_world *e)
 {
 	if (e->keys[key_o])
 	{
-		e->selected_object->s.x += e->cam->speed;
-		e->selected_object->s.y += e->cam->speed;
-		e->selected_object->s.z += e->cam->speed;
-		e->selected_object->object_union.plane.texture_trans_x -= 100;
+	//	e->selected_object->s.x += e->cam->speed;
+	//	e->selected_object->s.y += e->cam->speed;
+	//	e->selected_object->s.z += e->cam->speed;
+//	printf("%f\n", e->cam->speed);
+		if (e->cam->speed == 0.2)
+			e->selected_object->object_union.plane.texture_trans_x -= 10;
+		else
+			e->selected_object->object_union.plane.texture_trans_x += 10;
+
 	}
 	if (e->keys[key_p])
 	{
-		if (e->selected_object->s.x - e->cam->speed > 1.f &&
-				e->selected_object->s.y - e->cam->speed > 1.f &&
-				e->selected_object->s.z - e->cam->speed > 1.f)
-		{
-			e->selected_object->s.x -= e->cam->speed;
-			e->selected_object->s.y -= e->cam->speed;
-			e->selected_object->s.z -= e->cam->speed;
-			e->selected_object->object_union.plane.texture_trans_x += 100;
-		}
+		//if (e->selected_object->s.x - e->cam->speed > 1.f &&
+		//		e->selected_object->s.y - e->cam->speed > 1.f &&
+	//			e->selected_object->s.z - e->cam->speed > 1.f)
+	//	{
+	//		e->selected_object->s.x -= e->cam->speed;
+	//		e->selected_object->s.y -= e->cam->speed;
+	//		e->selected_object->s.z -= e->cam->speed; // TO REMOVE
+
+		if (e->cam->speed == 0.2)
+			e->selected_object->object_union.plane.texture_trans_y -= 10;
+		else
+			e->selected_object->object_union.plane.texture_trans_y += 10;
+
+	//	}
 	}
 	if (e->keys[key_n])
 		e->selected_object->object_union.plane.texture_stretch_x += 0.1;

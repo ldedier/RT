@@ -1,0 +1,263 @@
+<scene>
+	<camera>
+		<positionXYZ>0.408112 -3.584671 -36.957312</positionXYZ>
+		<rotationXYZ>-0.015340 -0.095107 0.000000</rotationXYZ>
+	</camera>
+	<objlist>
+		<cobject>
+			<object name="plane">
+				<positionXYZ>0 0 0</positionXYZ>
+				<positionXYZ>0.000000 1.000000 0.000000</positionXYZ>
+				<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFFFFFF</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<rotationXYZ>0 0 0</rotationXYZ>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
+			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+			<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+			<color>0xFFFFFF</color>
+			<shine>30.000000</shine>
+			<reflection>0.000000</reflection>
+			<refraction>1.000000</refraction>
+			<transparency>0.000000</transparency>
+			<perturbation name="none"></perturbation>
+			<object name="plane">
+				<positionXYZ>0.000000 0.000000 15.000000</positionXYZ>
+				<rotationXYZ>1.570700 0.000000 0.000000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFF0000</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<texture_stretch_x>1.000000</texture_stretch_x>
+				<texture_stretch_y>1.000000</texture_stretch_y>
+				<texture_trans_x>0</texture_trans_x>
+				<texture_trans_y>0</texture_trans_y>
+				<perturbation name="none"></perturbation>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
+			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+			<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+			<color>0xFFFFFF</color>
+			<shine>30.000000</shine>
+			<reflection>0.000000</reflection>
+			<refraction>1.000000</refraction>
+			<transparency>0.000000</transparency>
+			<perturbation name="none"></perturbation>
+			<object name="plane">
+				<positionXYZ>0.000000 0.000000 -50.000000</positionXYZ>
+				<rotationXYZ>1.570700 0.000000 0.000000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFF0000</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<texture_stretch_x>1.000000</texture_stretch_x>
+				<texture_stretch_y>1.000000</texture_stretch_y>
+				<texture_trans_x>0</texture_trans_x>
+				<texture_trans_y>0</texture_trans_y>
+				<perturbation name="none"></perturbation>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
+			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+			<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+			<color>0xFFFFFF</color>
+			<shine>30.000000</shine>
+			<reflection>0.000000</reflection>
+			<refraction>1.000000</refraction>
+			<transparency>0.000000</transparency>
+			<perturbation name="none"></perturbation>
+			<object name="torus">
+				<positionXYZ>0.400000 0.000000 0.000000</positionXYZ>
+				<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFFFFFF</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<small_radius>1.000000</small_radius>
+				<big_radius>2.000000</big_radius>
+				<perturbation name="none"></perturbation>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>6.800000 0.000000 0.000000</positionXYZ>
+			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+			<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+			<color>0xFFFFFF</color>
+			<shine>30.000000</shine>
+			<reflection>0.000000</reflection>
+			<refraction>1.000000</refraction>
+			<transparency>0.000000</transparency>
+			<perturbation name="none"></perturbation>
+			<object name="goursat">
+				<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
+				<rotationXYZ>0.000000 5.301438 1.178097</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFF</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<goursatAB>5.000000 11.800000</goursatAB>
+				<perturbation name="none"></perturbation>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>11.400000 -1.500000 0.000000</positionXYZ>
+			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+			<scaleXYZ>3.000000 3.000000 3.000000</scaleXYZ>
+			<color>0xFFFFFF</color>
+			<shine>30.000000</shine>
+			<reflection>0.000000</reflection>
+			<refraction>1.000000</refraction>
+			<transparency>0.000000</transparency>
+			<perturbation name="none"></perturbation>
+			<object name="piriform">
+				<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
+				<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFF00</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<perturbation name="none"></perturbation>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>-5.000000 0.000000 0.000000</positionXYZ>
+			<rotationXYZ>0.000000 0.000000 1.570700</rotationXYZ>
+			<scaleXYZ>2.000000 2.000000 2.000000</scaleXYZ>
+			<color>0xFFFFFF</color>
+			<shine>30.000000</shine>
+			<reflection>0.000000</reflection>
+			<refraction>1.000000</refraction>
+			<transparency>0.000000</transparency>
+			<perturbation name="none"></perturbation>
+			<object name="lemniscate">
+				<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
+				<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFFFF</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<perturbation name="none"></perturbation>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>-8.600000 0.000000 0.000000</positionXYZ>
+			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+			<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+			<color>0xFFFFFF</color>
+			<shine>30.000000</shine>
+			<reflection>0.000000</reflection>
+			<refraction>1.000000</refraction>
+			<transparency>0.000000</transparency>
+			<perturbation name="none"></perturbation>
+			<object name="roman">
+				<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
+				<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+				<scaleXYZ>3.000000 3.000000 3.000000</scaleXYZ>
+				<color>0xFFFF00</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<perturbation name="none"></perturbation>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
+			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+			<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+			<color>0xFFFFFF</color>
+			<shine>30.000000</shine>
+			<reflection>0.000000</reflection>
+			<refraction>1.000000</refraction>
+			<transparency>0.000000</transparency>
+			<perturbation name="none"></perturbation>
+			<object name="sphere">
+				<positionXYZ>15.400000 0.000000 0.000000</positionXYZ>
+				<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFFFFFF</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<radius>2.000000</radius>
+				<perturbation name="none"></perturbation>
+			</object>
+		</cobject>
+		<cobject>
+			<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
+			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
+			<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+			<color>0xFFFFFF</color>
+			<shine>30.000000</shine>
+			<reflection>0.000000</reflection>
+			<refraction>1.000000</refraction>
+			<transparency>0.000000</transparency>
+			<perturbation name="none"></perturbation>
+			<object name="ellipsoid">
+				<positionXYZ>-13.600000 0.000000 0.000000</positionXYZ>
+				<rotationXYZ>0.740000 1.400000 0.000000</rotationXYZ>
+				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
+				<color>0xFFFFFF</color>
+				<shine>30.000000</shine>
+				<reflection>0.000000</reflection>
+				<refraction>1.000000</refraction>
+				<transparency>0.000000</transparency>
+				<radius>1.000000</radius>
+				<ellipsoidABC>1.000000 2.000000 2.000000</ellipsoidABC>
+				<perturbation name="none"></perturbation>
+			</object>
+		</cobject>
+	</objlist>
+	<lightlist>
+		<light type="point">
+			<positionXYZ>0.400000 -2.000000 -7.000000</positionXYZ>
+			<rotationXYZ>0.000000 1.000000 0.000000</rotationXYZ>
+			<color>0xFFFFFF</color>
+			<intensity>1.000000</intensity>
+			<angle>0.785398</angle>
+			<ebloui>0</ebloui>
+		</light>
+		<light type="point">
+			<positionXYZ>0.400000 -13.000000 0.000000</positionXYZ>
+			<rotationXYZ>0.000000 1.000000 0.000000</rotationXYZ>
+			<color>0xFFFFFF</color>
+			<intensity>1.000000</intensity>
+			<angle>0.785398</angle>
+			<ebloui>0</ebloui>
+		</light>
+	</lightlist>
+	<ambientlight>
+		<intensity>0.500000</intensity>
+		<color>0xFFFFFF</color>
+	</ambientlight>
+	<fog>
+		<intensity>0.000000</intensity>
+		<color>0x222222</color>
+	</fog>
+	<antialiasing>1</antialiasing>
+	<shader type="normal"></shader>
+	<resolution>1584 396</resolution>
+</scene>
