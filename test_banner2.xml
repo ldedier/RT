@@ -1,62 +1,10 @@
 <scene>
 	<camera>
-		<positionXYZ>0.4000 -3.186479 -36.995293</positionXYZ>
+		<positionXYZ>0.407529 -3.186479 -36.995293</positionXYZ>
 		<rotationXYZ>-0.015340 -0.095107 0.000000</rotationXYZ>
 	</camera>
 	<objlist>
-		<cobject>
-			<positionXYZ>0.000000 1.000000 0.000000</positionXYZ>
-			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
-			<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
-			<color>0xFFFFFF</color>
-			<shine>30.000000</shine>
-			<reflection>0.000000</reflection>
-			<refraction>1.000000</refraction>
-			<transparency>0.000000</transparency>
-			<perturbation name="none"></perturbation>
-			<object name="plane">
-				<positionXYZ>0.000000 1.000000 0.000000</positionXYZ>
-				<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
-				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
-				<color>0x7B6BDF</color>
-				<shine>30.000000</shine>
-				<reflection>0.420000</reflection>
-				<refraction>0.000000</refraction>
-				<transparency>0.050000</transparency>
-				<texture_stretch_x>1.000000</texture_stretch_x>
-				<texture_stretch_y>1.000000</texture_stretch_y>
-				<texture_trans_x>0</texture_trans_x>
-				<texture_trans_y>0</texture_trans_y>
-				<perturbation name="ripple"></perturbation>
-			</object>
-		</cobject>
-		<cobject>
-			<positionXYZ>0.000000 0.000000 -16.000000</positionXYZ>
-			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
-			<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
-			<color>0xFFFFFF</color>
-			<shine>30.000000</shine>
-			<reflection>0.000000</reflection>
-			<refraction>1.000000</refraction>
-			<transparency>0.000000</transparency>
-			<perturbation name="none"></perturbation>
-			<object name="plane">
-				<positionXYZ>0.000000 0.000000 30.000000</positionXYZ>
-				<rotationXYZ>1.570700 0.000000 0.000000</rotationXYZ>
-				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
-				<color>0xFF0000</color>
-				<shine>30.000000</shine>
-				<reflection>0.000000</reflection>
-				<refraction>0.000000</refraction>
-				<transparency>0.000000</transparency>
-				<texture_stretch_x>0.150000</texture_stretch_x>
-				<texture_stretch_y>0.750000</texture_stretch_y>
-				<texture_trans_x>-1340</texture_trans_x>
-				<texture_trans_y>210</texture_trans_y>
-				<perturbation name="none"></perturbation>
-			</object>
-		</cobject>
-		<cobject>
+			<cobject>
 			<positionXYZ>3.200000 -2.000000 -28.200000</positionXYZ>
 			<rotationXYZ>0.000000 0.000000 0.000000</rotationXYZ>
 			<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
@@ -116,7 +64,7 @@
 	</objlist>
 	<lightlist>
 		<light type="point">
-			<positionXYZ>0.4000000 -2.000000 -7.000000</positionXYZ>
+			<positionXYZ>0.400000 -2.000000 -7.000000</positionXYZ>
 			<rotationXYZ>0.000000 1.000000 0.000000</rotationXYZ>
 			<color>0xFFFFFF</color>
 			<intensity>1.000000</intensity>
@@ -124,12 +72,11 @@
 			<ebloui>0</ebloui>
 		</light>
 		<light type="point">
-			<positionXYZ>0.400000 -3.200000 -36.000000</positionXYZ>
-			<rotationXYZ>0.60000 -0.240000 1.000000</rotationXYZ>
+			<positionXYZ>4.200000 -2.0000 -32.000000</positionXYZ>
+			<rotationXYZ>0.000000 1.000000 0.000000</rotationXYZ>
 			<color>0xFFFFFF</color>
 			<intensity>1.000000</intensity>
-			<angle>1.319469</angle>
-			<ebloui>0</ebloui>
+			<angle>0.785398</angle>
 		</light>
 	</lightlist>
 	<ambientlight>

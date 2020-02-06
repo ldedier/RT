@@ -6,7 +6,7 @@
 /*   By: lcavalle <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/26 09:48:49 by lcavalle          #+#    #+#             */
-/*   Updated: 2018/06/10 09:39:58 by lcavalle         ###   ########.fr       */
+/*   Updated: 2020/02/06 20:32:01 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,9 @@ static void	intersect_negative2(t_hit *newhit, t_line line, t_auxtracer2 aux,
 			hit->normal = scale(hit->normal, -1);
 		}
 		else
+		{
 			hit->enter = 1;
+		}
 	}
 }
 

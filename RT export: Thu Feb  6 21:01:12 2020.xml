@@ -1,7 +1,7 @@
 <scene>
 	<camera>
-		<positionXYZ>0.4000 -3.186479 -36.995293</positionXYZ>
-		<rotationXYZ>-0.015340 -0.095107 0.000000</rotationXYZ>
+		<positionXYZ>-0.690360 -5.404876 -43.367224</positionXYZ>
+		<rotationXYZ>-0.030680 -0.239301 0.000000</rotationXYZ>
 	</camera>
 	<objlist>
 		<cobject>
@@ -67,7 +67,7 @@
 			<transparency>0.000000</transparency>
 			<perturbation name="none"></perturbation>
 			<object name="plane">
-				<positionXYZ>0.000000 0.000000 0.0000</positionXYZ>
+				<positionXYZ>0.000000 0.000000 0.000000</positionXYZ>
 				<rotationXYZ>1.570700 0.000000 0.000000</rotationXYZ>
 				<scaleXYZ>1.000000 1.000000 1.000000</scaleXYZ>
 				<color>0xFFFFFF</color>
@@ -83,17 +83,12 @@
 				<cut type="relative">
 					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
 					<inequality>more than</inequality>
-					<value>2.00000</value>
+					<value>0.300000</value>
 				</cut>
 				<cut type="relative">
-					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
-					<inequality>more than</inequality>
-					<value>0.000000</value>
-				</cut>
-				<cut type="relative">
-					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
+					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
 					<inequality>less than</inequality>
-					<value>-0.800000</value>
+					<value>-2.000000</value>
 				</cut>
 				<cut type="relative">
 					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
@@ -101,14 +96,19 @@
 					<value>2.000000</value>
 				</cut>
 				<cut type="relative">
-					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
+					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
 					<inequality>less than</inequality>
-					<value>-2.000000</value>
+					<value>-0.800000</value>
 				</cut>
-				<cut type="color">
-					<cut_color>red</cut_color>
+				<cut type="relative">
+					<cutXYZ>0.000000 0.000000 1.000000</cutXYZ>
 					<inequality>more than</inequality>
-					<value>0.3</value>
+					<value>0.000000</value>
+				</cut>
+				<cut type="relative">
+					<cutXYZ>1.000000 0.000000 0.000000</cutXYZ>
+					<inequality>more than</inequality>
+					<value>2.000000</value>
 				</cut>
 				<texture>resources/textures/ok4.bmp</texture>
 			</object>
@@ -116,16 +116,16 @@
 	</objlist>
 	<lightlist>
 		<light type="point">
-			<positionXYZ>0.4000000 -2.000000 -7.000000</positionXYZ>
+			<positionXYZ>0.400000 -2.000000 -7.000000</positionXYZ>
 			<rotationXYZ>0.000000 1.000000 0.000000</rotationXYZ>
 			<color>0xFFFFFF</color>
 			<intensity>1.000000</intensity>
 			<angle>0.785398</angle>
 			<ebloui>0</ebloui>
 		</light>
-		<light type="point">
-			<positionXYZ>0.400000 -3.200000 -36.000000</positionXYZ>
-			<rotationXYZ>0.60000 -0.240000 1.000000</rotationXYZ>
+		<light type="spotlight">
+			<positionXYZ>4.200000 -3.200000 -36.000000</positionXYZ>
+			<rotationXYZ>-0.160000 -0.240000 1.000000</rotationXYZ>
 			<color>0xFFFFFF</color>
 			<intensity>1.000000</intensity>
 			<angle>1.319469</angle>

@@ -6,7 +6,7 @@
 /*   By: ldedier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 05:33:22 by ldedier           #+#    #+#             */
-/*   Updated: 2018/06/12 04:44:07 by ldedier          ###   ########.fr       */
+/*   Updated: 2020/02/06 20:46:55 by ldedier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,11 @@ int		texture_plane(t_object obj, t_hit *hit, t_bmp_parser parser)
 		u *= -1;
 	if (v < 0)
 		v *= -1;
-	return (ft_get_pixel(u, v, parser));
+	if (hit->unbumped_old_normal.y == -1.0)
+		return (ft_get_pixel(u, v, parser));
+	else
+		return (ft_get_pixel(parser.width - u, v, parser));
+
 }
 
 int		texture_cylinder(t_object obj, t_hit *hit, t_bmp_parser parser)
