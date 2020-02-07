@@ -8,6 +8,7 @@
 			<positionXYZ>0 0 10</positionXYZ>
 			<rotationXYZ>0 0 0</rotationXYZ>
 			<object name="sphere">
+				<radius>2</radius>
 				<texture>resources/textures/earth2.bmp</texture>
 				<cut type = "color">
 					<cut_color>blue</cut_color>
