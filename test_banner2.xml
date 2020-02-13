@@ -58,7 +58,7 @@
 					<inequality>more than</inequality>
 					<value>0.3</value>
 				</cut>
-				<texture>resources/textures/ok4.bmp</texture>
+				<texture>resources/textures/ok5.bmp</texture>
 			</object>
 		</cobject>
 	</objlist>
